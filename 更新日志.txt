@@ -1,0 +1,230 @@
+--------------------1.1.0.0--------------------
+解决方案
+- 取消支持 .NET Framework
+- 编程语言 VB.NET Framework 4.8 -> C#.NET 8.0
+- 重命名 KlxPiaoAPI -> KlxPiao
+
+KlxPiaoControls
+- 新增组件：
+-- BezierCurve
+- 移除组件：
+-- KlxPiaoProgressBar
+- 重命名组件：
+-- KlxPiaoTabControl -> TabControlContainer
+-- KlxPiaoTabPage -> KlxPiaoTabControl
+- 重命名属性：
+-- KlxPiaoForm.窗体按钮 -> 标题按钮显示
+- 新增函数：
+-- KlxPiaoForm.设置全局字体
+- 移除函数：
+-- KlxPiaoForm.设置WindowState
+-- KlxPiaoForm.自动生成主题
+-- KlxPiaoForm.复制主题
+-- KlxPiaoForm.导出主题文件
+-- KlxPiaoForm.加载主题文件
+-- TabControlContainer.设置选项卡索引
+-- TabControlContainer.获取选项卡索引
+-- TabControlContainer.获取绑定的KlxPiaoTabControl
+-- TabControlContainer.获取选中选项卡文字
+- 新增属性：
+-- KlxPiaoForm.标题按钮位置
+-- KlxPiaoForm.标题按钮图标大小
+-- KlxPiaoForm.标题按钮颜色反馈
+-- KlxPiaoForm.标题框前景色
+-- KlxPiaoForm.主题
+-- KlxPiaoForm.未激活边框颜色
+-- KlxPiaoForm.未激活标题框背景色
+-- KlxPiaoForm.未激活标题框前景色
+-- KlxPiaoForm.关闭按钮的功能
+-- KlxPiaoForm.启动顺序
+-- KlxPiaoForm.启用关闭按钮
+-- KlxPiaoForm.启用缩放按钮
+-- KlxPiaoForm.启用最小化按钮
+-- KlxPiaoForm.标题按钮未启用前景色
+-- KlxPiaoButton.可获得焦点
+-- KlxPiaoTrackBar.值显示格式
+-- KlxPiaoButton.ImageSize
+-- PointBar.坐标显示格式
+- 移除属性：
+-- KlxPiaoForm的大部分冗余属性
+-- KlxPiaoTrackBar.Text
+-- TabControlContainer.Text
+-- PointBar.Text
+- 修复：
+-- KlxPiaoForm.ShowIcon 属性无效的问题
+-- KlxPiaoForm的标题按钮可被Tab键选中的问题
+-- KlxPiaoLabel.Padding 属性无效的问题
+-- KlxPiaoLabel.AutoSize 属性自动设置为false的问题
+- 优化：
+-- KlxPiaoForm的启动和关闭动画
+-- KlxPiaoForm的最大化 / 还原 动画
+-- KlxPiaoForm的标题按钮图标不再使用贴图
+- 目前仍存在问题：
+-- 反复调整KlxPiaoButton.ImageSize属性时，图片会模糊
+-- KlxPiaoTabControl不能设计时交互
+-- KlxPiaoForm.ShowDialog()方法的优化问题
+-- Siwtch控件的功能待完善
+
+KlxPiaoAPI
+- 新增函数：
+-- 类型.判断
+-- 数学.计算网格点
+-- 动画.CalculateBezierPointByTime
+-- 动画.CalculateBezierPoint
+-- 控件.遍历
+-- 控件.自定义过渡动画
+-- 字符串.批量替换
+- 移除函数：
+-- 控件.据时间进度返回坐标
+- 重命名函数：
+-- 控件.过渡动画 -> 贝塞尔过渡动画
+- 新增接口：
+-- 类型.ITypeCollection
+- 优化：
+-- 控件.读取属性 的代码逻辑
+-- 控件.设置属性 的代码逻辑
+- 修复：
+-- 控件.过渡动画 不响应Point,Size等属性的问题
+
+--------------------1.0.3.4--------------------
+KlxPiaoPanel
+- 修复问题：函数  获取工作区矩形、获取工作区大小 在 启用投影=False 时失效
+
+Switch
+- 新增组件
+
+--------------------1.0.3.3--------------------
+KlxPiaoLabel
+- 圆角抗锯齿效果优化
+
+PointBar
+- 新增属性：坐标系类型（计算机图形坐标系，数学坐标系）
+- 修复问题：键盘响应时小概率失效
+
+KlxPiaoPanel
+- 新增函数：获取工作区矩形、获取工作区大小
+
+KlxPiaoForm
+- 新增函数：获取工作区矩形、获取工作区大小
+- 新增函数：显示提示框
+
+KlxPiaoAPI Demo
+- 界面更新
+- 功能更新
+
+KlxPiaoTrackBar
+- 新增属性：保留小数位数
+- 修复问题：最小值不为0且鼠标仅按下时值错误
+
+--------------------1.0.3.2--------------------
+KlxPiaoAPI
+- 优化“控件.过渡动画”的代码逻辑
+- 新增函数：根据时间进度返回坐标
+- 移除函数：控件.BezierCurve
+- 移除函数：控件.返回曲线百分比
+
+KlxPiaoPanel
+- 新增属性：圆角百分比
+- 新增属性：边框外部颜色
+
+--------------------1.0.3.1--------------------
+KlxPiaoAPI
+- 新增函数：控件.读取属性
+- 新增函数：控件.设置属性
+- 新增函数：控件.过渡动画
+- 新增函数：控件.返回曲线百分比
+- 新增函数：控件.BezierCurve
+
+--------------------1.0.3.0--------------------
+KlxPiaoForm
+- 优化启动和关闭动画
+- 优化代码逻辑
+- 新增属性：全屏时隐藏窗体边框
+
+KlxPiaoTrackBar
+- 新增焦点反馈、移入反馈相关属性
+
+KlxPiaoTabControl
+- 支持设计时交互
+- 新增函数：设置选项卡索引、获取选项卡索引、获取绑定的KlxPiaoTabPage、获取选中选项卡文字
+
+KlxPiaoPictureBox
+- 逻辑优化
+- 删除属性：图片缩放
+- 新增函数：返回图像
+
+--------------------1.0.2.6--------------------
+KlxPiaoForm
+- 新增函数：自动生成主题
+
+KlxPiaoAPI
+- 新增函数：颜色.获取亮度
+
+KlxPiaoAPI Demo
+- 新增功能："随机生成主题"
+- 更新功能："根据主题色一键生成"不再有深浅限制
+
+--------------------1.0.2.5--------------------
+KlxPiaoPanel
+- 默认事件修改为"Click"
+
+PointBar
+- 可以通过键盘调整大小
+
+KlxPiaoTrackBar
+- 新增焦点外观相关属性
+- 新增值显示相关属性
+- 新增边框相关属性
+
+--------------------1.0.2.4--------------------
+KlxPiaoForm
+- 新增属性：启用 启动/关闭 动画
+- 修复问题：Text不及时刷新
+KlxPiaoTrackBar
+- 新增组件
+
+KlxPiaoPictureBox
+- 效果优化
+
+KlxPiaoLabel
+- 新增函数：返回图像
+- 新增属性分类：质量
+- 修复问题：设置 AutoSize=False,投影连线=False 时，投影会错位
+
+KlxPiaoTabControl
+- 修复问题：鼠标右键也能响应
+
+--------------------1.0.2.1--------------------
+KlxPiaoPictureBox
+- 新增组件
+
+--------------------1.0.2.0--------------------
+KlxPiaoTabControl
+- 修复Bug
+
+KlxPiaoAPI Demo
+- 界面优化
+--------------------1.0.1.9--------------------
+KlxPiaoLabel
+- 属性名称更新：遮罩 -> 边框
+
+KlxPiaoTabControl
+- 新增组件（测试中）
+
+KlxPiaoAPI Demo
+- 新增功能：.Designer代码生成器
+
+--------------------1.0.1.7--------------------
+KlxPiaoLabel
+- 新增属性：遮罩
+
+KlxPiaoAPI Demo
+- 优化皮肤编辑器
+
+KlxPiaoPanel
+- 投影效果优化
+
+--------------------1.0.1.6--------------------
+KlxPiaoPanel
+- 投影方向支持自定义
+- 优化部分代码逻辑
