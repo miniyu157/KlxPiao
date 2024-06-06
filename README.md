@@ -1,34 +1,33 @@
-# KlxPiaoAPI
-提供常用函数、界面美化和一些控件
+# KlxPiao
 
-![home][1]
+提供 WinForms 常用函数、界面美化和一些控件
 
+## 使用
 
-![label][2]
+克隆此仓库, 并将项目直接添加到你的解决方案中
 
+## 预览
 
-![themeedit][3]
-
-
-![picturebox][4]
+![home](screenshot/home.png)
 
 
-![panel][5]
+![label](screenshot/label.png)
 
 
-![control][6]
+![themeedit](screenshot/themeedit.png)
 
 
-![trackbar][7]
+![picturebox](screenshot/picturebox.png)
 
 
-![color][8]
+![panel](screenshot/panel.png)
 
-  [1]: https://github.com/miniyu157/KlxPiaoAPI/blob/main/screenshot/home.png
-  [2]: https://github.com/miniyu157/KlxPiaoAPI/blob/main/screenshot/label.png
-  [3]: https://github.com/miniyu157/KlxPiaoAPI/blob/main/screenshot/themeedit.png
-  [4]: https://github.com/miniyu157/KlxPiaoAPI/blob/main/screenshot/picturebox.png
-  [5]: https://github.com/miniyu157/KlxPiaoAPI/blob/main/screenshot/panel.png
-  [6]: https://github.com/miniyu157/KlxPiaoAPI/blob/main/screenshot/control.png
-  [7]: https://github.com/miniyu157/KlxPiaoAPI/blob/main/screenshot/trackbar.png
-  [8]: https://github.com/miniyu157/KlxPiaoAPI/blob/main/screenshot/color.png
+
+![trackbar](screenshot/trackbar.png)
+
+
+![labeldemo](screenshot/labeldemo.png)
+
+
+![api_control](screenshot/api_control.png)
+
