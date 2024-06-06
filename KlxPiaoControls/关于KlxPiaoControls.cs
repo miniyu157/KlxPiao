@@ -11,7 +11,18 @@ namespace KlxPiaoControls
             AssemblyInformationalVersionAttribute? productVersion =
                 (AssemblyInformationalVersionAttribute?)Attribute.GetCustomAttribute(assembly, typeof(AssemblyInformationalVersionAttribute));
 
-            return productVersion?.InformationalVersion ?? "Unknown Version";
+            if (productVersion?.InformationalVersion is string versionStr)
+            {
+                var plusSymbolIndex = versionStr.IndexOf('+');
+                if (plusSymbolIndex != -1)
+                {
+                    versionStr = versionStr.Substring(0, plusSymbolIndex);
+                }
+
+                return versionStr;
+            }
+
+            return "Unknown Version";
         }
 
         public static string 产品名称()
