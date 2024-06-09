@@ -1,6 +1,8 @@
 ﻿using KlxPiaoAPI;
 using KlxPiaoControls;
+using KlxPiaoDemo.Properties;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Text;
@@ -53,9 +55,9 @@ namespace KlxPiaoDemo
                 {
                     KlxPiaoPanel p = new()
                     {
-                        边框大小 = 2,
+                        边框大小 = 1,
                         启用投影 = false,
-                        圆角百分比 = 0.36F,
+                        圆角大小 = new CornerRadius(0.36F),
                         Size = new Size(45, 45),
                         Cursor = Cursors.Hand,
                         BackColor = Color.FromArgb(rand.Next(随机颜色范围[0], 随机颜色范围[1]), rand.Next(随机颜色范围[0], 随机颜色范围[1]), rand.Next(随机颜色范围[0], 随机颜色范围[1]))
@@ -508,17 +510,17 @@ namespace KlxPiaoDemo
             if (位置过渡Check.Checked)
             {
                 Point 目标位置 = 控件动画Panel.Location == new Point(24, 271) ? new Point(435, 253) : new Point(24, 271);
-                _ = 控件.贝塞尔过渡动画(控件动画Panel, "Location", null, 目标位置, (int)klxPiaoTrackBar12.值, [.. bezierCurve1.控制点集合]);
+                _ = 控件动画Panel.贝塞尔过渡动画("Location", null, 目标位置, (int)klxPiaoTrackBar12.值, [.. bezierCurve1.控制点集合]);
             }
             if (大小过渡Check.Checked)
             {
                 Size 目标位置 = 控件动画Panel.Size == new Size(70, 70) ? new Size(130, 130) : new Size(70, 70);
-                _ = 控件.贝塞尔过渡动画(控件动画Panel, "Size", null, 目标位置, (int)klxPiaoTrackBar12.值, [.. bezierCurve1.控制点集合]);
+                _ = 控件动画Panel.贝塞尔过渡动画("Size", null, 目标位置, (int)klxPiaoTrackBar12.值, [.. bezierCurve1.控制点集合]);
             }
             if (颜色过渡Check.Checked)
             {
                 Color 目标颜色 = Color.FromArgb(rand.Next(0, 255), rand.Next(0, 255), rand.Next(0, 255));
-                _ = 控件.贝塞尔过渡动画(控件动画Panel, "BackColor", null, 目标颜色, (int)klxPiaoTrackBar12.值, null);
+                _ = 控件动画Panel.贝塞尔过渡动画("BackColor", null, 目标颜色, (int)klxPiaoTrackBar12.值, null);
             }
         }
         private void 停止But_Click(object sender, EventArgs e)
@@ -594,5 +596,124 @@ namespace KlxPiaoDemo
         }
         #endregion
 
+        //转换器代码生成器
+        private void KlxPiaoButton9_Click(object sender, EventArgs e)
+        {
+            //结构
+            label21.Text = $"{结构名称Text.Text}.cs";
+
+            var replacements = new Dictionary<string, string>{
+               {"{命名空间}",命名空间Text.Text},
+               {"{转换器名称}",转换器名称Text.Text},
+               {"{结构名称}",结构名称Text.Text},
+               {"{成员类型}",结构成员类型Text.Text}
+            };
+
+            StringBuilder 结构成员声明 = new();
+            foreach (string 成员 in 成员列表Text.Lines)
+            {
+                结构成员声明.AppendLine($"        public {结构成员类型Text.Text} {成员} {{ get; set; }}");
+            }
+
+            StringBuilder 统一赋值方法 = new();
+            统一赋值方法.Append("            ");
+            foreach (string 成员 in 成员列表Text.Lines)
+            {
+                统一赋值方法.Append($"{成员} = ");
+            }
+            统一赋值方法.Append("uniform;");
+
+            StringBuilder 通用方法参数 = new();
+            for (int i = 0; i < 成员列表Text.Lines.Length; i++)
+            {
+                通用方法参数.Append($"{结构成员类型Text.Text} {成员列表Text.Lines[i].方法参数处理("value")}");
+
+                if (i != 成员列表Text.Lines.Length - 1)
+                {
+                    通用方法参数.Append(", ");
+                }
+            }
+
+            StringBuilder 通用方法过程 = new();
+            for (int i = 0; i < 成员列表Text.Lines.Length; i++)
+            {
+                通用方法过程.Append($"            {成员列表Text.Lines[i]} = {成员列表Text.Lines[i].方法参数处理("value")};");
+
+                if (i != 成员列表Text.Lines.Length - 1)
+                {
+                    通用方法过程.AppendLine();
+                }
+            }
+
+            textBox23.Text = Resources.结构.批量替换(replacements)
+                .Replace("{结构成员声明}", 结构成员声明.ToString())
+                .Replace("{统一赋值方法}", 统一赋值方法.ToString())
+                .Replace("{通用方法参数}", 通用方法参数.ToString())
+                .Replace("{通用方法过程}", 通用方法过程.ToString());
+
+            //转换器
+            label23.Text = $"{转换器名称Text.Text}.cs";
+
+            StringBuilder 成员列表1 = new();
+            foreach (string 成员 in 成员列表Text.Lines)
+            {
+                成员列表1.AppendLine($"                    array[num++] = converter.ConvertToString(context, culture, {结构名称Text.Text}1.{成员});");
+            }
+
+            StringBuilder 成员类型列表 = new();
+            for (int i = 0; i < 成员列表Text.Lines.Length; i++)
+            {
+                成员类型列表.Append($"                        typeof({结构成员类型Text.Text})");
+
+                if (i != 成员列表Text.Lines.Length - 1)
+                {
+                    成员类型列表.Append(",\r\n");
+                }
+            }
+
+            StringBuilder 成员列表2 = new();
+            for (int i = 0; i < 成员列表Text.Lines.Length; i++)
+            {
+                成员列表2.Append($"{结构名称Text.Text}2.{成员列表Text.Lines[i]}");
+
+                if (i != 成员列表Text.Lines.Length - 1)
+                {
+                    成员列表2.Append(", ");
+                }
+            }
+
+            StringBuilder 成员列表3 = new();
+            for (int i = 0; i < 成员列表Text.Lines.Length; i++)
+            {
+                成员列表3.Append($"                ({结构成员类型Text.Text})propertyValues[\"{成员列表Text.Lines[i]}\"]");
+
+                if (i != 成员列表Text.Lines.Length - 1)
+                {
+                    成员列表3.Append(",\r\n");
+                }
+            }
+
+            StringBuilder 成员列表4 = new();
+            for (int i = 0; i < 成员列表Text.Lines.Length; i++)
+            {
+                成员列表4.Append($"\"{成员列表Text.Lines[i]}\"");
+
+                if (i != 成员列表Text.Lines.Length - 1)
+                {
+                    成员列表4.Append(", ");
+                }
+            }
+
+            textBox25.Text = Resources.转换器.批量替换(replacements)
+                .Replace("{成员数量}", 成员列表Text.Lines.Length.ToString())
+                .Replace("{成员列表1}", 成员列表1.ToString())
+                .Replace("{成员类型列表}", 成员类型列表.ToString())
+                .Replace("{成员列表2}", 成员列表2.ToString())
+                .Replace("{成员列表3}", 成员列表3.ToString())
+                .Replace("{成员列表4}", 成员列表4.ToString())
+                .Replace("{结构名称Value}", 结构名称Text.Text + "Value")
+                .Replace("{结构名称1}", 结构名称Text.Text + "1")
+                .Replace("{结构名称2}", 结构名称Text.Text + "2");
+        }
     }
 }

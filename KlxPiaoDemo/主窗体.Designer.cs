@@ -82,10 +82,12 @@
             klxPiaoLabel3 = new KlxPiaoControls.KlxPiaoLabel();
             tabPage7 = new TabPage();
             klxPiaoPanel8 = new KlxPiaoControls.KlxPiaoPanel();
+            klxPiaoPanel13 = new KlxPiaoControls.KlxPiaoPanel();
+            klxPiaoPanel12 = new KlxPiaoControls.KlxPiaoPanel();
+            klxPiaoPanel11 = new KlxPiaoControls.KlxPiaoPanel();
             klxPiaoLabel31 = new KlxPiaoControls.KlxPiaoLabel();
             klxPiaoPanel2 = new KlxPiaoControls.KlxPiaoPanel();
             klxPiaoPanel1 = new KlxPiaoControls.KlxPiaoPanel();
-            klxPiaoPanel6 = new KlxPiaoControls.KlxPiaoPanel();
             klxPiaoPanel5 = new KlxPiaoControls.KlxPiaoPanel();
             klxPiaoPanel4 = new KlxPiaoControls.KlxPiaoPanel();
             klxPiaoPanel3 = new KlxPiaoControls.KlxPiaoPanel();
@@ -114,6 +116,7 @@
             tabControlContainer2 = new KlxPiaoControls.TabControlContainer();
             klxPiaoTabControl2 = new KlxPiaoControls.KlxPiaoTabControl();
             tabPage13 = new TabPage();
+            控件动画Panel = new KlxPiaoControls.KlxPiaoPanel();
             checkBox8 = new CheckBox();
             textBox18 = new TextBox();
             label15 = new Label();
@@ -123,7 +126,6 @@
             大小过渡Check = new CheckBox();
             位置过渡Check = new CheckBox();
             停止But = new KlxPiaoControls.KlxPiaoButton();
-            控件动画Panel = new KlxPiaoControls.KlxPiaoPanel();
             klxPiaoButton8 = new KlxPiaoControls.KlxPiaoButton();
             klxPiaoButton7 = new KlxPiaoControls.KlxPiaoButton();
             label14 = new Label();
@@ -190,6 +192,22 @@
             panel1 = new Panel();
             textBox15 = new TextBox();
             klxPiaoButton4 = new KlxPiaoControls.KlxPiaoButton();
+            tabPage15 = new TabPage();
+            label23 = new Label();
+            label21 = new Label();
+            textBox25 = new TextBox();
+            textBox23 = new TextBox();
+            klxPiaoButton9 = new KlxPiaoControls.KlxPiaoButton();
+            label20 = new Label();
+            成员列表Text = new TextBox();
+            label22 = new Label();
+            转换器名称Text = new TextBox();
+            label19 = new Label();
+            结构成员类型Text = new TextBox();
+            label18 = new Label();
+            结构名称Text = new TextBox();
+            label17 = new Label();
+            命名空间Text = new TextBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -218,6 +236,7 @@
             tabPage5.SuspendLayout();
             tabPage8.SuspendLayout();
             groupBox4.SuspendLayout();
+            tabPage15.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -312,6 +331,7 @@
             tabControl1.Controls.Add(tabPage4);
             tabControl1.Controls.Add(tabPage5);
             tabControl1.Controls.Add(tabPage8);
+            tabControl1.Controls.Add(tabPage15);
             tabControl1.Location = new Point(12, 39);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
@@ -374,7 +394,6 @@
             klxPiaoTrackBar5.值显示方式 = KlxPiaoControls.KlxPiaoTrackBar.文字位置.居中;
             klxPiaoTrackBar5.值显示格式 = "{value}×{value}";
             klxPiaoTrackBar5.前景色 = Color.Gainsboro;
-            klxPiaoTrackBar5.焦点边框大小 = 2;
             klxPiaoTrackBar5.焦点边框颜色 = Color.FromArgb(128, 128, 255);
             klxPiaoTrackBar5.移入前景色 = Color.LightGray;
             klxPiaoTrackBar5.背景色 = Color.White;
@@ -401,7 +420,6 @@
             klxPiaoTrackBar3.Text = "klxPiaoTrackBar3";
             klxPiaoTrackBar3.值显示方式 = KlxPiaoControls.KlxPiaoTrackBar.文字位置.居中;
             klxPiaoTrackBar3.前景色 = Color.Gainsboro;
-            klxPiaoTrackBar3.焦点边框大小 = 2;
             klxPiaoTrackBar3.焦点边框颜色 = Color.FromArgb(128, 128, 255);
             klxPiaoTrackBar3.移入前景色 = Color.LightGray;
             klxPiaoTrackBar3.背景色 = Color.White;
@@ -419,7 +437,6 @@
             klxPiaoTrackBar2.Text = "klxPiaoTrackBar2";
             klxPiaoTrackBar2.值显示方式 = KlxPiaoControls.KlxPiaoTrackBar.文字位置.居中;
             klxPiaoTrackBar2.前景色 = Color.Gainsboro;
-            klxPiaoTrackBar2.焦点边框大小 = 2;
             klxPiaoTrackBar2.焦点边框颜色 = Color.FromArgb(128, 128, 255);
             klxPiaoTrackBar2.移入前景色 = Color.LightGray;
             klxPiaoTrackBar2.背景色 = Color.White;
@@ -437,7 +454,6 @@
             klxPiaoTrackBar1.Text = "klxPiaoTrackBar1";
             klxPiaoTrackBar1.值显示方式 = KlxPiaoControls.KlxPiaoTrackBar.文字位置.居中;
             klxPiaoTrackBar1.前景色 = Color.Gainsboro;
-            klxPiaoTrackBar1.焦点边框大小 = 2;
             klxPiaoTrackBar1.焦点边框颜色 = Color.FromArgb(128, 128, 255);
             klxPiaoTrackBar1.移入前景色 = Color.LightGray;
             klxPiaoTrackBar1.背景色 = Color.White;
@@ -850,7 +866,6 @@
             klxPiaoLabel2.投影颜色 = Color.Gray;
             klxPiaoLabel2.抗锯齿 = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             klxPiaoLabel2.文本呈现质量 = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
-            klxPiaoLabel2.边框大小 = 10;
             klxPiaoLabel2.边框颜色 = Color.Gray;
             // 
             // klxPiaoLabel3
@@ -889,10 +904,12 @@
             // klxPiaoPanel8
             // 
             klxPiaoPanel8.BackColor = Color.White;
+            klxPiaoPanel8.Controls.Add(klxPiaoPanel13);
+            klxPiaoPanel8.Controls.Add(klxPiaoPanel12);
+            klxPiaoPanel8.Controls.Add(klxPiaoPanel11);
             klxPiaoPanel8.Controls.Add(klxPiaoLabel31);
             klxPiaoPanel8.Controls.Add(klxPiaoPanel2);
             klxPiaoPanel8.Controls.Add(klxPiaoPanel1);
-            klxPiaoPanel8.Controls.Add(klxPiaoPanel6);
             klxPiaoPanel8.Controls.Add(klxPiaoPanel5);
             klxPiaoPanel8.Controls.Add(klxPiaoPanel4);
             klxPiaoPanel8.Controls.Add(klxPiaoPanel3);
@@ -901,8 +918,44 @@
             klxPiaoPanel8.Size = new Size(570, 377);
             klxPiaoPanel8.TabIndex = 9;
             klxPiaoPanel8.启用投影 = false;
-            klxPiaoPanel8.圆角百分比 = 0F;
+            klxPiaoPanel8.圆角大小 = new KlxPiaoAPI.CornerRadius(0F, 0F, 0F, 0F);
             klxPiaoPanel8.边框大小 = 0;
+            // 
+            // klxPiaoPanel13
+            // 
+            klxPiaoPanel13.BackColor = Color.White;
+            klxPiaoPanel13.Location = new Point(438, 175);
+            klxPiaoPanel13.Name = "klxPiaoPanel13";
+            klxPiaoPanel13.Size = new Size(80, 80);
+            klxPiaoPanel13.TabIndex = 7;
+            klxPiaoPanel13.启用投影 = false;
+            klxPiaoPanel13.圆角大小 = new KlxPiaoAPI.CornerRadius(0.8F, 0F, 0.8F, 0F);
+            klxPiaoPanel13.边框大小 = 10;
+            klxPiaoPanel13.边框颜色 = Color.FromArgb(255, 192, 255);
+            // 
+            // klxPiaoPanel12
+            // 
+            klxPiaoPanel12.BackColor = Color.White;
+            klxPiaoPanel12.Location = new Point(309, 175);
+            klxPiaoPanel12.Name = "klxPiaoPanel12";
+            klxPiaoPanel12.Size = new Size(80, 80);
+            klxPiaoPanel12.TabIndex = 6;
+            klxPiaoPanel12.启用投影 = false;
+            klxPiaoPanel12.圆角大小 = new KlxPiaoAPI.CornerRadius(1F, 0F, 0F, 1F);
+            klxPiaoPanel12.边框大小 = 10;
+            klxPiaoPanel12.边框颜色 = Color.FromArgb(192, 192, 255);
+            // 
+            // klxPiaoPanel11
+            // 
+            klxPiaoPanel11.BackColor = Color.White;
+            klxPiaoPanel11.Location = new Point(180, 175);
+            klxPiaoPanel11.Name = "klxPiaoPanel11";
+            klxPiaoPanel11.Size = new Size(80, 80);
+            klxPiaoPanel11.TabIndex = 5;
+            klxPiaoPanel11.启用投影 = false;
+            klxPiaoPanel11.圆角大小 = new KlxPiaoAPI.CornerRadius(0F, 0.33F, 0.66F, 1F);
+            klxPiaoPanel11.边框大小 = 10;
+            klxPiaoPanel11.边框颜色 = Color.FromArgb(255, 192, 192);
             // 
             // klxPiaoLabel31
             // 
@@ -926,66 +979,53 @@
             klxPiaoPanel2.BackColor = Color.White;
             klxPiaoPanel2.Location = new Point(52, 35);
             klxPiaoPanel2.Name = "klxPiaoPanel2";
-            klxPiaoPanel2.Size = new Size(100, 100);
+            klxPiaoPanel2.Size = new Size(80, 80);
             klxPiaoPanel2.TabIndex = 1;
-            klxPiaoPanel2.圆角百分比 = 0F;
+            klxPiaoPanel2.圆角大小 = new KlxPiaoAPI.CornerRadius(0F, 0F, 0F, 0F);
             // 
             // klxPiaoPanel1
             // 
             klxPiaoPanel1.BackColor = Color.White;
-            klxPiaoPanel1.Location = new Point(235, 35);
+            klxPiaoPanel1.Location = new Point(180, 35);
             klxPiaoPanel1.Name = "klxPiaoPanel1";
-            klxPiaoPanel1.Size = new Size(100, 100);
+            klxPiaoPanel1.Size = new Size(80, 80);
             klxPiaoPanel1.TabIndex = 0;
-            klxPiaoPanel1.圆角百分比 = 0F;
+            klxPiaoPanel1.圆角大小 = new KlxPiaoAPI.CornerRadius(0F, 0F, 0F, 0F);
             klxPiaoPanel1.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
-            // 
-            // klxPiaoPanel6
-            // 
-            klxPiaoPanel6.BackColor = Color.White;
-            klxPiaoPanel6.Location = new Point(235, 192);
-            klxPiaoPanel6.Name = "klxPiaoPanel6";
-            klxPiaoPanel6.Size = new Size(100, 100);
-            klxPiaoPanel6.TabIndex = 3;
-            klxPiaoPanel6.启用投影 = false;
-            klxPiaoPanel6.圆角百分比 = 0.5F;
-            klxPiaoPanel6.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
-            klxPiaoPanel6.边框大小 = 15;
-            klxPiaoPanel6.边框颜色 = Color.FromArgb(192, 192, 255);
             // 
             // klxPiaoPanel5
             // 
             klxPiaoPanel5.BackColor = Color.White;
-            klxPiaoPanel5.Location = new Point(52, 192);
+            klxPiaoPanel5.Location = new Point(52, 175);
             klxPiaoPanel5.Name = "klxPiaoPanel5";
-            klxPiaoPanel5.Size = new Size(100, 100);
+            klxPiaoPanel5.Size = new Size(80, 80);
             klxPiaoPanel5.TabIndex = 4;
             klxPiaoPanel5.启用投影 = false;
-            klxPiaoPanel5.圆角百分比 = 1F;
-            klxPiaoPanel5.边框大小 = 20;
+            klxPiaoPanel5.圆角大小 = new KlxPiaoAPI.CornerRadius(0F, 1F, 1F, 1F);
+            klxPiaoPanel5.边框大小 = 10;
             klxPiaoPanel5.边框颜色 = Color.FromArgb(192, 255, 192);
             // 
             // klxPiaoPanel4
             // 
             klxPiaoPanel4.BackColor = Color.White;
-            klxPiaoPanel4.Location = new Point(418, 192);
+            klxPiaoPanel4.Location = new Point(438, 35);
             klxPiaoPanel4.Name = "klxPiaoPanel4";
-            klxPiaoPanel4.Size = new Size(100, 100);
+            klxPiaoPanel4.Size = new Size(80, 80);
             klxPiaoPanel4.TabIndex = 5;
             klxPiaoPanel4.启用投影 = false;
-            klxPiaoPanel4.圆角百分比 = 0F;
+            klxPiaoPanel4.圆角大小 = new KlxPiaoAPI.CornerRadius(0F, 0F, 0F, 0F);
             klxPiaoPanel4.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下;
-            klxPiaoPanel4.边框大小 = 10;
+            klxPiaoPanel4.边框大小 = 5;
             klxPiaoPanel4.边框颜色 = Color.FromArgb(255, 255, 192);
             // 
             // klxPiaoPanel3
             // 
             klxPiaoPanel3.BackColor = Color.White;
-            klxPiaoPanel3.Location = new Point(418, 35);
+            klxPiaoPanel3.Location = new Point(309, 35);
             klxPiaoPanel3.Name = "klxPiaoPanel3";
-            klxPiaoPanel3.Size = new Size(100, 100);
+            klxPiaoPanel3.Size = new Size(80, 80);
             klxPiaoPanel3.TabIndex = 2;
-            klxPiaoPanel3.圆角百分比 = 0F;
+            klxPiaoPanel3.圆角大小 = new KlxPiaoAPI.CornerRadius(0F, 0F, 0F, 0F);
             klxPiaoPanel3.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下;
             // 
             // tabPage9
@@ -1077,6 +1117,7 @@
             Pic_BorderTrackBar.Size = new Size(222, 10);
             Pic_BorderTrackBar.TabIndex = 2;
             Pic_BorderTrackBar.Text = "klxPiaoTrackBar6";
+            Pic_BorderTrackBar.最大值 = 50F;
             // 
             // klxPiaoPictureBox1
             // 
@@ -1088,7 +1129,7 @@
             klxPiaoPictureBox1.TabStop = false;
             klxPiaoPictureBox1.启用边框 = true;
             klxPiaoPictureBox1.圆角百分比 = 0.36F;
-            klxPiaoPictureBox1.边框大小 = 16;
+            klxPiaoPictureBox1.边框大小 = 8;
             klxPiaoPictureBox1.边框颜色 = Color.LightPink;
             // 
             // tabPage10
@@ -1311,6 +1352,7 @@
             // tabPage13
             // 
             tabPage13.BackColor = Color.White;
+            tabPage13.Controls.Add(控件动画Panel);
             tabPage13.Controls.Add(checkBox8);
             tabPage13.Controls.Add(textBox18);
             tabPage13.Controls.Add(label15);
@@ -1320,7 +1362,6 @@
             tabPage13.Controls.Add(大小过渡Check);
             tabPage13.Controls.Add(位置过渡Check);
             tabPage13.Controls.Add(停止But);
-            tabPage13.Controls.Add(控件动画Panel);
             tabPage13.Controls.Add(klxPiaoButton8);
             tabPage13.Controls.Add(klxPiaoButton7);
             tabPage13.Controls.Add(label14);
@@ -1334,6 +1375,19 @@
             tabPage13.Size = new Size(582, 389);
             tabPage13.TabIndex = 0;
             tabPage13.Text = "控件";
+            // 
+            // 控件动画Panel
+            // 
+            控件动画Panel.BackColor = Color.FromArgb(192, 192, 255);
+            控件动画Panel.Cursor = Cursors.Hand;
+            控件动画Panel.Location = new Point(24, 271);
+            控件动画Panel.Name = "控件动画Panel";
+            控件动画Panel.Size = new Size(70, 70);
+            控件动画Panel.TabIndex = 27;
+            控件动画Panel.启用投影 = false;
+            控件动画Panel.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
+            控件动画Panel.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
+            控件动画Panel.投影长度 = 6;
             // 
             // checkBox8
             // 
@@ -1382,7 +1436,6 @@
             klxPiaoTrackBar12.最小值 = 50F;
             klxPiaoTrackBar12.前景色 = Color.Gainsboro;
             klxPiaoTrackBar12.增减大小 = 50F;
-            klxPiaoTrackBar12.焦点边框大小 = 2;
             klxPiaoTrackBar12.焦点边框颜色 = Color.FromArgb(128, 128, 255);
             klxPiaoTrackBar12.移入前景色 = Color.LightGray;
             klxPiaoTrackBar12.背景色 = Color.White;
@@ -1454,20 +1507,6 @@
             停止But.UseVisualStyleBackColor = true;
             停止But.Click += 停止But_Click;
             // 
-            // 控件动画Panel
-            // 
-            控件动画Panel.BackColor = Color.FromArgb(192, 192, 255);
-            控件动画Panel.Cursor = Cursors.Hand;
-            控件动画Panel.Location = new Point(24, 271);
-            控件动画Panel.Name = "控件动画Panel";
-            控件动画Panel.Size = new Size(70, 70);
-            控件动画Panel.TabIndex = 27;
-            控件动画Panel.启用投影 = false;
-            控件动画Panel.圆角百分比 = 0.36F;
-            控件动画Panel.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
-            控件动画Panel.投影长度 = 6;
-            控件动画Panel.边框大小 = 2;
-            // 
             // klxPiaoButton8
             // 
             klxPiaoButton8.FlatAppearance.BorderColor = Color.Gainsboro;
@@ -1520,7 +1559,6 @@
             klxPiaoTrackBar11.最小值 = 0.001F;
             klxPiaoTrackBar11.前景色 = Color.Gainsboro;
             klxPiaoTrackBar11.增减大小 = 0.001F;
-            klxPiaoTrackBar11.焦点边框大小 = 2;
             klxPiaoTrackBar11.焦点边框颜色 = Color.FromArgb(128, 128, 255);
             klxPiaoTrackBar11.移入前景色 = Color.LightGray;
             klxPiaoTrackBar11.背景色 = Color.White;
@@ -1633,7 +1671,7 @@
             klxPiaoPanel10.Name = "klxPiaoPanel10";
             klxPiaoPanel10.Size = new Size(176, 337);
             klxPiaoPanel10.TabIndex = 23;
-            klxPiaoPanel10.圆角百分比 = 0F;
+            klxPiaoPanel10.圆角大小 = new KlxPiaoAPI.CornerRadius(0F, 0F, 0F, 0F);
             // 
             // klxPiaoPanel9
             // 
@@ -1650,7 +1688,7 @@
             klxPiaoPanel9.Name = "klxPiaoPanel9";
             klxPiaoPanel9.Size = new Size(478, 115);
             klxPiaoPanel9.TabIndex = 22;
-            klxPiaoPanel9.圆角百分比 = 0F;
+            klxPiaoPanel9.圆角大小 = new KlxPiaoAPI.CornerRadius(0F, 0F, 0F, 0F);
             // 
             // klxPiaoTrackBar4
             // 
@@ -1666,7 +1704,6 @@
             klxPiaoTrackBar4.最小值 = -0.99F;
             klxPiaoTrackBar4.前景色 = Color.Gainsboro;
             klxPiaoTrackBar4.增减大小 = 0.01F;
-            klxPiaoTrackBar4.焦点边框大小 = 2;
             klxPiaoTrackBar4.焦点边框颜色 = Color.FromArgb(128, 128, 255);
             klxPiaoTrackBar4.移入前景色 = Color.LightGray;
             klxPiaoTrackBar4.背景色 = Color.White;
@@ -1694,8 +1731,7 @@
             Show_按钮按下.Size = new Size(50, 50);
             Show_按钮按下.TabIndex = 20;
             Show_按钮按下.启用投影 = false;
-            Show_按钮按下.圆角百分比 = 0.36F;
-            Show_按钮按下.边框大小 = 2;
+            Show_按钮按下.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             // 
             // klxPiaoLabel13
             // 
@@ -1729,9 +1765,8 @@
             Show_按钮背景.Size = new Size(50, 50);
             Show_按钮背景.TabIndex = 16;
             Show_按钮背景.启用投影 = false;
-            Show_按钮背景.圆角百分比 = 0.36F;
+            Show_按钮背景.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             Show_按钮背景.投影长度 = 6;
-            Show_按钮背景.边框大小 = 2;
             Show_按钮背景.Paint += Show_按钮背景_Paint;
             // 
             // Show_按钮移入
@@ -1742,9 +1777,8 @@
             Show_按钮移入.Size = new Size(50, 50);
             Show_按钮移入.TabIndex = 18;
             Show_按钮移入.启用投影 = false;
-            Show_按钮移入.圆角百分比 = 0.36F;
+            Show_按钮移入.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             Show_按钮移入.投影长度 = 6;
-            Show_按钮移入.边框大小 = 2;
             // 
             // klxPiaoLabel15
             // 
@@ -1801,7 +1835,7 @@
             klxPiaoPanel7.Name = "klxPiaoPanel7";
             klxPiaoPanel7.Size = new Size(478, 216);
             klxPiaoPanel7.TabIndex = 13;
-            klxPiaoPanel7.圆角百分比 = 0F;
+            klxPiaoPanel7.圆角大小 = new KlxPiaoAPI.CornerRadius(0F, 0F, 0F, 0F);
             // 
             // klxPiaoLabel4
             // 
@@ -1836,10 +1870,9 @@
             Edit_标题框背景色.Size = new Size(50, 50);
             Edit_标题框背景色.TabIndex = 1;
             Edit_标题框背景色.启用投影 = false;
-            Edit_标题框背景色.圆角百分比 = 0.36F;
+            Edit_标题框背景色.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             Edit_标题框背景色.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
             Edit_标题框背景色.投影长度 = 6;
-            Edit_标题框背景色.边框大小 = 2;
             // 
             // Edit_未激活边框颜色
             // 
@@ -1850,10 +1883,9 @@
             Edit_未激活边框颜色.Size = new Size(50, 50);
             Edit_未激活边框颜色.TabIndex = 11;
             Edit_未激活边框颜色.启用投影 = false;
-            Edit_未激活边框颜色.圆角百分比 = 0.36F;
+            Edit_未激活边框颜色.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             Edit_未激活边框颜色.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
             Edit_未激活边框颜色.投影长度 = 6;
-            Edit_未激活边框颜色.边框大小 = 2;
             // 
             // Edit_标题框前景色
             // 
@@ -1864,10 +1896,9 @@
             Edit_标题框前景色.Size = new Size(50, 50);
             Edit_标题框前景色.TabIndex = 3;
             Edit_标题框前景色.启用投影 = false;
-            Edit_标题框前景色.圆角百分比 = 0.36F;
+            Edit_标题框前景色.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             Edit_标题框前景色.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
             Edit_标题框前景色.投影长度 = 6;
-            Edit_标题框前景色.边框大小 = 2;
             // 
             // klxPiaoLabel9
             // 
@@ -1902,10 +1933,9 @@
             Edit_未激活标题框前景色.Size = new Size(50, 50);
             Edit_未激活标题框前景色.TabIndex = 9;
             Edit_未激活标题框前景色.启用投影 = false;
-            Edit_未激活标题框前景色.圆角百分比 = 0.36F;
+            Edit_未激活标题框前景色.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             Edit_未激活标题框前景色.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
             Edit_未激活标题框前景色.投影长度 = 6;
-            Edit_未激活标题框前景色.边框大小 = 2;
             // 
             // Edit_边框颜色
             // 
@@ -1916,10 +1946,9 @@
             Edit_边框颜色.Size = new Size(50, 50);
             Edit_边框颜色.TabIndex = 5;
             Edit_边框颜色.启用投影 = false;
-            Edit_边框颜色.圆角百分比 = 0.36F;
+            Edit_边框颜色.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             Edit_边框颜色.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
             Edit_边框颜色.投影长度 = 6;
-            Edit_边框颜色.边框大小 = 2;
             // 
             // klxPiaoLabel10
             // 
@@ -1954,10 +1983,9 @@
             Edit_未激活标题框背景色.Size = new Size(50, 50);
             Edit_未激活标题框背景色.TabIndex = 7;
             Edit_未激活标题框背景色.启用投影 = false;
-            Edit_未激活标题框背景色.圆角百分比 = 0.36F;
+            Edit_未激活标题框背景色.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             Edit_未激活标题框背景色.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
             Edit_未激活标题框背景色.投影长度 = 6;
-            Edit_未激活标题框背景色.边框大小 = 2;
             // 
             // tabPage5
             // 
@@ -2275,6 +2303,164 @@
             klxPiaoButton4.UseVisualStyleBackColor = true;
             klxPiaoButton4.Click += KlxPiaoButton4_Click;
             // 
+            // tabPage15
+            // 
+            tabPage15.BackColor = Color.White;
+            tabPage15.Controls.Add(label23);
+            tabPage15.Controls.Add(label21);
+            tabPage15.Controls.Add(textBox25);
+            tabPage15.Controls.Add(textBox23);
+            tabPage15.Controls.Add(klxPiaoButton9);
+            tabPage15.Controls.Add(label20);
+            tabPage15.Controls.Add(成员列表Text);
+            tabPage15.Controls.Add(label22);
+            tabPage15.Controls.Add(转换器名称Text);
+            tabPage15.Controls.Add(label19);
+            tabPage15.Controls.Add(结构成员类型Text);
+            tabPage15.Controls.Add(label18);
+            tabPage15.Controls.Add(结构名称Text);
+            tabPage15.Controls.Add(label17);
+            tabPage15.Controls.Add(命名空间Text);
+            tabPage15.Location = new Point(4, 26);
+            tabPage15.Name = "tabPage15";
+            tabPage15.Padding = new Padding(3);
+            tabPage15.Size = new Size(697, 409);
+            tabPage15.TabIndex = 6;
+            tabPage15.Text = "简单转换器代码生成器";
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Location = new Point(462, 28);
+            label23.Name = "label23";
+            label23.Size = new Size(68, 17);
+            label23.TabIndex = 14;
+            label23.Text = "转换器标题";
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Location = new Point(239, 28);
+            label21.Name = "label21";
+            label21.Size = new Size(56, 17);
+            label21.TabIndex = 13;
+            label21.Text = "文件标题";
+            // 
+            // textBox25
+            // 
+            textBox25.Location = new Point(462, 57);
+            textBox25.Multiline = true;
+            textBox25.Name = "textBox25";
+            textBox25.ScrollBars = ScrollBars.Vertical;
+            textBox25.Size = new Size(206, 325);
+            textBox25.TabIndex = 12;
+            textBox25.WordWrap = false;
+            // 
+            // textBox23
+            // 
+            textBox23.Location = new Point(239, 57);
+            textBox23.Multiline = true;
+            textBox23.Name = "textBox23";
+            textBox23.ScrollBars = ScrollBars.Vertical;
+            textBox23.Size = new Size(206, 325);
+            textBox23.TabIndex = 11;
+            textBox23.WordWrap = false;
+            // 
+            // klxPiaoButton9
+            // 
+            klxPiaoButton9.FlatAppearance.BorderColor = Color.Gainsboro;
+            klxPiaoButton9.FlatAppearance.MouseDownBackColor = Color.FromArgb(230, 230, 230);
+            klxPiaoButton9.FlatAppearance.MouseOverBackColor = Color.FromArgb(240, 240, 240);
+            klxPiaoButton9.FlatStyle = FlatStyle.Flat;
+            klxPiaoButton9.Location = new Point(33, 342);
+            klxPiaoButton9.Name = "klxPiaoButton9";
+            klxPiaoButton9.Size = new Size(186, 40);
+            klxPiaoButton9.TabIndex = 10;
+            klxPiaoButton9.Text = "生成代码";
+            klxPiaoButton9.UseVisualStyleBackColor = true;
+            klxPiaoButton9.Click += KlxPiaoButton9_Click;
+            // 
+            // label20
+            // 
+            label20.Location = new Point(6, 141);
+            label20.Name = "label20";
+            label20.Size = new Size(89, 23);
+            label20.TabIndex = 9;
+            label20.Text = "成员列表";
+            label20.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // 成员列表Text
+            // 
+            成员列表Text.Location = new Point(101, 141);
+            成员列表Text.Multiline = true;
+            成员列表Text.Name = "成员列表Text";
+            成员列表Text.Size = new Size(118, 195);
+            成员列表Text.TabIndex = 8;
+            // 
+            // label22
+            // 
+            label22.Location = new Point(6, 112);
+            label22.Name = "label22";
+            label22.Size = new Size(89, 23);
+            label22.TabIndex = 7;
+            label22.Text = "转换器名称";
+            label22.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // 转换器名称Text
+            // 
+            转换器名称Text.Location = new Point(101, 112);
+            转换器名称Text.Name = "转换器名称Text";
+            转换器名称Text.Size = new Size(118, 23);
+            转换器名称Text.TabIndex = 6;
+            // 
+            // label19
+            // 
+            label19.Location = new Point(6, 86);
+            label19.Name = "label19";
+            label19.Size = new Size(89, 17);
+            label19.TabIndex = 5;
+            label19.Text = "结构成员类型";
+            label19.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // 结构成员类型Text
+            // 
+            结构成员类型Text.Location = new Point(101, 83);
+            结构成员类型Text.Name = "结构成员类型Text";
+            结构成员类型Text.Size = new Size(118, 23);
+            结构成员类型Text.TabIndex = 4;
+            // 
+            // label18
+            // 
+            label18.Location = new Point(6, 57);
+            label18.Name = "label18";
+            label18.Size = new Size(89, 17);
+            label18.TabIndex = 3;
+            label18.Text = "结构名称";
+            label18.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // 结构名称Text
+            // 
+            结构名称Text.Location = new Point(101, 54);
+            结构名称Text.Name = "结构名称Text";
+            结构名称Text.Size = new Size(118, 23);
+            结构名称Text.TabIndex = 2;
+            // 
+            // label17
+            // 
+            label17.Location = new Point(6, 25);
+            label17.Name = "label17";
+            label17.Size = new Size(89, 23);
+            label17.TabIndex = 1;
+            label17.Text = "命名空间";
+            label17.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // 命名空间Text
+            // 
+            命名空间Text.Location = new Point(101, 25);
+            命名空间Text.Name = "命名空间Text";
+            命名空间Text.Size = new Size(118, 23);
+            命名空间Text.TabIndex = 0;
+            // 
             // 主窗体
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -2325,6 +2511,8 @@
             tabPage8.PerformLayout();
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
+            tabPage15.ResumeLayout(false);
+            tabPage15.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -2350,7 +2538,6 @@
         private KlxPiaoControls.KlxPiaoPanel klxPiaoPanel4;
         private KlxPiaoControls.KlxPiaoPanel klxPiaoPanel3;
         private KlxPiaoControls.KlxPiaoPanel klxPiaoPanel5;
-        private KlxPiaoControls.KlxPiaoPanel klxPiaoPanel6;
         private KlxPiaoControls.KlxPiaoPanel klxPiaoPanel2;
         private GroupBox groupBox1;
         private ComboBox comboBox1;
@@ -2480,7 +2667,6 @@
         private CheckBox checkBox9;
         private KlxPiaoControls.KlxPiaoButton klxPiaoButton8;
         private KlxPiaoControls.KlxPiaoButton klxPiaoButton7;
-        private KlxPiaoControls.KlxPiaoPanel 控件动画Panel;
         private KlxPiaoControls.KlxPiaoButton 停止But;
         private CheckBox 位置过渡Check;
         private KlxPiaoControls.KlxPiaoButton 播放But;
@@ -2491,5 +2677,25 @@
         private KlxPiaoControls.KlxPiaoTrackBar klxPiaoTrackBar12;
         private CheckBox checkBox8;
         private Label label16;
+        private TabPage tabPage15;
+        private Label label17;
+        private TextBox 命名空间Text;
+        private Label label18;
+        private TextBox 结构名称Text;
+        private Label label19;
+        private TextBox 结构成员类型Text;
+        private Label label22;
+        private TextBox 转换器名称Text;
+        private Label label20;
+        private TextBox 成员列表Text;
+        private TextBox textBox25;
+        private TextBox textBox23;
+        private KlxPiaoControls.KlxPiaoButton klxPiaoButton9;
+        private Label label23;
+        private Label label21;
+        private KlxPiaoControls.KlxPiaoPanel 控件动画Panel;
+        private KlxPiaoControls.KlxPiaoPanel klxPiaoPanel12;
+        private KlxPiaoControls.KlxPiaoPanel klxPiaoPanel11;
+        private KlxPiaoControls.KlxPiaoPanel klxPiaoPanel13;
     }
 }

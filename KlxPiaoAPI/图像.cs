@@ -5,6 +5,8 @@ namespace KlxPiaoAPI
 {
     public class 图像
     {
+        //参考自DYLIKE
+
         /// <summary>
         /// 替换图像中所有指定颜色的像素。
         /// </summary>

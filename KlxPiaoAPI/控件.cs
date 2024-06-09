@@ -3,7 +3,7 @@ using static KlxPiaoAPI.类型;
 
 namespace KlxPiaoAPI
 {
-    public class 控件
+    public static class 控件
     {
         /// <summary>
         /// 遍历指定容器中的控件，并对匹配的控件执行指定的操作。
@@ -11,7 +11,7 @@ namespace KlxPiaoAPI
         /// <typeparam name="T">要匹配的控件类型。</typeparam>
         /// <param name="container">要遍历的控件容器。</param>
         /// <param name="action">匹配成功时要执行的操作。</param>
-        public static void 遍历<T>(Control container, Action<T> action) where T : Control
+        public static void 遍历<T>(this Control container, Action<T> action) where T : Control
         {
             ArgumentNullException.ThrowIfNull(container);
             ArgumentNullException.ThrowIfNull(action);
@@ -35,7 +35,7 @@ namespace KlxPiaoAPI
         /// <param name="control">要设置属性的控件。</param>
         /// <param name="propertyName">属性名称。</param>
         /// <param name="value">要设置的值。</param>
-        public static void 设置属性(Control control, string propertyName, object value)
+        public static void 设置属性(this Control control, string propertyName, object value)
         {
             ArgumentNullException.ThrowIfNull(control);
 
@@ -65,7 +65,7 @@ namespace KlxPiaoAPI
         /// </summary>
         /// <param name="control">要获取属性的控件。</param>
         /// <param name="propertyName">属性名称。</param>
-        public static object? 读取属性(Control control, string propertyName)
+        public static object? 读取属性(this Control control, string propertyName)
         {
             ArgumentNullException.ThrowIfNull(control);
             if (string.IsNullOrEmpty(propertyName))
@@ -102,7 +102,7 @@ namespace KlxPiaoAPI
         /// <param name="持续时间">动画持续的时间（以毫秒为单位）</param>
         /// <param name="控制点">贝塞尔曲线的控制点数组，留空时缓动效果为Linear</param>
         /// <param name="帧率">动画的帧率</param>
-        public static async Task 贝塞尔过渡动画(Control 控件, string 属性, object? 开始值, object 结束值, int 持续时间, PointF[]? 控制点, int 帧率 = 100)
+        public static async Task 贝塞尔过渡动画(this Control 控件, string 属性, object? 开始值, object 结束值, int 持续时间, PointF[]? 控制点, int 帧率 = 100)
         {
             DateTime 启动时间 = DateTime.Now;
             TimeSpan 总时长 = TimeSpan.FromMilliseconds(持续时间);
@@ -128,7 +128,7 @@ namespace KlxPiaoAPI
                 if (时间进度 >= 1.0)
                 {
                     状态 = true;
-                    控件.Invoke(() => 设置属性(控件, 属性, 结束值));
+                    控件.Invoke(() => 控件.设置属性(属性, 结束值));
                 }
                 else
                 {
@@ -154,7 +154,7 @@ namespace KlxPiaoAPI
         /// <param name="自定义曲线表达式">动画的帧率</param>
         /// <param name="帧率"></param>
         /// <returns></returns>
-        public static async Task 自定义过渡动画(Control 控件, string 属性, object? 开始值, object 结束值, int 持续时间, 自定义函数 自定义曲线表达式, int 帧率 = 100)
+        public static async Task 自定义过渡动画(this Control 控件, string 属性, object? 开始值, object 结束值, int 持续时间, 自定义函数 自定义曲线表达式, int 帧率 = 100)
         {
             DateTime 启动时间 = DateTime.Now;
             TimeSpan 总时长 = TimeSpan.FromMilliseconds(持续时间);
@@ -179,7 +179,7 @@ namespace KlxPiaoAPI
                 if (时间进度 >= 1.0)
                 {
                     状态 = true;
-                    控件.Invoke(() => 设置属性(控件, 属性, 结束值));
+                    控件.Invoke(() => 控件.设置属性(属性, 结束值));
                 }
                 else
                 {

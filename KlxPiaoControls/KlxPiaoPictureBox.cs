@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using KlxPiaoAPI;
+using System.ComponentModel;
 using System.Drawing.Drawing2D;
 
 namespace KlxPiaoControls
@@ -60,7 +61,14 @@ namespace KlxPiaoControls
         public float 圆角百分比
         {
             get { return _圆角百分比; }
-            set { _圆角百分比 = value; Invalidate(); }
+            set
+            {
+                if (value < 0 || value > 1)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(圆角百分比), "圆角的百分比必须在0和1之间");
+                }
+                _圆角百分比 = value; Invalidate();
+            }
         }
         [Category("KlxPiaoPictureBox外观")]
         [Description("边框的大小，为0时隐藏边框")]
@@ -89,63 +97,10 @@ namespace KlxPiaoControls
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-                Rectangle 区域 = new(0, 0, Width, Height);
-                SizeF 圆角区域;
-                switch (区域.Width - 区域.Height)
+                if (启用边框)
                 {
-                    case 0:
-                        圆角区域 = new SizeF(区域.Width * 圆角百分比, 区域.Height * 圆角百分比);
-                        break;
-                    case < 0:
-                        圆角区域 = new SizeF(区域.Width * 圆角百分比, 区域.Width * 圆角百分比);
-                        break;
-                    case > 0:
-                        圆角区域 = new SizeF(区域.Height * 圆角百分比, 区域.Height * 圆角百分比);
-                        break;
-                }
-                PointF 圆角区域1 = new(区域.X, 区域.Y);
-                PointF 圆角区域2 = new(区域.Width - 圆角区域.Width, 区域.Y);
-                PointF 圆角区域3 = new(区域.Width - 圆角区域.Width, 区域.Height - 圆角区域.Height);
-                PointF 圆角区域4 = new(区域.X, 区域.Height - 圆角区域.Height);
-                if (边框大小 != 0 && 启用边框)
-                {
-                    GraphicsPath 边框 = new();
-                    if (圆角百分比 != 0)
-                    {
-                        边框.AddArc(new RectangleF(圆角区域1, 圆角区域), 180, 90);
-                        边框.AddArc(new RectangleF(圆角区域2, 圆角区域), 270, 90);
-                        边框.AddArc(new RectangleF(圆角区域3, 圆角区域), 0, 90);
-                        边框.AddArc(new RectangleF(圆角区域4, 圆角区域), 90, 90);
-                    }
-                    else
-                    {
-                        边框.AddRectangle(区域);
-                    }
-                    边框.CloseFigure();
-
-                    g.DrawPath(new Pen(边框颜色, 边框大小), 边框);
-                }
-                if (圆角百分比 != 0)
-                {
-                    GraphicsPath 圆角 = new();
-                    // 左上角
-                    圆角.AddArc(new RectangleF(圆角区域1, 圆角区域), 180, 90);
-                    圆角.AddLine(圆角区域1, new PointF(圆角区域1.X, 圆角区域1.Y + 圆角区域.Height / 2));
-                    圆角.CloseFigure();
-                    // 右上角
-                    圆角.AddArc(new RectangleF(圆角区域2, 圆角区域), 270, 90);
-                    圆角.AddLine(new PointF(圆角区域2.X + 圆角区域.Width, 圆角区域2.Y), 圆角区域2);
-                    圆角.CloseFigure();
-                    // 右下角
-                    圆角.AddArc(new RectangleF(圆角区域3, 圆角区域), 0, 90);
-                    圆角.AddLine(new PointF(圆角区域3.X + 圆角区域.Width, 圆角区域3.Y + 圆角区域.Height), new PointF(圆角区域3.X + 圆角区域.Width, 圆角区域3.Y));
-                    圆角.CloseFigure();
-                    // 左下角
-                    圆角.AddArc(new RectangleF(圆角区域4, 圆角区域), 90, 90);
-                    圆角.AddLine(new PointF(圆角区域4.X, 圆角区域4.Y + 圆角区域.Height), new PointF(圆角区域4.X + 圆角区域.Width, 圆角区域4.Y + 圆角区域.Height));
-                    圆角.CloseFigure();
-
-                    g.FillPath(new SolidBrush(边框外部颜色), 圆角);
+                    Rectangle 区域 = new(0, 0, Width, Height);
+                    g.绘制圆角(区域, new CornerRadius(圆角百分比), 边框外部颜色, new Pen(边框颜色, 边框大小));
                 }
             }
         }

@@ -16,7 +16,7 @@ namespace KlxPiaoControls
                 var plusSymbolIndex = versionStr.IndexOf('+');
                 if (plusSymbolIndex != -1)
                 {
-                    versionStr = versionStr.Substring(0, plusSymbolIndex);
+                    versionStr = versionStr[..plusSymbolIndex];
                 }
 
                 return versionStr;

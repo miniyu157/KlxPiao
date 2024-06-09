@@ -137,10 +137,9 @@
             边框外部Panel.Size = new Size(50, 50);
             边框外部Panel.TabIndex = 24;
             边框外部Panel.启用投影 = false;
-            边框外部Panel.圆角百分比 = 0.36F;
+            边框外部Panel.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             边框外部Panel.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
             边框外部Panel.投影长度 = 6;
-            边框外部Panel.边框大小 = 2;
             // 
             // 边框颜色Panel
             // 
@@ -151,10 +150,9 @@
             边框颜色Panel.Size = new Size(50, 50);
             边框颜色Panel.TabIndex = 23;
             边框颜色Panel.启用投影 = false;
-            边框颜色Panel.圆角百分比 = 0.36F;
+            边框颜色Panel.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             边框颜色Panel.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
             边框颜色Panel.投影长度 = 6;
-            边框颜色Panel.边框大小 = 2;
             // 
             // label9
             // 
@@ -183,7 +181,6 @@
             圆角Track.值显示方式 = KlxPiaoControls.KlxPiaoTrackBar.文字位置.居中;
             圆角Track.值显示格式 = "{value}%";
             圆角Track.前景色 = Color.Gainsboro;
-            圆角Track.焦点边框大小 = 2;
             圆角Track.焦点边框颜色 = Color.FromArgb(128, 128, 255);
             圆角Track.移入前景色 = Color.LightGray;
             圆角Track.背景色 = Color.White;
@@ -200,7 +197,6 @@
             边框Track.Text = "klxPiaoTrackBar1";
             边框Track.值显示方式 = KlxPiaoControls.KlxPiaoTrackBar.文字位置.居中;
             边框Track.前景色 = Color.Gainsboro;
-            边框Track.焦点边框大小 = 2;
             边框Track.焦点边框颜色 = Color.FromArgb(128, 128, 255);
             边框Track.移入前景色 = Color.LightGray;
             边框Track.背景色 = Color.White;
@@ -283,10 +279,9 @@
             前景Panel.Size = new Size(50, 50);
             前景Panel.TabIndex = 24;
             前景Panel.启用投影 = false;
-            前景Panel.圆角百分比 = 0.36F;
+            前景Panel.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             前景Panel.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
             前景Panel.投影长度 = 6;
-            前景Panel.边框大小 = 2;
             // 
             // 背景Panel
             // 
@@ -297,10 +292,9 @@
             背景Panel.Size = new Size(50, 50);
             背景Panel.TabIndex = 23;
             背景Panel.启用投影 = false;
-            背景Panel.圆角百分比 = 0.36F;
+            背景Panel.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             背景Panel.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
             背景Panel.投影长度 = 6;
-            背景Panel.边框大小 = 2;
             // 
             // label1
             // 
@@ -332,7 +326,6 @@
             字号Track.值显示方式 = KlxPiaoControls.KlxPiaoTrackBar.文字位置.居中;
             字号Track.最小值 = 1F;
             字号Track.前景色 = Color.Gainsboro;
-            字号Track.焦点边框大小 = 2;
             字号Track.焦点边框颜色 = Color.FromArgb(128, 128, 255);
             字号Track.移入前景色 = Color.LightGray;
             字号Track.背景色 = Color.White;
@@ -388,10 +381,9 @@
             投影颜色Panel.Size = new Size(50, 50);
             投影颜色Panel.TabIndex = 28;
             投影颜色Panel.启用投影 = false;
-            投影颜色Panel.圆角百分比 = 0.36F;
+            投影颜色Panel.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             投影颜色Panel.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
             投影颜色Panel.投影长度 = 6;
-            投影颜色Panel.边框大小 = 2;
             // 
             // 高质量Check
             // 

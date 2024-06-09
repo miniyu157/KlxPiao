@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using KlxPiaoAPI;
+using System.ComponentModel;
 using System.Drawing.Drawing2D;
 
 namespace KlxPiaoControls
@@ -53,6 +54,7 @@ namespace KlxPiaoControls
         private int _边框大小;
         private Color _边框颜色;
         private 文字位置 _值显示方式;
+        private float _圆角大小;
 
         private int _值显示边距;
         private Color _焦点边框颜色;
@@ -83,6 +85,7 @@ namespace KlxPiaoControls
             _边框颜色 = Color.FromArgb(0, 210, 212);
             _值显示方式 = 文字位置.不显示;
             _值显示边距 = 0;
+            _圆角大小 = 1;
 
             _焦点边框颜色 = Color.Transparent;
             _焦点边框大小 = -1;
@@ -161,6 +164,23 @@ namespace KlxPiaoControls
         {
             get { return _值显示边距; }
             set { _值显示边距 = value; Invalidate(); }
+        }
+        [Category("KlxPiaoTrackBar外观")]
+        [Description("圆角的百分比，范围在0-1之间")]
+        [DefaultValue(1F)]
+        public float 圆角大小
+        {
+            get { return _圆角大小; }
+            set
+            {
+                if (value < 0 || value > 1)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(圆角大小), "圆角的百分比必须在0和1之间");
+                }
+
+                _圆角大小 = value;
+                Invalidate();
+            }
         }
         #endregion
 
@@ -325,13 +345,6 @@ namespace KlxPiaoControls
             get { return base.Text; }
             set { base.Text = value; Invalidate(); }
         }
-
-        private Rectangle 工作矩形;
-        private void 重置工作矩形()
-        {
-            工作矩形 = new Rectangle(0, 0, Width - 1, Height + 1);
-        }
-
         protected override void OnPaint(PaintEventArgs pe)
         {
             base.OnPaint(pe);
@@ -343,76 +356,35 @@ namespace KlxPiaoControls
 
             g.SmoothingMode = SmoothingMode.HighQuality;
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            g.Clear(背景色);
 
-            #region 绘制前景和背景
-            重置工作矩形();
+            Rectangle 工作矩形 = new(0, 0, Width, Height);
 
-            float 百分比位置;
             if (!(正在拖动 || 正在滚动 || 正在按键))
-            {
                 绘制百分比 = (值 - 最小值) / (最大值 - 最小值);
-            }
 
-            百分比位置 = 工作矩形.Width * (float)绘制百分比;
-
-            GraphicsPath 左半边 = new();
-            左半边.AddArc(工作矩形.X, 工作矩形.Y, 工作矩形.Height, 工作矩形.Height, 90, 180);
-            左半边.AddLine(百分比位置, 工作矩形.Y, 百分比位置, 工作矩形.Height);
-
-            GraphicsPath 右半边 = new();
-            右半边.AddArc(工作矩形.Width - 工作矩形.Height, 工作矩形.Y, 工作矩形.Height, 工作矩形.Height, -90, 180);
-            右半边.AddLine(百分比位置, 工作矩形.Height, 百分比位置, 工作矩形.Y);
-
-            g.FillPath(new SolidBrush(背景色), 右半边);
-            g.FillPath(new SolidBrush(前景色), 左半边);
-            #endregion
-
-            // 绘制边框一层
-            if (边框大小 != 0)
+            //绘制边框
+            float 百分比位置 = 工作矩形.Width * 绘制百分比;
+            g.绘制圆角(new Rectangle(0, 0, (int)百分比位置, Height), new CornerRadius
             {
-                GraphicsPath 边框Path = new();
-                int 遮罩厚度 = Height % 2 == 0 ? Height : Height + 1;
-                重置工作矩形();
+                TopLeft = 圆角大小,
+                TopRight = 0,
+                BottomLeft = 圆角大小,
+                BottomRight = 0
+            }, Color.Empty, new SolidBrush(前景色));
 
-                工作矩形.X -= 遮罩厚度 / 2;
-                工作矩形.Y -= 遮罩厚度 / 2;
-                工作矩形.Width += 遮罩厚度 / 2;
-                工作矩形.Height += 遮罩厚度 - 1;
-
-                边框Path.AddArc(new Rectangle(工作矩形.X, 工作矩形.Y, 工作矩形.Height, 工作矩形.Height), 90, 180);
-                边框Path.AddArc(new Rectangle(工作矩形.Width - 工作矩形.Height, 工作矩形.Y, 工作矩形.Height, 工作矩形.Height), -90, 180);
-                边框Path.CloseFigure();
-
-                g.DrawPath(new Pen(边框颜色, 遮罩厚度 + 边框大小), 边框Path);
-            }
-
-            // 绘制边框二层（遮住第一层出格部分）
-            using (GraphicsPath 边框Path = new())
-            {
-                int 遮罩厚度 = Height % 2 == 0 ? Height : Height + 1;
-                重置工作矩形();
-
-                工作矩形.X -= 遮罩厚度 / 2;
-                工作矩形.Y -= 遮罩厚度 / 2;
-                工作矩形.Width += 遮罩厚度 / 2;
-                工作矩形.Height += 遮罩厚度 - 1;
-
-                边框Path.AddArc(new Rectangle(工作矩形.X, 工作矩形.Y, 工作矩形.Height, 工作矩形.Height), 90, 180);
-                边框Path.AddArc(new Rectangle(工作矩形.Width - 工作矩形.Height, 工作矩形.Y, 工作矩形.Height, 工作矩形.Height), -90, 180);
-                边框Path.CloseFigure();
-
-                g.DrawPath(new Pen(BackColor, 遮罩厚度), 边框Path);
-            }
+            g.绘制圆角(new Rectangle(0, 0, Width, Height), new CornerRadius(圆角大小), BackColor, new Pen(边框颜色, 边框大小));
 
             // 绘制值
             if (值显示方式 != 文字位置.不显示)
             {
                 SizeF 文字大小 = g.MeasureString(值显示格式.Replace("{value}", 值.ToString()), Font);
-                var 绘制位置 = 值显示方式 switch
+                float 竖直位置 = (Height - 文字大小.Height) / 2;
+                PointF 绘制位置 = 值显示方式 switch
                 {
-                    文字位置.左 => new PointF(边框大小 + 值显示边距, (Height - 文字大小.Height) / 2),
-                    文字位置.右 => new PointF(Width - 边框大小 - 文字大小.Width - 值显示边距, (Height - 文字大小.Height) / 2),
-                    文字位置.居中 => new PointF((Width - 文字大小.Width) / 2, (Height - 文字大小.Height) / 2),
+                    文字位置.左 => new PointF(边框大小 + 值显示边距, 竖直位置),
+                    文字位置.右 => new PointF(Width - 边框大小 - 文字大小.Width - 值显示边距, 竖直位置),
+                    文字位置.居中 => new PointF((Width - 文字大小.Width) / 2, 竖直位置),
                     _ => PointF.Empty,
                 };
                 g.DrawString(值显示格式.Replace("{value}", 值.ToString()), Font, new SolidBrush(ForeColor), 绘制位置);
@@ -421,7 +393,7 @@ namespace KlxPiaoControls
             pe.Graphics.DrawImage(bit, 0, 0);
         }
 
-        private double 绘制百分比 = 0;
+        private float 绘制百分比 = 0;
 
         #region 鼠标调整值
         private bool 正在拖动 = false;
@@ -434,7 +406,7 @@ namespace KlxPiaoControls
             {
                 正在拖动 = true;
 
-                绘制百分比 = (double)e.X / Width;
+                绘制百分比 = (float)e.X / Width;
                 值 = (float)Math.Round(最小值 + 绘制百分比 * (最大值 - 最小值), 保留小数位数);
             }
 
@@ -446,7 +418,7 @@ namespace KlxPiaoControls
 
             if (正在拖动)
             {
-                绘制百分比 = (double)e.X / Width;
+                绘制百分比 = (float)e.X / Width;
 
                 if ((float)e.X / Width > 1) { 绘制百分比 = 1; }
                 if ((float)e.X / Width < 0) { 绘制百分比 = 0; }
@@ -471,7 +443,7 @@ namespace KlxPiaoControls
 
             正在滚动 = true;
 
-            double 一次移动大小 = (1 / (最大值 - 最小值)) * 增减大小;
+            float 一次移动大小 = (1 / (最大值 - 最小值)) * 增减大小;
 
             switch (e.Delta)
             {
@@ -502,7 +474,7 @@ namespace KlxPiaoControls
             正在按键 = true;
             e.IsInputKey = true;
 
-            double 一次移动大小 = (1 / (最大值 - 最小值)) * 增减大小;
+            float 一次移动大小 = (1 / (最大值 - 最小值)) * 增减大小;
 
             switch (键盘响应方式)
             {

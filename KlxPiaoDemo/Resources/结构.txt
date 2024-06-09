@@ -1,0 +1,23 @@
+using System.ComponentModel;
+
+namespace {命名空间}
+{
+    [Serializable]
+    [TypeConverter(typeof({转换器名称}))]
+    public struct {结构名称}
+    {
+{结构成员声明}
+
+        public {结构名称}() { }
+
+        public {结构名称}({成员类型} uniform)
+        {
+{统一赋值方法}
+        }
+
+        public {结构名称}({通用方法参数})
+        {
+{通用方法过程}
+        }
+    }
+}
