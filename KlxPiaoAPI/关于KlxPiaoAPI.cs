@@ -2,6 +2,9 @@
 
 namespace KlxPiaoAPI
 {
+    /// <summary>
+    /// 提供关于 KlxPiaoAPI 的信息的方法。
+    /// </summary>
     public class 关于KlxPiaoAPI
     {
         public static string? 产品版本()
@@ -11,7 +14,18 @@ namespace KlxPiaoAPI
             AssemblyInformationalVersionAttribute? productVersion =
                 (AssemblyInformationalVersionAttribute?)Attribute.GetCustomAttribute(assembly, typeof(AssemblyInformationalVersionAttribute));
 
-            return productVersion?.InformationalVersion ?? "Unknown Version";
+            if (productVersion?.InformationalVersion is string versionStr)
+            {
+                var plusSymbolIndex = versionStr.IndexOf('+');
+                if (plusSymbolIndex != -1)
+                {
+                    versionStr = versionStr[..plusSymbolIndex];
+                }
+
+                return versionStr;
+            }
+
+            return "Unknown Version";
         }
 
         public static string 产品名称()

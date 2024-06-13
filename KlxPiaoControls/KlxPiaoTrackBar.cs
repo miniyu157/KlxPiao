@@ -4,6 +4,12 @@ using System.Drawing.Drawing2D;
 
 namespace KlxPiaoControls
 {
+    /// <summary>
+    /// 表示一个增强的 TrackBar 控件，具有额外的功能。
+    /// </summary>
+    /// <remarks>
+    /// KlxPiaoPanel 继承自 <see cref="Control"/> 类，可以设置边框样式、圆角大小、投影效果等外观属性。
+    /// </remarks>
     [DefaultEvent("值Changed")]
     public partial class KlxPiaoTrackBar : Control
     {
@@ -46,7 +52,8 @@ namespace KlxPiaoControls
             不显示,
             左,
             居中,
-            右
+            右,
+            跟随
         }
 
         private Color _背景色;
@@ -54,7 +61,9 @@ namespace KlxPiaoControls
         private int _边框大小;
         private Color _边框颜色;
         private 文字位置 _值显示方式;
+        private int _跟随时偏移;
         private float _圆角大小;
+        private bool _反向绘制;
 
         private int _值显示边距;
         private Color _焦点边框颜色;
@@ -84,8 +93,10 @@ namespace KlxPiaoControls
             _边框大小 = 0;
             _边框颜色 = Color.FromArgb(0, 210, 212);
             _值显示方式 = 文字位置.不显示;
+            _跟随时偏移 = -9001;
             _值显示边距 = 0;
             _圆角大小 = 1;
+            _反向绘制 = false;
 
             _焦点边框颜色 = Color.Transparent;
             _焦点边框大小 = -1;
@@ -158,6 +169,14 @@ namespace KlxPiaoControls
             set { _值显示方式 = value; Invalidate(); }
         }
         [Category("KlxPiaoTrackBar外观")]
+        [Description("仅当值显示方式为跟随时有效。特殊值：0 -> 居中，-9001 -> 一侧，-9002 -> 另一侧")]
+        [DefaultValue(-9001)]
+        public int 跟随时偏移
+        {
+            get { return _跟随时偏移; }
+            set { _跟随时偏移 = value; Invalidate(); }
+        }
+        [Category("KlxPiaoTrackBar外观")]
         [Description("显示值的左右边距")]
         [DefaultValue(0)]
         public int 值显示边距
@@ -166,21 +185,33 @@ namespace KlxPiaoControls
             set { _值显示边距 = value; Invalidate(); }
         }
         [Category("KlxPiaoTrackBar外观")]
-        [Description("圆角的百分比，范围在0-1之间")]
+        [Description("圆角的大小，自动检测是百分比大小还是像素大小")]
         [DefaultValue(1F)]
         public float 圆角大小
         {
             get { return _圆角大小; }
             set
             {
-                if (value < 0 || value > 1)
+                //防止超出最大范围
+                float 校准大小 = Math.Min(Width, Height);
+                if (value > 校准大小)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(圆角大小), "圆角的百分比必须在0和1之间");
+                    value = 校准大小;
                 }
 
                 _圆角大小 = value;
+
+
                 Invalidate();
             }
+        }
+        [Category("KlxPiaoTrackBar外观")]
+        [Description("是否进行反向绘制")]
+        [DefaultValue(false)]
+        public bool 反向绘制
+        {
+            get { return _反向绘制; }
+            set { _反向绘制 = value; Invalidate(); }
         }
         #endregion
 
@@ -356,37 +387,71 @@ namespace KlxPiaoControls
 
             g.SmoothingMode = SmoothingMode.HighQuality;
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            g.Clear(背景色);
+            g.Clear(!反向绘制 ? 背景色 : 前景色);
 
             Rectangle 工作矩形 = new(0, 0, Width, Height);
 
+            //如果代码设置值非用户设置，则根据值的大小计算绘制百分比
             if (!(正在拖动 || 正在滚动 || 正在按键))
-                绘制百分比 = (值 - 最小值) / (最大值 - 最小值);
+                绘制百分比 = !反向绘制 ? (值 - 最小值) / (最大值 - 最小值) : (最大值 - 值) / (最大值 - 最小值);
+
+            //绘制前景
+            Rectangle 前景区域;
+            float 百分比位置;
+            CornerRadius cornerRadius;
+
+            if (工作矩形.Width >= 工作矩形.Height) //横向
+            {
+                百分比位置 = 工作矩形.Width * 绘制百分比;
+                前景区域 = new(工作矩形.X, 工作矩形.Y, (int)百分比位置, Height);
+                cornerRadius = new CornerRadius(圆角大小, 0, 0, 圆角大小);
+            }
+            else //纵向
+            {
+                百分比位置 = 工作矩形.Height * 绘制百分比;
+                前景区域 = new(工作矩形.X, 工作矩形.Y, Width, (int)百分比位置);
+                cornerRadius = new CornerRadius(圆角大小, 圆角大小, 0, 0);
+            }
+
+            g.绘制圆角(前景区域, cornerRadius, Color.Empty, new SolidBrush(!反向绘制 ? 前景色 : 背景色));
 
             //绘制边框
-            float 百分比位置 = 工作矩形.Width * 绘制百分比;
-            g.绘制圆角(new Rectangle(0, 0, (int)百分比位置, Height), new CornerRadius
-            {
-                TopLeft = 圆角大小,
-                TopRight = 0,
-                BottomLeft = 圆角大小,
-                BottomRight = 0
-            }, Color.Empty, new SolidBrush(前景色));
-
             g.绘制圆角(new Rectangle(0, 0, Width, Height), new CornerRadius(圆角大小), BackColor, new Pen(边框颜色, 边框大小));
 
             // 绘制值
             if (值显示方式 != 文字位置.不显示)
             {
                 SizeF 文字大小 = g.MeasureString(值显示格式.Replace("{value}", 值.ToString()), Font);
-                float 竖直位置 = (Height - 文字大小.Height) / 2;
+                float 竖直居中 = (Height - 文字大小.Height) / 2;
+                float 横向居中 = (Width - 文字大小.Width) / 2;
+
                 PointF 绘制位置 = 值显示方式 switch
                 {
-                    文字位置.左 => new PointF(边框大小 + 值显示边距, 竖直位置),
-                    文字位置.右 => new PointF(Width - 边框大小 - 文字大小.Width - 值显示边距, 竖直位置),
-                    文字位置.居中 => new PointF((Width - 文字大小.Width) / 2, 竖直位置),
+                    文字位置.左 => new PointF(边框大小 + 值显示边距, 竖直居中),
+                    文字位置.右 => new PointF(Width - 边框大小 - 文字大小.Width - 值显示边距, 竖直居中),
+                    文字位置.居中 => new PointF((Width - 文字大小.Width) / 2, 竖直居中),
                     _ => PointF.Empty,
                 };
+
+                if (值显示方式 == 文字位置.跟随)
+                {
+                    float 偏移量 = 跟随时偏移 switch
+                    {
+                        -9001 => 工作矩形.Width >= 工作矩形.Height ? -文字大小.Width : -文字大小.Height,
+                        -9002 => 工作矩形.Width >= 工作矩形.Height ? +文字大小.Width / 5 : +文字大小.Height / 5,
+                        _ => 工作矩形.Width >= 工作矩形.Height ? -文字大小.Width / 2 + 跟随时偏移 : -文字大小.Height / 2 + 跟随时偏移
+                    };
+
+                    if (工作矩形.Width >= 工作矩形.Height) //横向
+                    {
+                        绘制位置 = new(工作矩形.Width * 绘制百分比 + 偏移量, 竖直居中);
+                    }
+                    else //纵向
+                    {
+                        绘制位置 = new(横向居中, 工作矩形.Height * 绘制百分比 + 偏移量);
+                    }
+                }
+
                 g.DrawString(值显示格式.Replace("{value}", 值.ToString()), Font, new SolidBrush(ForeColor), 绘制位置);
             }
 
@@ -406,8 +471,10 @@ namespace KlxPiaoControls
             {
                 正在拖动 = true;
 
-                绘制百分比 = (float)e.X / Width;
+                绘制百分比 = (Width >= Height) ? (float)e.X / Width : (float)e.Y / Height;
                 值 = (float)Math.Round(最小值 + 绘制百分比 * (最大值 - 最小值), 保留小数位数);
+
+                if (反向绘制) { 值 = (float)Math.Round(最大值 - (值 - 最小值), 保留小数位数); }
             }
 
             Focus();
@@ -418,12 +485,14 @@ namespace KlxPiaoControls
 
             if (正在拖动)
             {
-                绘制百分比 = (float)e.X / Width;
+                绘制百分比 = (Width >= Height) ? (float)e.X / Width : (float)e.Y / Height;
 
-                if ((float)e.X / Width > 1) { 绘制百分比 = 1; }
-                if ((float)e.X / Width < 0) { 绘制百分比 = 0; }
+                if (绘制百分比 > 1) { 绘制百分比 = 1; }
+                if (绘制百分比 < 0) { 绘制百分比 = 0; }
 
                 值 = (float)Math.Round(最小值 + 绘制百分比 * (最大值 - 最小值), 保留小数位数);
+
+                if (反向绘制) { 值 = (float)Math.Round(最大值 - (值 - 最小值), 保留小数位数); }
             }
         }
         protected override void OnMouseUp(MouseEventArgs e)

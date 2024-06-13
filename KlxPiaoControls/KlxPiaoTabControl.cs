@@ -2,6 +2,9 @@
 
 namespace KlxPiaoControls
 {
+    /// <summary>
+    /// 表示一个与外壳 <see cref="TabControlContainer"/> 绑定的自定义选项卡控件。
+    /// </summary>
     public partial class KlxPiaoTabControl : TabControl
     {
         public Color 边框颜色;

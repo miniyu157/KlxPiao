@@ -4,6 +4,9 @@ using System.Drawing.Drawing2D;
 
 namespace KlxPiaoControls
 {
+    /// <summary>
+    /// 用于绘制贝塞尔曲线，可交互的组件。
+    /// </summary>
     [DefaultEvent("控制点拖动")]
     public partial class BezierCurve : Control
     {
@@ -281,9 +284,11 @@ namespace KlxPiaoControls
 
             DoubleBuffered = true;
             Size = new Size(200, 200);
+
+            SetStyle(ControlStyles.Selectable, true);
         }
 
-        #region 方法和函数
+        #region 方法
         /// <summary>
         /// 设置指定索引处的控制点。
         /// </summary>
@@ -416,7 +421,7 @@ namespace KlxPiaoControls
             //绘制曲线
             for (float i = 0; i <= 1; i += 绘制精度)
             {
-                PointF pointF = 动画.CalculateBezierPointByTime(i, [.. 控制点集合]);
+                PointF pointF = KlxPiaoAPI.BezierCurve.CalculateBezierPointByTime(i, [.. 控制点集合]);
                 SolidBrush bezBrush = new(Color.Red);
                 g.FillEllipse(bezBrush, new RectangleF(
                     new PointF(
@@ -492,6 +497,7 @@ namespace KlxPiaoControls
             }
         }
 
+        //控制点拖动
         private bool 正在拖动;
         private int 拖动的索引;
 
@@ -523,6 +529,8 @@ namespace KlxPiaoControls
                 {
                     正在拖动 = !(!可拖动两端 && (拖动的索引 == 0 || 拖动的索引 == 控制点集合.Count - 1));
                 }
+
+                Focus();
             }
         }
 
@@ -565,6 +573,48 @@ namespace KlxPiaoControls
             base.OnMouseUp(e);
 
             正在拖动 = false;
+        }
+
+        //键盘事件
+        protected override void OnPreviewKeyDown(PreviewKeyDownEventArgs e)
+        {
+            if (拖动的索引 != -1)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.Up:
+                    case Keys.Down:
+                    case Keys.Left:
+                    case Keys.Right:
+                        e.IsInputKey = true;
+                        PointF 移动后的值 = 控制点集合[拖动的索引];
+
+                        switch (e.KeyCode)
+                        {
+                            case Keys.Up:
+                                移动后的值.Y += 0.01F;
+                                break;
+                            case Keys.Down:
+                                移动后的值.Y -= 0.01F;
+                                break;
+                            case Keys.Left:
+                                移动后的值.X -= 0.01F;
+                                break;
+                            case Keys.Right:
+                                移动后的值.X += 0.01F;
+                                break;
+                        }
+
+                        SetControlPoint(拖动的索引, new PointF((float)Math.Round(移动后的值.X, 保留小数位数), (float)Math.Round(移动后的值.Y, 保留小数位数)));
+                        OnControlPointDrag(new ControlPointDrag(拖动的索引, 控制点集合[拖动的索引]));
+                        break;
+
+                    default:
+                        e.IsInputKey = false;
+                        break;
+                }
+            }
+            base.OnPreviewKeyDown(e);
         }
     }
 }

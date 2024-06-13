@@ -5,6 +5,9 @@ using System.Drawing.Text;
 
 namespace KlxPiaoControls
 {
+    /// <summary>
+    /// 一个自定义的 Label 控件，支持投影、边框和高级文本渲染选项。
+    /// </summary>
     public partial class KlxPiaoLabel : Label
     {
         private bool _启用投影;
@@ -15,7 +18,7 @@ namespace KlxPiaoControls
         private bool _颜色减淡;
         private bool _启用边框;
         private Color _边框外部颜色;
-        private float _圆角百分比;
+        private float _圆角大小;
         private int _边框大小;
 
         private Color _边框颜色;
@@ -36,7 +39,7 @@ namespace KlxPiaoControls
 
             _启用边框 = false;
             _边框外部颜色 = Color.White;
-            _圆角百分比 = 0;
+            _圆角大小 = 0;
             _边框大小 = 5;
             _边框颜色 = Color.LightGray;
 
@@ -119,20 +122,12 @@ namespace KlxPiaoControls
             set { _边框外部颜色 = value; Invalidate(); }
         }
         [Category("KlxPiaoLabel边框")]
-        [Description("范围：0.00-1.00，为1时为圆形，为0时取消圆角")]
+        [Description("圆角大小，自动检测是百分比大小还是像素大小。")]
         [DefaultValue(0F)]
-        public float 圆角百分比
+        public float 圆角大小
         {
-            get { return _圆角百分比; }
-            set
-            {
-                if (value < 0 || value > 1)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(圆角百分比), "圆角的百分比必须在0和1之间");
-                }
-
-                _圆角百分比 = value; Invalidate();
-            }
+            get { return _圆角大小; }
+            set { _圆角大小 = value; Invalidate(); }
         }
         [Category("KlxPiaoLabel边框")]
         [Description("边框的大小，为0时隐藏边框")]
@@ -325,7 +320,7 @@ namespace KlxPiaoControls
             if (启用边框)
             {
                 Rectangle 区域 = new(0, 0, Width, Height);
-                g.绘制圆角(区域, new CornerRadius(圆角百分比), 边框外部颜色, new Pen(边框颜色, 边框大小));
+                g.绘制圆角(区域, new CornerRadius(圆角大小), 边框外部颜色, new Pen(边框颜色, 边框大小));
             }
         }
         /// <summary>

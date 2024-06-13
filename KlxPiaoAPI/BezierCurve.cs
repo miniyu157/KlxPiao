@@ -1,6 +1,9 @@
 ﻿namespace KlxPiaoAPI
 {
-    public class 动画
+    /// <summary>
+    /// 提供贝塞尔曲线计算的函数。
+    /// </summary>
+    public class BezierCurve
     {
         /// <summary>
         /// 根据时间进度计算贝塞尔曲线上的点。

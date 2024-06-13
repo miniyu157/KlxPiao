@@ -4,6 +4,9 @@ using System.Runtime.InteropServices;
 
 namespace KlxPiaoAPI
 {
+    /// <summary>
+    /// 提供文件操作相关的功能。
+    /// </summary>
     public class 文件
     {
         /// <summary>

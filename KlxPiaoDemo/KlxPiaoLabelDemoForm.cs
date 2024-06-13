@@ -44,7 +44,7 @@ namespace KlxPiaoDemo
                         labelDemo.边框大小 = value;
                         break;
                     case "圆角Track":
-                        labelDemo.圆角百分比 = value / 100F;
+                        labelDemo.圆角大小 = value / 100F;
                         break;
                 }
             }

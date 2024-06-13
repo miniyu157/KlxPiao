@@ -4,6 +4,12 @@ using System.Drawing.Drawing2D;
 
 namespace KlxPiaoControls
 {
+    /// <summary>
+    /// 表示一个具有自定义外观和投影效果的面板控件。
+    /// </summary>
+    /// <remarks>
+    /// KlxPiaoPanel 继承自 <see cref="Panel"/> 类，可以设置边框样式、圆角大小、投影效果等外观属性。
+    /// </remarks>
     [DefaultEvent("Click")]
     public partial class KlxPiaoPanel : Panel
     {
@@ -71,7 +77,7 @@ namespace KlxPiaoControls
         }
         [Category("KlxPiaoPanel外观")]
         [Description("每个角的圆角大小，自动检测是百分比大小还是像素大小。")]
-        [DefaultValue("0,0,0,0")]
+        [DefaultValue(typeof(CornerRadius), "0,0,0,0")]
         public CornerRadius 圆角大小
         {
             get { return _圆角大小; }
@@ -126,8 +132,6 @@ namespace KlxPiaoControls
 
         protected override void OnPaint(PaintEventArgs pe)
         {
-            base.OnPaint(pe);
-
             using Bitmap bitmap = new(Width, Height);
             {
                 Graphics g = Graphics.FromImage(bitmap);
@@ -207,6 +211,8 @@ namespace KlxPiaoControls
                 }
                 pe.Graphics.DrawImage(bitmap, 0, 0);
             }
+
+            base.OnPaint(pe);
         }
         /// <summary>
         /// 获取工作区的大小

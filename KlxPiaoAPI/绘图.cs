@@ -3,6 +3,9 @@ using System.Drawing.Drawing2D;
 
 namespace KlxPiaoAPI
 {
+    /// <summary>
+    /// 提供了 GDI+ 的扩展方法，用于快速绘制图形。
+    /// </summary>
     public static class 绘图
     {
         /// <summary>

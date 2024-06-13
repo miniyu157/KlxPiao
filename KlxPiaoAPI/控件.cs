@@ -11,7 +11,8 @@ namespace KlxPiaoAPI
         /// <typeparam name="T">要匹配的控件类型。</typeparam>
         /// <param name="container">要遍历的控件容器。</param>
         /// <param name="action">匹配成功时要执行的操作。</param>
-        public static void 遍历<T>(this Control container, Action<T> action) where T : Control
+        /// <param name="traverseSubControls">是否递归遍历子控件，默认为 false。</param>
+        public static void 遍历<T>(this Control container, Action<T> action, bool traverseSubControls = false) where T : Control
         {
             ArgumentNullException.ThrowIfNull(container);
             ArgumentNullException.ThrowIfNull(action);
@@ -23,12 +24,13 @@ namespace KlxPiaoAPI
                     action(matchingControl);
                 }
 
-                if (c.Controls.Count > 0)
+                if (traverseSubControls && c.Controls.Count > 0)
                 {
-                    遍历(c, action);
+                    遍历(c, action, traverseSubControls); //隐示传递true
                 }
             }
         }
+
         /// <summary>
         /// 设置控件的属性值。
         /// </summary>
@@ -132,7 +134,7 @@ namespace KlxPiaoAPI
                 }
                 else
                 {
-                    double 进度 = 动画.CalculateBezierPointByTime(时间进度, 控制点).Y;
+                    double 进度 = BezierCurve.CalculateBezierPointByTime(时间进度, 控制点).Y;
 
                     if (开始值 != null)
                     {

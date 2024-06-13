@@ -2,6 +2,9 @@
 
 namespace KlxPiaoControls
 {
+    /// <summary>
+    /// 提供关于 KlxPiaoControls 的信息的方法。
+    /// </summary>
     public class 关于KlxPiaoControls
     {
         public static string? 产品版本()

@@ -492,7 +492,7 @@ namespace KlxPiaoDemo
         }
 
         #region KlxPiaoAPI.控件
-        private void BezierCurve1_控制点拖动(object sender, BezierCurve.ControlPointDrag? e) //不会读取e的信息，因此声明可为null
+        private void BezierCurve1_控制点拖动(object sender, KlxPiaoControls.BezierCurve.ControlPointDrag? e) //不会读取e的信息，因此声明可为null
         {
             StringBuilder pointsList = new();
 
@@ -590,8 +590,8 @@ namespace KlxPiaoDemo
         {
             bezierCurve1.辅助线显示方式 = checkBox8.Checked switch
             {
-                true => BezierCurve.辅助线绘制.两端实线_中间虚线,
-                false => BezierCurve.辅助线绘制.不绘制
+                true => KlxPiaoControls.BezierCurve.辅助线绘制.两端实线_中间虚线,
+                false => KlxPiaoControls.BezierCurve.辅助线绘制.不绘制
             };
         }
         #endregion

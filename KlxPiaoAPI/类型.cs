@@ -1,5 +1,8 @@
 ﻿namespace KlxPiaoAPI
 {
+    /// <summary>
+    /// 提供用于判断对象类型的辅助方法和类型集合。
+    /// </summary>
     public class 类型
     {
         /// <summary>

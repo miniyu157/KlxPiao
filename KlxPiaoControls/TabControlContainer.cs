@@ -2,6 +2,12 @@
 
 namespace KlxPiaoControls
 {
+    /// <summary>
+    /// 表示一个与 <see cref="KlxPiaoTabControl"/> 绑定的容器控件，用于管理自定义选项卡和相关属性。
+    /// </summary>
+    /// <remarks>
+    /// TabControlContainer 继承自 Control 类，支持绑定 <see cref="KlxPiaoTabControl"/> 控件，并提供选项卡大小、文字位置、图片位置、边框颜色、投影颜色等自定义属性。
+    /// </remarks>
     public partial class TabControlContainer : Control
     {
         private KlxPiaoTabControl? _绑定;

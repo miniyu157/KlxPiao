@@ -2,6 +2,12 @@
 
 namespace KlxPiaoControls
 {
+    /// <summary>
+    /// 表示一个点坐标控件，用于显示和选择一个二维点坐标。
+    /// </summary>
+    /// <remarks>
+    /// 这个控件支持在指定的坐标系中显示和编辑一个二维点坐标。它可以显示坐标轴、定制准星样式和颜色，并提供键盘控制功能以便精确调整点的位置。
+    /// </remarks>
     [DefaultEvent("值Changed")]
     public partial class PointBar : Control
     {

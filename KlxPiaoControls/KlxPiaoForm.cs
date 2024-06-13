@@ -4,6 +4,9 @@ using System.Drawing.Drawing2D;
 
 namespace KlxPiaoControls
 {
+    /// <summary>
+    /// 一个美化的 WinForms 窗体控件，提供多种自定义风格和功能选项。
+    /// </summary>
     public partial class KlxPiaoForm : Form
     {
         public enum 两端

@@ -3,6 +3,9 @@ using System.Runtime.InteropServices;
 
 namespace KlxPiaoAPI
 {
+    /// <summary>
+    /// 提供图像处理相关的功能。
+    /// </summary>
     public class 图像
     {
         //参考自DYLIKE

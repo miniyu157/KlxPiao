@@ -1,5 +1,8 @@
 ﻿namespace KlxPiaoAPI
 {
+    /// <summary>
+    /// 提供颜色处理的相关操作。
+    /// </summary>
     public class 颜色
     {
         /// <summary>

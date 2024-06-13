@@ -3,6 +3,9 @@ using System.Text;
 
 namespace KlxPiaoAPI
 {
+    /// <summary>
+    /// 提供了一系列用于字符串处理的扩展方法。
+    /// </summary>
     public static partial class 字符串
     {
         /// <summary>

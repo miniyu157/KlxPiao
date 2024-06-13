@@ -2,6 +2,9 @@
 
 namespace KlxPiaoControls
 {
+    /// <summary>
+    /// 基于原版Button增强的组件。
+    /// </summary>
     public partial class KlxPiaoButton : Button
     {
         private bool _可获得焦点;

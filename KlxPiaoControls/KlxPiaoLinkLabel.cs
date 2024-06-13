@@ -1,5 +1,8 @@
 ﻿namespace KlxPiaoControls
 {
+    /// <summary>
+    /// 初始化一些属性值的原版LinkLabel。
+    /// </summary>
     public partial class KlxPiaoLinkLabel : LinkLabel
     {
         public KlxPiaoLinkLabel()

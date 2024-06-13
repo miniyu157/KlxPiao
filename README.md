@@ -14,13 +14,16 @@
 ![label](screenshot/label.png)
 
 
-![themeedit](screenshot/themeedit.png)
+![theme](screenshot/theme.png)
 
 
 ![picturebox](screenshot/picturebox.png)
 
 
 ![panel](screenshot/panel.png)
+
+
+![slideswitch](screenshot/slideswitch.png)
 
 
 ![trackbar](screenshot/trackbar.png)
