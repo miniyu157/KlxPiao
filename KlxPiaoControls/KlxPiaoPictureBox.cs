@@ -14,7 +14,7 @@ namespace KlxPiaoControls
     {
         private bool _启用边框;
         private Color _边框外部颜色;
-        private float _圆角百分比;
+        private CornerRadius _圆角大小;
         private int _边框大小;
         private Color _边框颜色;
 
@@ -24,7 +24,7 @@ namespace KlxPiaoControls
 
             _启用边框 = false;
             _边框外部颜色 = Color.White;
-            _圆角百分比 = 0;
+            _圆角大小 = new CornerRadius(0);
             _边框大小 = 10;
             _边框颜色 = Color.LightGray;
 
@@ -62,19 +62,12 @@ namespace KlxPiaoControls
             set { _边框外部颜色 = value; Invalidate(); }
         }
         [Category("KlxPiaoPictureBox外观")]
-        [Description("范围：0.00-1.00，等于0时取消圆角")]
-        [DefaultValue(0)]
-        public float 圆角百分比
+        [Description("每个角的圆角大小，自动适应百分比大小或像素大小")]
+        [DefaultValue(typeof(CornerRadius), "0,0,0,0")]
+        public CornerRadius 圆角大小
         {
-            get { return _圆角百分比; }
-            set
-            {
-                if (value < 0 || value > 1)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(圆角百分比), "圆角的百分比必须在0和1之间");
-                }
-                _圆角百分比 = value; Invalidate();
-            }
+            get { return _圆角大小; }
+            set { _圆角大小 = value; Invalidate(); }
         }
         [Category("KlxPiaoPictureBox外观")]
         [Description("边框的大小，为0时隐藏边框")]
@@ -106,7 +99,7 @@ namespace KlxPiaoControls
                 if (启用边框)
                 {
                     Rectangle 区域 = new(0, 0, Width, Height);
-                    g.绘制圆角(区域, new CornerRadius(圆角百分比), 边框外部颜色, new Pen(边框颜色, 边框大小));
+                    g.绘制圆角(区域, 圆角大小, 边框外部颜色, new Pen(边框颜色, 边框大小));
                 }
             }
         }

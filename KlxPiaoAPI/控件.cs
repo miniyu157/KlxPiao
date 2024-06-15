@@ -88,23 +88,22 @@ namespace KlxPiaoAPI
         }
 
         /// <summary>
-        /// 一个委托类型，表示用户定义的曲线函数
+        /// 一个委托类型，表示用户定义的曲线函数。
         /// </summary>
-        /// <param name="progress">进度，范围在0到1之间</param>
-        /// <returns></returns>
+        /// <param name="progress">进度，范围在0到1之间。</param>
         public delegate double 自定义函数(double progress);
 
         /// <summary>
-        /// 将贝塞尔曲线应用于控件的过渡动画
+        /// 将贝塞尔曲线应用于控件的过渡动画。
         /// </summary>
-        /// <param name="控件">要应用动画的控件</param>
-        /// <param name="属性">要过渡的属性</param>
-        /// <param name="开始值">动画的起始值</param>
-        /// <param name="结束值">动画的结束值</param>
-        /// <param name="持续时间">动画持续的时间（以毫秒为单位）</param>
-        /// <param name="控制点">贝塞尔曲线的控制点数组，留空时缓动效果为Linear</param>
-        /// <param name="帧率">动画的帧率</param>
-        public static async Task 贝塞尔过渡动画(this Control 控件, string 属性, object? 开始值, object 结束值, int 持续时间, PointF[]? 控制点, int 帧率 = 100)
+        /// <param name="控件">要应用动画的控件。</param>
+        /// <param name="属性">要过渡的属性。</param>
+        /// <param name="开始值">动画的起始值。</param>
+        /// <param name="结束值">动画的结束值。</param>
+        /// <param name="持续时间">动画持续的时间（以毫秒为单位）。</param>
+        /// <param name="控制点">贝塞尔曲线的控制点数组，留空时缓动效果为Linear。</param>
+        /// <param name="帧率">动画的帧率。</param>
+        public static async Task 贝塞尔过渡动画(this Control 控件, string 属性, object? 开始值, object 结束值, int 持续时间, PointF[]? 控制点 = null, int 帧率 = 100)
         {
             DateTime 启动时间 = DateTime.Now;
             TimeSpan 总时长 = TimeSpan.FromMilliseconds(持续时间);
@@ -146,15 +145,15 @@ namespace KlxPiaoAPI
         }
 
         /// <summary>
-        /// 将用户自定义函数曲线应用于控件的过渡动画
+        /// 将用户自定义函数曲线应用于控件的过渡动画。
         /// </summary>
-        /// <param name="控件">要应用动画的控件</param>
-        /// <param name="属性">要过渡的属性</param>
-        /// <param name="开始值">动画的起始值</param>
-        /// <param name="结束值">动画的结束值</param>
-        /// <param name="持续时间">动画持续的时间（以毫秒为单位）</param>
-        /// <param name="自定义曲线表达式">动画的帧率</param>
-        /// <param name="帧率"></param>
+        /// <param name="控件">要应用动画的控件。</param>
+        /// <param name="属性">要过渡的属性。</param>
+        /// <param name="开始值">动画的起始值。</param>
+        /// <param name="结束值">动画的结束值。</param>
+        /// <param name="持续时间">动画持续的时间（以毫秒为单位）。</param>
+        /// <param name="自定义曲线表达式">用户自定义的动画曲线表达式。</param>
+        /// <param name="帧率">动画的帧率。</param>
         /// <returns></returns>
         public static async Task 自定义过渡动画(this Control 控件, string 属性, object? 开始值, object 结束值, int 持续时间, 自定义函数 自定义曲线表达式, int 帧率 = 100)
         {

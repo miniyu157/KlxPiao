@@ -13,7 +13,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 外观属性的枚举。
         /// </summary>
-        public enum Attributes
+        public enum Properties
         {
             BackColor,
             ForeColor,
@@ -25,7 +25,7 @@ namespace KlxPiaoControls
         private Size _SelectSize;
         private int _SelectIndex;
         private Color[] _ChangeColors;
-        private Attributes _ChangeAttributes;
+        private Properties _ChangeProperty;
         private bool _Draggable;
         private bool _AllowDragOutOfBounds;
         private bool _UpdateTextOnDrag;
@@ -34,7 +34,7 @@ namespace KlxPiaoControls
         public SlideSwitch()
         {
             InitializeComponent();
-
+            
             _Items = ["Item1", "Item2"];
             _ItemSize = new Size(58, 38);
             _SelectSize = new Size(50, 46);
@@ -44,7 +44,7 @@ namespace KlxPiaoControls
                 Color.FromArgb(0, 117, 184), //参考自 Phigros 难度选择器-HD背景色
                 Color.FromArgb(207, 19, 18)  //参考自 Phigros 难度选择器-IN背景色
                 ];
-            _ChangeAttributes = Attributes.BackColor;
+            _ChangeProperty = Properties.BackColor;
             _Draggable = true;
             _AllowDragOutOfBounds = false;
             _UpdateTextOnDrag = true;
@@ -111,9 +111,9 @@ namespace KlxPiaoControls
             {
                 _ChangeColors = value;
                 //更新当前的外观
-                if (_ChangeAttributes != Attributes.NoChange)
+                if (_ChangeProperty != Properties.NoChange)
                 {
-                    SelectShow.设置属性(GetChangeAttributesValue(), value[_SelectIndex]);
+                    SelectShow.设置属性(GetChangePropertyValue(), value[_SelectIndex]);
                 }
                 Invalidate();
             }
@@ -121,16 +121,16 @@ namespace KlxPiaoControls
         [Category("SlideSwitch外观")]
         [Description("选中每个选项卡时改变的属性外观")]
         [DefaultValue("BackColor")]
-        public Attributes ChangeAttributes
+        public Properties ChangeProperty
         {
-            get { return _ChangeAttributes; }
+            get { return _ChangeProperty; }
             set
             {
-                _ChangeAttributes = value;
+                _ChangeProperty = value;
                 //更新当前的外观
-                if (_ChangeAttributes != Attributes.NoChange)
+                if (_ChangeProperty != Properties.NoChange)
                 {
-                    SelectShow.设置属性(GetChangeAttributesValue(), _ChangeColors[_SelectIndex]);
+                    SelectShow.设置属性(GetChangePropertyValue(), _ChangeColors[_SelectIndex]);
                 }
                 Invalidate();
             }
@@ -311,10 +311,10 @@ namespace KlxPiaoControls
             return -1;
         }
 
-        //获取ChangeAttributes属性的值
-        private string GetChangeAttributesValue()
+        //获取ChangeProperty属性的值
+        private string GetChangePropertyValue()
         {
-            return Enum.GetNames(typeof(Attributes))[(int)ChangeAttributes];
+            return Enum.GetNames(typeof(Properties))[(int)ChangeProperty];
         }
 
         //刷新选项卡位置（动画）
@@ -334,9 +334,9 @@ namespace KlxPiaoControls
                 new Point(newX + ItemsShow.Left, newY + ItemsShow.Top), 200,
                 [new(0F, 0F), new(0, 1F), new(0.67F, 1F), new(1, 1)]);
 
-            if (ChangeAttributes != Attributes.NoChange)
+            if (ChangeProperty != Properties.NoChange)
             {
-                _ = SelectShow.贝塞尔过渡动画(Enum.GetNames(typeof(Attributes))[(int)ChangeAttributes], null,
+                _ = SelectShow.贝塞尔过渡动画(Enum.GetNames(typeof(Properties))[(int)ChangeProperty], null,
                     SelectIndex < ChangeColors.Length ? ChangeColors[SelectIndex] : Color.Black, 150, null);
             }
         }

@@ -29,6 +29,15 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(主窗体));
+            KlxPiaoControls.RoundedButton.交互样式类 交互样式类1 = new KlxPiaoControls.RoundedButton.交互样式类();
+            KlxPiaoControls.RoundedButton.交互样式类 交互样式类2 = new KlxPiaoControls.RoundedButton.交互样式类();
+            KlxPiaoControls.RoundedButton.交互样式类 交互样式类3 = new KlxPiaoControls.RoundedButton.交互样式类();
+            KlxPiaoControls.RoundedButton.交互样式类 交互样式类4 = new KlxPiaoControls.RoundedButton.交互样式类();
+            KlxPiaoControls.RoundedButton.交互样式类 交互样式类5 = new KlxPiaoControls.RoundedButton.交互样式类();
+            KlxPiaoControls.RoundedButton.交互样式类 交互样式类6 = new KlxPiaoControls.RoundedButton.交互样式类();
+            KlxPiaoControls.RoundedButton.交互样式类 交互样式类7 = new KlxPiaoControls.RoundedButton.交互样式类();
+            KlxPiaoControls.RoundedButton.交互样式类 交互样式类8 = new KlxPiaoControls.RoundedButton.交互样式类();
+            KlxPiaoControls.RoundedButton.交互样式类 交互样式类9 = new KlxPiaoControls.RoundedButton.交互样式类();
             label1 = new Label();
             textBox1 = new TextBox();
             textBox2 = new TextBox();
@@ -38,7 +47,6 @@
             textBox5 = new TextBox();
             textBox6 = new TextBox();
             label3 = new Label();
-            klxPiaoButton1 = new KlxPiaoControls.KlxPiaoButton();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
             klxPiaoLabel5 = new KlxPiaoControls.KlxPiaoLabel();
@@ -114,6 +122,18 @@
             slideSwitch1 = new KlxPiaoControls.SlideSwitch();
             tabPage12 = new TabPage();
             klxPiaoButton6 = new KlxPiaoControls.KlxPiaoButton();
+            tabPage16 = new TabPage();
+            klxPiaoLabel35 = new KlxPiaoControls.KlxPiaoLabel();
+            slideSwitch7 = new KlxPiaoControls.SlideSwitch();
+            roundedButton8 = new KlxPiaoControls.RoundedButton();
+            roundedButton9 = new KlxPiaoControls.RoundedButton();
+            roundedButton6 = new KlxPiaoControls.RoundedButton();
+            roundedButton7 = new KlxPiaoControls.RoundedButton();
+            roundedButton5 = new KlxPiaoControls.RoundedButton();
+            roundedButton4 = new KlxPiaoControls.RoundedButton();
+            roundedButton3 = new KlxPiaoControls.RoundedButton();
+            roundedButton2 = new KlxPiaoControls.RoundedButton();
+            roundedButton1 = new KlxPiaoControls.RoundedButton();
             tabPage3 = new TabPage();
             tabControlContainer2 = new KlxPiaoControls.TabControlContainer();
             klxPiaoTabControl2 = new KlxPiaoControls.KlxPiaoTabControl();
@@ -166,6 +186,12 @@
             klxPiaoLabel7 = new KlxPiaoControls.KlxPiaoLabel();
             Edit_未激活标题框背景色 = new KlxPiaoControls.KlxPiaoPanel();
             tabPage5 = new TabPage();
+            klxPiaoPanel6 = new KlxPiaoControls.KlxPiaoPanel();
+            textBox19 = new TextBox();
+            label24 = new Label();
+            textBox20 = new TextBox();
+            label25 = new Label();
+            slideSwitch6 = new KlxPiaoControls.SlideSwitch();
             tabPage8 = new TabPage();
             checkBox6 = new CheckBox();
             checkBox5 = new CheckBox();
@@ -227,6 +253,7 @@
             tabPage10.SuspendLayout();
             tabPage11.SuspendLayout();
             tabPage12.SuspendLayout();
+            tabPage16.SuspendLayout();
             tabPage3.SuspendLayout();
             tabControlContainer2.SuspendLayout();
             klxPiaoTabControl2.SuspendLayout();
@@ -236,6 +263,7 @@
             klxPiaoPanel9.SuspendLayout();
             klxPiaoPanel7.SuspendLayout();
             tabPage5.SuspendLayout();
+            klxPiaoPanel6.SuspendLayout();
             tabPage8.SuspendLayout();
             groupBox4.SuspendLayout();
             tabPage15.SuspendLayout();
@@ -244,34 +272,34 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(18, 16);
+            label1.Location = new Point(18, 17);
             label1.Name = "label1";
-            label1.Size = new Size(56, 17);
+            label1.Size = new Size(118, 17);
             label1.TabIndex = 0;
-            label1.Text = "属性名称";
+            label1.Text = "属性名称 (Property)";
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(80, 13);
+            textBox1.Location = new Point(157, 14);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(242, 23);
+            textBox1.Size = new Size(121, 23);
             textBox1.TabIndex = 1;
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(80, 42);
+            textBox2.Location = new Point(157, 43);
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(242, 23);
+            textBox2.Size = new Size(121, 23);
             textBox2.TabIndex = 3;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(18, 45);
+            label2.Location = new Point(18, 46);
             label2.Name = "label2";
-            label2.Size = new Size(32, 17);
+            label2.Size = new Size(72, 17);
             label2.TabIndex = 2;
-            label2.Text = "类型";
+            label2.Text = "类型 (Type)";
             // 
             // textBox3
             // 
@@ -279,6 +307,8 @@
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(352, 23);
             textBox3.TabIndex = 5;
+            textBox3.Text = "private  _;";
+            textBox3.WordWrap = false;
             // 
             // textBox4
             // 
@@ -286,44 +316,34 @@
             textBox4.Name = "textBox4";
             textBox4.Size = new Size(352, 23);
             textBox4.TabIndex = 6;
+            textBox4.Text = "_ = ;";
+            textBox4.WordWrap = false;
             // 
             // textBox5
             // 
-            textBox5.Location = new Point(328, 71);
+            textBox5.Location = new Point(328, 83);
             textBox5.Multiline = true;
             textBox5.Name = "textBox5";
-            textBox5.Size = new Size(352, 321);
+            textBox5.Size = new Size(352, 309);
             textBox5.TabIndex = 7;
+            textBox5.Text = resources.GetString("textBox5.Text");
+            textBox5.WordWrap = false;
             // 
             // textBox6
             // 
-            textBox6.Location = new Point(80, 71);
+            textBox6.Location = new Point(157, 72);
             textBox6.Name = "textBox6";
-            textBox6.Size = new Size(242, 23);
+            textBox6.Size = new Size(121, 23);
             textBox6.TabIndex = 9;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(18, 74);
+            label3.Location = new Point(18, 75);
             label3.Name = "label3";
-            label3.Size = new Size(44, 17);
+            label3.Size = new Size(129, 17);
             label3.TabIndex = 8;
-            label3.Text = "默认值";
-            // 
-            // klxPiaoButton1
-            // 
-            klxPiaoButton1.FlatAppearance.BorderColor = Color.Gainsboro;
-            klxPiaoButton1.FlatAppearance.MouseDownBackColor = Color.FromArgb(230, 230, 230);
-            klxPiaoButton1.FlatAppearance.MouseOverBackColor = Color.FromArgb(240, 240, 240);
-            klxPiaoButton1.FlatStyle = FlatStyle.Flat;
-            klxPiaoButton1.Location = new Point(18, 100);
-            klxPiaoButton1.Name = "klxPiaoButton1";
-            klxPiaoButton1.Size = new Size(304, 40);
-            klxPiaoButton1.TabIndex = 13;
-            klxPiaoButton1.Text = "生成";
-            klxPiaoButton1.UseVisualStyleBackColor = true;
-            klxPiaoButton1.Click += KlxPiaoButton1_Click;
+            label3.Text = "默认值 (DefaultValue)";
             // 
             // tabControl1
             // 
@@ -740,6 +760,7 @@
             klxPiaoTabControl1.Controls.Add(tabPage10);
             klxPiaoTabControl1.Controls.Add(tabPage11);
             klxPiaoTabControl1.Controls.Add(tabPage12);
+            klxPiaoTabControl1.Controls.Add(tabPage16);
             klxPiaoTabControl1.ItemSize = new Size(0, 1);
             klxPiaoTabControl1.Location = new Point(94, 0);
             klxPiaoTabControl1.Multiline = true;
@@ -1125,7 +1146,7 @@
             klxPiaoPictureBox1.TabIndex = 0;
             klxPiaoPictureBox1.TabStop = false;
             klxPiaoPictureBox1.启用边框 = true;
-            klxPiaoPictureBox1.圆角百分比 = 0.36F;
+            klxPiaoPictureBox1.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             klxPiaoPictureBox1.边框大小 = 8;
             klxPiaoPictureBox1.边框颜色 = Color.LightPink;
             // 
@@ -1254,13 +1275,13 @@
             // 
             // slideSwitch4
             // 
-            slideSwitch4.ChangeAttributes = KlxPiaoControls.SlideSwitch.Attributes.BackColor;
             slideSwitch4.ChangeColors = new Color[]
     {
     Color.FromArgb(17, 178, 48),
     Color.FromArgb(0, 117, 184),
     Color.FromArgb(207, 19, 18)
     };
+            slideSwitch4.ChangeProperty = KlxPiaoControls.SlideSwitch.Properties.BackColor;
             slideSwitch4.Items = new string[]
     {
     "Item1",
@@ -1303,12 +1324,12 @@
             // 
             // slideSwitch5
             // 
-            slideSwitch5.ChangeAttributes = KlxPiaoControls.SlideSwitch.Attributes.BackColor;
             slideSwitch5.ChangeColors = new Color[]
     {
     Color.FromArgb(17, 178, 48),
     Color.FromArgb(207, 19, 18)
     };
+            slideSwitch5.ChangeProperty = KlxPiaoControls.SlideSwitch.Properties.BackColor;
             slideSwitch5.Font = new Font("Microsoft YaHei UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 134);
             slideSwitch5.Items = new string[]
     {
@@ -1353,7 +1374,6 @@
             // 
             // slideSwitch3
             // 
-            slideSwitch3.ChangeAttributes = KlxPiaoControls.SlideSwitch.Attributes.边框颜色;
             slideSwitch3.ChangeColors = new Color[]
     {
     Color.Lime,
@@ -1362,6 +1382,7 @@
     Color.Red,
     Color.Black
     };
+            slideSwitch3.ChangeProperty = KlxPiaoControls.SlideSwitch.Properties.边框颜色;
             slideSwitch3.Items = new string[]
     {
     "1",
@@ -1413,13 +1434,13 @@
             // 
             // slideSwitch2
             // 
-            slideSwitch2.ChangeAttributes = KlxPiaoControls.SlideSwitch.Attributes.边框颜色;
             slideSwitch2.ChangeColors = new Color[]
     {
     Color.FromArgb(17, 178, 48),
     Color.FromArgb(0, 117, 184),
     Color.FromArgb(207, 19, 18)
     };
+            slideSwitch2.ChangeProperty = KlxPiaoControls.SlideSwitch.Properties.边框颜色;
             slideSwitch2.Items = new string[]
     {
     "Item1",
@@ -1463,7 +1484,6 @@
             // 
             // slideSwitch1
             // 
-            slideSwitch1.ChangeAttributes = KlxPiaoControls.SlideSwitch.Attributes.BackColor;
             slideSwitch1.ChangeColors = new Color[]
     {
     Color.FromArgb(17, 178, 48),
@@ -1471,6 +1491,7 @@
     Color.FromArgb(207, 19, 18),
     Color.FromArgb(39, 37, 38)
     };
+            slideSwitch1.ChangeProperty = KlxPiaoControls.SlideSwitch.Properties.BackColor;
             slideSwitch1.Items = new string[]
     {
     "EZ",
@@ -1538,6 +1559,347 @@
             klxPiaoButton6.Text = "设置全局字体";
             klxPiaoButton6.UseVisualStyleBackColor = true;
             klxPiaoButton6.Click += KlxPiaoButton6_Click;
+            // 
+            // tabPage16
+            // 
+            tabPage16.BackColor = Color.White;
+            tabPage16.Controls.Add(klxPiaoLabel35);
+            tabPage16.Controls.Add(slideSwitch7);
+            tabPage16.Controls.Add(roundedButton8);
+            tabPage16.Controls.Add(roundedButton9);
+            tabPage16.Controls.Add(roundedButton6);
+            tabPage16.Controls.Add(roundedButton7);
+            tabPage16.Controls.Add(roundedButton5);
+            tabPage16.Controls.Add(roundedButton4);
+            tabPage16.Controls.Add(roundedButton3);
+            tabPage16.Controls.Add(roundedButton2);
+            tabPage16.Controls.Add(roundedButton1);
+            tabPage16.Location = new Point(6, 4);
+            tabPage16.Name = "tabPage16";
+            tabPage16.Padding = new Padding(3);
+            tabPage16.Size = new Size(581, 389);
+            tabPage16.TabIndex = 6;
+            tabPage16.Text = "Button";
+            // 
+            // klxPiaoLabel35
+            // 
+            klxPiaoLabel35.AutoSize = false;
+            klxPiaoLabel35.BackColor = Color.White;
+            klxPiaoLabel35.ForeColor = Color.Black;
+            klxPiaoLabel35.Location = new Point(417, 353);
+            klxPiaoLabel35.Name = "klxPiaoLabel35";
+            klxPiaoLabel35.Size = new Size(55, 30);
+            klxPiaoLabel35.TabIndex = 11;
+            klxPiaoLabel35.Text = "启用动画";
+            klxPiaoLabel35.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // slideSwitch7
+            // 
+            slideSwitch7.ChangeColors = new Color[]
+    {
+    Color.FromArgb(17, 178, 48),
+    Color.FromArgb(207, 19, 18)
+    };
+            slideSwitch7.ChangeProperty = KlxPiaoControls.SlideSwitch.Properties.BackColor;
+            slideSwitch7.Font = new Font("Microsoft YaHei UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            slideSwitch7.Items = new string[]
+    {
+    "ON",
+    "OFF"
+    };
+            slideSwitch7.ItemSize = new Size(45, 18);
+            // 
+            // 
+            // 
+            slideSwitch7.ItemsStyle.BackColor = Color.White;
+            slideSwitch7.ItemsStyle.Cursor = Cursors.Hand;
+            slideSwitch7.ItemsStyle.Location = new Point(0, 6);
+            slideSwitch7.ItemsStyle.Name = "ItemsShow";
+            slideSwitch7.ItemsStyle.Size = new Size(90, 18);
+            slideSwitch7.ItemsStyle.TabIndex = 0;
+            slideSwitch7.ItemsStyle.启用投影 = false;
+            slideSwitch7.ItemsStyle.圆角大小 = new KlxPiaoAPI.CornerRadius(1F, 1F, 1F, 1F);
+            slideSwitch7.Location = new Point(478, 353);
+            slideSwitch7.Name = "slideSwitch7";
+            slideSwitch7.Padding = new Padding(5, 0, 5, 0);
+            slideSwitch7.SelectIndex = 1;
+            // 
+            // 
+            // 
+            slideSwitch7.SelectItemStyle.AutoSize = false;
+            slideSwitch7.SelectItemStyle.BackColor = Color.FromArgb(207, 19, 18);
+            slideSwitch7.SelectItemStyle.ForeColor = Color.White;
+            slideSwitch7.SelectItemStyle.Location = new Point(50, 0);
+            slideSwitch7.SelectItemStyle.Name = "SelectShow";
+            slideSwitch7.SelectItemStyle.Size = new Size(30, 30);
+            slideSwitch7.SelectItemStyle.TabIndex = 2;
+            slideSwitch7.SelectItemStyle.Text = "OFF";
+            slideSwitch7.SelectItemStyle.TextAlign = ContentAlignment.MiddleCenter;
+            slideSwitch7.SelectItemStyle.偏移方式 = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            slideSwitch7.SelectItemStyle.启用边框 = true;
+            slideSwitch7.SelectItemStyle.圆角大小 = 1F;
+            slideSwitch7.SelectItemStyle.抗锯齿 = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            slideSwitch7.SelectItemStyle.边框大小 = 1;
+            slideSwitch7.SelectSize = new Size(30, 30);
+            slideSwitch7.Size = new Size(90, 30);
+            slideSwitch7.TabIndex = 10;
+            slideSwitch7.SelectIndexChanged += SlideSwitch7_SelectIndexChanged;
+            // 
+            // roundedButton8
+            // 
+            roundedButton8.BackColor = Color.White;
+            roundedButton8.ForeColor = Color.Black;
+            roundedButton8.Image = Properties.Resources.TestImage2;
+            roundedButton8.ImageAlign = ContentAlignment.MiddleLeft;
+            roundedButton8.ImageCornerRadius = new KlxPiaoAPI.CornerRadius(1F, 1F, 1F, 1F);
+            roundedButton8.ImagePadding = new Padding(10, 0, 0, 0);
+            roundedButton8.Location = new Point(299, 23);
+            roundedButton8.Name = "roundedButton8";
+            roundedButton8.Padding = new Padding(0, 0, 8, 0);
+            roundedButton8.Size = new Size(128, 43);
+            roundedButton8.TabIndex = 9;
+            roundedButton8.Text = "ImageButton";
+            roundedButton8.TextAlign = ContentAlignment.MiddleRight;
+            交互样式类1.启用动画 = false;
+            交互样式类1.按下前景色 = Color.Empty;
+            交互样式类1.按下大小 = null;
+            交互样式类1.按下背景色 = Color.FromArgb(249, 236, 236);
+            交互样式类1.按下边框颜色 = Color.Empty;
+            交互样式类1.移入前景色 = Color.Empty;
+            交互样式类1.移入大小 = null;
+            交互样式类1.移入背景色 = Color.WhiteSmoke;
+            交互样式类1.移入边框颜色 = Color.Empty;
+            roundedButton8.交互样式 = 交互样式类1;
+            roundedButton8.图像大小修正 = new SizeF(0.5F, 0.5F);
+            roundedButton8.图像大小修正格式 = KlxPiaoControls.RoundedButton.FormatType.Percentage;
+            roundedButton8.边框颜色 = Color.Pink;
+            // 
+            // roundedButton9
+            // 
+            roundedButton9.BackColor = Color.FromArgb(80, 80, 80);
+            roundedButton9.Font = new Font("Microsoft YaHei UI", 7.5F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            roundedButton9.ForeColor = Color.FromArgb(80, 80, 80);
+            roundedButton9.ImageAlign = ContentAlignment.MiddleLeft;
+            roundedButton9.ImageCornerRadius = new KlxPiaoAPI.CornerRadius(1F, 1F, 1F, 1F);
+            roundedButton9.ImagePadding = new Padding(12, 0, 0, 0);
+            roundedButton9.Location = new Point(478, 95);
+            roundedButton9.Name = "roundedButton9";
+            roundedButton9.Padding = new Padding(1, 0, 0, 2);
+            roundedButton9.Size = new Size(43, 43);
+            roundedButton9.TabIndex = 8;
+            roundedButton9.Text = "Piao";
+            交互样式类2.启用动画 = false;
+            交互样式类2.按下前景色 = Color.Black;
+            交互样式类2.按下大小 = null;
+            交互样式类2.按下背景色 = Color.White;
+            交互样式类2.按下边框颜色 = Color.Pink;
+            交互样式类2.移入前景色 = SystemColors.WindowFrame;
+            交互样式类2.移入大小 = null;
+            交互样式类2.移入背景色 = SystemColors.WindowFrame;
+            交互样式类2.移入边框颜色 = Color.Empty;
+            roundedButton9.交互样式 = 交互样式类2;
+            roundedButton9.图像大小修正 = new SizeF(0.5F, 0.5F);
+            roundedButton9.图像大小修正格式 = KlxPiaoControls.RoundedButton.FormatType.Percentage;
+            roundedButton9.圆角大小 = new KlxPiaoAPI.CornerRadius(1F, 1F, 1F, 1F);
+            roundedButton9.边框颜色 = Color.Gainsboro;
+            // 
+            // roundedButton6
+            // 
+            roundedButton6.BackColor = Color.FromArgb(80, 80, 80);
+            roundedButton6.ForeColor = Color.White;
+            roundedButton6.Image = Properties.Resources.TestImage;
+            roundedButton6.ImageAlign = ContentAlignment.MiddleLeft;
+            roundedButton6.ImageCornerRadius = new KlxPiaoAPI.CornerRadius(1F, 1F, 1F, 1F);
+            roundedButton6.ImagePadding = new Padding(12, 0, 0, 0);
+            roundedButton6.Location = new Point(22, 242);
+            roundedButton6.Name = "roundedButton6";
+            roundedButton6.Padding = new Padding(0, 0, 12, 0);
+            roundedButton6.Size = new Size(133, 43);
+            roundedButton6.TabIndex = 6;
+            roundedButton6.Text = "ImageButton";
+            roundedButton6.TextAlign = ContentAlignment.MiddleRight;
+            交互样式类3.启用动画 = false;
+            交互样式类3.按下前景色 = Color.Black;
+            交互样式类3.按下大小 = null;
+            交互样式类3.按下背景色 = Color.White;
+            交互样式类3.按下边框颜色 = Color.Pink;
+            交互样式类3.移入前景色 = Color.Empty;
+            交互样式类3.移入大小 = new Size(163, 83);
+            交互样式类3.移入背景色 = SystemColors.WindowFrame;
+            交互样式类3.移入边框颜色 = Color.Empty;
+            roundedButton6.交互样式 = 交互样式类3;
+            roundedButton6.图像大小修正 = new SizeF(0.5F, 0.5F);
+            roundedButton6.图像大小修正格式 = KlxPiaoControls.RoundedButton.FormatType.Percentage;
+            roundedButton6.圆角大小 = new KlxPiaoAPI.CornerRadius(0F, 1F, 1F, 0F);
+            roundedButton6.边框颜色 = Color.Gainsboro;
+            // 
+            // roundedButton7
+            // 
+            roundedButton7.BackColor = Color.FromArgb(80, 80, 80);
+            roundedButton7.ForeColor = Color.White;
+            roundedButton7.Image = Properties.Resources.TestImage;
+            roundedButton7.ImageAlign = ContentAlignment.MiddleLeft;
+            roundedButton7.ImageCornerRadius = new KlxPiaoAPI.CornerRadius(1F, 1F, 1F, 1F);
+            roundedButton7.ImagePadding = new Padding(12, 0, 0, 0);
+            roundedButton7.Location = new Point(22, 193);
+            roundedButton7.Name = "roundedButton7";
+            roundedButton7.Padding = new Padding(0, 0, 12, 0);
+            roundedButton7.Size = new Size(133, 43);
+            roundedButton7.TabIndex = 5;
+            roundedButton7.Text = "ImageButton";
+            roundedButton7.TextAlign = ContentAlignment.MiddleRight;
+            交互样式类4.启用动画 = false;
+            交互样式类4.按下前景色 = Color.Black;
+            交互样式类4.按下大小 = null;
+            交互样式类4.按下背景色 = Color.White;
+            交互样式类4.按下边框颜色 = Color.Pink;
+            交互样式类4.移入前景色 = Color.Empty;
+            交互样式类4.移入大小 = new Size(163, 43);
+            交互样式类4.移入背景色 = SystemColors.WindowFrame;
+            交互样式类4.移入边框颜色 = Color.Empty;
+            roundedButton7.交互样式 = 交互样式类4;
+            roundedButton7.图像大小修正 = new SizeF(0.5F, 0.5F);
+            roundedButton7.图像大小修正格式 = KlxPiaoControls.RoundedButton.FormatType.Percentage;
+            roundedButton7.圆角大小 = new KlxPiaoAPI.CornerRadius(0F, 1F, 1F, 0F);
+            roundedButton7.边框颜色 = Color.Gainsboro;
+            // 
+            // roundedButton5
+            // 
+            roundedButton5.BackColor = Color.FromArgb(80, 80, 80);
+            roundedButton5.ForeColor = Color.White;
+            roundedButton5.Image = Properties.Resources.TestImage;
+            roundedButton5.ImageAlign = ContentAlignment.MiddleLeft;
+            roundedButton5.ImageCornerRadius = new KlxPiaoAPI.CornerRadius(1F, 1F, 1F, 1F);
+            roundedButton5.ImagePadding = new Padding(12, 0, 0, 0);
+            roundedButton5.Location = new Point(22, 144);
+            roundedButton5.Name = "roundedButton5";
+            roundedButton5.Padding = new Padding(0, 0, 12, 0);
+            roundedButton5.Size = new Size(133, 43);
+            roundedButton5.TabIndex = 4;
+            roundedButton5.Text = "ImageButton";
+            roundedButton5.TextAlign = ContentAlignment.MiddleRight;
+            交互样式类5.启用动画 = false;
+            交互样式类5.按下前景色 = Color.Black;
+            交互样式类5.按下大小 = null;
+            交互样式类5.按下背景色 = Color.White;
+            交互样式类5.按下边框颜色 = Color.Pink;
+            交互样式类5.移入前景色 = Color.Empty;
+            交互样式类5.移入大小 = new Size(163, 43);
+            交互样式类5.移入背景色 = SystemColors.WindowFrame;
+            交互样式类5.移入边框颜色 = Color.Empty;
+            roundedButton5.交互样式 = 交互样式类5;
+            roundedButton5.图像大小修正 = new SizeF(0.5F, 0.5F);
+            roundedButton5.图像大小修正格式 = KlxPiaoControls.RoundedButton.FormatType.Percentage;
+            roundedButton5.圆角大小 = new KlxPiaoAPI.CornerRadius(0F, 1F, 1F, 0F);
+            roundedButton5.边框颜色 = Color.Gainsboro;
+            // 
+            // roundedButton4
+            // 
+            roundedButton4.BackColor = Color.FromArgb(80, 80, 80);
+            roundedButton4.ForeColor = Color.White;
+            roundedButton4.Image = Properties.Resources.TestImage;
+            roundedButton4.ImageAlign = ContentAlignment.MiddleLeft;
+            roundedButton4.ImageCornerRadius = new KlxPiaoAPI.CornerRadius(1F, 1F, 1F, 1F);
+            roundedButton4.ImagePadding = new Padding(12, 0, 0, 0);
+            roundedButton4.Location = new Point(22, 95);
+            roundedButton4.Name = "roundedButton4";
+            roundedButton4.Padding = new Padding(0, 0, 12, 0);
+            roundedButton4.Size = new Size(133, 43);
+            roundedButton4.TabIndex = 3;
+            roundedButton4.Text = "ImageButton";
+            roundedButton4.TextAlign = ContentAlignment.MiddleRight;
+            交互样式类6.启用动画 = false;
+            交互样式类6.按下前景色 = Color.Black;
+            交互样式类6.按下大小 = null;
+            交互样式类6.按下背景色 = Color.White;
+            交互样式类6.按下边框颜色 = Color.Pink;
+            交互样式类6.移入前景色 = Color.Empty;
+            交互样式类6.移入大小 = new Size(163, 43);
+            交互样式类6.移入背景色 = SystemColors.WindowFrame;
+            交互样式类6.移入边框颜色 = Color.Empty;
+            roundedButton4.交互样式 = 交互样式类6;
+            roundedButton4.图像大小修正 = new SizeF(0.5F, 0.5F);
+            roundedButton4.图像大小修正格式 = KlxPiaoControls.RoundedButton.FormatType.Percentage;
+            roundedButton4.圆角大小 = new KlxPiaoAPI.CornerRadius(0F, 1F, 1F, 0F);
+            roundedButton4.边框颜色 = Color.Gainsboro;
+            // 
+            // roundedButton3
+            // 
+            roundedButton3.BackColor = Color.FromArgb(80, 80, 80);
+            roundedButton3.ForeColor = Color.White;
+            roundedButton3.Image = Properties.Resources.TestImage;
+            roundedButton3.ImageAlign = ContentAlignment.MiddleLeft;
+            roundedButton3.ImageCornerRadius = new KlxPiaoAPI.CornerRadius(1F, 1F, 1F, 1F);
+            roundedButton3.ImagePadding = new Padding(12, 0, 0, 0);
+            roundedButton3.Location = new Point(299, 193);
+            roundedButton3.Name = "roundedButton3";
+            roundedButton3.Padding = new Padding(0, 0, 8, 0);
+            roundedButton3.Size = new Size(128, 43);
+            roundedButton3.TabIndex = 2;
+            roundedButton3.Text = "ImageButton";
+            roundedButton3.TextAlign = ContentAlignment.MiddleRight;
+            交互样式类7.启用动画 = false;
+            交互样式类7.按下前景色 = Color.Black;
+            交互样式类7.按下大小 = null;
+            交互样式类7.按下背景色 = Color.White;
+            交互样式类7.按下边框颜色 = Color.Pink;
+            交互样式类7.移入前景色 = Color.Empty;
+            交互样式类7.移入大小 = null;
+            交互样式类7.移入背景色 = SystemColors.WindowFrame;
+            交互样式类7.移入边框颜色 = Color.Empty;
+            roundedButton3.交互样式 = 交互样式类7;
+            roundedButton3.图像大小修正 = new SizeF(0.5F, 0.5F);
+            roundedButton3.图像大小修正格式 = KlxPiaoControls.RoundedButton.FormatType.Percentage;
+            roundedButton3.圆角大小 = new KlxPiaoAPI.CornerRadius(1F, 1F, 1F, 1F);
+            roundedButton3.边框颜色 = Color.Gainsboro;
+            // 
+            // roundedButton2
+            // 
+            roundedButton2.BackColor = Color.FromArgb(80, 80, 80);
+            roundedButton2.ForeColor = Color.White;
+            roundedButton2.Image = Properties.Resources.TestImage2;
+            roundedButton2.ImageAlign = ContentAlignment.MiddleLeft;
+            roundedButton2.ImageCornerRadius = new KlxPiaoAPI.CornerRadius(1F, 1F, 1F, 1F);
+            roundedButton2.ImagePadding = new Padding(10, 0, 0, 0);
+            roundedButton2.Location = new Point(299, 95);
+            roundedButton2.Name = "roundedButton2";
+            roundedButton2.Padding = new Padding(0, 0, 8, 0);
+            roundedButton2.Size = new Size(128, 43);
+            roundedButton2.TabIndex = 1;
+            roundedButton2.Text = "ImageButton";
+            roundedButton2.TextAlign = ContentAlignment.MiddleRight;
+            交互样式类8.启用动画 = false;
+            交互样式类8.按下前景色 = Color.Empty;
+            交互样式类8.按下大小 = null;
+            交互样式类8.按下背景色 = Color.FromArgb(249, 236, 236);
+            交互样式类8.按下边框颜色 = Color.Empty;
+            交互样式类8.移入前景色 = Color.Black;
+            交互样式类8.移入大小 = null;
+            交互样式类8.移入背景色 = Color.White;
+            交互样式类8.移入边框颜色 = Color.Pink;
+            roundedButton2.交互样式 = 交互样式类8;
+            roundedButton2.图像大小修正 = new SizeF(0.5F, 0.5F);
+            roundedButton2.图像大小修正格式 = KlxPiaoControls.RoundedButton.FormatType.Percentage;
+            roundedButton2.边框颜色 = Color.Gainsboro;
+            // 
+            // roundedButton1
+            // 
+            roundedButton1.Location = new Point(22, 23);
+            roundedButton1.Name = "roundedButton1";
+            roundedButton1.Size = new Size(116, 43);
+            roundedButton1.TabIndex = 0;
+            roundedButton1.Text = "RoundedButton";
+            交互样式类9.启用动画 = false;
+            交互样式类9.按下前景色 = Color.Empty;
+            交互样式类9.按下大小 = null;
+            交互样式类9.按下背景色 = Color.FromArgb(235, 235, 235);
+            交互样式类9.按下边框颜色 = Color.Empty;
+            交互样式类9.移入前景色 = Color.Empty;
+            交互样式类9.移入大小 = null;
+            交互样式类9.移入背景色 = Color.FromArgb(245, 245, 245);
+            交互样式类9.移入边框颜色 = Color.Empty;
+            roundedButton1.交互样式 = 交互样式类9;
+            roundedButton1.边框颜色 = Color.Gainsboro;
             // 
             // tabPage3
             // 
@@ -1723,7 +2085,6 @@
             // 
             // 停止But
             // 
-            停止But.Enabled = false;
             停止But.FlatAppearance.BorderColor = Color.Gainsboro;
             停止But.FlatAppearance.MouseDownBackColor = Color.FromArgb(230, 230, 230);
             停止But.FlatAppearance.MouseOverBackColor = Color.FromArgb(240, 240, 240);
@@ -1732,7 +2093,7 @@
             停止But.Name = "停止But";
             停止But.Size = new Size(90, 42);
             停止But.TabIndex = 31;
-            停止But.Text = "停止(不会弄)";
+            停止But.Text = "暂停";
             停止But.UseVisualStyleBackColor = true;
             停止But.Click += 停止But_Click;
             // 
@@ -1819,7 +2180,6 @@
             // 
             // bezierCurve1
             // 
-            bezierCurve1.Dock = DockStyle.Fill;
             bezierCurve1.Location = new Point(3, 3);
             bezierCurve1.Name = "bezierCurve1";
             bezierCurve1.Padding = new Padding(25, 5, 0, 0);
@@ -2217,13 +2577,8 @@
             // tabPage5
             // 
             tabPage5.BackColor = Color.White;
-            tabPage5.Controls.Add(label1);
-            tabPage5.Controls.Add(klxPiaoButton1);
-            tabPage5.Controls.Add(textBox1);
-            tabPage5.Controls.Add(textBox6);
-            tabPage5.Controls.Add(label2);
-            tabPage5.Controls.Add(label3);
-            tabPage5.Controls.Add(textBox2);
+            tabPage5.Controls.Add(klxPiaoPanel6);
+            tabPage5.Controls.Add(slideSwitch6);
             tabPage5.Controls.Add(textBox5);
             tabPage5.Controls.Add(textBox3);
             tabPage5.Controls.Add(textBox4);
@@ -2233,6 +2588,108 @@
             tabPage5.Size = new Size(697, 409);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "属性代码生成器";
+            // 
+            // klxPiaoPanel6
+            // 
+            klxPiaoPanel6.BackColor = Color.White;
+            klxPiaoPanel6.Controls.Add(label1);
+            klxPiaoPanel6.Controls.Add(textBox2);
+            klxPiaoPanel6.Controls.Add(label3);
+            klxPiaoPanel6.Controls.Add(label2);
+            klxPiaoPanel6.Controls.Add(textBox6);
+            klxPiaoPanel6.Controls.Add(textBox19);
+            klxPiaoPanel6.Controls.Add(textBox1);
+            klxPiaoPanel6.Controls.Add(label24);
+            klxPiaoPanel6.Controls.Add(textBox20);
+            klxPiaoPanel6.Controls.Add(label25);
+            klxPiaoPanel6.Location = new Point(20, 83);
+            klxPiaoPanel6.Name = "klxPiaoPanel6";
+            klxPiaoPanel6.Size = new Size(293, 169);
+            klxPiaoPanel6.TabIndex = 22;
+            klxPiaoPanel6.启用投影 = false;
+            klxPiaoPanel6.圆角大小 = new KlxPiaoAPI.CornerRadius(25F, 25F, 25F, 25F);
+            // 
+            // textBox19
+            // 
+            textBox19.Location = new Point(157, 130);
+            textBox19.Name = "textBox19";
+            textBox19.Size = new Size(121, 23);
+            textBox19.TabIndex = 17;
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Location = new Point(18, 104);
+            label24.Name = "label24";
+            label24.Size = new Size(97, 17);
+            label24.TabIndex = 14;
+            label24.Text = "类别 (Category)";
+            // 
+            // textBox20
+            // 
+            textBox20.Location = new Point(157, 101);
+            textBox20.Name = "textBox20";
+            textBox20.Size = new Size(121, 23);
+            textBox20.TabIndex = 15;
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Location = new Point(18, 133);
+            label25.Name = "label25";
+            label25.Size = new Size(110, 17);
+            label25.TabIndex = 16;
+            label25.Text = "描述 (Description)";
+            // 
+            // slideSwitch6
+            // 
+            slideSwitch6.ChangeColors = new Color[]
+    {
+    Color.FromArgb(0, 117, 184),
+    Color.DarkSeaGreen
+    };
+            slideSwitch6.ChangeProperty = KlxPiaoControls.SlideSwitch.Properties.BackColor;
+            slideSwitch6.Items = new string[]
+    {
+    "C#",
+    "VB"
+    };
+            slideSwitch6.ItemSize = new Size(58, 35);
+            // 
+            // 
+            // 
+            slideSwitch6.ItemsStyle.BackColor = Color.White;
+            slideSwitch6.ItemsStyle.Cursor = Cursors.Hand;
+            slideSwitch6.ItemsStyle.Location = new Point(0, 5);
+            slideSwitch6.ItemsStyle.Name = "ItemsShow";
+            slideSwitch6.ItemsStyle.Size = new Size(116, 35);
+            slideSwitch6.ItemsStyle.TabIndex = 0;
+            slideSwitch6.ItemsStyle.启用投影 = false;
+            slideSwitch6.ItemsStyle.圆角大小 = new KlxPiaoAPI.CornerRadius(10F, 10F, 10F, 10F);
+            slideSwitch6.Location = new Point(20, 19);
+            slideSwitch6.Name = "slideSwitch6";
+            slideSwitch6.Padding = new Padding(5, 0, 5, 0);
+            // 
+            // 
+            // 
+            slideSwitch6.SelectItemStyle.AutoSize = false;
+            slideSwitch6.SelectItemStyle.BackColor = Color.FromArgb(0, 117, 184);
+            slideSwitch6.SelectItemStyle.ForeColor = Color.White;
+            slideSwitch6.SelectItemStyle.Location = new Point(6, -1);
+            slideSwitch6.SelectItemStyle.Name = "SelectShow";
+            slideSwitch6.SelectItemStyle.Size = new Size(50, 46);
+            slideSwitch6.SelectItemStyle.TabIndex = 2;
+            slideSwitch6.SelectItemStyle.Text = "C#";
+            slideSwitch6.SelectItemStyle.TextAlign = ContentAlignment.MiddleCenter;
+            slideSwitch6.SelectItemStyle.偏移方式 = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            slideSwitch6.SelectItemStyle.启用边框 = true;
+            slideSwitch6.SelectItemStyle.圆角大小 = 10F;
+            slideSwitch6.SelectItemStyle.抗锯齿 = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            slideSwitch6.SelectItemStyle.边框大小 = 1;
+            slideSwitch6.SelectSize = new Size(50, 46);
+            slideSwitch6.Size = new Size(116, 46);
+            slideSwitch6.TabIndex = 21;
+            slideSwitch6.SelectIndexChanged += SlideSwitch6_SelectIndexChanged;
             // 
             // tabPage8
             // 
@@ -2722,6 +3179,7 @@
             tabPage10.ResumeLayout(false);
             tabPage11.ResumeLayout(false);
             tabPage12.ResumeLayout(false);
+            tabPage16.ResumeLayout(false);
             tabPage3.ResumeLayout(false);
             tabControlContainer2.ResumeLayout(false);
             klxPiaoTabControl2.ResumeLayout(false);
@@ -2734,6 +3192,8 @@
             klxPiaoPanel7.ResumeLayout(false);
             tabPage5.ResumeLayout(false);
             tabPage5.PerformLayout();
+            klxPiaoPanel6.ResumeLayout(false);
+            klxPiaoPanel6.PerformLayout();
             tabPage8.ResumeLayout(false);
             tabPage8.PerformLayout();
             groupBox4.ResumeLayout(false);
@@ -2754,7 +3214,6 @@
         private TextBox textBox5;
         private TextBox textBox6;
         private Label label3;
-        private KlxPiaoControls.KlxPiaoButton klxPiaoButton1;
         private TabControl tabControl1;
         private TabPage tabPage1;
         private TabPage tabPage2;
@@ -2926,5 +3385,23 @@
         private KlxPiaoControls.SlideSwitch slideSwitch3;
         private KlxPiaoControls.SlideSwitch slideSwitch5;
         private KlxPiaoControls.SlideSwitch slideSwitch4;
+        private TextBox textBox19;
+        private Label label24;
+        private Label label25;
+        private TextBox textBox20;
+        private KlxPiaoControls.SlideSwitch slideSwitch6;
+        private KlxPiaoControls.KlxPiaoPanel klxPiaoPanel6;
+        private TabPage tabPage16;
+        private KlxPiaoControls.RoundedButton roundedButton1;
+        private KlxPiaoControls.RoundedButton roundedButton2;
+        private KlxPiaoControls.RoundedButton roundedButton3;
+        private KlxPiaoControls.RoundedButton roundedButton4;
+        private KlxPiaoControls.RoundedButton roundedButton6;
+        private KlxPiaoControls.RoundedButton roundedButton7;
+        private KlxPiaoControls.RoundedButton roundedButton5;
+        private KlxPiaoControls.RoundedButton roundedButton9;
+        private KlxPiaoControls.RoundedButton roundedButton8;
+        private KlxPiaoControls.KlxPiaoLabel klxPiaoLabel35;
+        private KlxPiaoControls.SlideSwitch slideSwitch7;
     }
 }

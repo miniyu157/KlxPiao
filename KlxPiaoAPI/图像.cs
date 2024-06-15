@@ -6,7 +6,7 @@ namespace KlxPiaoAPI
     /// <summary>
     /// 提供图像处理相关的功能。
     /// </summary>
-    public class 图像
+    public static class 图像
     {
         //参考自DYLIKE
 
@@ -105,6 +105,40 @@ namespace KlxPiaoAPI
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 添加圆角到指定的 Bitmap 图像。
+        /// </summary>
+        /// <param name="original">原始的 Bitmap 图像。</param>
+        /// <param name="圆角大小">指定的圆角大小，以 CornerRadius 结构体表示。</param>
+        /// <returns>带有圆角的 Bitmap 图像。</returns>
+        public static Bitmap 添加圆角(this Bitmap original, CornerRadius 圆角大小)
+        {
+            Rectangle rect = new(0, 0, original.Width, original.Height);
+
+            int width = original.Width;
+            int height = original.Height;
+            Bitmap roundedImage = new(width, height);
+            using (Graphics g = Graphics.FromImage(roundedImage))
+            {
+                g.Clear(Color.Transparent);
+                g.SetClip(绘图.转为圆角路径(rect, 圆角大小));
+                g.DrawImage(original, Point.Empty);
+            }
+
+            return roundedImage;
+        }
+
+        /// <summary>
+        /// 添加圆角到指定的 Image 图像。
+        /// </summary>
+        /// <param name="original">原始的 Image 图像。</param>
+        /// <param name="圆角大小">指定的圆角大小，以 CornerRadius 结构体表示。</param>
+        /// <returns>带有圆角的 Image 图像。</returns>
+        public static Image 添加圆角(this Image original, CornerRadius 圆角大小)
+        {
+            return ((Bitmap)original).添加圆角(圆角大小);
         }
     }
 }

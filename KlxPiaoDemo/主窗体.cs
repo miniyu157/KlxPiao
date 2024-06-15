@@ -2,10 +2,10 @@
 using KlxPiaoControls;
 using KlxPiaoDemo.Properties;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Text;
+using static KlxPiaoAPI.控件;
 
 namespace KlxPiaoDemo
 {
@@ -24,7 +24,7 @@ namespace KlxPiaoDemo
 
             //控件.PictureBox
             Pic_BorderTrackBar.值 = klxPiaoPictureBox1.边框大小;
-            Pic_FilletTrackBar.值 = klxPiaoPictureBox1.圆角百分比;
+            Pic_FilletTrackBar.值 = klxPiaoPictureBox1.圆角大小.TopLeft;
             Pic_SizeTrackBar.值 = klxPiaoPictureBox1.Width;
 
             Pic_SizeTrackBar.最小值 = klxPiaoPictureBox1.Width / 2;
@@ -107,20 +107,38 @@ namespace KlxPiaoDemo
             checkBox1.Checked = 启用缩放动画;
             checkBox2.Checked = 可调整大小;
             checkBox3.Checked = ShowIcon;
+
+            //属性代码生成器
+            klxPiaoPanel6.遍历<TextBox>(textBox => { textBox.TextChanged += 生成代码; });
         }
 
         //属性代码生成器
-        private void KlxPiaoButton1_Click(object sender, EventArgs e)
+        private void 生成代码(object? sender, EventArgs e)
         {
             string 名称 = textBox1.Text;
             string 类型 = textBox2.Text;
             string 默认值 = textBox6.Text;
+            string 类别 = textBox20.Text;
+            string 描述 = textBox19.Text;
 
-            textBox3.Text = $"private {类型} _{名称};";
-            textBox4.Text = $"_{名称} = {默认值};";
-            textBox5.Text = $"        public {类型} {名称}\r\n        {{\r\n            get {{ return _{名称}; }}\r\n            set {{ _{名称} = value; Invalidate(); }}\r\n        }}";
+            if (slideSwitch6.SelectIndex == 0)
+            {
+                textBox3.Text = $"private {类型} _{名称};";
+                textBox4.Text = $"_{名称} = {默认值};";
+                textBox5.Text = $"        [Category(\"{类别}\")]\r\n        [Description(\"{描述}\")]\r\n        [DefaultValue(typeof({类型}), \"{默认值}\")]\r\n        public {类型} {名称}\r\n        {{\r\n            get {{ return _{名称}; }}\r\n            set {{ _{名称} = value; Invalidate(); }}\r\n        }}";
+            }
+            else if (slideSwitch6.SelectIndex == 1)
+            {
+                textBox3.Text = $"Dim _{名称} As {类型}";
+                textBox4.Text = $"_{名称} = {默认值}";
+                textBox5.Text = $"        <Category(\"{类别}\")>\r\n        <Description(\"{描述}\")>\r\n        <DefaultValue(GetType({类型}), \"{默认值}\")>\r\n        Public Property {名称} As {类型}\r\n            Get\r\n                Return _{名称}\r\n            End Get\r\n            Set(value As {类型})\r\n                _{名称} = value\r\n                Invalidate()\r\n            End Set\r\n        End Property";
+            }
+
         }
-
+        private void SlideSwitch6_SelectIndexChanged(object sender, EventArgs e)
+        {
+            生成代码(sender, e);
+        }
         #region 控件.PictureBox
         private void Pic_Track_值Changed(object? sender, PropertyChangedEventArgs e)
         {
@@ -132,7 +150,7 @@ namespace KlxPiaoDemo
                         klxPiaoPictureBox1.边框大小 = (int)c.值;
                         break;
                     case "Pic_FilletTrackBar":
-                        klxPiaoPictureBox1.圆角百分比 = c.值;
+                        klxPiaoPictureBox1.圆角大小 = new CornerRadius(c.值);
                         break;
                     case "Pic_SizeTrackBar":
                         klxPiaoPictureBox1.Size = new Size((int)c.值, (int)c.值);
@@ -383,7 +401,7 @@ namespace KlxPiaoDemo
                 Padding 边距 = new(int.Parse(textBox14.Text), int.Parse(textBox13.Text), int.Parse(textBox17.Text), int.Parse(textBox16.Text));
                 Size 矩阵大小 = new(int.Parse(textBox10.Text), int.Parse(textBox9.Text));
 
-                List<PointF> points = 数学.计算网格点(容器大小, 单元大小, 矩阵大小, 边距);
+                List<PointF> points = LayoutUtilities.计算网格点(容器大小, 单元大小, 矩阵大小, 边距);
                 StringBuilder showPoints = new();
 
                 textBox15.Clear();
@@ -714,6 +732,26 @@ namespace KlxPiaoDemo
                 .Replace("{结构名称Value}", 结构名称Text.Text + "Value")
                 .Replace("{结构名称1}", 结构名称Text.Text + "1")
                 .Replace("{结构名称2}", 结构名称Text.Text + "2");
+        }
+
+
+        //KlxPiaoControls.RoundedButton
+        private void SlideSwitch7_SelectIndexChanged(object sender, SlideSwitch.IndexChangedEventArgs e)
+        {
+            switch (e.SelectIndex)
+            {
+                case 0:
+                    SetRoundedButton(true);
+                    break;
+
+                case 1:
+                    SetRoundedButton(false);
+                    break;
+            }
+        }
+        private void SetRoundedButton(bool check)
+        {
+            tabPage16.遍历<RoundedButton>(roundedbutton => { roundedbutton.交互样式.启用动画 = check; });
         }
     }
 }

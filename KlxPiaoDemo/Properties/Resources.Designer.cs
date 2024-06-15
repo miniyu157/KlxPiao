@@ -71,6 +71,16 @@ namespace KlxPiaoDemo.Properties {
         }
         
         /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap TestImage2 {
+            get {
+                object obj = ResourceManager.GetObject("TestImage2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 using System.ComponentModel;
         ///
         ///namespace {命名空间}
@@ -79,19 +89,21 @@ namespace KlxPiaoDemo.Properties {
         ///    [TypeConverter(typeof({转换器名称}))]
         ///    public struct {结构名称}
         ///    {
-        ///        public {元素类型} TopLeft { get; set; }
-        ///        public {元素类型} TopRight { get; set; }
-        ///        public {元素类型} BottomRight { get; set; }
-        ///        public {元素类型} BottomLeft { get; set; }
+        ///{结构成员声明}
         ///
         ///        public {结构名称}() { }
         ///
-        ///        public {结构名称}({元素类型} uniform)
+        ///        public {结构名称}({成员类型} uniform)
         ///        {
-        ///            TopLeft = TopRight = BottomRight = BottomLeft = uniform;
+        ///{统一赋值方法}
         ///        }
         ///
-        ///        public [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///        public {结构名称}({通用方法参数})
+        ///        {
+        ///{通用方法过程}
+        ///        }
+        ///    }
+        ///} 的本地化字符串。
         /// </summary>
         internal static string 结构 {
             get {
@@ -110,11 +122,11 @@ namespace KlxPiaoDemo.Properties {
         ///    /// &lt;summary&gt;提供了一种类型转换器，用于将 &lt;see cref=&quot;{结构名称}&quot; /&gt; 值与其他各种表示形式进行转换。&lt;/summary&gt;
         ///    public class {转换器名称} : TypeConverter
         ///    {
-        ///
         ///#pragma warning disable CS8765 // 参数类型的为 Null 性与重写成员不匹配(可能是由于为 Null 性特性)。
         ///#pragma warning disable CA2208 // 正确实例化参数异常
         ///#pragma warning disable CS8604 // 引用类型参数可能为 null。
-        ///#pragma warning disable CS8601 // 引用类型赋值可能为 null。 [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///#pragma warning disable CS8601 // 引用类型赋值可能为 null。
+        /// [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string 转换器 {
             get {

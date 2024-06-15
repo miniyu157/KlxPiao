@@ -93,9 +93,9 @@ namespace KlxPiaoAPI
             Rectangle BottomRightRect = Rectangle.Empty;
             Rectangle BottomLeftRect = Rectangle.Empty;
 
-            //左上角路径
             try
             {
+                //左上角路径
                 if (TopLeft == 0F)
                 {
                     圆角路径.AddLine(LeftCenterPoint, TopLeftPoint);
