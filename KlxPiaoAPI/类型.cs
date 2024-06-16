@@ -47,6 +47,8 @@
                     _ => false,
                 };
             }
+            private NumberType() { }
+            public static NumberType Instance { get; } = new();
         }
 
         /// <summary>
@@ -67,6 +69,8 @@
                     _ => false,
                 };
             }
+            private PointOrSizeType() { }
+            public static PointOrSizeType Instance { get; } = new();
         }
     }
 }

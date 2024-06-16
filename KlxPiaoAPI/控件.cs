@@ -92,14 +92,14 @@ namespace KlxPiaoAPI
             开始值 ??= SetOrGetPropertyValue(控件, 属性);
             控制点 ??= [new(0, 0), new(1, 1)];
 
-            ITypeCollection 数字类型集合 = new NumberType();
-            ITypeCollection 点和大小类型集合 = new PointOrSizeType();
-
+            ITypeCollection 数字类型集合 = NumberType.Instance;
+            ITypeCollection 点和大小类型集合 = PointOrSizeType.Instance;
+            
             bool 颜色 = 开始值 is Color && 结束值 is Color;
             bool 单个数值类型 = 开始值 != null && 开始值.GetType() == 结束值.GetType() && 判断(数字类型集合, 开始值) && 判断(数字类型集合, 结束值);
             bool 点或大小 = 开始值 != null && 开始值.GetType() == 结束值.GetType() && 判断(点和大小类型集合, 开始值) && 判断(点和大小类型集合, 结束值);
 
-            bool[] types = [颜色, 单个数值类型, 点或大小];
+            var types = (颜色, 单个数值类型, 点或大小);
 
             while (!状态)
             {
@@ -151,14 +151,14 @@ namespace KlxPiaoAPI
 
             开始值 ??= 控件.SetOrGetPropertyValue(属性);
 
-            ITypeCollection 数字类型集合 = new NumberType();
-            ITypeCollection 点和大小类型集合 = new PointOrSizeType();
+            ITypeCollection 数字类型集合 = NumberType.Instance;
+            ITypeCollection 点和大小类型集合 = PointOrSizeType.Instance;
 
             bool 颜色 = 开始值 is Color && 结束值 is Color;
             bool 单个数值类型 = 开始值 != null && 开始值.GetType() == 结束值.GetType() && 判断(数字类型集合, 开始值) && 判断(数字类型集合, 结束值);
             bool 点或大小 = 开始值 != null && 开始值.GetType() == 结束值.GetType() && 判断(点和大小类型集合, 开始值) && 判断(点和大小类型集合, 结束值);
 
-            bool[] types = [颜色, 单个数值类型, 点或大小];
+            var types = (颜色, 单个数值类型, 点或大小);
 
             while (!状态)
             {
@@ -191,9 +191,13 @@ namespace KlxPiaoAPI
         }
 
         //通用过渡动画逻辑
-        private static void 动画逻辑(Control 控件, string 属性, object 开始值, object 结束值, bool[] types, double 进度)
+        private static void 动画逻辑(Control 控件, string 属性, object 开始值, object 结束值, (bool 颜色, bool 单个数值类型, bool 点或大小) types, double 进度)
         {
-            if (开始值 != null && types[0])
+            if (开始值 == null)
+            {
+                return;
+            }
+            if (types.颜色)
             {
                 Color startColor = (Color)开始值;
                 Color endColor = (Color)结束值;
@@ -205,7 +209,7 @@ namespace KlxPiaoAPI
 
                 控件.Invoke(() => 控件.SetOrGetPropertyValue(属性, newColor));
             }
-            else if (开始值 != null && types[1])
+            else if (types.单个数值类型)
             {
                 double startValue = Convert.ToDouble(开始值);
                 double endValue = Convert.ToDouble(结束值);
@@ -213,7 +217,7 @@ namespace KlxPiaoAPI
 
                 控件.Invoke(() => 控件.SetOrGetPropertyValue(属性, newValue));
             }
-            else if (开始值 != null && types[2])
+            else if (types.点或大小)
             {
                 object newValue = InterpolateValues(开始值, 结束值, 进度);
 

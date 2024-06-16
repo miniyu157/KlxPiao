@@ -69,5 +69,26 @@
 
             return CalculateBezierPointRecursive(t, reducedPoints, n - 1);
         }
+        /// <summary>
+         /// 递归计算贝塞尔曲线上的点。
+         /// </summary>
+         /// <param name="t">曲线进度，范围在0到1之间。</param>
+         /// <param name="controlPoints">控制点数组。</param>
+         /// <param name="n">控制点的数量减一。</param>
+        private static PointF CalculateBezierPointRecursive(double t, Span<PointF> controlPoints, int n)
+        {
+            if (n == 0)
+                return controlPoints[0];
+
+            Span<PointF> reducedPoints = stackalloc PointF[n];
+            for (int i = 0; i < n; i++)
+            {
+                float x = (float)((1 - t) * controlPoints[i].X + t * controlPoints[i + 1].X);
+                float y = (float)((1 - t) * controlPoints[i].Y + t * controlPoints[i + 1].Y);
+                reducedPoints[i] = new PointF(x, y);
+            }
+
+            return CalculateBezierPointRecursive(t, reducedPoints, n - 1);
+        }
     }
 }

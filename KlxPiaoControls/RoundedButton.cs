@@ -54,6 +54,7 @@ namespace KlxPiaoControls
 
             _边框大小 = 1;
             _边框颜色 = Color.Gainsboro;
+            _边框笔 = new Pen(边框颜色, 边框大小);
             _圆角大小 = new CornerRadius(10);
             _外部颜色 = Color.White;
             _图像大小模式 = PictureBoxSizeMode.Zoom;
@@ -130,8 +131,13 @@ namespace KlxPiaoControls
         [DefaultValue(1)]
         public int 边框大小
         {
-            get { return _边框大小; }
-            set { _边框大小 = value; Invalidate(); }
+            get => _边框大小;
+            set 
+            { 
+                _边框大小 = value;
+                _边框笔.Width = value;
+                Invalidate(); 
+            }
         }
         /// <summary>
         /// 边框的颜色。
@@ -141,8 +147,13 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "Color.G")]
         public Color 边框颜色
         {
-            get { return _边框颜色; }
-            set { _边框颜色 = value; Invalidate(); }
+            get => _边框颜色;
+            set 
+            {
+                _边框颜色 = value; 
+                _边框笔.Color = value;
+                Invalidate();
+            }
         }
         /// <summary>
         /// 每个角的圆角大小。
@@ -279,6 +290,12 @@ namespace KlxPiaoControls
                 return "";
             }
         }
+        private Pen _边框笔;
+        public Pen 边框笔
+        {
+            get => _边框笔;
+            set => _边框笔 = value;
+        }
 
         protected override void OnPaint(PaintEventArgs pe)
         {
@@ -382,15 +399,15 @@ namespace KlxPiaoControls
                         drawPoint.Offset(offsetX, offsetY);
                         drawSize = new Size(newWidth, newHeight);
                     }
-
-                    g.DrawImage(Image.添加圆角(ImageCornerRadius), new Rectangle(LayoutUtilities.CalculateAlignedPosition(工作区, drawSize, ImageAlign, ImagePadding), drawSize));
+                    using var roundedImage = Image.添加圆角(ImageCornerRadius);
+                    g.DrawImage(roundedImage, new Rectangle(LayoutUtilities.CalculateAlignedPosition(工作区, drawSize, ImageAlign, ImagePadding), drawSize));
                 }
 
                 //绘制文本
                 g.DrawString(Text, Font, new SolidBrush(ForeColor), LayoutUtilities.CalculateAlignedPosition(工作区, 文本大小, TextAlign, Padding));
 
                 //边框
-                g.绘制圆角(工作区, 圆角大小, 外部颜色, new Pen(边框颜色, 边框大小));
+                g.绘制圆角(工作区, 圆角大小, 外部颜色, 边框笔);
 
                 base.OnPaint(pe);
             }
