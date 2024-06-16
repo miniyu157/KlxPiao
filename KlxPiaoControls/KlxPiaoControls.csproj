@@ -5,11 +5,11 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyVersion>1.1.0.3</AssemblyVersion>
-    <FileVersion>1.1.0.3</FileVersion>
+    <AssemblyVersion>1.1.0.4</AssemblyVersion>
+    <FileVersion>1.1.0.4</FileVersion>
     <Copyright>KlxPiao Copyright © 2024</Copyright>
     <Authors>$(AssemblyName)</Authors>
-	<Version>1.1.0.3</Version>
+	<Version>1.1.0.4</Version>
   </PropertyGroup>
 
   <ItemGroup>

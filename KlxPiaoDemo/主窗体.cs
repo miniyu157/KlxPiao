@@ -523,28 +523,43 @@ namespace KlxPiaoDemo
 
             textBox18.Text = pointsList.ToString();
         }
+
+        private CancellationTokenSource cts = new();
         private void 播放But_Click(object sender, EventArgs e)
         {
+            cts.Cancel();
+            cts = new CancellationTokenSource();
+
             if (位置过渡Check.Checked)
             {
                 Point 目标位置 = 控件动画Panel.Location == new Point(24, 271) ? new Point(435, 253) : new Point(24, 271);
-                _ = 控件动画Panel.贝塞尔过渡动画("Location", null, 目标位置, (int)klxPiaoTrackBar12.值, [.. bezierCurve1.控制点集合]);
+                _ = 控件动画Panel.贝塞尔过渡动画("Location",
+                    null, 目标位置, (int)klxPiaoTrackBar12.值, [.. bezierCurve1.控制点集合], 100,
+                    default, cts.Token);
             }
             if (大小过渡Check.Checked)
             {
-                Size 目标位置 = 控件动画Panel.Size == new Size(70, 70) ? new Size(130, 130) : new Size(70, 70);
-                _ = 控件动画Panel.贝塞尔过渡动画("Size", null, 目标位置, (int)klxPiaoTrackBar12.值, [.. bezierCurve1.控制点集合]);
+                Size 目标大小 = 控件动画Panel.Size == new Size(70, 70) ? new Size(130, 130) : new Size(70, 70);
+                _ = 控件动画Panel.贝塞尔过渡动画("Size",
+                    null, 目标大小, (int)klxPiaoTrackBar12.值, [.. bezierCurve1.控制点集合], 100,
+                    default, cts.Token);
             }
             if (颜色过渡Check.Checked)
             {
                 Color 目标颜色 = Color.FromArgb(rand.Next(0, 255), rand.Next(0, 255), rand.Next(0, 255));
-                _ = 控件动画Panel.贝塞尔过渡动画("BackColor", null, 目标颜色, (int)klxPiaoTrackBar12.值, null);
+                _ = 控件动画Panel.贝塞尔过渡动画("BackColor",
+                    null, 目标颜色, (int)klxPiaoTrackBar12.值, null, 100,
+                    default, cts.Token);
             }
         }
         private void 停止But_Click(object sender, EventArgs e)
         {
-
+            if (cts != default)
+            {
+                cts.Cancel();
+            }
         }
+
         //修改基础数据
         private void TextBox18_TextChanged(object sender, EventArgs e)
         {

@@ -32,58 +32,36 @@ namespace KlxPiaoAPI
         }
 
         /// <summary>
-        /// 设置控件的属性值。
+        /// 设置或获取对象的属性值。
         /// </summary>
-        /// <param name="control">要设置属性的控件。</param>
-        /// <param name="propertyName">属性名称。</param>
-        /// <param name="value">要设置的值。</param>
-        public static void 设置属性(this Control control, string propertyName, object value)
+        /// <param name="obj">要操作的对象。</param>
+        /// <param name="propertyName">属性的名称。</param>
+        /// <param name="newValue">新的属性值。如果为 null，则表示获取属性值。</param>
+        /// <returns>如果 newValue 为 null，则返回属性的当前值；否则返回 null。</returns>
+        /// <exception cref="ArgumentNullException">当 obj 为 null 时抛出。</exception>
+        /// <exception cref="ArgumentException">当属性名称为空或属性不存在时抛出。</exception>
+        public static object? SetOrGetPropertyValue(this object obj, string propertyName, object? newValue = null)
         {
-            ArgumentNullException.ThrowIfNull(control);
+            ArgumentNullException.ThrowIfNull(obj);
 
             if (string.IsNullOrEmpty(propertyName))
-                throw new ArgumentNullException(nameof(propertyName));
+                throw new ArgumentException("属性名不能为空", nameof(propertyName));
 
-            PropertyInfo property = control.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance) ?? throw new ArgumentException($"属性 '{propertyName}' 在控件 '{control.GetType().Name}' 中不存在。");
+            Type type = obj.GetType();
 
-            if (!property.CanWrite)
-                throw new ArgumentException($"属性 '{propertyName}' 是只读的。");
+            PropertyInfo property = type.GetProperty(propertyName) ?? throw new ArgumentException($"属性 {propertyName} 在类型 {type.Name} 中不存在", nameof(propertyName));
 
-            try
+            if (newValue != null)
             {
-                if (value != null && !property.PropertyType.IsAssignableFrom(value.GetType()))
-                {
-                    value = Convert.ChangeType(value, property.PropertyType);
-                }
-                property.SetValue(control, value);
+                if (!property.PropertyType.IsAssignableFrom(newValue.GetType()))
+                    throw new ArgumentException($"值类型 {newValue.GetType().Name} 与属性类型 {property.PropertyType.Name} 不匹配", nameof(newValue));
+
+                property.SetValue(obj, newValue);
+                return null;
             }
-            catch (Exception ex)
+            else
             {
-                throw new InvalidOperationException($"设置属性 '{propertyName}' 时发生错误: {ex.Message}", ex);
-            }
-        }
-        /// <summary>
-        /// 获取控件的属性值。
-        /// </summary>
-        /// <param name="control">要获取属性的控件。</param>
-        /// <param name="propertyName">属性名称。</param>
-        public static object? 读取属性(this Control control, string propertyName)
-        {
-            ArgumentNullException.ThrowIfNull(control);
-            if (string.IsNullOrEmpty(propertyName))
-                throw new ArgumentNullException(nameof(propertyName));
-
-            PropertyInfo property = control.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance) ?? throw new ArgumentException($"属性 '{propertyName}' 在控件 '{control.GetType().Name}' 中不存在。");
-            if (!property.CanRead)
-                throw new ArgumentException($"属性 '{propertyName}' 是不可读的。");
-
-            try
-            {
-                return property.GetValue(control);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException($"获取属性 '{propertyName}' 时发生错误: {ex.Message}", ex);
+                return property.GetValue(obj);
             }
         }
 
@@ -103,13 +81,15 @@ namespace KlxPiaoAPI
         /// <param name="持续时间">动画持续的时间（以毫秒为单位）。</param>
         /// <param name="控制点">贝塞尔曲线的控制点数组，留空时缓动效果为Linear。</param>
         /// <param name="帧率">动画的帧率。</param>
-        public static async Task 贝塞尔过渡动画(this Control 控件, string 属性, object? 开始值, object 结束值, int 持续时间, PointF[]? 控制点 = null, int 帧率 = 100)
+        /// <param name="action">每一帧动画完成时执行的操作。</param>
+        /// <param name="token">用于取消动画的CancellationToken。</param>
+        public static async Task 贝塞尔过渡动画(this Control 控件, string 属性, object? 开始值, object 结束值, int 持续时间, PointF[]? 控制点 = null, int 帧率 = 100, Action<double>? action = default, CancellationToken token = default)
         {
             DateTime 启动时间 = DateTime.Now;
             TimeSpan 总时长 = TimeSpan.FromMilliseconds(持续时间);
             bool 状态 = false; //true表示动画完成
 
-            开始值 ??= 读取属性(控件, 属性);
+            开始值 ??= SetOrGetPropertyValue(控件, 属性);
             控制点 ??= [new(0, 0), new(1, 1)];
 
             ITypeCollection 数字类型集合 = new NumberType();
@@ -123,13 +103,18 @@ namespace KlxPiaoAPI
 
             while (!状态)
             {
+                if (token.IsCancellationRequested)
+                {
+                    break;
+                }
+
                 TimeSpan 当前时间 = DateTime.Now - 启动时间;
                 double 时间进度 = 当前时间.TotalMilliseconds / 总时长.TotalMilliseconds;
 
                 if (时间进度 >= 1.0)
                 {
                     状态 = true;
-                    控件.Invoke(() => 控件.设置属性(属性, 结束值));
+                    控件.Invoke(() => 控件.SetOrGetPropertyValue(属性, 结束值));
                 }
                 else
                 {
@@ -139,8 +124,10 @@ namespace KlxPiaoAPI
                     {
                         动画逻辑(控件, 属性, 开始值, 结束值, types, 进度);
                     }
-                    await Task.Delay(1000 / 帧率);
+                    await Task.Delay(1000 / 帧率, token);
                 }
+
+                action?.Invoke(时间进度);
             }
         }
 
@@ -154,14 +141,15 @@ namespace KlxPiaoAPI
         /// <param name="持续时间">动画持续的时间（以毫秒为单位）。</param>
         /// <param name="自定义曲线表达式">用户自定义的动画曲线表达式。</param>
         /// <param name="帧率">动画的帧率。</param>
+        /// <param name="token">用于取消动画的CancellationToken。</param>
         /// <returns></returns>
-        public static async Task 自定义过渡动画(this Control 控件, string 属性, object? 开始值, object 结束值, int 持续时间, 自定义函数 自定义曲线表达式, int 帧率 = 100)
+        public static async Task 自定义过渡动画(this Control 控件, string 属性, object? 开始值, object 结束值, int 持续时间, 自定义函数 自定义曲线表达式, int 帧率 = 100, Action<double>? action = default, CancellationToken token = default)
         {
             DateTime 启动时间 = DateTime.Now;
             TimeSpan 总时长 = TimeSpan.FromMilliseconds(持续时间);
             bool 状态 = false; //true表示动画完成
 
-            开始值 ??= 读取属性(控件, 属性);
+            开始值 ??= 控件.SetOrGetPropertyValue(属性);
 
             ITypeCollection 数字类型集合 = new NumberType();
             ITypeCollection 点和大小类型集合 = new PointOrSizeType();
@@ -174,13 +162,18 @@ namespace KlxPiaoAPI
 
             while (!状态)
             {
+                if (token.IsCancellationRequested)
+                {
+                    break;
+                }
+
                 TimeSpan 当前时间 = DateTime.Now - 启动时间;
                 double 时间进度 = 当前时间.TotalMilliseconds / 总时长.TotalMilliseconds;
 
                 if (时间进度 >= 1.0)
                 {
                     状态 = true;
-                    控件.Invoke(() => 控件.设置属性(属性, 结束值));
+                    控件.Invoke(() => 控件.SetOrGetPropertyValue(属性, 结束值));
                 }
                 else
                 {
@@ -190,8 +183,10 @@ namespace KlxPiaoAPI
                     {
                         动画逻辑(控件, 属性, 开始值, 结束值, types, 进度);
                     }
-                    await Task.Delay(1000 / 帧率);
+                    await Task.Delay(1000 / 帧率, token);
                 }
+
+                action?.Invoke(时间进度);
             }
         }
 
@@ -208,7 +203,7 @@ namespace KlxPiaoAPI
                 int B = startColor.B + (int)((endColor.B - startColor.B) * 进度);
                 Color newColor = Color.FromArgb(R, G, B);
 
-                控件.Invoke(() => 设置属性(控件, 属性, newColor));
+                控件.Invoke(() => 控件.SetOrGetPropertyValue(属性, newColor));
             }
             else if (开始值 != null && types[1])
             {
@@ -216,13 +211,13 @@ namespace KlxPiaoAPI
                 double endValue = Convert.ToDouble(结束值);
                 double newValue = startValue + (endValue - startValue) * 进度;
 
-                控件.Invoke(() => 设置属性(控件, 属性, newValue));
+                控件.Invoke(() => 控件.SetOrGetPropertyValue(属性, newValue));
             }
             else if (开始值 != null && types[2])
             {
                 object newValue = InterpolateValues(开始值, 结束值, 进度);
 
-                控件.Invoke(() => 设置属性(控件, 属性, newValue));
+                控件.Invoke(() => 控件.SetOrGetPropertyValue(属性, newValue));
             }
         }
 

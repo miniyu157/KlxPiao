@@ -1662,11 +1662,9 @@
             roundedButton8.TextAlign = ContentAlignment.MiddleRight;
             交互样式类1.启用动画 = false;
             交互样式类1.按下前景色 = Color.Empty;
-            交互样式类1.按下大小 = null;
             交互样式类1.按下背景色 = Color.FromArgb(249, 236, 236);
             交互样式类1.按下边框颜色 = Color.Empty;
             交互样式类1.移入前景色 = Color.Empty;
-            交互样式类1.移入大小 = null;
             交互样式类1.移入背景色 = Color.WhiteSmoke;
             交互样式类1.移入边框颜色 = Color.Empty;
             roundedButton8.交互样式 = 交互样式类1;
@@ -1690,11 +1688,9 @@
             roundedButton9.Text = "Piao";
             交互样式类2.启用动画 = false;
             交互样式类2.按下前景色 = Color.Black;
-            交互样式类2.按下大小 = null;
             交互样式类2.按下背景色 = Color.White;
             交互样式类2.按下边框颜色 = Color.Pink;
             交互样式类2.移入前景色 = SystemColors.WindowFrame;
-            交互样式类2.移入大小 = null;
             交互样式类2.移入背景色 = SystemColors.WindowFrame;
             交互样式类2.移入边框颜色 = Color.Empty;
             roundedButton9.交互样式 = 交互样式类2;
@@ -1720,11 +1716,9 @@
             roundedButton6.TextAlign = ContentAlignment.MiddleRight;
             交互样式类3.启用动画 = false;
             交互样式类3.按下前景色 = Color.Black;
-            交互样式类3.按下大小 = null;
             交互样式类3.按下背景色 = Color.White;
             交互样式类3.按下边框颜色 = Color.Pink;
             交互样式类3.移入前景色 = Color.Empty;
-            交互样式类3.移入大小 = new Size(163, 83);
             交互样式类3.移入背景色 = SystemColors.WindowFrame;
             交互样式类3.移入边框颜色 = Color.Empty;
             roundedButton6.交互样式 = 交互样式类3;
@@ -1750,11 +1744,9 @@
             roundedButton7.TextAlign = ContentAlignment.MiddleRight;
             交互样式类4.启用动画 = false;
             交互样式类4.按下前景色 = Color.Black;
-            交互样式类4.按下大小 = null;
             交互样式类4.按下背景色 = Color.White;
             交互样式类4.按下边框颜色 = Color.Pink;
             交互样式类4.移入前景色 = Color.Empty;
-            交互样式类4.移入大小 = new Size(163, 43);
             交互样式类4.移入背景色 = SystemColors.WindowFrame;
             交互样式类4.移入边框颜色 = Color.Empty;
             roundedButton7.交互样式 = 交互样式类4;
@@ -1780,11 +1772,9 @@
             roundedButton5.TextAlign = ContentAlignment.MiddleRight;
             交互样式类5.启用动画 = false;
             交互样式类5.按下前景色 = Color.Black;
-            交互样式类5.按下大小 = null;
             交互样式类5.按下背景色 = Color.White;
             交互样式类5.按下边框颜色 = Color.Pink;
             交互样式类5.移入前景色 = Color.Empty;
-            交互样式类5.移入大小 = new Size(163, 43);
             交互样式类5.移入背景色 = SystemColors.WindowFrame;
             交互样式类5.移入边框颜色 = Color.Empty;
             roundedButton5.交互样式 = 交互样式类5;
@@ -1810,11 +1800,9 @@
             roundedButton4.TextAlign = ContentAlignment.MiddleRight;
             交互样式类6.启用动画 = false;
             交互样式类6.按下前景色 = Color.Black;
-            交互样式类6.按下大小 = null;
             交互样式类6.按下背景色 = Color.White;
             交互样式类6.按下边框颜色 = Color.Pink;
             交互样式类6.移入前景色 = Color.Empty;
-            交互样式类6.移入大小 = new Size(163, 43);
             交互样式类6.移入背景色 = SystemColors.WindowFrame;
             交互样式类6.移入边框颜色 = Color.Empty;
             roundedButton4.交互样式 = 交互样式类6;
@@ -1827,7 +1815,7 @@
             // 
             roundedButton3.BackColor = Color.FromArgb(80, 80, 80);
             roundedButton3.ForeColor = Color.White;
-            roundedButton3.Image = Properties.Resources.TestImage;
+            roundedButton3.Image = Properties.Resources.TestImage2;
             roundedButton3.ImageAlign = ContentAlignment.MiddleLeft;
             roundedButton3.ImageCornerRadius = new KlxPiaoAPI.CornerRadius(1F, 1F, 1F, 1F);
             roundedButton3.ImagePadding = new Padding(12, 0, 0, 0);
@@ -1840,11 +1828,9 @@
             roundedButton3.TextAlign = ContentAlignment.MiddleRight;
             交互样式类7.启用动画 = false;
             交互样式类7.按下前景色 = Color.Black;
-            交互样式类7.按下大小 = null;
             交互样式类7.按下背景色 = Color.White;
             交互样式类7.按下边框颜色 = Color.Pink;
             交互样式类7.移入前景色 = Color.Empty;
-            交互样式类7.移入大小 = null;
             交互样式类7.移入背景色 = SystemColors.WindowFrame;
             交互样式类7.移入边框颜色 = Color.Empty;
             roundedButton3.交互样式 = 交互样式类7;
@@ -1870,11 +1856,9 @@
             roundedButton2.TextAlign = ContentAlignment.MiddleRight;
             交互样式类8.启用动画 = false;
             交互样式类8.按下前景色 = Color.Empty;
-            交互样式类8.按下大小 = null;
             交互样式类8.按下背景色 = Color.FromArgb(249, 236, 236);
             交互样式类8.按下边框颜色 = Color.Empty;
             交互样式类8.移入前景色 = Color.Black;
-            交互样式类8.移入大小 = null;
             交互样式类8.移入背景色 = Color.White;
             交互样式类8.移入边框颜色 = Color.Pink;
             roundedButton2.交互样式 = 交互样式类8;
@@ -1891,11 +1875,9 @@
             roundedButton1.Text = "RoundedButton";
             交互样式类9.启用动画 = false;
             交互样式类9.按下前景色 = Color.Empty;
-            交互样式类9.按下大小 = null;
             交互样式类9.按下背景色 = Color.FromArgb(235, 235, 235);
             交互样式类9.按下边框颜色 = Color.Empty;
             交互样式类9.移入前景色 = Color.Empty;
-            交互样式类9.移入大小 = null;
             交互样式类9.移入背景色 = Color.FromArgb(245, 245, 245);
             交互样式类9.移入边框颜色 = Color.Empty;
             roundedButton1.交互样式 = 交互样式类9;
@@ -2093,7 +2075,7 @@
             停止But.Name = "停止But";
             停止But.Size = new Size(90, 42);
             停止But.TabIndex = 31;
-            停止But.Text = "暂停";
+            停止But.Text = "停止";
             停止But.UseVisualStyleBackColor = true;
             停止But.Click += 停止But_Click;
             // 
@@ -2187,6 +2169,8 @@
             bezierCurve1.TabIndex = 36;
             bezierCurve1.Text = "bezierCurve1";
             bezierCurve1.内部位置 = ContentAlignment.TopLeft;
+            bezierCurve1.扫描线进度 = 0F;
+            bezierCurve1.扫描线颜色 = Color.Empty;
             bezierCurve1.拖动时显示控制点信息 = false;
             bezierCurve1.控制点集合 = (List<PointF>)resources.GetObject("bezierCurve1.控制点集合");
             bezierCurve1.控制点拖动 += BezierCurve1_控制点拖动;

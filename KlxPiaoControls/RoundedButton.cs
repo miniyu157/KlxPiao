@@ -42,8 +42,6 @@ namespace KlxPiaoControls
         private SizeF _图像大小修正;
         private FormatType _图像大小修正格式;
 
-        //private bool _可获得焦点;
-
         public RoundedButton()
         {
             InitializeComponent();
@@ -67,11 +65,8 @@ namespace KlxPiaoControls
 
             _交互样式.启用动画 = false;
 
-            //_可获得焦点 = true;
-
             Size = new Size(116, 43);
             DoubleBuffered = true;
-            SetStyle(ControlStyles.Selectable, true);
         }
 
         [DefaultValue(typeof(Size), "116,43")]
@@ -217,18 +212,6 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        ///// <summary>
-        ///// 指示组件是否可获得焦点。
-        ///// </summary>
-        //[Category("RoundedButton特性")]
-        //[Description("组件是否可获得焦点")]
-        //[DefaultValue(true)]
-        //public bool 可获得焦点
-        //{
-        //    get { return _可获得焦点; }
-        //    set { _可获得焦点 = value; }
-        //}
-
         private 交互样式类 _交互样式 = new();
 
         /// <summary>
@@ -291,36 +274,6 @@ namespace KlxPiaoControls
             [Description("鼠标按下时组件的前景色。")]
             public Color 按下前景色 { get; set; }
 
-            /// <summary>
-            /// 获取或设置鼠标移入时组件的大小。
-            /// </summary>
-            [Description("鼠标移入时组件的大小。")]
-            public Size? 移入大小 { get; set; }
-
-            /// <summary>
-            /// 获取或设置鼠标按下时组件的大小。
-            /// </summary>
-            [Description("鼠标按下时组件的大小。")]
-            public Size? 按下大小 { get; set; }
-
-            ///// <summary>
-            ///// 获取或设置组件获得焦点时的背景色。
-            ///// </summary>
-            //[Description("获得焦点时组件的背景色。")]
-            //public Color 焦点背景色 { get; set; }
-
-            ///// <summary>
-            ///// 获取或设置组件获得焦点时的边框颜色。
-            ///// </summary>
-            //[Description("获得焦点时组件的边框颜色。")]
-            //public Color 焦点边框颜色 { get; set; }
-
-            ///// <summary>
-            ///// 获取或设置组件获得焦点时的边框大小。
-            ///// </summary>
-            //[Description("获得焦点时组件的边框大小。")]
-            //public int? 焦点边框大小 { get; set; }
-
             public override string ToString()
             {
                 return "";
@@ -329,382 +282,253 @@ namespace KlxPiaoControls
 
         protected override void OnPaint(PaintEventArgs pe)
         {
-            //SetStyle(ControlStyles.Selectable, 可获得焦点);
-
-            Graphics g = pe.Graphics;
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-            Rectangle 工作区 = new(0, 0, Width, Height);
-            SizeF 文本大小 = g.MeasureString(Text, Font);
-
-            //绘制图像
-            if (Image != null)
+            using Bitmap bitmap = new(Width, Height);
             {
-                Point drawPoint;
-                Size drawSize;
+                Graphics g = Graphics.FromImage(bitmap);
+                g.Clear(BackColor);
 
-                switch (图像大小模式)
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                Rectangle 工作区 = new(0, 0, Width, Height);
+                SizeF 文本大小 = g.MeasureString(Text, Font);
+
+                //绘制图像
+                if (Image != null)
                 {
-                    case PictureBoxSizeMode.Normal:
-                        drawPoint = new Point(0, 0);
-                        drawSize = Image.Size;
-                        break;
+                    Point drawPoint;
+                    Size drawSize;
 
-                    case PictureBoxSizeMode.StretchImage:
-                        drawPoint = new Point(0, 0);
-                        drawSize = Size;
-                        break;
+                    switch (图像大小模式)
+                    {
+                        case PictureBoxSizeMode.Normal:
+                            drawPoint = new Point(0, 0);
+                            drawSize = Image.Size;
+                            break;
 
-                    case PictureBoxSizeMode.AutoSize:
-                        Width = Image.Width;
-                        Height = Image.Height;
+                        case PictureBoxSizeMode.StretchImage:
+                            drawPoint = new Point(0, 0);
+                            drawSize = Size;
+                            break;
 
-                        drawPoint = new Point(0, 0);
-                        drawSize = Image.Size;
-                        break;
+                        case PictureBoxSizeMode.AutoSize:
+                            Width = Image.Width;
+                            Height = Image.Height;
 
-                    case PictureBoxSizeMode.CenterImage:
-                        int x = (Width - Image.Width) / 2;
-                        int y = (Height - Image.Height) / 2;
+                            drawPoint = new Point(0, 0);
+                            drawSize = Image.Size;
+                            break;
 
-                        drawPoint = new Point(x, y);
-                        drawSize = Image.Size;
-                        break;
+                        case PictureBoxSizeMode.CenterImage:
+                            int x = (Width - Image.Width) / 2;
+                            int y = (Height - Image.Height) / 2;
 
-                    case PictureBoxSizeMode.Zoom:
-                        float imageAspect = (float)Image.Width / Image.Height;
-                        float controlAspect = (float)Width / Height;
+                            drawPoint = new Point(x, y);
+                            drawSize = Image.Size;
+                            break;
 
-                        int drawWidth, drawHeight;
-                        int posX, posY;
+                        case PictureBoxSizeMode.Zoom:
+                            float imageAspect = (float)Image.Width / Image.Height;
+                            float controlAspect = (float)Width / Height;
 
-                        if (imageAspect > controlAspect)
+                            int drawWidth, drawHeight;
+                            int posX, posY;
+
+                            if (imageAspect > controlAspect)
+                            {
+                                drawWidth = Width;
+                                drawHeight = (int)(Width / imageAspect);
+                                posX = 0;
+                                posY = (Height - drawHeight) / 2;
+                            }
+                            else
+                            {
+                                drawWidth = (int)(Height * imageAspect);
+                                drawHeight = Height;
+                                posX = (Width - drawWidth) / 2;
+                                posY = 0;
+                            }
+
+                            drawPoint = new Point(posX, posY);
+                            drawSize = new Size(drawWidth, drawHeight);
+                            break;
+
+                        default:
+                            drawPoint = new Point(0, 0);
+                            drawSize = Image.Size;
+                            break;
+                    }
+
+                    //按指定的像素或比例缩放图片
+                    if (图像大小修正 != new Size(0, 0))
+                    {
+                        int newWidth = 图像大小修正格式 switch
                         {
-                            drawWidth = Width;
-                            drawHeight = (int)(Width / imageAspect);
-                            posX = 0;
-                            posY = (Height - drawHeight) / 2;
-                        }
-                        else
+                            FormatType.Percentage => (int)(drawSize.Width * 图像大小修正.Width),
+                            FormatType.Pixel => (int)图像大小修正.Width,
+                            _ => 0
+                        };
+                        int newHeight = 图像大小修正格式 switch
                         {
-                            drawWidth = (int)(Height * imageAspect);
-                            drawHeight = Height;
-                            posX = (Width - drawWidth) / 2;
-                            posY = 0;
-                        }
+                            FormatType.Percentage => (int)(drawSize.Height * 图像大小修正.Height),
+                            FormatType.Pixel => (int)图像大小修正.Height,
+                            _ => 0
+                        };
 
-                        drawPoint = new Point(posX, posY);
-                        drawSize = new Size(drawWidth, drawHeight);
-                        break;
+                        //调整绘制位置以居中显示调整后的图像
+                        int offsetX = (drawSize.Width - newWidth) / 2;
+                        int offsetY = (drawSize.Height - newHeight) / 2;
 
-                    default:
-                        drawPoint = new Point(0, 0);
-                        drawSize = Image.Size;
-                        break;
+                        drawPoint.Offset(offsetX, offsetY);
+                        drawSize = new Size(newWidth, newHeight);
+                    }
+
+                    g.DrawImage(Image.添加圆角(ImageCornerRadius), new Rectangle(LayoutUtilities.CalculateAlignedPosition(工作区, drawSize, ImageAlign, ImagePadding), drawSize));
                 }
 
-                //按指定的像素或比例缩放图片
-                if (图像大小修正 != new Size(0, 0))
-                {
-                    int newWidth = 图像大小修正格式 switch
-                    {
-                        FormatType.Percentage => (int)(drawSize.Width * 图像大小修正.Width),
-                        FormatType.Pixel => (int)图像大小修正.Width,
-                        _ => 0
-                    };
-                    int newHeight = 图像大小修正格式 switch
-                    {
-                        FormatType.Percentage => (int)(drawSize.Height * 图像大小修正.Height),
-                        FormatType.Pixel => (int)图像大小修正.Height,
-                        _ => 0
-                    };
+                //绘制文本
+                g.DrawString(Text, Font, new SolidBrush(ForeColor), LayoutUtilities.CalculateAlignedPosition(工作区, 文本大小, TextAlign, Padding));
 
-                    //调整绘制位置以居中显示调整后的图像
-                    int offsetX = (drawSize.Width - newWidth) / 2;
-                    int offsetY = (drawSize.Height - newHeight) / 2;
+                //边框
+                g.绘制圆角(工作区, 圆角大小, 外部颜色, new Pen(边框颜色, 边框大小));
 
-                    drawPoint.Offset(offsetX, offsetY);
-                    drawSize = new Size(newWidth, newHeight);
-                }
-
-                g.DrawImage(Image.添加圆角(ImageCornerRadius), new Rectangle(LayoutUtilities.CalculateAlignedPosition(工作区, drawSize, ImageAlign, ImagePadding), drawSize));
+                base.OnPaint(pe);
             }
-
-            //绘制文本
-            g.DrawString(Text, Font, new SolidBrush(ForeColor), LayoutUtilities.CalculateAlignedPosition(工作区, 文本大小, TextAlign, Padding));
-
-            //边框
-            g.绘制圆角(工作区, 圆角大小, 外部颜色, new Pen(边框颜色, 边框大小));
-
-            base.OnPaint(pe);
+            pe.Graphics.DrawImage(bitmap, 0, 0);
         }
 
         #region 交互样式
-        private readonly PointF[] ControlPoint = [new(0, 0), new(0, 0), new(0.15F, 0.85F), new(1, 1)];
+        private readonly int FPS = 30;
+        private readonly int Time = 150;
 
-        //储存移入
-        Color oldBackColor1 = Color.Empty;
-        Color oldBorderColor1 = Color.Empty;
-        Color oldForeColor1 = Color.Empty;
-        Size oldSize1 = Size.Empty;
+        //存储数据
+        private readonly List<object?> oldMouseOverData = [];
+        private readonly List<object?> oldMouseDownData = [];
 
-        //储存按下
-        Color oldBackColor2 = Color.Empty;
-        Color oldBorderColor2 = Color.Empty;
-        Color oldForeColor2 = Color.Empty;
-        Size oldSize2 = Size.Empty;
+        //目标属性
+        private readonly string[] mouseOverProperties = ["移入背景色", "移入边框颜色", "移入前景色"];
+        private readonly string[] mouseDownProperties = ["按下背景色", "按下边框颜色", "按下前景色"];
 
-        //Color oldBackColor3 = Color.Empty;
-        //Color oldBorderColor3 = Color.Empty;
+        private readonly string[] propertyNames = ["BackColor", "边框颜色", "ForeColor"];
 
-        //int oldBorderSize = -1;
+        private CancellationTokenSource MouseOverCTS = new();
+        private CancellationTokenSource MouseDownCTS = new();
 
-        //移入反馈
         protected override void OnMouseEnter(EventArgs e)
         {
-            if (交互样式.移入背景色 != Color.Empty)
-            {
-                oldBackColor1 = BackColor;
-                if (!交互样式.启用动画)
-                {
-                    BackColor = 交互样式.移入背景色;
-                }
-                else
-                {
-                    _ = this.贝塞尔过渡动画("BackColor", null, 交互样式.移入背景色, 150);
-                }
-            }
-            if (交互样式.移入边框颜色 != Color.Empty)
-            {
-                oldBorderColor1 = 边框颜色;
-                if (!交互样式.启用动画)
-                {
-                    边框颜色 = 交互样式.移入边框颜色;
-                }
-                else
-                {
-                    _ = this.贝塞尔过渡动画("边框颜色", null, 交互样式.移入边框颜色, 150);
-                }
-            }
-            if (交互样式.移入前景色 != Color.Empty)
-            {
-                oldForeColor1 = ForeColor;
-                if (!交互样式.启用动画)
-                {
-                    ForeColor = 交互样式.移入前景色;
-                }
-                else
-                {
-                    _ = this.贝塞尔过渡动画("ForeColor", null, 交互样式.移入前景色, 150);
-                }
-            }
-            if (交互样式.移入大小 != null)
-            {
-                oldSize1 = Size;
-                if (!交互样式.启用动画)
-                {
-                    Size = (Size)交互样式.移入大小;
-                }
-                else
-                {
-                    _ = this.贝塞尔过渡动画("Size", null, 交互样式.移入大小, 150, ControlPoint);
-                }
-            }
             base.OnMouseEnter(e);
+
+            MouseOverCTS.Cancel();
+            MouseOverCTS = new CancellationTokenSource();
+
+            oldMouseOverData.Clear();
+
+            for (int i = 0; i < propertyNames.Length; i++)
+            {
+                string property = propertyNames[i];
+                object? currentValue = this.SetOrGetPropertyValue(property);
+                object? targetValue = 交互样式.SetOrGetPropertyValue(mouseOverProperties[i]);
+
+                oldMouseOverData.Add(currentValue);
+
+                if (targetValue is Color colorValue && colorValue != Color.Empty)
+                {
+                    if (交互样式.启用动画)
+                    {
+                        _ = this.贝塞尔过渡动画(property, null, colorValue, Time, null, FPS, default, MouseOverCTS.Token);
+                    }
+                    else
+                    {
+                        this.SetOrGetPropertyValue(property, colorValue);
+                    }
+                }
+            }
         }
+
         protected override void OnMouseLeave(EventArgs e)
         {
-            if (交互样式.移入背景色 != Color.Empty)
-            {
-                if (!交互样式.启用动画)
-                {
-                    BackColor = oldBackColor1;
-                }
-                else
-                {
-                    _ = this.贝塞尔过渡动画("BackColor", null, oldBackColor1, 150);
-                }
-            }
-            if (交互样式.移入边框颜色 != Color.Empty)
-            {
-                if (!交互样式.启用动画)
-                {
-                    边框颜色 = oldBorderColor1;
-                }
-                else
-                {
-                    _ = this.贝塞尔过渡动画("边框颜色", null, oldBorderColor1, 150);
-                }
-            }
-            if (交互样式.移入前景色 != Color.Empty)
-            {
-                if (!交互样式.启用动画)
-                {
-                    ForeColor = oldForeColor1;
-                }
-                else
-                {
-                    _ = this.贝塞尔过渡动画("ForeColor", null, oldForeColor1, 150);
-                }
-            }
-            if (交互样式.移入大小 != null)
-            {
-                if (!交互样式.启用动画)
-                {
-                    Size = oldSize1;
-                }
-                else
-                {
-                    _ = this.贝塞尔过渡动画("Size", null, oldSize1, 150, ControlPoint);
-                }
-            }
             base.OnMouseLeave(e);
+
+            MouseOverCTS.Cancel();
+            MouseOverCTS = new CancellationTokenSource();
+
+            for (int i = 0; i < propertyNames.Length; i++)
+            {
+                string property = propertyNames[i];
+                object? targetValue = 交互样式.SetOrGetPropertyValue(mouseOverProperties[i]);
+                object? oldPropertyValue = oldMouseOverData[i];
+
+                if (targetValue is Color colorValue && colorValue != Color.Empty && oldPropertyValue != null)
+                {
+                    if (交互样式.启用动画)
+                    {
+                        _ = this.贝塞尔过渡动画(property, null, oldPropertyValue, Time, null, FPS, default, MouseOverCTS.Token);
+                    }
+                    else
+                    {
+                        this.SetOrGetPropertyValue(property, oldPropertyValue);
+                    }
+                }
+            }
         }
-        //鼠标反馈
+
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                if (交互样式.按下背景色 != Color.Empty)
-                {
-                    oldBackColor2 = BackColor;
-                    if (!交互样式.启用动画)
-                    {
-                        BackColor = 交互样式.按下背景色;
-                    }
-                    else
-                    {
-                        _ = this.贝塞尔过渡动画("BackColor", null, 交互样式.按下背景色, 150);
-                    }
-                }
-                if (交互样式.按下边框颜色 != Color.Empty)
-                {
-                    oldBorderColor2 = 边框颜色;
-                    if (!交互样式.启用动画)
-                    {
-                        边框颜色 = 交互样式.按下边框颜色;
-                    }
-                    else
-                    {
-                        _ = this.贝塞尔过渡动画("边框颜色", null, 交互样式.按下边框颜色, 150);
-                    }
-                }
-                if (交互样式.按下前景色 != Color.Empty)
-                {
-                    oldForeColor2 = ForeColor;
-                    if (!交互样式.启用动画)
-                    {
-                        ForeColor = 交互样式.按下前景色;
-                    }
-                    else
-                    {
-                        _ = this.贝塞尔过渡动画("ForeColor", null, 交互样式.按下前景色, 150);
-                    }
-                }
-                if (交互样式.按下大小 != null)
-                {
-                    oldSize2 = Size;
-                    if (!交互样式.启用动画)
-                    {
-                        Size = (Size)交互样式.按下大小;
-                    }
-                    else
-                    {
-                        _ = this.贝塞尔过渡动画("Size", null, 交互样式.按下大小, 150, ControlPoint);
-                    }
-                }
-                //if (可获得焦点)
-                //{
-                //    Focus();
-                //}
-            }
             base.OnMouseDown(e);
+
+            MouseDownCTS.Cancel();
+            MouseDownCTS = new CancellationTokenSource();
+
+            oldMouseDownData.Clear();
+
+            for (int i = 0; i < propertyNames.Length; i++)
+            {
+                string property = propertyNames[i];
+                object? currentValue = this.SetOrGetPropertyValue(property);
+                object? targetValue = 交互样式.SetOrGetPropertyValue(mouseDownProperties[i]);
+
+                oldMouseDownData.Add(currentValue);
+
+                if (targetValue is Color colorValue && colorValue != Color.Empty)
+                {
+                    if (交互样式.启用动画)
+                    {
+                        _ = this.贝塞尔过渡动画(property, null, colorValue, Time, null, FPS, default, MouseDownCTS.Token);
+                    }
+                    else
+                    {
+                        this.SetOrGetPropertyValue(property, colorValue);
+                    }
+                }
+            }
         }
+
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            if (交互样式.按下背景色 != Color.Empty)
-            {
-                if (!交互样式.启用动画)
-                {
-                    BackColor = oldBackColor2;
-                }
-                else
-                {
-                    _ = this.贝塞尔过渡动画("BackColor", null, oldBackColor2, 150);
-                }
-            }
-            if (交互样式.按下边框颜色 != Color.Empty)
-            {
-                if (!交互样式.启用动画)
-                {
-                    边框颜色 = oldBorderColor2;
-                }
-                else
-                {
-                    _ = this.贝塞尔过渡动画("边框颜色", null, oldBorderColor2, 150);
-                }
-            }
-            if (交互样式.按下前景色 != Color.Empty)
-            {
-                if (!交互样式.启用动画)
-                {
-                    ForeColor = oldForeColor2;
-                }
-                else
-                {
-                    _ = this.贝塞尔过渡动画("ForeColor", null, oldForeColor2, 150);
-                }
-            }
-            if (交互样式.按下大小 != null)
-            {
-                if (!交互样式.启用动画)
-                {
-                    Size = oldSize2;
-                }
-                else
-                {
-                    _ = this.贝塞尔过渡动画("Size", null, oldSize2, 150, ControlPoint);
-                }
-            }
             base.OnMouseUp(e);
+
+            MouseDownCTS.Cancel();
+            MouseDownCTS = new CancellationTokenSource();
+
+            for (int i = 0; i < propertyNames.Length; i++)
+            {
+                string property = propertyNames[i];
+                object? targetValue = 交互样式.SetOrGetPropertyValue(mouseDownProperties[i]);
+                object? oldPropertyValue = oldMouseDownData[i];
+
+                if (targetValue is Color colorValue && colorValue != Color.Empty && oldPropertyValue != null)
+                {
+                    if (交互样式.启用动画)
+                    {
+                        _ = this.贝塞尔过渡动画(property, null, oldPropertyValue, Time, null, FPS, default, MouseDownCTS.Token);
+                    }
+                    else
+                    {
+                        this.SetOrGetPropertyValue(property, oldPropertyValue);
+                    }
+                }
+            }
         }
-        //焦点反馈
-        //protected override void OnEnter(EventArgs e)
-        //{
-        //    if (交互样式.焦点背景色 != Color.Empty)
-        //    {
-        //        oldBackColor3 = BackColor;
-        //        BackColor = 交互样式.焦点背景色;
-        //    }
-        //    if (交互样式.焦点边框颜色 != Color.Empty)
-        //    {
-        //        oldBorderColor3 = 边框颜色;
-        //        边框颜色 = 交互样式.焦点边框颜色;
-        //    }
-        //    if (交互样式.焦点边框大小 != null)
-        //    {
-        //        oldBorderSize = 边框大小;
-        //        边框大小 = (int)交互样式.焦点边框大小;
-        //    }
-        //    base.OnEnter(e);
-        //}
-        //protected override void OnLeave(EventArgs e)
-        //{
-        //    if (交互样式.焦点背景色 != Color.Empty)
-        //    {
-        //        BackColor = oldBackColor3;
-        //    }
-        //    if (交互样式.焦点边框颜色 != Color.Empty)
-        //    {
-        //        边框颜色 = oldBorderColor3;
-        //    }
-        //    if (交互样式.焦点边框大小 != null)
-        //    {
-        //        边框大小 = oldBorderSize;
-        //    }
-        //    base.OnLeave(e);
-        //}
         #endregion
 
         //修改布局时立即重绘
@@ -714,6 +538,7 @@ namespace KlxPiaoControls
 
             base.OnPaddingChanged(e);
         }
+
         protected override void OnTextChanged(EventArgs e)
         {
             Refresh();
@@ -721,5 +546,11 @@ namespace KlxPiaoControls
             base.OnTextChanged(e);
         }
 
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            Refresh();
+
+            base.OnSizeChanged(e);
+        }
     }
 }

@@ -200,7 +200,7 @@ namespace KlxPiaoControls
                 }
             }
             else
-            {   
+            {
                 //这里不知道怎么写
                 //标题按钮_Paint(关闭按钮, e);
                 //标题按钮_Paint(缩放按钮, e);
@@ -763,7 +763,7 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        //启动动画
+        //启动
         protected override void OnLoad(EventArgs e)
         {
             if (!启用启动动画)
@@ -776,18 +776,24 @@ namespace KlxPiaoControls
             {
                 case StartupSequence.WaitOnLoadThenAnimate:
                     base.OnLoad(e);
-                    FormBorderStyle = FormBorderStyle.FixedDialog;
-                    FormBorderStyle = FormBorderStyle.None;
-                    Refresh();
+                    Animation();
                     break;
+
                 case StartupSequence.AnimateThenOnLoad:
-                    FormBorderStyle = FormBorderStyle.FixedDialog;
-                    FormBorderStyle = FormBorderStyle.None;
-                    Refresh();
+                    Animation();
                     base.OnLoad(e);
                     break;
             }
 
+            void Animation()
+            {
+                //临时转变为 FixedDialog
+                FormBorderStyle = FormBorderStyle.FixedDialog;
+                FormBorderStyle = FormBorderStyle.None;
+
+                //防止启动闪烁
+                Refresh();
+            }
         }
 
         //关闭事件，引发关闭动画

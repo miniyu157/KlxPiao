@@ -29,8 +29,34 @@ namespace KlxPiaoControls
             不绘制
         }
 
-        public float 扫描线进度;
-        public Color 扫描线颜色;
+        private float _扫描线进度;
+        private Color _扫描线颜色;
+
+        /// <summary>
+        /// 扫描线的进度。
+        /// </summary>
+        [Browsable(false)]
+        public float 扫描线进度
+        {
+            get { return _扫描线进度; }
+            set
+            {
+                _扫描线进度 = value;
+                Refresh();
+            }
+        }
+
+        [Category("BezierCurve属性")]
+        [Description("扫描线的颜色，设置扫描线进度以绘制扫描线")]
+        public Color 扫描线颜色
+        {
+            get { return _扫描线颜色; }
+            set
+            {
+                _扫描线颜色 = value;
+                Refresh();
+            }
+        }
 
         private List<PointF> _控制点集合;
         private float _绘制精度;
@@ -144,7 +170,7 @@ namespace KlxPiaoControls
             set { _保留小数位数 = value; Invalidate(); }
         }
         [Category("BezierCurve属性")]
-        [Description("每个控制点保留的小数位数")]
+        [Description("拖动时是否自动吸附顶点")]
         [DefaultValue(true)]
         public bool 吸附顶点
         {
@@ -464,7 +490,7 @@ namespace KlxPiaoControls
             }
 
             //绘制扫描线
-            if (扫描线进度 != 0 && 扫描线进度 != 1)
+            if (扫描线进度 > 0 && 扫描线进度 < 1)
             {
                 g.DrawLine(new Pen(扫描线颜色, 1),
                     new Point((int)(绘制区域.X + 绘制区域.Width * 扫描线进度), (int)绘制区域.Y),

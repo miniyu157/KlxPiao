@@ -34,7 +34,7 @@ namespace KlxPiaoControls
         public SlideSwitch()
         {
             InitializeComponent();
-            
+
             _Items = ["Item1", "Item2"];
             _ItemSize = new Size(58, 38);
             _SelectSize = new Size(50, 46);
@@ -113,7 +113,7 @@ namespace KlxPiaoControls
                 //更新当前的外观
                 if (_ChangeProperty != Properties.NoChange)
                 {
-                    SelectShow.设置属性(GetChangePropertyValue(), value[_SelectIndex]);
+                    SelectShow.SetOrGetPropertyValue(GetChangePropertyValue(), value[_SelectIndex]);
                 }
                 Invalidate();
             }
@@ -130,7 +130,7 @@ namespace KlxPiaoControls
                 //更新当前的外观
                 if (_ChangeProperty != Properties.NoChange)
                 {
-                    SelectShow.设置属性(GetChangePropertyValue(), _ChangeColors[_SelectIndex]);
+                    SelectShow.SetOrGetPropertyValue(GetChangePropertyValue(), _ChangeColors[_SelectIndex]);
                 }
                 Invalidate();
             }
@@ -318,8 +318,12 @@ namespace KlxPiaoControls
         }
 
         //刷新选项卡位置（动画）
+        private CancellationTokenSource cts = new();
         private void RefreshSelectShowLocation()
         {
+            cts.Cancel();
+            cts = new CancellationTokenSource();
+
             RefreshItemsRect();
 
             SelectShow.Text = Items[SelectIndex];
@@ -332,12 +336,12 @@ namespace KlxPiaoControls
 
             _ = SelectShow.贝塞尔过渡动画("Location", null,
                 new Point(newX + ItemsShow.Left, newY + ItemsShow.Top), 200,
-                [new(0F, 0F), new(0, 1F), new(0.67F, 1F), new(1, 1)]);
+                [new(0F, 0F), new(0, 1F), new(0.67F, 1F), new(1, 1)], 100, default, cts.Token);
 
             if (ChangeProperty != Properties.NoChange)
             {
                 _ = SelectShow.贝塞尔过渡动画(Enum.GetNames(typeof(Properties))[(int)ChangeProperty], null,
-                    SelectIndex < ChangeColors.Length ? ChangeColors[SelectIndex] : Color.Black, 150, null);
+                    SelectIndex < ChangeColors.Length ? ChangeColors[SelectIndex] : Color.Black, 150, null, 100, default, cts.Token);
             }
         }
 
@@ -441,7 +445,7 @@ namespace KlxPiaoControls
         {
             base.OnMouseWheel(e);
 
-            if (EnableMouseWheel)
+            if (EnableMouseWheel && !Draging)
             {
                 switch (e.Delta)
                 {
