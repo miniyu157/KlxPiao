@@ -19,7 +19,8 @@
             string responseBody = await response.Content.ReadAsStringAsync();
             return responseBody;
         }
-        ////带有Cookie的方法
+
+        ////带有Cookie
         //public static async Task<string> GetRawData(string accessToken)
         //{
         //    HttpClient httpClient = new()

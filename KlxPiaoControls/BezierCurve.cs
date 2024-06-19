@@ -442,6 +442,29 @@ namespace KlxPiaoControls
             if (辅助线显示方式 != 辅助线绘制.不绘制 && 辅助线大小 != 0)
             {
                 绘制辅助线(g, 绘制数组);
+
+                void 绘制辅助线(Graphics g, List<PointF> points)
+                {
+                    Pen pen1 = new(辅助线颜色, 辅助线大小);                           //实线画笔
+                    Pen pen2 = new(辅助线颜色, 辅助线大小) { DashPattern = [8, 4] };  //虚线画笔
+
+                    if (points.Count <= 2) return;  //控制点数量小于等于2时不绘制辅助线
+
+                    switch (辅助线显示方式)
+                    {
+                        case 辅助线绘制.两端实线_中间虚线:
+                            for (int i = 0; i < points.Count - 1; i++)
+                            {
+                                Pen drawPen = (i != 0 && i != points.Count - 2) ? pen2 : pen1;  //两端以外使用虚线
+                                g.DrawLine(drawPen, points[i], points[i + 1]);
+                            }
+                            break;
+                        case 辅助线绘制.仅绘制两端辅助线:
+                            g.DrawLine(pen1, points[0], points[1]);
+                            g.DrawLine(pen1, points[^1], points[^2]);  //old: [points.Count - 1], points[points.Count - 2]
+                            break;
+                    }
+                }
             }
 
             //绘制曲线
@@ -460,10 +483,19 @@ namespace KlxPiaoControls
             //绘制控制点
             if (显示控制点)
             {
-                for (int i = 0; i <= 绘制数组.Count - 1; i++)
+                //使其控制点能覆盖端点
+                DrawPointControl(0);
+                DrawPointControl(绘制数组.Count - 1);
+
+                for (int i = 1; i < 绘制数组.Count - 1; i++)
                 {
-                    Color drawColor = (i == 0 || i == 绘制数组.Count - 1) ? 开始点结束点颜色 : 控制点颜色;
-                    PointF pointF = 绘制数组[i];
+                    DrawPointControl(i);
+                }
+                
+                void DrawPointControl(int index)
+                {
+                    Color drawColor = (index == 0 || index == 绘制数组.Count - 1) ? 开始点结束点颜色 : 控制点颜色;
+                    PointF pointF = 绘制数组[index];
                     SolidBrush controlPointBrush = new(drawColor);
                     g.FillEllipse(controlPointBrush, new RectangleF(
                         new PointF(
@@ -486,7 +518,7 @@ namespace KlxPiaoControls
                     { "{y}", dragPointF.Y.ToString() }
                 };
 
-                g.DrawString(字符串.批量替换(控制点显示格式, replacements), Font, new SolidBrush(ForeColor), 绘制数组[拖动的索引]);
+                g.DrawString(控制点显示格式.批量替换(replacements), Font, new SolidBrush(ForeColor), 绘制数组[拖动的索引]);
             }
 
             //绘制扫描线
@@ -499,28 +531,6 @@ namespace KlxPiaoControls
             }
 
             base.OnPaint(e);
-        }
-        private void 绘制辅助线(Graphics g, List<PointF> points)
-        {
-            Pen pen1 = new(辅助线颜色, 辅助线大小);                           //实线画笔
-            Pen pen2 = new(辅助线颜色, 辅助线大小) { DashPattern = [8, 4] };  //虚线画笔
-
-            if (points.Count <= 2) return;  //控制点数量小于等于2时不绘制辅助线
-
-            switch (辅助线显示方式)
-            {
-                case 辅助线绘制.两端实线_中间虚线:
-                    for (int i = 0; i < points.Count - 1; i++)
-                    {
-                        Pen drawPen = (i != 0 && i != points.Count - 2) ? pen2 : pen1;  //两端以外使用虚线
-                        g.DrawLine(drawPen, points[i], points[i + 1]);
-                    }
-                    break;
-                case 辅助线绘制.仅绘制两端辅助线:
-                    g.DrawLine(pen1, points[0], points[1]);
-                    g.DrawLine(pen1, points[^1], points[^2]);  //old: [points.Count - 1], points[points.Count - 2]
-                    break;
-            }
         }
 
         //控制点拖动

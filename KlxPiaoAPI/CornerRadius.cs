@@ -44,6 +44,8 @@ namespace KlxPiaoAPI
             BottomLeft = bottomLeft;
         }
 
+        public CornerRadius() { }
+
         /// <summary>
         /// 初始化 CornerRadius 结构的新实例，所有角的大小相同。
         /// </summary>

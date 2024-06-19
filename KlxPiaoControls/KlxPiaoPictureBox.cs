@@ -99,7 +99,7 @@ namespace KlxPiaoControls
                 if (启用边框)
                 {
                     Rectangle 区域 = new(0, 0, Width, Height);
-                    g.绘制圆角(区域, 圆角大小, 边框外部颜色, new Pen(边框颜色, 边框大小));
+                    g.DrawRounded(区域, 圆角大小, 边框外部颜色, new Pen(边框颜色, 边框大小));
                 }
             }
         }

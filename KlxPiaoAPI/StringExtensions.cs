@@ -6,7 +6,7 @@ namespace KlxPiaoAPI
     /// <summary>
     /// 提供了一系列用于字符串处理的扩展方法。
     /// </summary>
-    public static partial class 字符串
+    public static partial class StringExtensions
     {
         /// <summary>
         /// 执行批量替换操作，将字符串中的指定内容替换为新的值。

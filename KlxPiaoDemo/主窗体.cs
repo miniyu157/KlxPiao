@@ -262,7 +262,7 @@ namespace KlxPiaoDemo
                     {
                         case "Edit_标题框背景色":
                             标题框背景色 = selectColor;
-                            标题框前景色 = 颜色.获取亮度(selectColor) > 127 ? Color.Black : Color.White;
+                            标题框前景色 = ColorProcessor.GetBrightness(selectColor) > 127 ? Color.Black : Color.White;
                             break;
                         case "Edit_标题框前景色":
                             标题框前景色 = selectColor;
@@ -314,8 +314,8 @@ namespace KlxPiaoDemo
         private void Show_按钮背景_Paint(object sender, PaintEventArgs e)
         {
             Show_按钮背景.BackColor = 标题框背景色;
-            Show_按钮移入.BackColor = 颜色.调整亮度(Show_按钮背景.BackColor, 标题按钮颜色反馈);
-            Show_按钮按下.BackColor = 颜色.调整亮度(Show_按钮移入.BackColor, 标题按钮颜色反馈);
+            Show_按钮移入.BackColor = ColorProcessor.AdjustBrightness(Show_按钮背景.BackColor, 标题按钮颜色反馈);
+            Show_按钮按下.BackColor = ColorProcessor.AdjustBrightness(Show_按钮移入.BackColor, 标题按钮颜色反馈);
         }
         private void 主窗体_Activated(object sender, EventArgs e)
         {
@@ -350,11 +350,13 @@ namespace KlxPiaoDemo
         {
             if (sender is KlxPiaoPanel c)
             {
+                Color newThemeColor = c.BackColor;
+
                 switch (e.Button)
                 {
                     case MouseButtons.Left:
-                        标题框背景色 = c.BackColor;
-                        标题框前景色 = 颜色.获取亮度(c.BackColor) > 127 ? Color.Black : Color.White;
+                        设置全局主题(newThemeColor,true);
+
                         break;
                     case MouseButtons.Right:
                         KlxPiaoForm klxfm = new()
@@ -497,7 +499,7 @@ namespace KlxPiaoDemo
                 };
                 if (selectFile.ShowDialog() == DialogResult.OK)
                 {
-                    FontFamily fontFamily = 文件.加载字体(selectFile.FileName);
+                    FontFamily fontFamily = FileUtils.加载字体(selectFile.FileName);
                     设置全局字体(fontFamily);
                     控件.遍历<KlxPiaoLabel>(this, label => label.文本呈现质量 = TextRenderingHint.AntiAliasGridFit);
                 }

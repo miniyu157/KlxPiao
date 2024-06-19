@@ -413,10 +413,10 @@ namespace KlxPiaoControls
                 cornerRadius = new CornerRadius(圆角大小, 圆角大小, 0, 0);
             }
 
-            g.绘制圆角(前景区域, cornerRadius, Color.Empty, new SolidBrush(!反向绘制 ? 前景色 : 背景色));
+            g.DrawRounded(前景区域, cornerRadius, Color.Empty, new SolidBrush(!反向绘制 ? 前景色 : 背景色));
 
             //绘制边框
-            g.绘制圆角(new Rectangle(0, 0, Width, Height), new CornerRadius(圆角大小), BackColor, new Pen(边框颜色, 边框大小));
+            g.DrawRounded(new Rectangle(0, 0, Width, Height), new CornerRadius(圆角大小), BackColor, new Pen(边框颜色, 边框大小));
 
             // 绘制值
             if (值显示方式 != 文字位置.不显示)

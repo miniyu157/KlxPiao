@@ -622,8 +622,8 @@ namespace KlxPiaoControls
             {
                 b.Size = new Size(标题按钮宽度, 标题框高度 - 1);
                 b.BackColor = 标题框背景色;
-                b.FlatAppearance.MouseOverBackColor = 颜色.调整亮度(标题框背景色, 标题按钮颜色反馈);
-                b.FlatAppearance.MouseDownBackColor = 颜色.调整亮度(b.FlatAppearance.MouseOverBackColor, 标题按钮颜色反馈);
+                b.FlatAppearance.MouseOverBackColor = ColorProcessor.AdjustBrightness(标题框背景色, 标题按钮颜色反馈);
+                b.FlatAppearance.MouseDownBackColor = ColorProcessor.AdjustBrightness(b.FlatAppearance.MouseOverBackColor, 标题按钮颜色反馈);
 
                 关闭按钮.Enabled = 启用关闭按钮;
                 缩放按钮.Enabled = 启用缩放按钮;
@@ -1117,6 +1117,7 @@ namespace KlxPiaoControls
         {
             return new Size(Width - 2, Height - 标题框高度 - 1);
         }
+
         /// <summary>
         /// 获取工作区的矩形
         /// </summary>
@@ -1125,8 +1126,9 @@ namespace KlxPiaoControls
         {
             return new Rectangle(new Point(1, 标题框高度), 获取工作区大小());
         }
+
         /// <summary>
-        /// 将指定的字体应用与窗体的每个控件，不改变字体样式和字体大小（可选）
+        /// 将指定的字体应用与窗体的每个控件，不改变字体大小（可选）
         /// </summary>
         /// <param name="字体"></param>
         /// <param name="字体大小修正">要应用到每个控件的字体大小的偏移量，默认为0</param>
@@ -1135,9 +1137,50 @@ namespace KlxPiaoControls
             控件.遍历<Control>(this, control =>
             {
                 control.Font = new Font(字体, control.Font.Size + 字体大小修正, control.Font.Style);
-            });
+            }, true);
 
             标题字体 = new Font(字体, 标题字体.Size, 标题字体.Style);
+        }
+
+        public void 设置全局主题(Color? themeColor = null, bool 应用于控件 = true)
+        {
+            themeColor = themeColor == null ? 标题框背景色 : themeColor;
+
+            标题框背景色 = (Color)themeColor;
+            标题框前景色 = ColorProcessor.GetBrightness((Color)themeColor) > 127 ? Color.Black : Color.White;
+
+            if (应用于控件)
+            {
+                Color butBorderColor = ColorProcessor.SetBrightness((Color)themeColor, 210);
+                Color mouseOverColor = ColorProcessor.SetBrightness(butBorderColor, 250);
+                Color mouseDownColor = ColorProcessor.SetBrightness(butBorderColor, 240);
+
+                this.遍历<RoundedButton>(but =>
+                {
+                    if (but.交互样式.移入前景色 != Color.Empty) //移入改变明暗主题
+                    {
+                        but.交互样式.移入边框颜色 = butBorderColor;
+                        but.交互样式.按下背景色 = mouseDownColor;
+                    }
+                    else if (but.交互样式.按下前景色 != Color.Empty) //按下改变明暗主题
+                    {
+                        but.交互样式.按下边框颜色 = butBorderColor;
+                    }
+                    else if (but.交互样式.移入前景色 == Color.Empty && but.交互样式.按下前景色 == Color.Empty) //不改变明暗主题
+                    {
+                        but.交互样式.移入背景色 = mouseOverColor;
+                        but.交互样式.按下背景色 = mouseDownColor;
+                        but.边框颜色 = butBorderColor;
+                    }
+                }, true);
+
+                this.遍历<KlxPiaoButton>(but =>
+                {
+                    but.FlatAppearance.BorderColor = butBorderColor;
+                    but.FlatAppearance.MouseOverBackColor = mouseOverColor;
+                    but.FlatAppearance.MouseDownBackColor = mouseDownColor;
+                }, true);
+            }
         }
     }
 }
