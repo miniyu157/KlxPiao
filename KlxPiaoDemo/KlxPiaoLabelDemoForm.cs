@@ -24,9 +24,9 @@ namespace KlxPiaoDemo
 
             klxPiaoLinkLabel1.Text = labelDemo.Font.FontFamily.Name;
 
-            this.遍历<KlxPiaoTrackBar>(trackBar => trackBar.ValueChanged += TrackBars_Changed);
-            this.遍历<KlxPiaoPanel>(panel => panel.Click += Panels_Click);
-            this.遍历<CheckBox>(checkBox => checkBox.CheckedChanged += CheckBoxs_Checked);
+            this.遍历<KlxPiaoTrackBar>(trackBar => trackBar.ValueChanged += TrackBars_Changed, true);
+            this.遍历<KlxPiaoPanel>(panel => panel.Click += Panels_Click, true);
+            this.遍历<CheckBox>(checkBox => checkBox.CheckedChanged += CheckBoxs_Checked, true);
         }
 
         private void TrackBars_Changed(object? sender, KlxPiaoTrackBar.ValueChangedEventArgs e)
