@@ -5,14 +5,17 @@ using System.Drawing.Drawing2D;
 namespace KlxPiaoControls
 {
     /// <summary>
-    /// 表示一个增强的 TrackBar 控件，具有额外的功能。
+    /// 表示一个增强的拖动条控件，可以设置边框样式、圆角大小等外观属性。
     /// </summary>
     /// <remarks>
-    /// KlxPiaoPanel 继承自 <see cref="Control"/> 类，可以设置边框样式、圆角大小、投影效果等外观属性。
+    /// <see cref="KlxPiaoTrackBar"/> 继承自 <see cref="Control"/> 类，是原版 <see cref="TrackBar"/> 的增强版本。
     /// </remarks>
-    [DefaultEvent("值Changed")]
+    [DefaultEvent("ValueChanged")]
     public partial class KlxPiaoTrackBar : Control
     {
+        /// <summary>
+        /// 表示鼠标滚轮响应的方向。
+        /// </summary>
         public enum 鼠标滚轮响应
         {
             /// <summary>
@@ -28,6 +31,10 @@ namespace KlxPiaoControls
             /// </summary>
             不启用 = 0
         }
+
+        /// <summary>
+        /// 表示键盘响应的方向。
+        /// </summary>
         public enum 键盘响应
         {
             /// <summary>
@@ -47,6 +54,10 @@ namespace KlxPiaoControls
             /// </summary>
             不启用
         }
+
+        /// <summary>
+        /// 表示文字绘制的位置。
+        /// </summary>
         public enum 文字位置
         {
             不显示,
@@ -54,6 +65,29 @@ namespace KlxPiaoControls
             居中,
             右,
             跟随
+        }
+
+        /// <summary>
+        /// 表示触发事件的类型。
+        /// </summary>
+        public enum EventTriggerType
+        {
+            /// <summary>
+            /// 非用户交互触发。
+            /// </summary>
+            Code,
+            /// <summary>
+            /// 鼠标调整时触发。
+            /// </summary>
+            Mouse,
+            /// <summary>
+            /// 键盘调整时触发。
+            /// </summary>
+            Keyboard,
+            /// <summary>
+            /// 鼠标滚轮调整时触发
+            /// </summary>
+            MouseWheel
         }
 
         private Color _背景色;
@@ -84,6 +118,7 @@ namespace KlxPiaoControls
         private float _增减大小;
         private int _保留小数位数;
         private string _值显示格式;
+
         public KlxPiaoTrackBar()
         {
             InitializeComponent();
@@ -285,11 +320,32 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        public event PropertyChangedEventHandler? 值Changed;
-        protected virtual void OnValueChanged(string propertyName)
+        /// <summary>
+        /// 值改变事件
+        /// </summary>
+        /// <param name="value">值大小。</param>
+        /// <param name="drawPercentage">绘制的百分比。</param>
+        public class ValueChangedEventArgs(float value, EventTriggerType eventTriggerType, float drawPercentage) : EventArgs
         {
-            值Changed?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            public float Value { get; } = value;
+            public EventTriggerType EventTriggerType { get; } = eventTriggerType;
+            public float DrawPercentage { get; } = drawPercentage;
         }
+
+        //用户交互触发值改变事件
+        public event EventHandler<ValueChangedEventArgs>? ValueChanged;
+        protected virtual void OnValueChanged(ValueChangedEventArgs e)
+        {
+            ValueChanged?.Invoke(this, e);
+        }
+
+        //代码设置触发值改变事件
+        public event EventHandler<ValueChangedEventArgs>? ValueChangedByCode;
+        protected virtual void OnValueChangedByCode(ValueChangedEventArgs e)
+        {
+            ValueChangedByCode?.Invoke(this, e);
+        }
+
         [Category("KlxPiaoTrackBar属性")]
         [Description("当前的值")]
         [DefaultValue(0F)]
@@ -299,9 +355,10 @@ namespace KlxPiaoControls
             set
             {
                 _值 = value;
-                Invalidate();
 
-                OnValueChanged(nameof(值));
+                OnValueChangedByCode(new ValueChangedEventArgs(value, EventTriggerType.Code, 绘制百分比));
+
+                Invalidate();
             }
         }
         #region "KlxPiaoTrackBar属性"
@@ -412,7 +469,6 @@ namespace KlxPiaoControls
                 前景区域 = new(工作矩形.X, 工作矩形.Y, Width, (int)百分比位置);
                 cornerRadius = new CornerRadius(圆角大小, 圆角大小, 0, 0);
             }
-
             g.DrawRounded(前景区域, cornerRadius, Color.Empty, new SolidBrush(!反向绘制 ? 前景色 : 背景色));
 
             //绘制边框
@@ -475,6 +531,8 @@ namespace KlxPiaoControls
                 值 = (float)Math.Round(最小值 + 绘制百分比 * (最大值 - 最小值), 保留小数位数);
 
                 if (反向绘制) { 值 = (float)Math.Round(最大值 - (值 - 最小值), 保留小数位数); }
+
+                OnValueChanged(new ValueChangedEventArgs(值, EventTriggerType.Mouse, 绘制百分比));
             }
 
             Focus();
@@ -493,6 +551,8 @@ namespace KlxPiaoControls
                 值 = (float)Math.Round(最小值 + 绘制百分比 * (最大值 - 最小值), 保留小数位数);
 
                 if (反向绘制) { 值 = (float)Math.Round(最大值 - (值 - 最小值), 保留小数位数); }
+
+                OnValueChanged(new ValueChangedEventArgs(值, EventTriggerType.Mouse, 绘制百分比));
             }
         }
         protected override void OnMouseUp(MouseEventArgs e)
@@ -528,6 +588,8 @@ namespace KlxPiaoControls
             if (绘制百分比 < 0) 绘制百分比 = 0;
 
             值 = (float)Math.Round(最小值 + 绘制百分比 * (最大值 - 最小值), 保留小数位数);
+
+            OnValueChanged(new ValueChangedEventArgs(值, EventTriggerType.MouseWheel, 绘制百分比));
 
             Focus();
         }
@@ -597,6 +659,8 @@ namespace KlxPiaoControls
             if (绘制百分比 < 0) 绘制百分比 = 0;
 
             值 = (float)Math.Round(最小值 + 绘制百分比 * (最大值 - 最小值), 保留小数位数);
+
+            OnValueChanged(new ValueChangedEventArgs(值, EventTriggerType.Keyboard, 绘制百分比));
         }
         #endregion
 

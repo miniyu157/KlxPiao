@@ -1,7 +1,6 @@
 ﻿using KlxPiaoAPI;
 using KlxPiaoControls;
 using KlxPiaoDemo.Properties;
-using System.ComponentModel;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Text;
@@ -23,16 +22,20 @@ namespace KlxPiaoDemo
             Text = $"{关于KlxPiaoControls.产品名称()} & {关于KlxPiaoAPI.产品名称()} {关于KlxPiaoControls.产品版本()} Demo";
 
             //控件.PictureBox
+            Pic_SizePixelTrackBar.最大值 = klxPiaoPictureBox1.Width;
+            Pic_SizeTrackBar.最小值 = klxPiaoPictureBox1.Width / 2;
+            Pic_SizeTrackBar.最大值 = (float)(klxPiaoPictureBox1.Width * 1.2F);
+
             Pic_BorderTrackBar.值 = klxPiaoPictureBox1.边框大小;
             Pic_FilletTrackBar.值 = klxPiaoPictureBox1.圆角大小.TopLeft;
             Pic_SizeTrackBar.值 = klxPiaoPictureBox1.Width;
 
-            Pic_SizeTrackBar.最小值 = klxPiaoPictureBox1.Width / 2;
-            Pic_SizeTrackBar.最大值 = (float)(klxPiaoPictureBox1.Width * 1.2F);
+            Pic_SizePixelTrackBar.值 = Pic_FilletTrackBar.值 / klxPiaoPictureBox1.Width;
 
-            Pic_BorderTrackBar.值Changed += Pic_Track_值Changed;
-            Pic_FilletTrackBar.值Changed += Pic_Track_值Changed;
-            Pic_SizeTrackBar.值Changed += Pic_Track_值Changed;
+            Pic_BorderTrackBar.ValueChanged += Pic_Track_值Changed;
+            Pic_FilletTrackBar.ValueChanged += Pic_Track_值Changed;
+            Pic_SizeTrackBar.ValueChanged += Pic_Track_值Changed;
+            Pic_SizePixelTrackBar.ValueChanged += Pic_Track_值Changed;
             //控件.Panel
             foreach (Control p in klxPiaoPanel8.Controls)
             {
@@ -125,13 +128,13 @@ namespace KlxPiaoDemo
             {
                 textBox3.Text = $"private {类型} _{名称};";
                 textBox4.Text = $"_{名称} = {默认值};";
-                textBox5.Text = $"        [Category(\"{类别}\")]\r\n        [Description(\"{描述}\")]\r\n        [DefaultValue(typeof({类型}), \"{默认值}\")]\r\n        public {类型} {名称}\r\n        {{\r\n            get {{ return _{名称}; }}\r\n            set {{ _{名称} = value; Invalidate(); }}\r\n        }}";
+                textBox5.Text = $"        /// <summary>\r\n        /// {描述}。\r\n        /// </summary>\r\n        [Category(\"{类别}\")]\r\n        [Description(\"{描述}\")]\r\n        [DefaultValue(typeof({类型}), \"{默认值}\")]\r\n        public {类型} {名称}\r\n        {{\r\n            get {{ return _{名称}; }}\r\n            set {{ _{名称} = value; Invalidate(); }}\r\n        }}";
             }
             else if (slideSwitch6.SelectIndex == 1)
             {
                 textBox3.Text = $"Dim _{名称} As {类型}";
                 textBox4.Text = $"_{名称} = {默认值}";
-                textBox5.Text = $"        <Category(\"{类别}\")>\r\n        <Description(\"{描述}\")>\r\n        <DefaultValue(GetType({类型}), \"{默认值}\")>\r\n        Public Property {名称} As {类型}\r\n            Get\r\n                Return _{名称}\r\n            End Get\r\n            Set(value As {类型})\r\n                _{名称} = value\r\n                Invalidate()\r\n            End Set\r\n        End Property";
+                textBox5.Text = $"        ''' <summary>\r\n        ''' {描述}。\r\n        ''' </summary>\r\n        <Category(\"{类别}\")>\r\n        <Description(\"{描述}\")>\r\n        <DefaultValue(GetType({类型}), \"{默认值}\")>\r\n        Public Property {名称} As {类型}\r\n            Get\r\n                Return _{名称}\r\n            End Get\r\n            Set(value As {类型})\r\n                _{名称} = value\r\n                Invalidate()\r\n            End Set\r\n        End Property";
             }
 
         }
@@ -140,21 +143,35 @@ namespace KlxPiaoDemo
             生成代码(sender, e);
         }
         #region 控件.PictureBox
-        private void Pic_Track_值Changed(object? sender, PropertyChangedEventArgs e)
+        //会造成栈溢出，大概是KlxPiaoTrackBar引起的
+        private void Pic_Track_值Changed(object? sender, KlxPiaoTrackBar.ValueChangedEventArgs e)
         {
             if (sender is KlxPiaoTrackBar c)
             {
                 switch (c.Name)
                 {
+                    //边框大小
                     case "Pic_BorderTrackBar":
-                        klxPiaoPictureBox1.边框大小 = (int)c.值;
+                        klxPiaoPictureBox1.边框大小 = (int)e.Value;
                         break;
+
+                    //圆角大小(百分比)
                     case "Pic_FilletTrackBar":
-                        klxPiaoPictureBox1.圆角大小 = new CornerRadius(c.值);
+                        klxPiaoPictureBox1.圆角大小 = new CornerRadius(e.Value);
+                        Pic_SizePixelTrackBar.值 = klxPiaoPictureBox1.Width * e.Value;
                         break;
+
+                    //圆角大小(像素)
+                    case "Pic_SizePixelTrackBar": //打错了
+                        klxPiaoPictureBox1.圆角大小 = new CornerRadius(e.Value);
+                        Pic_FilletTrackBar.值 = e.Value / klxPiaoPictureBox1.Width;
+                        break;
+
+                    //大小
                     case "Pic_SizeTrackBar":
-                        klxPiaoPictureBox1.Size = new Size((int)c.值, (int)c.值);
+                        klxPiaoPictureBox1.Size = new Size((int)e.Value, (int)e.Value);
                         panel2.Left = klxPiaoPictureBox1.Left + 25 + klxPiaoPictureBox1.Width;
+                        Pic_SizePixelTrackBar.最大值 = klxPiaoPictureBox1.Width;
                         break;
                 }
             }
@@ -219,23 +236,23 @@ namespace KlxPiaoDemo
             ShowIcon = checkBox3.Checked;
         }
 
-        private void KlxPiaoTrackBar1_值Changed(object sender, PropertyChangedEventArgs e)
+        private void KlxPiaoTrackBar1_值Changed(object sender, KlxPiaoTrackBar.ValueChangedEventArgs e)
         {
             标题框高度 = (int)klxPiaoTrackBar1.值;
             tabControl1.Top = 标题框高度 + 9;
         }
 
-        private void KlxPiaoTrackBar2_值Changed(object sender, PropertyChangedEventArgs e)
+        private void KlxPiaoTrackBar2_值Changed(object sender, KlxPiaoTrackBar.ValueChangedEventArgs e)
         {
             标题左右边距 = (int)klxPiaoTrackBar2.值;
         }
 
-        private void KlxPiaoTrackBar3_值Changed(object sender, PropertyChangedEventArgs e)
+        private void KlxPiaoTrackBar3_值Changed(object sender, KlxPiaoTrackBar.ValueChangedEventArgs e)
         {
             标题按钮宽度 = (int)klxPiaoTrackBar3.值;
         }
 
-        private void KlxPiaoTrackBar5_值Changed(object sender, PropertyChangedEventArgs e)
+        private void KlxPiaoTrackBar5_值Changed(object sender, KlxPiaoTrackBar.ValueChangedEventArgs e)
         {
             标题按钮图标大小 = new SizeF(klxPiaoTrackBar5.值, klxPiaoTrackBar5.值);
         }
@@ -326,7 +343,7 @@ namespace KlxPiaoDemo
             klxPiaoLabel12.Text = "未激活";
         }
         //修改反馈偏移
-        private void KlxPiaoTrackBar4_值Changed(object sender, PropertyChangedEventArgs e)
+        private void KlxPiaoTrackBar4_值Changed(object sender, KlxPiaoTrackBar.ValueChangedEventArgs e)
         {
             标题按钮颜色反馈 = klxPiaoTrackBar4.值;
             foreach (Control c in klxPiaoPanel9.Controls)
@@ -355,7 +372,7 @@ namespace KlxPiaoDemo
                 switch (e.Button)
                 {
                     case MouseButtons.Left:
-                        设置全局主题(newThemeColor,true);
+                        设置全局主题(newThemeColor, true);
 
                         break;
                     case MouseButtons.Right:
@@ -602,7 +619,7 @@ namespace KlxPiaoDemo
         {
             bezierCurve1.拖动时显示控制点信息 = checkBox9.Checked;
         }
-        private void KlxPiaoTrackBar11_值Changed(object sender, PropertyChangedEventArgs e)
+        private void KlxPiaoTrackBar11_值Changed(object sender, KlxPiaoTrackBar.ValueChangedEventArgs e)
         {
             bezierCurve1.绘制精度 = klxPiaoTrackBar11.值;
         }

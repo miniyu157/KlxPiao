@@ -24,27 +24,25 @@ namespace KlxPiaoDemo
 
             klxPiaoLinkLabel1.Text = labelDemo.Font.FontFamily.Name;
 
-            this.遍历<KlxPiaoTrackBar>(trackBar => trackBar.值Changed += TrackBars_Changed);
+            this.遍历<KlxPiaoTrackBar>(trackBar => trackBar.ValueChanged += TrackBars_Changed);
             this.遍历<KlxPiaoPanel>(panel => panel.Click += Panels_Click);
             this.遍历<CheckBox>(checkBox => checkBox.CheckedChanged += CheckBoxs_Checked);
         }
 
-        private void TrackBars_Changed(object? sender, PropertyChangedEventArgs e)
+        private void TrackBars_Changed(object? sender, KlxPiaoTrackBar.ValueChangedEventArgs e)
         {
             if (sender is KlxPiaoTrackBar trackBar)
             {
-                int value = (int)trackBar.值;
-
                 switch (trackBar.Name)
                 {
                     case "字号Track":
-                        labelDemo.Font = new Font(labelDemo.Font.FontFamily, value, labelDemo.Font.Style);
+                        labelDemo.Font = new Font(labelDemo.Font.FontFamily, (int)e.Value, labelDemo.Font.Style);
                         break;
                     case "边框Track":
-                        labelDemo.边框大小 = value;
+                        labelDemo.边框大小 = (int)e.Value;
                         break;
                     case "圆角Track":
-                        labelDemo.圆角大小 = value / 100F;
+                        labelDemo.圆角大小 = (int)e.Value / 100F;
                         break;
                 }
             }

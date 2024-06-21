@@ -118,13 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="textBox5.Text" xml:space="preserve">
-    <value>        [Category("")]
-        [Description("")]
-        [DefaultValue(typeof(), "")]
-        public  
+    <value>        /// &lt;summary&gt;
+        /// fsdfs。
+        /// &lt;/summary&gt;
+        [Category("sdfsdf")]
+        [Description("fsdfs")]
+        [DefaultValue(typeof(dsfsdf), "fsdf")]
+        public dsfsdf dsfsf
         {
-            get { return _; }
-            set { _ = value; Invalidate(); }
+            get { return _dsfsf; }
+            set { _dsfsf = value; Invalidate(); }
         }</value>
   </data>
   <data name="bezierCurve1.控制点集合" mimetype="application/x-microsoft.net.object.binary.base64">

@@ -101,6 +101,8 @@
             klxPiaoPanel3 = new KlxPiaoControls.KlxPiaoPanel();
             tabPage9 = new TabPage();
             panel2 = new Panel();
+            Pic_SizePixelTrackBar = new KlxPiaoControls.KlxPiaoTrackBar();
+            klxPiaoLabel36 = new KlxPiaoControls.KlxPiaoLabel();
             klxPiaoLabel32 = new KlxPiaoControls.KlxPiaoLabel();
             klxPiaoLabel33 = new KlxPiaoControls.KlxPiaoLabel();
             Pic_FilletTrackBar = new KlxPiaoControls.KlxPiaoTrackBar();
@@ -421,7 +423,7 @@
             klxPiaoTrackBar5.背景色 = Color.White;
             klxPiaoTrackBar5.边框大小 = 1;
             klxPiaoTrackBar5.边框颜色 = Color.DarkGray;
-            klxPiaoTrackBar5.值Changed += KlxPiaoTrackBar5_值Changed;
+            klxPiaoTrackBar5.ValueChanged += KlxPiaoTrackBar5_值Changed;
             // 
             // label13
             // 
@@ -447,7 +449,7 @@
             klxPiaoTrackBar3.背景色 = Color.White;
             klxPiaoTrackBar3.边框大小 = 1;
             klxPiaoTrackBar3.边框颜色 = Color.DarkGray;
-            klxPiaoTrackBar3.值Changed += KlxPiaoTrackBar3_值Changed;
+            klxPiaoTrackBar3.ValueChanged += KlxPiaoTrackBar3_值Changed;
             // 
             // klxPiaoTrackBar2
             // 
@@ -464,7 +466,7 @@
             klxPiaoTrackBar2.背景色 = Color.White;
             klxPiaoTrackBar2.边框大小 = 1;
             klxPiaoTrackBar2.边框颜色 = Color.DarkGray;
-            klxPiaoTrackBar2.值Changed += KlxPiaoTrackBar2_值Changed;
+            klxPiaoTrackBar2.ValueChanged += KlxPiaoTrackBar2_值Changed;
             // 
             // klxPiaoTrackBar1
             // 
@@ -481,7 +483,7 @@
             klxPiaoTrackBar1.背景色 = Color.White;
             klxPiaoTrackBar1.边框大小 = 1;
             klxPiaoTrackBar1.边框颜色 = Color.DarkGray;
-            klxPiaoTrackBar1.值Changed += KlxPiaoTrackBar1_值Changed;
+            klxPiaoTrackBar1.ValueChanged += KlxPiaoTrackBar1_值Changed;
             // 
             // label11
             // 
@@ -1060,16 +1062,39 @@
             // 
             // panel2
             // 
+            panel2.Controls.Add(Pic_SizePixelTrackBar);
+            panel2.Controls.Add(klxPiaoLabel36);
             panel2.Controls.Add(klxPiaoLabel32);
             panel2.Controls.Add(klxPiaoLabel33);
             panel2.Controls.Add(Pic_FilletTrackBar);
             panel2.Controls.Add(Pic_SizeTrackBar);
             panel2.Controls.Add(klxPiaoLabel34);
             panel2.Controls.Add(Pic_BorderTrackBar);
-            panel2.Location = new Point(221, 59);
+            panel2.Location = new Point(221, 41);
             panel2.Name = "panel2";
-            panel2.Size = new Size(321, 100);
+            panel2.Size = new Size(321, 146);
             panel2.TabIndex = 7;
+            // 
+            // Pic_SizePixelTrackBar
+            // 
+            Pic_SizePixelTrackBar.BackColor = Color.White;
+            Pic_SizePixelTrackBar.Location = new Point(85, 111);
+            Pic_SizePixelTrackBar.Name = "Pic_SizePixelTrackBar";
+            Pic_SizePixelTrackBar.Size = new Size(222, 10);
+            Pic_SizePixelTrackBar.TabIndex = 8;
+            Pic_SizePixelTrackBar.Text = "klxPiaoTrackBar8";
+            // 
+            // klxPiaoLabel36
+            // 
+            klxPiaoLabel36.AutoSize = false;
+            klxPiaoLabel36.BackColor = Color.White;
+            klxPiaoLabel36.ForeColor = Color.Black;
+            klxPiaoLabel36.Location = new Point(0, 108);
+            klxPiaoLabel36.Name = "klxPiaoLabel36";
+            klxPiaoLabel36.Size = new Size(76, 17);
+            klxPiaoLabel36.TabIndex = 7;
+            klxPiaoLabel36.Text = "圆角(像素)";
+            klxPiaoLabel36.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // klxPiaoLabel32
             // 
@@ -1092,7 +1117,7 @@
             klxPiaoLabel33.Name = "klxPiaoLabel33";
             klxPiaoLabel33.Size = new Size(76, 17);
             klxPiaoLabel33.TabIndex = 3;
-            klxPiaoLabel33.Text = "圆角";
+            klxPiaoLabel33.Text = "圆角(百分比)";
             klxPiaoLabel33.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // Pic_FilletTrackBar
@@ -1105,6 +1130,7 @@
             Pic_FilletTrackBar.Text = "klxPiaoTrackBar7";
             Pic_FilletTrackBar.保留小数位数 = 2;
             Pic_FilletTrackBar.最大值 = 1F;
+            Pic_FilletTrackBar.增减大小 = 0.1F;
             // 
             // Pic_SizeTrackBar
             // 
@@ -1145,6 +1171,9 @@
             klxPiaoPictureBox1.Size = new Size(155, 155);
             klxPiaoPictureBox1.TabIndex = 0;
             klxPiaoPictureBox1.TabStop = false;
+            klxPiaoPictureBox1.Text = "114514";
+            klxPiaoPictureBox1.TextAlign = ContentAlignment.BottomRight;
+            klxPiaoPictureBox1.TextDrawPriority = KlxPiaoAPI.PriorityLevel.High;
             klxPiaoPictureBox1.启用边框 = true;
             klxPiaoPictureBox1.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             klxPiaoPictureBox1.边框大小 = 8;
@@ -1247,7 +1276,7 @@
             klxPiaoTrackBar7.TabIndex = 1;
             klxPiaoTrackBar7.Text = "klxPiaoTrackBar7";
             klxPiaoTrackBar7.保留小数位数 = 3;
-            klxPiaoTrackBar7.值 = 114.514F;
+            klxPiaoTrackBar7.值 = 123.456F;
             klxPiaoTrackBar7.值显示方式 = KlxPiaoControls.KlxPiaoTrackBar.文字位置.居中;
             klxPiaoTrackBar7.值显示格式 = "支持浮点数 [{value}]";
             klxPiaoTrackBar7.最大值 = 250F;
@@ -2136,7 +2165,7 @@
             klxPiaoTrackBar11.背景色 = Color.White;
             klxPiaoTrackBar11.边框大小 = 1;
             klxPiaoTrackBar11.边框颜色 = Color.DarkGray;
-            klxPiaoTrackBar11.值Changed += KlxPiaoTrackBar11_值Changed;
+            klxPiaoTrackBar11.ValueChanged += KlxPiaoTrackBar11_值Changed;
             // 
             // checkBox9
             // 
@@ -2281,7 +2310,7 @@
             klxPiaoTrackBar4.背景色 = Color.White;
             klxPiaoTrackBar4.边框大小 = 1;
             klxPiaoTrackBar4.边框颜色 = Color.DarkGray;
-            klxPiaoTrackBar4.值Changed += KlxPiaoTrackBar4_值Changed;
+            klxPiaoTrackBar4.ValueChanged += KlxPiaoTrackBar4_值Changed;
             // 
             // klxPiaoLabel14
             // 
@@ -3387,5 +3416,7 @@
         private KlxPiaoControls.RoundedButton roundedButton8;
         private KlxPiaoControls.KlxPiaoLabel klxPiaoLabel35;
         private KlxPiaoControls.SlideSwitch slideSwitch7;
+        private KlxPiaoControls.KlxPiaoTrackBar Pic_SizePixelTrackBar;
+        private KlxPiaoControls.KlxPiaoLabel klxPiaoLabel36;
     }
 }

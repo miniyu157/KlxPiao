@@ -3,21 +3,6 @@
 namespace KlxPiaoAPI
 {
     /// <summary>
-    /// 匹配模式的枚举。
-    /// </summary>
-    public enum MatchMode
-    {
-        /// <summary>
-        /// 正则表达式匹配模式。
-        /// </summary>
-        Regex,
-        /// <summary>
-        /// 字符串索引匹配模式。
-        /// </summary>
-        StringIndex
-    }
-
-    /// <summary>
     /// 用于从文本中提取子字符串的实用工具类。
     /// </summary>
     public static class TextExtractor
@@ -95,21 +80,21 @@ namespace KlxPiaoAPI
         /// <param name="leadingText">要搜索的前导文本。</param>
         /// <param name="trailingText">要搜索的尾随文本。</param>
         /// <returns>提取的子字符串列表。</returns>
-        private static List<string> ExtractWithStringIndex(string inputString, string leadingText, string trailingText)
+        private static List<string> ExtractWithStringIndex(string inputText, string leadingText, string trailingText)
         {
             var resultList = new List<string>();
             int startPos = 0;
 
             while (true)
             {
-                int leadPos = inputString.IndexOf(leadingText, startPos);
+                int leadPos = inputText.IndexOf(leadingText, startPos);
                 if (leadPos == -1) break;
                 leadPos += leadingText.Length;
 
-                int trailPos = inputString.IndexOf(trailingText, leadPos);
+                int trailPos = inputText.IndexOf(trailingText, leadPos);
                 if (trailPos == -1) break;
 
-                string extractedString = inputString[leadPos..trailPos];
+                string extractedString = inputText[leadPos..trailPos];
 
                 resultList.Add(extractedString);
 

@@ -11,9 +11,9 @@
         /// <param name="containerRect">包含内部大小的容器矩形。</param>
         /// <param name="internalSize">要在容器内对齐的内部矩形的大小。</param>
         /// <param name="alignment">内部矩形在容器内的对齐方式。</param>
-        /// <param name="padding">偏移，用于调整内部矩形在容器内的位置。默认为null。</param>
+        /// <param name="offset">偏移，用于调整内部矩形在容器中的位置。默认为null。</param>
         /// <returns>经过对齐和偏移调整后的内部矩形的位置。</returns>
-        public static Point CalculateAlignedPosition(Rectangle containerRect, Size internalSize, ContentAlignment alignment, Padding? padding = null)
+        public static Point CalculateAlignedPosition(Rectangle containerRect, Size internalSize, ContentAlignment alignment, Point? offset = null)
         {
             int HLeft = containerRect.X;
             int HCenter = containerRect.X + (containerRect.Width - internalSize.Width) / 2;
@@ -36,12 +36,10 @@
                 _ => Point.Empty
             };
 
-            if (padding != null)
+            if (offset != null)
             {
-                point.Y -= padding.Value.Bottom;
-                point.Y += padding.Value.Top;
-                point.X -= padding.Value.Right;
-                point.X += padding.Value.Left;
+                point.X += ((Point)offset).X;
+                point.Y += ((Point)offset).Y;
             }
 
             return point;
@@ -53,9 +51,9 @@
         /// <param name="containerRect">包含内部大小的容器矩形。</param>
         /// <param name="internalSize">要在容器内对齐的内部矩形的大小。</param>
         /// <param name="alignment">内部矩形在容器内的对齐方式。</param>
-        /// <param name="padding">偏移，用于调整内部矩形在容器内的位置。默认为null。</param>
+        /// <param name="offset">偏移，用于调整内部矩形在容器中的位置。默认为null。</param>
         /// <returns>经过对齐和偏移调整后的内部矩形的位置。</returns>
-        public static PointF CalculateAlignedPosition(RectangleF containerRect, SizeF internalSize, ContentAlignment alignment, Padding? padding = null)
+        public static PointF CalculateAlignedPosition(RectangleF containerRect, SizeF internalSize, ContentAlignment alignment, Point? offset = null)
         {
             float HLeft = containerRect.X;
             float HCenter = containerRect.X + (containerRect.Width - internalSize.Width) / 2;
@@ -78,12 +76,10 @@
                 _ => PointF.Empty
             };
 
-            if (padding != null)
+            if (offset != null)
             {
-                pointF.Y -= padding.Value.Bottom;
-                pointF.Y += padding.Value.Top;
-                pointF.X -= padding.Value.Right;
-                pointF.X += padding.Value.Left;
+                pointF.X += ((PointF)offset).X;
+                pointF.Y += ((PointF)offset).Y;
             }
 
             return pointF;
@@ -95,23 +91,80 @@
         /// <param name="containerRect">包含内部大小的容器矩形。</param>
         /// <param name="internalSize">要在容器内对齐的内部矩形的大小。</param>
         /// <param name="alignment">内部矩形在容器内的对齐方式。</param>
-        /// <param name="padding">偏移，用于调整内部矩形在容器内的位置。默认为null。</param>
+        /// <param name="padding">偏移，用于调整内部矩形在容器中的位置。默认为null。</param>
         /// <returns>经过对齐和偏移调整后的内部矩形的位置。</returns>
-        public static Point CalculateAlignedPosition(Rectangle containerRect, SizeF internalSize, ContentAlignment alignment, Padding? padding = null)
+        public static Point CalculateAlignedPosition(Rectangle containerRect, SizeF internalSize, ContentAlignment alignment, Point? offset = null)
         {
-            return CalculateAlignedPosition(containerRect, new Size((int)internalSize.Width, (int)internalSize.Height), alignment, padding);
+            return CalculateAlignedPosition(containerRect, new Size((int)internalSize.Width, (int)internalSize.Height), alignment, offset);
         }
+
         /// <summary>
         /// 根据指定的对齐方式，计算容器矩形内部矩形的位置。
         /// </summary>
         /// <param name="containerRect">包含内部大小的容器矩形。</param>
         /// <param name="internalSize">要在容器内对齐的内部矩形的大小。</param>
         /// <param name="alignment">内部矩形在容器内的对齐方式。</param>
-        /// <param name="padding">偏移，用于调整内部矩形在容器内的位置。默认为null。</param>
+        /// <param name="offset">偏移，用于调整内部矩形在容器中的位置。默认为null。</param>
+        /// <returns>经过对齐和偏移调整后的内部矩形的位置。</returns>
+        public static PointF CalculateAlignedPosition(RectangleF containerRect, Size internalSize, ContentAlignment alignment, Point? offset = null)
+        {
+            return CalculateAlignedPosition(containerRect, new SizeF(internalSize.Width, internalSize.Height), alignment, offset);
+        }
+
+        /// <summary>
+        /// 根据指定的对齐方式，计算容器矩形内部矩形的位置。
+        /// </summary>
+        /// <param name="containerRect">包含内部大小的容器矩形。</param>
+        /// <param name="internalSize">要在容器内对齐的内部矩形的大小。</param>
+        /// <param name="alignment">内部矩形在容器内的对齐方式。</param>
+        /// <param name="offset">偏移，用于调整内部矩形在容器中的位置。默认为null。</param>
+        /// <returns>经过对齐和偏移调整后的内部矩形的位置。</returns>
+        public static Point CalculateAlignedPosition(Rectangle containerRect, Size internalSize, ContentAlignment alignment, Padding? padding = null)
+        {
+            Point? offset = padding == null ? null : ConvertToPoint((Padding)padding);
+            return CalculateAlignedPosition(containerRect, internalSize, alignment, offset);
+        }
+
+        /// <summary>
+        /// 根据指定的对齐方式，计算容器矩形内部矩形的位置。
+        /// </summary>
+        /// <param name="containerRect">包含内部大小的容器矩形。</param>
+        /// <param name="internalSize">要在容器内对齐的内部矩形的大小。</param>
+        /// <param name="alignment">内部矩形在容器内的对齐方式。</param>
+        /// <param name="offset">偏移，用于调整内部矩形在容器中的位置。默认为null。</param>
+        /// <returns>经过对齐和偏移调整后的内部矩形的位置。</returns>
+        public static PointF CalculateAlignedPosition(RectangleF containerRect, SizeF internalSize, ContentAlignment alignment, Padding? padding = null)
+        {
+            Point? offset = padding == null ? null : ConvertToPoint((Padding)padding);
+            return CalculateAlignedPosition(containerRect, internalSize, alignment, offset);
+        }
+
+        /// <summary>
+        /// 根据指定的对齐方式，计算容器矩形内部矩形的位置。
+        /// </summary>
+        /// <param name="containerRect">包含内部大小的容器矩形。</param>
+        /// <param name="internalSize">要在容器内对齐的内部矩形的大小。</param>
+        /// <param name="alignment">内部矩形在容器内的对齐方式。</param>
+        /// <param name="offset">偏移，用于调整内部矩形在容器中的位置。默认为null。</param>
+        /// <returns>经过对齐和偏移调整后的内部矩形的位置。</returns>
+        public static Point CalculateAlignedPosition(Rectangle containerRect, SizeF internalSize, ContentAlignment alignment, Padding? padding = null)
+        {
+            Point? offset = padding == null ? null : ConvertToPoint((Padding)padding);
+            return CalculateAlignedPosition(containerRect, new Size((int)internalSize.Width, (int)internalSize.Height), alignment, offset);
+        }
+
+        /// <summary>
+        /// 根据指定的对齐方式，计算容器矩形内部矩形的位置。
+        /// </summary>
+        /// <param name="containerRect">包含内部大小的容器矩形。</param>
+        /// <param name="internalSize">要在容器内对齐的内部矩形的大小。</param>
+        /// <param name="alignment">内部矩形在容器内的对齐方式。</param>
+        /// <param name="offset">偏移，用于调整内部矩形在容器中的位置。默认为null。</param>
         /// <returns>经过对齐和偏移调整后的内部矩形的位置。</returns>
         public static PointF CalculateAlignedPosition(RectangleF containerRect, Size internalSize, ContentAlignment alignment, Padding? padding = null)
         {
-            return CalculateAlignedPosition(containerRect, new SizeF(internalSize.Width, internalSize.Height), alignment, padding);
+            Point? offset = padding == null ? null : ConvertToPoint((Padding)padding);
+            return CalculateAlignedPosition(containerRect, new SizeF(internalSize.Width, internalSize.Height), alignment, offset);
         }
 
         /// <summary>
@@ -140,6 +193,11 @@
                 }
             }
             return points;
+        }
+
+        public static Point ConvertToPoint(Padding padding)
+        {
+            return new(padding.Left - padding.Right, padding.Top - padding.Bottom);
         }
     }
 }

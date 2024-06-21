@@ -34,7 +34,6 @@ namespace KlxPiaoAPI
             //填充外部
             GraphicsPath 外部路径 = ConvertToRoundedPath(rect, cornerRadius, true);
             g.FillPath(new SolidBrush(clear), 外部路径);
-
         }
 
         /// <summary>
@@ -59,7 +58,6 @@ namespace KlxPiaoAPI
             //填充外部
             GraphicsPath 外部路径 = ConvertToRoundedPath(rect, cornerRadius, true);
             g.FillPath(new SolidBrush(clear), 外部路径);
-
         }
 
         /// <summary>
