@@ -132,6 +132,64 @@ namespace KlxPiaoAPI
         }
 
         /// <summary>
+        /// 将贝塞尔曲线应用于控件的过渡动画。
+        /// </summary>
+        /// <param name="控件">要应用动画的控件。</param>
+        /// <param name="属性">要过渡的属性。</param>
+        /// <param name="开始值">动画的起始值。</param>
+        /// <param name="结束值">动画的结束值。</param>
+        /// <param name="animation">动画的基本组成元素，以 <see cref="Animation"/> 结构体表示。</param>
+        /// <param name="action">每一帧动画完成时执行的操作。</param>
+        /// <param name="token">用于取消动画的CancellationToken。</param>
+        public static async Task 贝塞尔过渡动画(this Control 控件, string 属性, object? 开始值, object 结束值, Animation animation, Action<double>? action = default, CancellationToken token = default)
+        {
+            DateTime 启动时间 = DateTime.Now;
+            TimeSpan 总时长 = TimeSpan.FromMilliseconds(animation.Time);
+            bool 状态 = false; //true表示动画完成
+
+            开始值 ??= SetOrGetPropertyValue(控件, 属性);
+            animation.Easing ??= [new(0, 0), new(1, 1)];
+
+            ITypeCollection 数字类型集合 = NumberType.Instance;
+            ITypeCollection 点和大小类型集合 = PointOrSizeType.Instance;
+
+            bool 颜色 = 开始值 is Color && 结束值 is Color;
+            bool 单个数值类型 = 开始值 != null && 开始值.GetType() == 结束值.GetType() && 开始值.IsTypes(数字类型集合) && 结束值.IsTypes(数字类型集合);
+            bool 点或大小 = 开始值 != null && 开始值.GetType() == 结束值.GetType() && 开始值.IsTypes(点和大小类型集合) && 结束值.IsTypes(点和大小类型集合);
+
+            var types = (颜色, 单个数值类型, 点或大小);
+
+            while (!状态)
+            {
+                if (token.IsCancellationRequested)
+                {
+                    break;
+                }
+
+                TimeSpan 当前时间 = DateTime.Now - 启动时间;
+                double 时间进度 = 当前时间.TotalMilliseconds / 总时长.TotalMilliseconds;
+
+                if (时间进度 >= 1.0)
+                {
+                    状态 = true;
+                    控件.Invoke(() => 控件.SetOrGetPropertyValue(属性, 结束值));
+                }
+                else
+                {
+                    double 进度 = BezierCurve.CalculateBezierPointByTime(时间进度, animation.Easing).Y;
+
+                    if (开始值 != null)
+                    {
+                        动画逻辑(控件, 属性, 开始值, 结束值, types, 进度);
+                    }
+                    await Task.Delay(1000 / animation.FPS, token);
+                }
+
+                action?.Invoke(时间进度);
+            }
+        }
+
+        /// <summary>
         /// 将用户自定义函数曲线应用于控件的过渡动画。
         /// </summary>
         /// <param name="控件">要应用动画的控件。</param>

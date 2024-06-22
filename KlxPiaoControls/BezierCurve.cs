@@ -593,7 +593,7 @@ namespace KlxPiaoControls
                     { "{y}", dragPointF.Y.ToString() }
                 };
 
-                g.DrawString(控制点显示格式.批量替换(replacements), Font, new SolidBrush(ForeColor), 绘制数组[拖动的索引]);
+                g.DrawString(控制点显示格式.ReplaceMultiple(replacements), Font, new SolidBrush(ForeColor), 绘制数组[拖动的索引]);
             }
 
             //绘制扫描线

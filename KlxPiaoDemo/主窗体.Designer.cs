@@ -30,14 +30,32 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(主窗体));
             KlxPiaoControls.RoundedButton.交互样式类 交互样式类1 = new KlxPiaoControls.RoundedButton.交互样式类();
+            KlxPiaoAPI.Animation animation1 = new KlxPiaoAPI.Animation();
+            KlxPiaoAPI.Animation animation2 = new KlxPiaoAPI.Animation();
             KlxPiaoControls.RoundedButton.交互样式类 交互样式类2 = new KlxPiaoControls.RoundedButton.交互样式类();
+            KlxPiaoAPI.Animation animation3 = new KlxPiaoAPI.Animation();
+            KlxPiaoAPI.Animation animation4 = new KlxPiaoAPI.Animation();
             KlxPiaoControls.RoundedButton.交互样式类 交互样式类3 = new KlxPiaoControls.RoundedButton.交互样式类();
+            KlxPiaoAPI.Animation animation5 = new KlxPiaoAPI.Animation();
+            KlxPiaoAPI.Animation animation6 = new KlxPiaoAPI.Animation();
             KlxPiaoControls.RoundedButton.交互样式类 交互样式类4 = new KlxPiaoControls.RoundedButton.交互样式类();
+            KlxPiaoAPI.Animation animation7 = new KlxPiaoAPI.Animation();
+            KlxPiaoAPI.Animation animation8 = new KlxPiaoAPI.Animation();
             KlxPiaoControls.RoundedButton.交互样式类 交互样式类5 = new KlxPiaoControls.RoundedButton.交互样式类();
+            KlxPiaoAPI.Animation animation9 = new KlxPiaoAPI.Animation();
+            KlxPiaoAPI.Animation animation10 = new KlxPiaoAPI.Animation();
             KlxPiaoControls.RoundedButton.交互样式类 交互样式类6 = new KlxPiaoControls.RoundedButton.交互样式类();
+            KlxPiaoAPI.Animation animation11 = new KlxPiaoAPI.Animation();
+            KlxPiaoAPI.Animation animation12 = new KlxPiaoAPI.Animation();
             KlxPiaoControls.RoundedButton.交互样式类 交互样式类7 = new KlxPiaoControls.RoundedButton.交互样式类();
+            KlxPiaoAPI.Animation animation13 = new KlxPiaoAPI.Animation();
+            KlxPiaoAPI.Animation animation14 = new KlxPiaoAPI.Animation();
             KlxPiaoControls.RoundedButton.交互样式类 交互样式类8 = new KlxPiaoControls.RoundedButton.交互样式类();
+            KlxPiaoAPI.Animation animation15 = new KlxPiaoAPI.Animation();
+            KlxPiaoAPI.Animation animation16 = new KlxPiaoAPI.Animation();
             KlxPiaoControls.RoundedButton.交互样式类 交互样式类9 = new KlxPiaoControls.RoundedButton.交互样式类();
+            KlxPiaoAPI.Animation animation17 = new KlxPiaoAPI.Animation();
+            KlxPiaoAPI.Animation animation18 = new KlxPiaoAPI.Animation();
             label1 = new Label();
             textBox1 = new TextBox();
             textBox2 = new TextBox();
@@ -1651,18 +1669,17 @@
             slideSwitch7.Location = new Point(478, 353);
             slideSwitch7.Name = "slideSwitch7";
             slideSwitch7.Padding = new Padding(5, 0, 5, 0);
-            slideSwitch7.SelectIndex = 1;
             // 
             // 
             // 
             slideSwitch7.SelectItemStyle.AutoSize = false;
-            slideSwitch7.SelectItemStyle.BackColor = Color.FromArgb(207, 19, 18);
+            slideSwitch7.SelectItemStyle.BackColor = Color.FromArgb(17, 178, 48);
             slideSwitch7.SelectItemStyle.ForeColor = Color.White;
-            slideSwitch7.SelectItemStyle.Location = new Point(50, 0);
+            slideSwitch7.SelectItemStyle.Location = new Point(10, 0);
             slideSwitch7.SelectItemStyle.Name = "SelectShow";
             slideSwitch7.SelectItemStyle.Size = new Size(30, 30);
             slideSwitch7.SelectItemStyle.TabIndex = 2;
-            slideSwitch7.SelectItemStyle.Text = "OFF";
+            slideSwitch7.SelectItemStyle.Text = "ON";
             slideSwitch7.SelectItemStyle.TextAlign = ContentAlignment.MiddleCenter;
             slideSwitch7.SelectItemStyle.偏移方式 = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
             slideSwitch7.SelectItemStyle.启用边框 = true;
@@ -1689,17 +1706,33 @@
             roundedButton8.TabIndex = 9;
             roundedButton8.Text = "ImageButton";
             roundedButton8.TextAlign = ContentAlignment.MiddleRight;
-            交互样式类1.启用动画 = false;
             交互样式类1.按下前景色 = Color.Empty;
+            交互样式类1.按下大小 = new Size(0, 0);
             交互样式类1.按下背景色 = Color.FromArgb(249, 236, 236);
             交互样式类1.按下边框颜色 = Color.Empty;
             交互样式类1.移入前景色 = Color.Empty;
+            交互样式类1.移入大小 = new Size(0, 0);
             交互样式类1.移入背景色 = Color.WhiteSmoke;
             交互样式类1.移入边框颜色 = Color.Empty;
             roundedButton8.交互样式 = 交互样式类1;
+            roundedButton8.启用动画 = true;
             roundedButton8.图像大小修正 = new SizeF(0.5F, 0.5F);
             roundedButton8.图像大小修正格式 = KlxPiaoControls.RoundedButton.FormatType.Percentage;
+            animation1.Easing = new PointF[]
+    {
+    (PointF)resources.GetObject("animation1.Easing"),
+    (PointF)resources.GetObject("animation1.Easing1"),
+    (PointF)resources.GetObject("animation1.Easing2"),
+    (PointF)resources.GetObject("animation1.Easing3")
+    };
+            animation1.FPS = 100;
+            animation1.Time = 300;
+            roundedButton8.大小过渡配置 = animation1;
             roundedButton8.边框颜色 = Color.Pink;
+            animation2.Easing = null;
+            animation2.FPS = 30;
+            animation2.Time = 150;
+            roundedButton8.颜色过渡配置 = animation2;
             // 
             // roundedButton9
             // 
@@ -1715,18 +1748,33 @@
             roundedButton9.Size = new Size(43, 43);
             roundedButton9.TabIndex = 8;
             roundedButton9.Text = "Piao";
-            交互样式类2.启用动画 = false;
             交互样式类2.按下前景色 = Color.Black;
+            交互样式类2.按下大小 = new Size(0, 0);
             交互样式类2.按下背景色 = Color.White;
             交互样式类2.按下边框颜色 = Color.Pink;
             交互样式类2.移入前景色 = SystemColors.WindowFrame;
+            交互样式类2.移入大小 = new Size(0, 0);
             交互样式类2.移入背景色 = SystemColors.WindowFrame;
             交互样式类2.移入边框颜色 = Color.Empty;
             roundedButton9.交互样式 = 交互样式类2;
+            roundedButton9.启用动画 = true;
             roundedButton9.图像大小修正 = new SizeF(0.5F, 0.5F);
             roundedButton9.图像大小修正格式 = KlxPiaoControls.RoundedButton.FormatType.Percentage;
             roundedButton9.圆角大小 = new KlxPiaoAPI.CornerRadius(1F, 1F, 1F, 1F);
-            roundedButton9.边框颜色 = Color.Gainsboro;
+            animation3.Easing = new PointF[]
+    {
+    (PointF)resources.GetObject("animation3.Easing"),
+    (PointF)resources.GetObject("animation3.Easing1"),
+    (PointF)resources.GetObject("animation3.Easing2"),
+    (PointF)resources.GetObject("animation3.Easing3")
+    };
+            animation3.FPS = 100;
+            animation3.Time = 300;
+            roundedButton9.大小过渡配置 = animation3;
+            animation4.Easing = null;
+            animation4.FPS = 30;
+            animation4.Time = 150;
+            roundedButton9.颜色过渡配置 = animation4;
             // 
             // roundedButton6
             // 
@@ -1743,18 +1791,33 @@
             roundedButton6.TabIndex = 6;
             roundedButton6.Text = "ImageButton";
             roundedButton6.TextAlign = ContentAlignment.MiddleRight;
-            交互样式类3.启用动画 = false;
             交互样式类3.按下前景色 = Color.Black;
+            交互样式类3.按下大小 = new Size(0, 0);
             交互样式类3.按下背景色 = Color.White;
             交互样式类3.按下边框颜色 = Color.Pink;
             交互样式类3.移入前景色 = Color.Empty;
+            交互样式类3.移入大小 = new Size(200, 43);
             交互样式类3.移入背景色 = SystemColors.WindowFrame;
             交互样式类3.移入边框颜色 = Color.Empty;
             roundedButton6.交互样式 = 交互样式类3;
+            roundedButton6.启用动画 = true;
             roundedButton6.图像大小修正 = new SizeF(0.5F, 0.5F);
             roundedButton6.图像大小修正格式 = KlxPiaoControls.RoundedButton.FormatType.Percentage;
             roundedButton6.圆角大小 = new KlxPiaoAPI.CornerRadius(0F, 1F, 1F, 0F);
-            roundedButton6.边框颜色 = Color.Gainsboro;
+            animation5.Easing = new PointF[]
+    {
+    (PointF)resources.GetObject("animation5.Easing"),
+    (PointF)resources.GetObject("animation5.Easing1"),
+    (PointF)resources.GetObject("animation5.Easing2"),
+    (PointF)resources.GetObject("animation5.Easing3")
+    };
+            animation5.FPS = 100;
+            animation5.Time = 300;
+            roundedButton6.大小过渡配置 = animation5;
+            animation6.Easing = null;
+            animation6.FPS = 30;
+            animation6.Time = 150;
+            roundedButton6.颜色过渡配置 = animation6;
             // 
             // roundedButton7
             // 
@@ -1771,18 +1834,33 @@
             roundedButton7.TabIndex = 5;
             roundedButton7.Text = "ImageButton";
             roundedButton7.TextAlign = ContentAlignment.MiddleRight;
-            交互样式类4.启用动画 = false;
             交互样式类4.按下前景色 = Color.Black;
+            交互样式类4.按下大小 = new Size(0, 0);
             交互样式类4.按下背景色 = Color.White;
             交互样式类4.按下边框颜色 = Color.Pink;
             交互样式类4.移入前景色 = Color.Empty;
+            交互样式类4.移入大小 = new Size(200, 43);
             交互样式类4.移入背景色 = SystemColors.WindowFrame;
             交互样式类4.移入边框颜色 = Color.Empty;
             roundedButton7.交互样式 = 交互样式类4;
+            roundedButton7.启用动画 = true;
             roundedButton7.图像大小修正 = new SizeF(0.5F, 0.5F);
             roundedButton7.图像大小修正格式 = KlxPiaoControls.RoundedButton.FormatType.Percentage;
             roundedButton7.圆角大小 = new KlxPiaoAPI.CornerRadius(0F, 1F, 1F, 0F);
-            roundedButton7.边框颜色 = Color.Gainsboro;
+            animation7.Easing = new PointF[]
+    {
+    (PointF)resources.GetObject("animation7.Easing"),
+    (PointF)resources.GetObject("animation7.Easing1"),
+    (PointF)resources.GetObject("animation7.Easing2"),
+    (PointF)resources.GetObject("animation7.Easing3")
+    };
+            animation7.FPS = 100;
+            animation7.Time = 300;
+            roundedButton7.大小过渡配置 = animation7;
+            animation8.Easing = null;
+            animation8.FPS = 30;
+            animation8.Time = 150;
+            roundedButton7.颜色过渡配置 = animation8;
             // 
             // roundedButton5
             // 
@@ -1799,18 +1877,33 @@
             roundedButton5.TabIndex = 4;
             roundedButton5.Text = "ImageButton";
             roundedButton5.TextAlign = ContentAlignment.MiddleRight;
-            交互样式类5.启用动画 = false;
             交互样式类5.按下前景色 = Color.Black;
+            交互样式类5.按下大小 = new Size(0, 0);
             交互样式类5.按下背景色 = Color.White;
             交互样式类5.按下边框颜色 = Color.Pink;
             交互样式类5.移入前景色 = Color.Empty;
+            交互样式类5.移入大小 = new Size(200, 43);
             交互样式类5.移入背景色 = SystemColors.WindowFrame;
             交互样式类5.移入边框颜色 = Color.Empty;
             roundedButton5.交互样式 = 交互样式类5;
+            roundedButton5.启用动画 = true;
             roundedButton5.图像大小修正 = new SizeF(0.5F, 0.5F);
             roundedButton5.图像大小修正格式 = KlxPiaoControls.RoundedButton.FormatType.Percentage;
             roundedButton5.圆角大小 = new KlxPiaoAPI.CornerRadius(0F, 1F, 1F, 0F);
-            roundedButton5.边框颜色 = Color.Gainsboro;
+            animation9.Easing = new PointF[]
+    {
+    (PointF)resources.GetObject("animation9.Easing"),
+    (PointF)resources.GetObject("animation9.Easing1"),
+    (PointF)resources.GetObject("animation9.Easing2"),
+    (PointF)resources.GetObject("animation9.Easing3")
+    };
+            animation9.FPS = 100;
+            animation9.Time = 300;
+            roundedButton5.大小过渡配置 = animation9;
+            animation10.Easing = null;
+            animation10.FPS = 30;
+            animation10.Time = 150;
+            roundedButton5.颜色过渡配置 = animation10;
             // 
             // roundedButton4
             // 
@@ -1827,18 +1920,39 @@
             roundedButton4.TabIndex = 3;
             roundedButton4.Text = "ImageButton";
             roundedButton4.TextAlign = ContentAlignment.MiddleRight;
-            交互样式类6.启用动画 = false;
             交互样式类6.按下前景色 = Color.Black;
+            交互样式类6.按下大小 = new Size(0, 0);
             交互样式类6.按下背景色 = Color.White;
             交互样式类6.按下边框颜色 = Color.Pink;
             交互样式类6.移入前景色 = Color.Empty;
+            交互样式类6.移入大小 = new Size(200, 43);
             交互样式类6.移入背景色 = SystemColors.WindowFrame;
             交互样式类6.移入边框颜色 = Color.Empty;
             roundedButton4.交互样式 = 交互样式类6;
+            roundedButton4.启用动画 = true;
             roundedButton4.图像大小修正 = new SizeF(0.5F, 0.5F);
             roundedButton4.图像大小修正格式 = KlxPiaoControls.RoundedButton.FormatType.Percentage;
             roundedButton4.圆角大小 = new KlxPiaoAPI.CornerRadius(0F, 1F, 1F, 0F);
-            roundedButton4.边框颜色 = Color.Gainsboro;
+            animation11.Easing = new PointF[]
+    {
+    (PointF)resources.GetObject("animation11.Easing"),
+    (PointF)resources.GetObject("animation11.Easing1"),
+    (PointF)resources.GetObject("animation11.Easing2"),
+    (PointF)resources.GetObject("animation11.Easing3")
+    };
+            animation11.FPS = 100;
+            animation11.Time = 300;
+            roundedButton4.大小过渡配置 = animation11;
+            animation12.Easing = new PointF[]
+    {
+    (PointF)resources.GetObject("animation12.Easing"),
+    (PointF)resources.GetObject("animation12.Easing1"),
+    (PointF)resources.GetObject("animation12.Easing2"),
+    (PointF)resources.GetObject("animation12.Easing3")
+    };
+            animation12.FPS = 30;
+            animation12.Time = 150;
+            roundedButton4.颜色过渡配置 = animation12;
             // 
             // roundedButton3
             // 
@@ -1855,18 +1969,33 @@
             roundedButton3.TabIndex = 2;
             roundedButton3.Text = "ImageButton";
             roundedButton3.TextAlign = ContentAlignment.MiddleRight;
-            交互样式类7.启用动画 = false;
             交互样式类7.按下前景色 = Color.Black;
+            交互样式类7.按下大小 = new Size(0, 0);
             交互样式类7.按下背景色 = Color.White;
             交互样式类7.按下边框颜色 = Color.Pink;
             交互样式类7.移入前景色 = Color.Empty;
+            交互样式类7.移入大小 = new Size(0, 0);
             交互样式类7.移入背景色 = SystemColors.WindowFrame;
             交互样式类7.移入边框颜色 = Color.Empty;
             roundedButton3.交互样式 = 交互样式类7;
+            roundedButton3.启用动画 = true;
             roundedButton3.图像大小修正 = new SizeF(0.5F, 0.5F);
             roundedButton3.图像大小修正格式 = KlxPiaoControls.RoundedButton.FormatType.Percentage;
             roundedButton3.圆角大小 = new KlxPiaoAPI.CornerRadius(1F, 1F, 1F, 1F);
-            roundedButton3.边框颜色 = Color.Gainsboro;
+            animation13.Easing = new PointF[]
+    {
+    (PointF)resources.GetObject("animation13.Easing"),
+    (PointF)resources.GetObject("animation13.Easing1"),
+    (PointF)resources.GetObject("animation13.Easing2"),
+    (PointF)resources.GetObject("animation13.Easing3")
+    };
+            animation13.FPS = 100;
+            animation13.Time = 300;
+            roundedButton3.大小过渡配置 = animation13;
+            animation14.Easing = null;
+            animation14.FPS = 30;
+            animation14.Time = 150;
+            roundedButton3.颜色过渡配置 = animation14;
             // 
             // roundedButton2
             // 
@@ -1883,17 +2012,32 @@
             roundedButton2.TabIndex = 1;
             roundedButton2.Text = "ImageButton";
             roundedButton2.TextAlign = ContentAlignment.MiddleRight;
-            交互样式类8.启用动画 = false;
             交互样式类8.按下前景色 = Color.Empty;
+            交互样式类8.按下大小 = new Size(0, 0);
             交互样式类8.按下背景色 = Color.FromArgb(249, 236, 236);
             交互样式类8.按下边框颜色 = Color.Empty;
             交互样式类8.移入前景色 = Color.Black;
+            交互样式类8.移入大小 = new Size(0, 0);
             交互样式类8.移入背景色 = Color.White;
             交互样式类8.移入边框颜色 = Color.Pink;
             roundedButton2.交互样式 = 交互样式类8;
+            roundedButton2.启用动画 = true;
             roundedButton2.图像大小修正 = new SizeF(0.5F, 0.5F);
             roundedButton2.图像大小修正格式 = KlxPiaoControls.RoundedButton.FormatType.Percentage;
-            roundedButton2.边框颜色 = Color.Gainsboro;
+            animation15.Easing = new PointF[]
+    {
+    (PointF)resources.GetObject("animation15.Easing"),
+    (PointF)resources.GetObject("animation15.Easing1"),
+    (PointF)resources.GetObject("animation15.Easing2"),
+    (PointF)resources.GetObject("animation15.Easing3")
+    };
+            animation15.FPS = 100;
+            animation15.Time = 300;
+            roundedButton2.大小过渡配置 = animation15;
+            animation16.Easing = null;
+            animation16.FPS = 30;
+            animation16.Time = 150;
+            roundedButton2.颜色过渡配置 = animation16;
             // 
             // roundedButton1
             // 
@@ -1902,15 +2046,30 @@
             roundedButton1.Size = new Size(116, 43);
             roundedButton1.TabIndex = 0;
             roundedButton1.Text = "RoundedButton";
-            交互样式类9.启用动画 = false;
             交互样式类9.按下前景色 = Color.Empty;
+            交互样式类9.按下大小 = new Size(0, 0);
             交互样式类9.按下背景色 = Color.FromArgb(235, 235, 235);
             交互样式类9.按下边框颜色 = Color.Empty;
             交互样式类9.移入前景色 = Color.Empty;
+            交互样式类9.移入大小 = new Size(0, 0);
             交互样式类9.移入背景色 = Color.FromArgb(245, 245, 245);
             交互样式类9.移入边框颜色 = Color.Empty;
             roundedButton1.交互样式 = 交互样式类9;
-            roundedButton1.边框颜色 = Color.Gainsboro;
+            roundedButton1.启用动画 = true;
+            animation17.Easing = new PointF[]
+    {
+    (PointF)resources.GetObject("animation17.Easing"),
+    (PointF)resources.GetObject("animation17.Easing1"),
+    (PointF)resources.GetObject("animation17.Easing2"),
+    (PointF)resources.GetObject("animation17.Easing3")
+    };
+            animation17.FPS = 100;
+            animation17.Time = 300;
+            roundedButton1.大小过渡配置 = animation17;
+            animation18.Easing = null;
+            animation18.FPS = 30;
+            animation18.Time = 150;
+            roundedButton1.颜色过渡配置 = animation18;
             // 
             // tabPage3
             // 
@@ -3414,9 +3573,9 @@
         private KlxPiaoControls.RoundedButton roundedButton5;
         private KlxPiaoControls.RoundedButton roundedButton9;
         private KlxPiaoControls.RoundedButton roundedButton8;
-        private KlxPiaoControls.KlxPiaoLabel klxPiaoLabel35;
         private KlxPiaoControls.SlideSwitch slideSwitch7;
         private KlxPiaoControls.KlxPiaoTrackBar Pic_SizePixelTrackBar;
         private KlxPiaoControls.KlxPiaoLabel klxPiaoLabel36;
+        private KlxPiaoControls.KlxPiaoLabel klxPiaoLabel35;
     }
 }

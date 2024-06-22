@@ -3,8 +3,11 @@
 namespace KlxPiaoControls
 {
     /// <summary>
-    /// 基于原版Button增强的组件。
+    /// 表示一个按钮控件。
     /// </summary>
+    /// <remarks>
+    /// <see cref="KlxPiaoButton"/> 继承自 <see cref="Button"/>，是原版 <see cref="Button"/> 的增强版本。
+    /// </remarks>
     public partial class KlxPiaoButton : Button
     {
         private bool _可获得焦点;

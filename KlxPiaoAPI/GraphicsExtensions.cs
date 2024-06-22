@@ -64,7 +64,7 @@ namespace KlxPiaoAPI
         /// 将一个矩形转换为圆角路径。
         /// </summary>
         /// <param name="rect">提供的矩形。</param>
-        /// <param name="cornerRadius">每个角的圆角大小，自动检测是百分比大小还是像素大小。</param>
+        /// <param name="cornerRadius">角半径，以 <see cref="CornerRadius"/> 结构体表示。</param>
         /// <param name="returnOuterPath">是否返回除圆角区域外的路径</param>
         /// <returns>表示圆角路径的 <see cref="GraphicsPath"/> 。</returns>
         public static GraphicsPath ConvertToRoundedPath(Rectangle rect, CornerRadius cornerRadius, bool returnOuterPath = false)

@@ -67,6 +67,7 @@ namespace KlxPiaoAPI
                 {
                     return new CornerRadius(array2[0], array2[1], array2[2], array2[3]);
                 }
+                //指定一个值初始化新实例
                 if (array2.Length == 1)
                 {
                     return new CornerRadius(array2[0]);
@@ -161,8 +162,6 @@ namespace KlxPiaoAPI
         public override bool GetPropertiesSupported(ITypeDescriptorContext context) => true;
 
         /// <summary>初始化 <see cref="T:System.Windows.Forms.CornerRadiusConverter" /> 类的新实例。</summary>
-        public CornerRadiusConverter()
-        {
-        }
+        public CornerRadiusConverter() { }
     }
 }

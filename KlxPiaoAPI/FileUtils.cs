@@ -14,8 +14,9 @@ namespace KlxPiaoAPI
         /// </summary>
         /// <param name="pathOrResourceName">字体文件的路径或资源名称。</param>
         /// <param name="isResource">指示是否从资源加载字体。如果为 <<c>true</c>>，则从嵌入的资源加载字体；否则从文件路径加载字体。</param>
-        /// <returns>加载的字体对象。</returns>
-        public static FontFamily 加载字体(string pathOrResourceName, bool isResource = false)
+        /// <returns>返回的 <see cref="FontFamily"/> 对象。</returns>
+        /// <exception cref="Exception">指定的文件路径或资源不存在时抛出。</exception>
+        public static FontFamily LoadFontFamily(string pathOrResourceName, bool isResource = false)
         {
             PrivateFontCollection privateFonts = new();
 

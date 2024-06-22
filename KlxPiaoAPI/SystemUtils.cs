@@ -15,7 +15,7 @@ namespace KlxPiaoAPI
         /// </remarks>
         /// <param name="targetFile">快捷方式指向的目标文件路径。</param>
         /// <param name="output">快捷方式文件的保存路径。</param>
-        public class ShortcutCreator(string targetFilePath, string outputPath) //创建实例所必须的参数
+        public class ShortcutCreator(string targetFilePath, string outputPath)
         {
             /// <summary>
             /// 获取或设置目标文件路径。
@@ -106,8 +106,9 @@ namespace KlxPiaoAPI
         /// </summary>
         public static void RefreshFileAssociations()
         {
-            const int SHCNE_ASSOCCHANGED = 0x8000000; // 文件关联已更改事件
-            const int SHCNF_FLUSH = 0x1000; // 强制刷新
+            const int SHCNE_ASSOCCHANGED = 0x8000000;   //文件关联已更改事件
+            const int SHCNF_FLUSH = 0x1000;             //强制刷新
+
             SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_FLUSH, IntPtr.Zero, IntPtr.Zero);
         }
 

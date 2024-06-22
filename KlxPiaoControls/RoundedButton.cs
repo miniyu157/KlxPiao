@@ -42,6 +42,11 @@ namespace KlxPiaoControls
         private SizeF _图像大小修正;
         private FormatType _图像大小修正格式;
 
+        private bool _启用动画;
+        private 交互样式类 _交互样式 = new();
+        private Animation _颜色过渡配置;
+        private Animation _大小过渡配置;
+
         public RoundedButton()
         {
             InitializeComponent();
@@ -64,7 +69,9 @@ namespace KlxPiaoControls
             _交互样式.移入背景色 = Color.FromArgb(245, 245, 245);
             _交互样式.按下背景色 = Color.FromArgb(235, 235, 235);
 
-            _交互样式.启用动画 = false;
+            _启用动画 = true;
+            _颜色过渡配置 = new Animation(150, 30, [new(0, 0), new(0, 0), new(1, 1), new(1, 1)]);
+            _大小过渡配置 = new Animation(300, 100, [new(0, 0), new(0.58F, 1), new(1, 1), new(1, 1)]);
 
             Size = new Size(116, 43);
             DoubleBuffered = true;
@@ -144,7 +151,7 @@ namespace KlxPiaoControls
         /// </summary>
         [Category("RoundedButton外观")]
         [Description("边框的颜色")]
-        [DefaultValue(typeof(Color), "Color.G")]
+        [DefaultValue(typeof(Color), "Gainsboro")]
         public Color 边框颜色
         {
             get => _边框颜色;
@@ -223,32 +230,57 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        private 交互样式类 _交互样式 = new();
-
+        #region RoundedButton交互样式
+        /// <summary>
+        /// 获取或设置交互时是否启用动画。
+        /// </summary>
+        [Category("RoundedButton交互样式")]
+        [Description("交互时是否启用动画")]
+        public bool 启用动画
+        {
+            get { return _启用动画; }
+            set { _启用动画 = value; }
+        }
         /// <summary>
         /// 获取或设置按钮的交互样式。
         /// </summary>
-        [Category("RoundedButton外观")]
+        [Category("RoundedButton交互样式")]
         [Description("定义鼠标交互时按钮的外观")]
         public 交互样式类 交互样式
         {
             get { return _交互样式; }
-            set { _交互样式 = value; Invalidate(); }
+            set { _交互样式 = value; }
         }
+        /// <summary>
+        /// 定义鼠标交互时按钮的颜色过渡动画配置。
+        /// </summary>
+        [Category("RoundedButton交互样式")]
+        [Description("定义鼠标交互时按钮的颜色过渡动画配置")]
+        [DefaultValue(typeof(Animation), "150, 30, [0 0;0 0;1 1;1 1]")]
+        public Animation 颜色过渡配置
+        {
+            get { return _颜色过渡配置; }
+            set { _颜色过渡配置 = value; }
+        }
+        /// <summary>
+        /// 定义鼠标交互时按钮的大小过渡动画配置。
+        /// </summary>
+        [Category("RoundedButton交互样式")]
+        [Description("定义鼠标交互时按钮的大小过渡动画配置")]
+        [DefaultValue(typeof(Animation), "300, 100, [0 0;0.58 1;1 1;1 1]")]
+        public Animation 大小过渡配置
+        {
+            get { return _大小过渡配置; }
+            set { _大小过渡配置 = value; }
+        }
+        #endregion
 
         /// <summary>
-        /// 定义按钮的交互样式。
+        /// 定义 <see cref="RoundedButton"/> 的交互样式。
         /// </summary>
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public class 交互样式类
         {
-            /// <summary>
-            /// 获取或设置是否启用动画。
-            /// </summary>
-            /// <remarks>若启用动画，会非常占用性能。</remarks>
-            [Description("是否启用动画。若启用动画，会非常占用性能")]
-            public bool 启用动画 { get; set; }
-
             /// <summary>
             /// 获取或设置鼠标移入时组件的背景色。
             /// </summary>
@@ -284,6 +316,18 @@ namespace KlxPiaoControls
             /// </summary>
             [Description("鼠标按下时组件的前景色。")]
             public Color 按下前景色 { get; set; }
+
+            /// <summary>
+            /// 获取或设置鼠标移入时组件的大小。
+            /// </summary>
+            [Description("鼠标移入时组件的大小。")]
+            public Size 移入大小 { get; set; }
+
+            /// <summary>
+            /// 获取或设置鼠标按下时组件的大小。
+            /// </summary>
+            [Description("鼠标按下时组件的大小。")]
+            public Size 按下大小 { get; set; }
 
             public override string ToString()
             {
@@ -420,18 +464,15 @@ namespace KlxPiaoControls
         }
 
         #region 交互样式
-        private readonly int FPS = 30;
-        private readonly int Time = 150;
-
         //存储数据
         private readonly List<object?> oldMouseOverData = [];
         private readonly List<object?> oldMouseDownData = [];
 
         //目标属性
-        private readonly string[] mouseOverProperties = ["移入背景色", "移入边框颜色", "移入前景色"];
-        private readonly string[] mouseDownProperties = ["按下背景色", "按下边框颜色", "按下前景色"];
+        private readonly string[] mouseOverProperties = ["移入背景色", "移入边框颜色", "移入前景色", "移入大小"];
+        private readonly string[] mouseDownProperties = ["按下背景色", "按下边框颜色", "按下前景色", "按下大小"];
 
-        private readonly string[] propertyNames = ["BackColor", "边框颜色", "ForeColor"];
+        private readonly string[] propertyNames = ["BackColor", "边框颜色", "ForeColor", "Size"];
 
         private CancellationTokenSource MouseOverCTS = new();
         private CancellationTokenSource MouseDownCTS = new();
@@ -453,15 +494,38 @@ namespace KlxPiaoControls
 
                 oldMouseOverData.Add(currentValue);
 
-                if (targetValue is Color colorValue && colorValue != Color.Empty)
+                if (targetValue != null &&
+                    ((targetValue is Color color && color != Color.Empty) ||
+                        (targetValue is Size size && size != Size.Empty)))
                 {
-                    if (交互样式.启用动画)
+                    if (启用动画)
                     {
-                        _ = this.贝塞尔过渡动画(property, null, colorValue, Time, null, FPS, default, MouseOverCTS.Token);
+                        int time = property switch
+                        {
+                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.Time,
+                            "Size" => 大小过渡配置.Time,
+                            _ => 200
+                        };
+
+                        int FPS = property switch
+                        {
+                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.FPS,
+                            "Size" => 大小过渡配置.FPS,
+                            _ => 30
+                        };
+
+                        PointF[]? easing = property switch
+                        {
+                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.Easing,
+                            "Size" => 大小过渡配置.Easing,
+                            _ => [new(0, 0), new(1, 1)]
+                        };
+
+                        _ = this.贝塞尔过渡动画(property, null, targetValue, new Animation(time, FPS, easing), default, MouseOverCTS.Token);
                     }
                     else
                     {
-                        this.SetOrGetPropertyValue(property, colorValue);
+                        this.SetOrGetPropertyValue(property, targetValue);
                     }
                 }
             }
@@ -480,11 +544,34 @@ namespace KlxPiaoControls
                 object? targetValue = 交互样式.SetOrGetPropertyValue(mouseOverProperties[i]);
                 object? oldPropertyValue = oldMouseOverData[i];
 
-                if (targetValue is Color colorValue && colorValue != Color.Empty && oldPropertyValue != null)
+                if (oldPropertyValue != null &&
+                    ((oldPropertyValue is Color color && color != Color.Empty) ||
+                        (oldPropertyValue is Size size && size != Size.Empty)))
                 {
-                    if (交互样式.启用动画)
+                    if (启用动画)
                     {
-                        _ = this.贝塞尔过渡动画(property, null, oldPropertyValue, Time, null, FPS, default, MouseOverCTS.Token);
+                        int time = property switch
+                        {
+                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.Time,
+                            "Size" => 大小过渡配置.Time,
+                            _ => 200
+                        };
+
+                        int FPS = property switch
+                        {
+                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.FPS,
+                            "Size" => 大小过渡配置.FPS,
+                            _ => 30
+                        };
+
+                        PointF[]? easing = property switch
+                        {
+                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.Easing,
+                            "Size" => 大小过渡配置.Easing,
+                            _ => [new(0, 0), new(1, 1)]
+                        };
+
+                        _ = this.贝塞尔过渡动画(property, null, oldPropertyValue, new Animation(time, FPS, easing), default, MouseOverCTS.Token);
                     }
                     else
                     {
@@ -511,15 +598,38 @@ namespace KlxPiaoControls
 
                 oldMouseDownData.Add(currentValue);
 
-                if (targetValue is Color colorValue && colorValue != Color.Empty)
+                if (targetValue != null &&
+                    ((targetValue is Color color && color != Color.Empty) ||
+                        (targetValue is Size size && size != Size.Empty)))
                 {
-                    if (交互样式.启用动画)
+                    if (启用动画)
                     {
-                        _ = this.贝塞尔过渡动画(property, null, colorValue, Time, null, FPS, default, MouseDownCTS.Token);
+                        int time = property switch
+                        {
+                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.Time,
+                            "Size" => 大小过渡配置.Time,
+                            _ => 200
+                        };
+
+                        int FPS = property switch
+                        {
+                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.FPS,
+                            "Size" => 大小过渡配置.FPS,
+                            _ => 30
+                        };
+
+                        PointF[]? easing = property switch
+                        {
+                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.Easing,
+                            "Size" => 大小过渡配置.Easing,
+                            _ => [new(0, 0), new(1, 1)]
+                        };
+
+                        _ = this.贝塞尔过渡动画(property, null, targetValue, new Animation(time, FPS, easing), default, MouseDownCTS.Token);
                     }
                     else
                     {
-                        this.SetOrGetPropertyValue(property, colorValue);
+                        this.SetOrGetPropertyValue(property, targetValue);
                     }
                 }
             }
@@ -538,11 +648,34 @@ namespace KlxPiaoControls
                 object? targetValue = 交互样式.SetOrGetPropertyValue(mouseDownProperties[i]);
                 object? oldPropertyValue = oldMouseDownData[i];
 
-                if (targetValue is Color colorValue && colorValue != Color.Empty && oldPropertyValue != null)
+                if (oldPropertyValue != null &&
+                    ((oldPropertyValue is Color color && color != Color.Empty) ||
+                        (oldPropertyValue is Size size && size != Size.Empty)))
                 {
-                    if (交互样式.启用动画)
+                    if (启用动画)
                     {
-                        _ = this.贝塞尔过渡动画(property, null, oldPropertyValue, Time, null, FPS, default, MouseDownCTS.Token);
+                        int time = property switch
+                        {
+                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.Time,
+                            "Size" => 大小过渡配置.Time,
+                            _ => 200
+                        };
+
+                        int FPS = property switch
+                        {
+                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.FPS,
+                            "Size" => 大小过渡配置.FPS,
+                            _ => 30
+                        };
+
+                        PointF[]? easing = property switch
+                        {
+                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.Easing,
+                            "Size" => 大小过渡配置.Easing,
+                            _ => [new(0, 0), new(1, 1)]
+                        };
+
+                        _ = this.贝塞尔过渡动画(property, null, oldPropertyValue, new Animation(time, FPS, easing), default, MouseDownCTS.Token);
                     }
                     else
                     {

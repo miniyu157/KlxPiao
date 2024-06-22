@@ -96,6 +96,5 @@
 
             return CalculateBezierPointRecursive(t, reducedPoints, n - 1);
         }
-
     }
 }

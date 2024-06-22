@@ -20,7 +20,7 @@
             return responseBody;
         }
 
-        ////带有Cookie
+        ////带有Cookie示例：
         //public static async Task<string> GetRawData(string accessToken)
         //{
         //    HttpClient httpClient = new()

@@ -14,7 +14,7 @@ namespace KlxPiaoAPI
         /// <param name="leadingText">前导文本。</param>
         /// <param name="trailingText">尾随文本。</param>
         /// <returns>提取的中间文本。</returns>
-        public static string 提取中间文本(this string originalText, string leadingText, string trailingText)
+        public static string ExtractBetween(this string originalText, string leadingText, string trailingText)
         {
             int startIndex = originalText.IndexOf(leadingText);
             if (startIndex == -1)
@@ -40,12 +40,12 @@ namespace KlxPiaoAPI
         /// <param name="trailingText">要搜索的尾随文本。</param>
         /// <param name="mode">要使用的匹配模式（默认为 Regex）。</param>
         /// <returns>提取的子字符串列表。</returns>
-        public static List<string> 提取所有中间文本(this string inputText, string leadingText, string trailingText, MatchMode mode = MatchMode.Regex)
+        public static List<string> ExtractAllBetween(this string inputText, string leadingText, string trailingText, MatchMode mode = MatchMode.Regex)
         {
             return mode switch
             {
                 MatchMode.Regex => ExtractWithRegex(inputText, leadingText, trailingText),
-                MatchMode.StringIndex => ExtractWithStringIndex(inputText, leadingText, trailingText),
+                MatchMode.StringIndex => ExtractWithIndex(inputText, leadingText, trailingText),
                 _ => throw new ArgumentException("指定了无效的匹配模式", nameof(mode))
             };
         }
@@ -80,7 +80,7 @@ namespace KlxPiaoAPI
         /// <param name="leadingText">要搜索的前导文本。</param>
         /// <param name="trailingText">要搜索的尾随文本。</param>
         /// <returns>提取的子字符串列表。</returns>
-        private static List<string> ExtractWithStringIndex(string inputText, string leadingText, string trailingText)
+        private static List<string> ExtractWithIndex(string inputText, string leadingText, string trailingText)
         {
             var resultList = new List<string>();
             int startPos = 0;

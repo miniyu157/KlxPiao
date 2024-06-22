@@ -13,7 +13,7 @@ namespace KlxPiaoAPI
         /// </summary>
         /// <param name="format">要进行替换操作的原始字符串。</param>
         /// <param name="replacements">用于替换的键值对，键表示要替换的内容，值表示替换后的新值。</param>
-        public static string 批量替换(this string format, Dictionary<string, string> replacements)
+        public static string ReplaceMultiple(this string format, Dictionary<string, string> replacements)
         {
             foreach (var replacement in replacements)
             {
@@ -30,7 +30,7 @@ namespace KlxPiaoAPI
         /// <param name="end">转换范围的结束索引（包括）。</param>
         /// <returns>转换后的字符串。</returns>
         /// <exception cref="ArgumentException">当起始索引小于0、结束索引大于等于字符串长度、或者起始索引大于结束索引时抛出。</exception>
-        public static string 转换小写(this string input, int start, int end)
+        public static string ToLowerRange(this string input, int start, int end)
         {
             if (input.Length == 1)
             {
@@ -42,13 +42,13 @@ namespace KlxPiaoAPI
                 throw new ArgumentException("Invalid start or end index.");
             }
 
-            for (int i = start; i <= end; i++)
-            {
-                input = input[..i] + char.ToLower(input[i]) + input[(i + 1)..];
-            }
+            string prefix = input[..start];
+            string range = input[start..(end + 1)].ToLower();
+            string suffix = input[(end + 1)..];
 
-            return input;
+            return prefix + range + suffix;
         }
+
         /// <summary>
         /// 将指定范围内的字符转换为大写形式。
         /// </summary>
@@ -57,7 +57,7 @@ namespace KlxPiaoAPI
         /// <param name="end">转换范围的结束索引（包括）。</param>
         /// <returns>转换后的字符串。</returns>
         /// <exception cref="ArgumentException">当起始索引小于0、结束索引大于等于字符串长度、或者起始索引大于结束索引时抛出。</exception>
-        public static string 转换大写(this string input, int start, int end)
+        public static string ToUpperRange(this string input, int start, int end)
         {
             if (input.Length == 1)
             {
@@ -69,25 +69,25 @@ namespace KlxPiaoAPI
                 throw new ArgumentException("Invalid start or end index.");
             }
 
-            for (int i = start; i <= end; i++)
-            {
-                input = input[..i] + char.ToUpper(input[i]) + input[(i + 1)..];
-            }
+            string prefix = input[..start];
+            string range = input[start..(end + 1)].ToUpper();
+            string suffix = input[(end + 1)..];
 
-            return input;
+            return prefix + range + suffix;
         }
 
         /// <summary>
         /// 处理字符串的第一个字符，根据其大小写转换为相反的大小写。
         /// </summary>
         /// <param name="input">要处理的字符串。</param>
-        /// <param name="failstring">处理大小写后未改变时追加的字符。</param>
-        /// <returns>返回第一个字符大小写转换后的字符串。</returns>
-        public static string 方法参数处理(this string input, string failstring = "")
+        /// <param name="failstring">处理无效时追加的字符。</param>
+        /// <returns>返回处理后的字符串。</returns>
+        /// <exception cref="ArgumentException">参数无效时抛出。</exception>
+        public static string ProcessFirstChar(this string input, string failstring = "")
         {
             if (string.IsNullOrEmpty(input))
             {
-                throw new Exception("参数不能为空");
+                throw new ArgumentException("参数 'input' 不能为空");
             }
 
             char firstChar = input[0];
@@ -115,11 +115,11 @@ namespace KlxPiaoAPI
         }
 
         /// <summary>
-        /// 将字符串转换为Unicode字符串。
+        /// 将字符串转换为 Unicode 形式的字符串。
         /// </summary>
         /// <param name="chineseString">提供的源文本。</param>
-        /// <returns>转换后的Unicode字符串。</returns>
-        /// <exception cref="ArgumentException">参数为空时抛出。</exception>
+        /// <returns>转换后的 Unicode 字符串。</returns>
+        /// <exception cref="ArgumentException">参数无效时抛出。</exception>
         public static string ToUnicode(this string chineseString)
         {
             if (string.IsNullOrEmpty(chineseString))
@@ -136,11 +136,11 @@ namespace KlxPiaoAPI
         }
 
         /// <summary>
-        /// 将形如\uXXXX的Unicode字符串转换为可读的文本。
+        /// 将形如 \uXXXX 的 Unicode 字符串转换为可读的文本。
         /// </summary>
         /// <param name="unicodeString">提供的源文本。</param>
         /// <returns>转换后的字符串。</returns>
-        /// <exception cref="ArgumentException">参数为空时抛出。</exception>
+        /// <exception cref="ArgumentException">参数无效时抛出。</exception>
         public static string ToChinese(this string unicodeString)
         {
             if (string.IsNullOrEmpty(unicodeString))
@@ -148,13 +148,12 @@ namespace KlxPiaoAPI
                 throw new ArgumentException("Input string cannot be null or empty", nameof(unicodeString));
             }
 
-            // 匹配所有的Unicode转义序列
+            //匹配所有的Unicode转义序列
             Regex regex = MyRegex();
             return regex.Replace(unicodeString, m => ((char)Convert.ToInt32(m.Groups["Value"].Value, 16)).ToString());
         }
 
         [GeneratedRegex(@"\\u(?<Value>[a-fA-F0-9]{4})", RegexOptions.Compiled)]
         private static partial Regex MyRegex();
-
     }
 }

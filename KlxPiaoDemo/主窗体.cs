@@ -19,7 +19,7 @@ namespace KlxPiaoDemo
         private readonly Random rand = new();
         private void 主窗体_Load(object sender, EventArgs e)
         {
-            Text = $"{关于KlxPiaoControls.产品名称()} & {关于KlxPiaoAPI.产品名称()} {关于KlxPiaoControls.产品版本()} Demo";
+            Text = $"{KlxPiaoControlsInfo.GetProductName()} & {KlxPiaoAPIInfo.GetProductName()} {KlxPiaoControlsInfo.GetProductVersion()} Demo";
 
             //控件.PictureBox
             Pic_SizePixelTrackBar.最大值 = klxPiaoPictureBox1.Width;
@@ -420,7 +420,7 @@ namespace KlxPiaoDemo
                 Padding 边距 = new(int.Parse(textBox14.Text), int.Parse(textBox13.Text), int.Parse(textBox17.Text), int.Parse(textBox16.Text));
                 Size 矩阵大小 = new(int.Parse(textBox10.Text), int.Parse(textBox9.Text));
 
-                List<PointF> points = LayoutUtilities.计算网格点(容器大小, 单元大小, 矩阵大小, 边距);
+                List<PointF> points = LayoutUtilities.CalculateGridPoints(容器大小, 单元大小, 矩阵大小, 边距);
                 StringBuilder showPoints = new();
 
                 textBox15.Clear();
@@ -516,7 +516,7 @@ namespace KlxPiaoDemo
                 };
                 if (selectFile.ShowDialog() == DialogResult.OK)
                 {
-                    FontFamily fontFamily = FileUtils.加载字体(selectFile.FileName);
+                    FontFamily fontFamily = FileUtils.LoadFontFamily(selectFile.FileName);
                     设置全局字体(fontFamily);
                     控件.遍历<KlxPiaoLabel>(this, label => label.文本呈现质量 = TextRenderingHint.AntiAliasGridFit);
                 }
@@ -678,7 +678,7 @@ namespace KlxPiaoDemo
             StringBuilder 通用方法参数 = new();
             for (int i = 0; i < 成员列表Text.Lines.Length; i++)
             {
-                通用方法参数.Append($"{结构成员类型Text.Text} {成员列表Text.Lines[i].方法参数处理("value")}");
+                通用方法参数.Append($"{结构成员类型Text.Text} {成员列表Text.Lines[i].ProcessFirstChar("value")}");
 
                 if (i != 成员列表Text.Lines.Length - 1)
                 {
@@ -689,7 +689,7 @@ namespace KlxPiaoDemo
             StringBuilder 通用方法过程 = new();
             for (int i = 0; i < 成员列表Text.Lines.Length; i++)
             {
-                通用方法过程.Append($"            {成员列表Text.Lines[i]} = {成员列表Text.Lines[i].方法参数处理("value")};");
+                通用方法过程.Append($"            {成员列表Text.Lines[i]} = {成员列表Text.Lines[i].ProcessFirstChar("value")};");
 
                 if (i != 成员列表Text.Lines.Length - 1)
                 {
@@ -697,7 +697,7 @@ namespace KlxPiaoDemo
                 }
             }
 
-            textBox23.Text = Resources.结构.批量替换(replacements)
+            textBox23.Text = Resources.结构.ReplaceMultiple(replacements)
                 .Replace("{结构成员声明}", 结构成员声明.ToString())
                 .Replace("{统一赋值方法}", 统一赋值方法.ToString())
                 .Replace("{通用方法参数}", 通用方法参数.ToString())
@@ -756,7 +756,7 @@ namespace KlxPiaoDemo
                 }
             }
 
-            textBox25.Text = Resources.转换器.批量替换(replacements)
+            textBox25.Text = Resources.转换器.ReplaceMultiple(replacements)
                 .Replace("{成员数量}", 成员列表Text.Lines.Length.ToString())
                 .Replace("{成员列表1}", 成员列表1.ToString())
                 .Replace("{成员类型列表}", 成员类型列表.ToString())
@@ -785,7 +785,7 @@ namespace KlxPiaoDemo
         }
         private void SetRoundedButton(bool check)
         {
-            tabPage16.遍历<RoundedButton>(roundedbutton => { roundedbutton.交互样式.启用动画 = check; });
+            tabPage16.遍历<RoundedButton>(roundedbutton => { roundedbutton.启用动画 = check; });
         }
     }
 }

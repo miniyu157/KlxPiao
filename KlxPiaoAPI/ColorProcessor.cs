@@ -11,7 +11,7 @@
         /// <param name="color">要调整的颜色。</param>
         /// <param name="factor">
         /// 亮度调整因子。正值增加亮度，负值降低亮度。
-        /// 例如：0.2 表示增加20%的亮度，-0.2 表示减少20%的亮度。
+        /// <br/>例如：0.2 表示增加20%的亮度，-0.2 表示减少 20% 的亮度。
         /// </param>
         /// <returns>调整亮度后的颜色。</returns>
         public static Color AdjustBrightness(Color color, double factor)
@@ -33,9 +33,9 @@
         }
 
         /// <summary>
-        /// 设置颜色的亮度到指定值。
+        /// 设置颜色的亮度。
         /// </summary>
-        /// <param name="color">要调整的颜色。</param>
+        /// <param name="color">要设置亮度的颜色。</param>
         /// <param name="Brightness">目标亮度值，范围从0到255。</param>
         /// <param name="precision">调整亮度的精度，默认为0.08。</param>
         /// <returns>调整后的颜色，其亮度接近于指定的目标亮度值。</returns>

@@ -5,9 +5,13 @@ namespace KlxPiaoControls
     /// <summary>
     /// 提供关于 KlxPiaoControls 的信息的方法。
     /// </summary>
-    public class 关于KlxPiaoControls
+    public class KlxPiaoControlsInfo
     {
-        public static string? 产品版本()
+        /// <summary>
+        /// 获取 KlxPiaoControls 的产品版本。
+        /// </summary>
+        /// <returns>产品版本。</returns>
+        public static string? GetProductVersion()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
 
@@ -28,7 +32,11 @@ namespace KlxPiaoControls
             return "Unknown Version";
         }
 
-        public static string 产品名称()
+        /// <summary>
+        /// 获取 KlxPiaoControls 的产品名称。
+        /// </summary>
+        /// <returns>产品名称。</returns>
+        public static string GetProductName()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
 

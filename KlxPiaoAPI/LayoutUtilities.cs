@@ -170,31 +170,39 @@
         /// <summary>
         /// 计算网格点，返回在指定容器大小中按给定单元大小和矩阵大小排列的点列表。
         /// </summary>
-        /// <param name="容器大小">整个容器的大小。</param>
-        /// <param name="单元大小">每个单元的大小。</param>
-        /// <param name="矩阵大小">矩阵的行列数。</param>
-        /// <param name="边距">容器的边距。</param>
+        /// <param name="containerSize">整个容器的大小。</param>
+        /// <param name="cellSize">每个单元的大小。</param>
+        /// <param name="matrixSize">矩阵的行列数。</param>
+        /// <param name="padding">内边距。</param>
         /// <returns>按矩阵排列的点列表。</returns>
-        public static List<PointF> 计算网格点(SizeF 容器大小, SizeF 单元大小, Size 矩阵大小, Padding 边距)
+        public static List<PointF> CalculateGridPoints(SizeF containerSize, SizeF cellSize, Size matrixSize, Padding padding)
         {
-            float x间距 = (容器大小.Width - 边距.Left - 边距.Right - 单元大小.Width * 矩阵大小.Width) / (矩阵大小.Width - 1);
-            float y间距 = (容器大小.Height - 边距.Top - 边距.Bottom - 单元大小.Height * 矩阵大小.Height) / (矩阵大小.Height - 1);
+            float x间距 = (containerSize.Width - padding.Left - padding.Right - cellSize.Width * matrixSize.Width) / (matrixSize.Width - 1);
+            float y间距 = (containerSize.Height - padding.Top - padding.Bottom - cellSize.Height * matrixSize.Height) / (matrixSize.Height - 1);
 
             List<PointF> points = [];
 
-            for (int y = 0; y < 矩阵大小.Height; y++)
+            for (int y = 0; y < matrixSize.Height; y++)
             {
-                for (int x = 0; x < 矩阵大小.Width; x++)
+                for (int x = 0; x < matrixSize.Width; x++)
                 {
                     points.Add(new PointF(
-                        边距.Left + x * (单元大小.Width + x间距),
-                        边距.Top + y * (单元大小.Height + y间距)
+                        padding.Left + x * (cellSize.Width + x间距),
+                        padding.Top + y * (cellSize.Height + y间距)
                     ));
                 }
             }
             return points;
         }
 
+        /// <summary>
+        /// 将一个 <see cref="Padding"/> 对象转换为一个 <see cref="Point"/> 对象。
+        /// </summary>
+        /// <param name="padding">要转换的 <see cref="Padding"/> 对象。</param>
+        /// <returns>
+        /// 一个 <see cref="Point"/> 对象，其中 X 坐标计算为 padding.Left 减去 padding.Right，
+        /// Y 坐标计算为 padding.Top 减去 padding.Bottom。
+        /// </returns>
         public static Point ConvertToPoint(Padding padding)
         {
             return new(padding.Left - padding.Right, padding.Top - padding.Bottom);

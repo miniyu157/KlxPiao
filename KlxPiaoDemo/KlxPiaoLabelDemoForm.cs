@@ -16,7 +16,7 @@ namespace KlxPiaoDemo
 
         private void KlxPiaoLabelDemoForm_Load(object sender, EventArgs e)
         {
-            Text = $"KlxPiaoLabel Demo - {关于KlxPiaoControls.产品名称()} {关于KlxPiaoControls.产品版本()}";
+            Text = $"KlxPiaoLabel Demo - {KlxPiaoControlsInfo.GetProductName()} {KlxPiaoControlsInfo.GetProductVersion()}";
 
             labelDemo.Location = Point.Empty;
             labelDemo.Size = panel1.Size;
