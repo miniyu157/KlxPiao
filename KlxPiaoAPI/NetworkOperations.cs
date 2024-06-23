@@ -3,14 +3,14 @@
     /// <summary>
     /// 提供网络相关操作的功能。
     /// </summary>
-    public class 网络
+    public class NetworkOperations
     {
         /// <summary>
         /// 异步获取指定 URL 的页面内容。
         /// </summary>
         /// <param name="url">要获取内容的 URL 地址。</param>
         /// <returns>页面内容的字符串表示。</returns>
-        public static async Task<string> 获取页面内容(string url)
+        public static async Task<string> GetHTMLContentAsync(string url)
         {
             HttpClient client = new();
 

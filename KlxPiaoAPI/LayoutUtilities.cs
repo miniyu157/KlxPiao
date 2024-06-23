@@ -5,6 +5,7 @@
     /// </summary>
     public class LayoutUtilities
     {
+        #region (8 个重载) CalculateAlignedPosition
         /// <summary>
         /// 根据指定的对齐方式，计算容器矩形内部矩形的位置。
         /// </summary>
@@ -166,6 +167,7 @@
             Point? offset = padding == null ? null : ConvertToPoint((Padding)padding);
             return CalculateAlignedPosition(containerRect, new SizeF(internalSize.Width, internalSize.Height), alignment, offset);
         }
+        #endregion
 
         /// <summary>
         /// 计算网格点，返回在指定容器大小中按给定单元大小和矩阵大小排列的点列表。

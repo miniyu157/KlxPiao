@@ -4,7 +4,7 @@ using KlxPiaoDemo.Properties;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Text;
-using static KlxPiaoAPI.控件;
+using static KlxPiaoAPI.ControlTransitionAnimator;
 
 namespace KlxPiaoDemo
 {
@@ -112,7 +112,7 @@ namespace KlxPiaoDemo
             checkBox3.Checked = ShowIcon;
 
             //属性代码生成器
-            klxPiaoPanel6.遍历<TextBox>(textBox => { textBox.TextChanged += 生成代码; });
+            klxPiaoPanel6.ForEachControl<TextBox>(textBox => { textBox.TextChanged += 生成代码; });
         }
 
         //属性代码生成器
@@ -518,7 +518,7 @@ namespace KlxPiaoDemo
                 {
                     FontFamily fontFamily = FileUtils.LoadFontFamily(selectFile.FileName);
                     设置全局字体(fontFamily);
-                    控件.遍历<KlxPiaoLabel>(this, label => label.文本呈现质量 = TextRenderingHint.AntiAliasGridFit);
+                    this.ForEachControl<KlxPiaoLabel>(label => label.文本呈现质量 = TextRenderingHint.AntiAliasGridFit);
                 }
             }
             catch
@@ -529,6 +529,36 @@ namespace KlxPiaoDemo
         }
 
         #region KlxPiaoAPI.控件
+        private void KlxPiaoButton1_Click(object sender, EventArgs e)
+        {
+            StringBuilder pointfsshowtext = new();
+            StringBuilder comptext = new();
+            PointF[] pointFs = [.. bezierCurve1.控制点集合];
+            pointfsshowtext.Append('[');
+            comptext.Append("[DefaultValue(typeof(Animation), \"Time, FPS, [");
+            for (int i = 0; i < pointFs.Length; i++)
+            {
+                pointfsshowtext.Append($"new({pointFs[i].X}F, {pointFs[i].Y}F)");
+                comptext.Append($"{pointFs[i].X} {pointFs[i].Y}");
+
+                if (i != pointFs.Length - 1)
+                {
+                    pointfsshowtext.Append(", ");
+                    comptext.Append(';');
+                }
+                else
+                {
+                    pointfsshowtext.Append(']');
+                    comptext.Append("]\")]");
+                }
+            }
+
+            BezierCurveCodeShow form = new(pointfsshowtext.ToString(), comptext.ToString(), 标题框背景色)
+            {
+                主题 = 主题
+            };
+            form.ShowDialog();
+        }
         private void BezierCurve1_控制点拖动(object sender, KlxPiaoControls.BezierCurve.ControlPointDrag? e) //不会读取e的信息，因此声明可为null
         {
             StringBuilder pointsList = new();
@@ -552,21 +582,21 @@ namespace KlxPiaoDemo
             if (位置过渡Check.Checked)
             {
                 Point 目标位置 = 控件动画Panel.Location == new Point(24, 271) ? new Point(435, 253) : new Point(24, 271);
-                _ = 控件动画Panel.贝塞尔过渡动画("Location",
-                    null, 目标位置, (int)klxPiaoTrackBar12.值, [.. bezierCurve1.控制点集合], 100,
+                _ = 控件动画Panel.BezierTransition("Location",
+                    null, 目标位置, new Animation((int)klxPiaoTrackBar12.值, 100, [.. bezierCurve1.控制点集合]),
                     default, cts.Token);
             }
             if (大小过渡Check.Checked)
             {
                 Size 目标大小 = 控件动画Panel.Size == new Size(70, 70) ? new Size(130, 130) : new Size(70, 70);
-                _ = 控件动画Panel.贝塞尔过渡动画("Size",
+                _ = 控件动画Panel.BezierTransition("Size",
                     null, 目标大小, (int)klxPiaoTrackBar12.值, [.. bezierCurve1.控制点集合], 100,
                     default, cts.Token);
             }
             if (颜色过渡Check.Checked)
             {
                 Color 目标颜色 = Color.FromArgb(rand.Next(0, 255), rand.Next(0, 255), rand.Next(0, 255));
-                _ = 控件动画Panel.贝塞尔过渡动画("BackColor",
+                _ = 控件动画Panel.BezierTransition("BackColor",
                     null, 目标颜色, (int)klxPiaoTrackBar12.值, null, 100,
                     default, cts.Token);
             }
@@ -785,7 +815,7 @@ namespace KlxPiaoDemo
         }
         private void SetRoundedButton(bool check)
         {
-            tabPage16.遍历<RoundedButton>(roundedbutton => { roundedbutton.启用动画 = check; });
+            tabPage16.ForEachControl<RoundedButton>(roundedbutton => { roundedbutton.启用动画 = check; });
         }
     }
 }

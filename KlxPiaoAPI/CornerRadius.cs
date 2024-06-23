@@ -55,6 +55,56 @@ namespace KlxPiaoAPI
             TopLeft = TopRight = BottomRight = BottomLeft = all;
         }
 
+        #region 重载运算符
+        /// <summary>
+        /// 重载 + 运算符，实现两个 <see cref="CornerRadius"/> 对象相加。
+        /// </summary>
+        /// <param name="cr1">第一个 <see cref="CornerRadius"/> 对象。</param>
+        /// <param name="cr2">第二个 <see cref="CornerRadius"/> 对象。</param>
+        /// <returns>相加后的 <see cref="CornerRadius"/> 对象。</returns>
+        public static CornerRadius operator +(CornerRadius cr1, CornerRadius cr2)
+        {
+            return new CornerRadius(
+                cr1.TopLeft + cr2.TopLeft,
+                cr1.TopRight + cr2.TopRight,
+                cr1.BottomRight + cr2.BottomRight,
+                cr1.BottomLeft + cr2.BottomLeft
+            );
+        }
+
+        /// <summary>
+        /// 重载 * 运算符，实现 <see cref="CornerRadius"/> 对象与 <see cref="int"/> 相乘。
+        /// </summary>
+        /// <param name="cr"><see cref="CornerRadius"/> 对象。</param>
+        /// <param name="multiplier">乘数。</param>
+        /// <returns>相乘后的 <see cref="CornerRadius"/> 对象。</returns>
+        public static CornerRadius operator *(CornerRadius cr, float multiplier)
+        {
+            return new CornerRadius(
+                cr.TopLeft * multiplier,
+                cr.TopRight * multiplier,
+                cr.BottomRight * multiplier,
+                cr.BottomLeft * multiplier
+            );
+        }
+
+        /// <summary>
+        /// 重载 / 运算符，实现 <see cref="CornerRadius"/> 对象与 <see cref="int"/> 相除。
+        /// </summary>
+        /// <param name="cr"><see cref="CornerRadius"/> 对象。</param>
+        /// <param name="multiplier">除数。</param>
+        /// <returns>相除后的 <see cref="CornerRadius"/> 对象。</returns>
+        public static CornerRadius operator /(CornerRadius cr, float multiplier)
+        {
+            return new CornerRadius(
+                cr.TopLeft / multiplier,
+                cr.TopRight / multiplier,
+                cr.BottomRight / multiplier,
+                cr.BottomLeft / multiplier
+            );
+        }
+        #endregion
+
         /// <summary>
         /// 返回表示当前对象的字符串。
         /// </summary>

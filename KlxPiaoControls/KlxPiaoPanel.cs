@@ -8,7 +8,7 @@ namespace KlxPiaoControls
     /// 表示一个具有自定义外观和投影效果的面板控件。
     /// </summary>
     /// <remarks>
-    /// KlxPiaoPanel 继承自 <see cref="Panel"/> 类，可以设置边框样式、圆角大小、投影效果等外观属性。
+    /// <see cref="KlxPiaoPanel"/> 继承自 <see cref="Panel"/> 类，可以设置边框样式、圆角大小、投影效果等外观属性。
     /// </remarks>
     [DefaultEvent("Click")]
     public partial class KlxPiaoPanel : Panel

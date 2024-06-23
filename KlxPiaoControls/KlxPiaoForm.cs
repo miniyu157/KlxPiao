@@ -1134,7 +1134,7 @@ namespace KlxPiaoControls
         /// <param name="字体大小修正">要应用到每个控件的字体大小的偏移量，默认为0</param>
         public void 设置全局字体(FontFamily 字体, float 字体大小修正 = 0)
         {
-            控件.遍历<Control>(this, control =>
+            this.ForEachControl<Control>(control =>
             {
                 control.Font = new Font(字体, control.Font.Size + 字体大小修正, control.Font.Style);
             }, true);
@@ -1155,7 +1155,7 @@ namespace KlxPiaoControls
                 Color mouseOverColor = ColorProcessor.SetBrightness(butBorderColor, 250);
                 Color mouseDownColor = ColorProcessor.SetBrightness(butBorderColor, 240);
 
-                this.遍历<RoundedButton>(but =>
+                this.ForEachControl<RoundedButton>(but =>
                 {
                     if (but.交互样式.移入前景色 != Color.Empty) //移入改变明暗主题
                     {
@@ -1174,11 +1174,19 @@ namespace KlxPiaoControls
                     }
                 }, true);
 
-                this.遍历<KlxPiaoButton>(but =>
+                this.ForEachControl<KlxPiaoButton>(but =>
                 {
                     but.FlatAppearance.BorderColor = butBorderColor;
                     but.FlatAppearance.MouseOverBackColor = mouseOverColor;
                     but.FlatAppearance.MouseDownBackColor = mouseDownColor;
+                }, true);
+
+                this.ForEachControl<KlxPiaoPanel>(panel =>
+                {
+                    if (!panel.启用投影)
+                    {
+                        panel.边框颜色 = butBorderColor;
+                    }
                 }, true);
             }
         }

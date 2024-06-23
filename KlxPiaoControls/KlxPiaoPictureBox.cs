@@ -8,7 +8,7 @@ namespace KlxPiaoControls
     /// 表示一个带有自定义外观的图片框控件，支持边框和圆角设置。
     /// </summary>
     /// <remarks>
-    /// KlxPiaoPictureBox 继承自 <see cref="PictureBox"/> 类，允许设置边框样式、圆角大小、以及返回绘制的图像。
+    /// <see cref="KlxPiaoPictureBox"/> 继承自 <see cref="PictureBox"/> 类，允许设置边框样式、圆角大小、以及返回绘制的图像。
     /// </remarks>
     public partial class KlxPiaoPictureBox : PictureBox
     {

@@ -7,29 +7,34 @@ namespace KlxPiaoControls
     /// <summary>
     /// 滑动开关组件，用于选择不同的选项。
     /// </summary>
+    /// <remarks><see cref="SlideSwitch"/> 继承自 <see cref="UserControl"/>，是由 <see cref="KlxPiaoLabel"/> 和 <see cref="KlxPiaoPanel"/> 构成的。</remarks>
     [DefaultEvent("SelectIndexChanged")]
     public partial class SlideSwitch : UserControl
     {
         /// <summary>
         /// 外观属性的枚举。
         /// </summary>
-        public enum Properties
+        public enum StyleProperties
         {
             BackColor,
             ForeColor,
             边框颜色,
             NoChange
         }
+
         private String[] _Items;
         private Size _ItemSize;
         private Size _SelectSize;
         private int _SelectIndex;
         private Color[] _ChangeColors;
-        private Properties _ChangeProperty;
+        private StyleProperties _ChangeProperty;
         private bool _Draggable;
         private bool _AllowDragOutOfBounds;
         private bool _UpdateTextOnDrag;
         private bool _EnableMouseWheel;
+        private bool _IsAnimationEnabled;
+        private Animation _TransAnim;
+        private Animation _ColorAnim;
 
         public SlideSwitch()
         {
@@ -44,11 +49,14 @@ namespace KlxPiaoControls
                 Color.FromArgb(0, 117, 184), //参考自 Phigros 难度选择器-HD背景色
                 Color.FromArgb(207, 19, 18)  //参考自 Phigros 难度选择器-IN背景色
                 ];
-            _ChangeProperty = Properties.BackColor;
+            _ChangeProperty = StyleProperties.BackColor;
             _Draggable = true;
             _AllowDragOutOfBounds = false;
             _UpdateTextOnDrag = true;
             _EnableMouseWheel = true;
+            _IsAnimationEnabled = true;
+            _TransAnim = new Animation(200, 100, [new(0, 0), new(0, 1), new(0.67F, 1), new(1, 1)]);
+            _ColorAnim = new Animation(150, 30, [new(0, 0), new(0, 0), new(1, 1), new(1, 1)]);
 
             DoubleBuffered = true;
             //
@@ -76,16 +84,25 @@ namespace KlxPiaoControls
         }
 
         #region SlideSwitch外观
+        /// <summary>
+        /// 获取或设置选中的选项卡的外观。这是通过 <see cref="KlxPiaoLabel"/> 实现的。
+        /// </summary>
         [Category("SlideSwitch外观")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         [Description("选中的选项卡的属性")]
         public KlxPiaoLabel SelectItemStyle => SelectShow;
 
+        /// <summary>
+        /// 获取或设置选项卡容器的外观。这是通过 <see cref="KlxPiaoPanel"/> 实现的。
+        /// </summary>
         [Category("SlideSwitch外观")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         [Description("选项卡容器的属性")]
         public KlxPiaoPanel ItemsStyle => ItemsShow;
 
+        /// <summary>
+        /// 获取或设置选项卡的大小。
+        /// </summary>
         [Category("SlideSwitch外观")]
         [Description("每个选项卡的大小")]
         [DefaultValue("58,38")]
@@ -94,6 +111,9 @@ namespace KlxPiaoControls
             get { return _ItemSize; }
             set { _ItemSize = value; Refresh(); RefreshSelectShowLocation(); }
         }
+        /// <summary>
+        /// 获取或设置选中的选项卡大小。
+        /// </summary>
         [Category("SlideSwitch外观")]
         [Description("选中选项卡的大小")]
         [DefaultValue("50,46")]
@@ -102,6 +122,9 @@ namespace KlxPiaoControls
             get { return _SelectSize; }
             set { _SelectSize = value; Refresh(); RefreshSelectShowLocation(); }
         }
+        /// <summary>
+        /// 获取或设置选项卡被选中时的外观数组。
+        /// </summary>
         [Category("SlideSwitch外观")]
         [Description("分别选中每个选项卡改变的颜色数组")]
         public Color[] ChangeColors
@@ -111,24 +134,27 @@ namespace KlxPiaoControls
             {
                 _ChangeColors = value;
                 //更新当前的外观
-                if (_ChangeProperty != Properties.NoChange)
+                if (_ChangeProperty != StyleProperties.NoChange)
                 {
                     SelectShow.SetOrGetPropertyValue(GetChangePropertyValue(), value[_SelectIndex]);
                 }
                 Invalidate();
             }
         }
+        /// <summary>
+        /// 获取或设置选项卡被选中时改变的外观。
+        /// </summary>
         [Category("SlideSwitch外观")]
         [Description("选中每个选项卡时改变的属性外观")]
         [DefaultValue("BackColor")]
-        public Properties ChangeProperty
+        public StyleProperties ChangeProperty
         {
             get { return _ChangeProperty; }
             set
             {
                 _ChangeProperty = value;
                 //更新当前的外观
-                if (_ChangeProperty != Properties.NoChange)
+                if (_ChangeProperty != StyleProperties.NoChange)
                 {
                     SelectShow.SetOrGetPropertyValue(GetChangePropertyValue(), _ChangeColors[_SelectIndex]);
                 }
@@ -138,6 +164,9 @@ namespace KlxPiaoControls
         #endregion
 
         #region SlideSwitch属性
+        /// <summary>
+        /// 获取或设置选项卡集合。
+        /// </summary>
         [Category("SlideSwitch属性")]
         [Description("选项卡的集合")]
         public String[] Items
@@ -156,6 +185,9 @@ namespace KlxPiaoControls
                 Invalidate();
             }
         }
+        /// <summary>
+        /// 获取或设置选中的索引。
+        /// </summary>
         [Category("SlideSwitch属性")]
         [Description("选中选项卡的索引")]
         [DefaultValue(0)]
@@ -174,6 +206,9 @@ namespace KlxPiaoControls
                 }
             }
         }
+        /// <summary>
+        /// 是否允许拖动。
+        /// </summary>
         [Category("SlideSwitch属性")]
         [Description("是否允许拖动以调整选项卡索引")]
         [DefaultValue(true)]
@@ -182,6 +217,9 @@ namespace KlxPiaoControls
             get { return _Draggable; }
             set { _Draggable = value; }
         }
+        /// <summary>
+        /// 是否允许拖动时超出边界。
+        /// </summary>
         [Category("SlideSwitch属性")]
         [Description("是否允许拖动选项卡超出边界")]
         [DefaultValue(false)]
@@ -190,6 +228,9 @@ namespace KlxPiaoControls
             get { return _AllowDragOutOfBounds; }
             set { _AllowDragOutOfBounds = value; }
         }
+        /// <summary>
+        /// 是否在拖动时即时更新文本。
+        /// </summary>
         [Category("SlideSwitch属性")]
         [Description("在拖动过程中是否即时更新文本")]
         [DefaultValue(true)]
@@ -198,6 +239,9 @@ namespace KlxPiaoControls
             get { return _UpdateTextOnDrag; }
             set { _UpdateTextOnDrag = value; }
         }
+        /// <summary>
+        /// 是否响应鼠标滚轮事件。
+        /// </summary>
         [Category("SlideSwitch属性")]
         [Description("是否响应鼠标滚轮事件")]
         [DefaultValue(true)]
@@ -208,9 +252,45 @@ namespace KlxPiaoControls
         }
         #endregion
 
+        #region SlideSwitch动画
+        /// <summary>
+        /// 是否启用动画。
+        /// </summary>
+        [Category("SlideSwitch动画")]
+        [Description("是否启用动画")]
+        [DefaultValue(true)]
+        public bool IsAnimationEnabled
+        {
+            get { return _IsAnimationEnabled; }
+            set { _IsAnimationEnabled = value; }
+        }
+        /// <summary>
+        /// 位移动画的配置，以 <see cref="Animation"/> 结构体表示。
+        /// </summary>
+        [Category("SlideSwitch动画")]
+        [Description("位移动画的配置")]
+        [DefaultValue(typeof(Animation), "200, 100, [0 0;0 1;0.67 1;1 1]")]
+        public Animation TransAnim
+        {
+            get { return _TransAnim; }
+            set { _TransAnim = value; }
+        }
+        /// <summary>
+        /// 颜色动画的配置，以 <see cref="Animation"/> 结构体表示。
+        /// </summary>
+        [Category("SlideSwitch动画")]
+        [Description("颜色动画的配置")]
+        [DefaultValue(typeof(Animation), "150, 30, [0 0;0 0;1 1;1 1]")]
+        public Animation ColorAnim
+        {
+            get { return _ColorAnim; }
+            set { _ColorAnim = value; }
+        }
+        #endregion
+
         #region SlideSwitch事件
         /// <summary>
-        /// 选项卡改变事件
+        /// 选项卡改变事件。
         /// </summary>
         /// <param name="index">索引。</param>
         /// <param name="text">索引处选项卡的文本。</param>
@@ -220,15 +300,21 @@ namespace KlxPiaoControls
             public string SelectItem { get; } = text;
         }
 
-        //选项卡切换事件
         public event EventHandler<IndexChangedEventArgs>? SelectIndexChanged;
+        /// <summary>
+        /// 触发选项卡改变事件。
+        /// </summary>
+        /// <param name="e">选项卡改变事件。</param>
         protected virtual void OnSelectIndexChanged(IndexChangedEventArgs e)
         {
             SelectIndexChanged?.Invoke(this, e);
         }
 
-        //由代码手动触发的切换事件
         public event EventHandler<IndexChangedEventArgs>? SelectIndexChangedByCode;
+        /// <summary>
+        /// 非用户交互触发的选项卡改变事件。
+        /// </summary>
+        /// <param name="e">选项卡改变事件。</param>
         protected virtual void OnSelectIndexChangedByCode(IndexChangedEventArgs e)
         {
             SelectIndexChanged?.Invoke(this, e);
@@ -314,7 +400,7 @@ namespace KlxPiaoControls
         //获取ChangeProperty属性的值
         private string GetChangePropertyValue()
         {
-            return Enum.GetNames(typeof(Properties))[(int)ChangeProperty];
+            return Enum.GetNames(typeof(StyleProperties))[(int)ChangeProperty];
         }
 
         //刷新选项卡位置（动画）
@@ -334,14 +420,31 @@ namespace KlxPiaoControls
             int newX = centerX - SelectShow.Width / 2;
             int newY = centerY - SelectShow.Height / 2;
 
-            _ = SelectShow.贝塞尔过渡动画("Location", null,
-                new Point(newX + ItemsShow.Left, newY + ItemsShow.Top), 200,
-                [new(0F, 0F), new(0, 1F), new(0.67F, 1F), new(1, 1)], 100, default, cts.Token);
+            Point targetPosition = new(newX + ItemsShow.Left, newY + ItemsShow.Top);
+            Color targetColor = SelectIndex < ChangeColors.Length ? ChangeColors[SelectIndex] : Color.Black;
 
-            if (ChangeProperty != Properties.NoChange)
+            if (IsAnimationEnabled)
             {
-                _ = SelectShow.贝塞尔过渡动画(Enum.GetNames(typeof(Properties))[(int)ChangeProperty], null,
-                    SelectIndex < ChangeColors.Length ? ChangeColors[SelectIndex] : Color.Black, 150, null, 100, default, cts.Token);
+                //位移
+                _ = SelectShow.BezierTransition("Location", null, targetPosition, TransAnim, default, cts.Token);
+
+                //颜色
+                if (ChangeProperty != StyleProperties.NoChange)
+                {
+                    _ = SelectShow.BezierTransition(GetChangePropertyValue(), null,
+                        targetColor, ColorAnim, default, cts.Token);
+                }
+            }
+            else
+            {
+                //位移
+                SelectShow.Location = new Point(newX + ItemsShow.Left, newY + ItemsShow.Top);
+
+                //颜色
+                if (ChangeProperty != StyleProperties.NoChange)
+                {
+                    SelectShow.SetOrGetPropertyValue(GetChangePropertyValue(), targetColor);
+                }
             }
         }
 
@@ -363,6 +466,8 @@ namespace KlxPiaoControls
             {
                 Draging = true;
                 MouseDownPoint = e.Location;
+
+                cts.Cancel();
             }
         }
 

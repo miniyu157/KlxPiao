@@ -163,7 +163,7 @@ namespace KlxPiaoControls
             }
         }
         /// <summary>
-        /// 每个角的圆角大小。
+        /// 圆角的大小，以 <see cref="CornerRadius"/> 结构体表示。 
         /// </summary>
         [Category("RoundedButton外观")]
         [Description("每个角的圆角大小，自动适应百分比大小或像素大小")]
@@ -185,7 +185,7 @@ namespace KlxPiaoControls
             set { _外部颜色 = value; Invalidate(); }
         }
         /// <summary>
-        /// 指定 RoundedButton 如何处理图像位置或大小
+        /// 指定 <see cref="RoundedButton"/> 如何处理图像位置或大小
         /// </summary>
         [Category("RoundedButton外观")]
         [Description("如何处理图像位置或大小")]
@@ -521,7 +521,7 @@ namespace KlxPiaoControls
                             _ => [new(0, 0), new(1, 1)]
                         };
 
-                        _ = this.贝塞尔过渡动画(property, null, targetValue, new Animation(time, FPS, easing), default, MouseOverCTS.Token);
+                        _ = this.BezierTransition(property, null, targetValue, new Animation(time, FPS, easing), default, MouseOverCTS.Token);
                     }
                     else
                     {
@@ -571,7 +571,7 @@ namespace KlxPiaoControls
                             _ => [new(0, 0), new(1, 1)]
                         };
 
-                        _ = this.贝塞尔过渡动画(property, null, oldPropertyValue, new Animation(time, FPS, easing), default, MouseOverCTS.Token);
+                        _ = this.BezierTransition(property, null, oldPropertyValue, new Animation(time, FPS, easing), default, MouseOverCTS.Token);
                     }
                     else
                     {
@@ -625,7 +625,7 @@ namespace KlxPiaoControls
                             _ => [new(0, 0), new(1, 1)]
                         };
 
-                        _ = this.贝塞尔过渡动画(property, null, targetValue, new Animation(time, FPS, easing), default, MouseDownCTS.Token);
+                        _ = this.BezierTransition(property, null, targetValue, new Animation(time, FPS, easing), default, MouseDownCTS.Token);
                     }
                     else
                     {
@@ -675,7 +675,7 @@ namespace KlxPiaoControls
                             _ => [new(0, 0), new(1, 1)]
                         };
 
-                        _ = this.贝塞尔过渡动画(property, null, oldPropertyValue, new Animation(time, FPS, easing), default, MouseDownCTS.Token);
+                        _ = this.BezierTransition(property, null, oldPropertyValue, new Animation(time, FPS, easing), default, MouseDownCTS.Token);
                     }
                     else
                     {
