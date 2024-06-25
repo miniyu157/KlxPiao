@@ -103,7 +103,50 @@ namespace KlxPiaoAPI
                 cr.BottomLeft / multiplier
             );
         }
+
+        /// <summary>
+        /// 重载 == 运算符，比较两个 <see cref="CornerRadius"/> 对象是否相等。
+        /// </summary>
+        /// <param name="cr1">第一个 <see cref="CornerRadius"/> 对象。</param>
+        /// <param name="cr2">第二个 <see cref="CornerRadius"/> 对象。</param>
+        /// <returns>如果两个对象相等，则返回 true；否则返回 false。</returns>
+        public static bool operator ==(CornerRadius cr1, CornerRadius cr2)
+        {
+            return cr1.TopLeft == cr2.TopLeft &&
+                   cr1.TopRight == cr2.TopRight &&
+                   cr1.BottomRight == cr2.BottomRight &&
+                   cr1.BottomLeft == cr2.BottomLeft;
+        }
+
+        /// <summary>
+        /// 重载 != 运算符，比较两个 <see cref="CornerRadius"/> 对象是否不相等。
+        /// </summary>
+        /// <param name="cr1">第一个 <see cref="CornerRadius"/> 对象。</param>
+        /// <param name="cr2">第二个 <see cref="CornerRadius"/> 对象。</param>
+        /// <returns>如果两个对象不相等，则返回 true；否则返回 false。</returns>
+        public static bool operator !=(CornerRadius cr1, CornerRadius cr2)
+        {
+            return !(cr1 == cr2);
+        }
         #endregion
+
+        public readonly override int GetHashCode()
+        {
+            return TopLeft.GetHashCode() ^ TopRight.GetHashCode() ^ BottomRight.GetHashCode() ^ BottomLeft.GetHashCode();
+        }
+
+        public readonly override bool Equals(object? obj)
+        {
+            if (obj == null || obj is not CornerRadius)
+            {
+                return false;
+            }
+            else
+            {
+                CornerRadius cr = (CornerRadius)obj;
+                return TopLeft == cr.TopLeft && TopRight == cr.TopRight && BottomRight == cr.BottomRight && BottomLeft == cr.BottomLeft;
+            }
+        }
 
         /// <summary>
         /// 返回表示当前对象的字符串。

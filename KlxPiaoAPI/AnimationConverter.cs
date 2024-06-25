@@ -39,7 +39,8 @@ namespace KlxPiaoAPI
             {
                 try
                 {
-                    var parts = str.Split(',');
+                    char c = culture.TextInfo.ListSeparator[0];
+                    var parts = str.Split(c);
                     if (parts.Length < 3) throw new ArgumentException("Invalid format");
 
                     int time = int.Parse(parts[0].Trim(), culture);
@@ -93,6 +94,9 @@ namespace KlxPiaoAPI
             // 检查传入的destinationType是否为string类型，以及value是否可以转换为Animation类型
             if (destinationType == typeof(string) && value is Animation animation)
             {
+                // 获取当前文化设置的列表分隔符
+                char c = culture.TextInfo.ListSeparator[0];
+
                 // 使用LINQ的Select方法，将animation.Easing集合中的每个元素（PointF对象）转换为一个包含X和Y值的字符串，然后将结果赋值给easingParts变量
                 var easingParts = animation.Easing.Select(p => $"{p.X} {p.Y}");
 
@@ -100,7 +104,7 @@ namespace KlxPiaoAPI
                 string easingStr = $"[{string.Join(";", easingParts)}]";
 
                 // 返回一个字符串，包含animation的Time属性，FPS属性，以及easingStr变量的值，三者之间用逗号(,)分隔
-                return $"{animation.Time}, {animation.FPS}, {easingStr}";
+                return $"{animation.Time}{c} {animation.FPS}{c} {easingStr}";
             }
 
             // 如果destinationType不是string类型，或者value不能转换为Animation类型，那么调用基类的ConvertTo方法进行处理

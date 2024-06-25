@@ -134,7 +134,7 @@ namespace KlxPiaoControls
         {
             using Bitmap bitmap = new(Width, Height);
             {
-                Graphics g = Graphics.FromImage(bitmap);
+                using Graphics g = Graphics.FromImage(bitmap);
                 g.Clear(Color.White);
 
                 int 递减R = (255 - 投影颜色.R) / 投影长度;

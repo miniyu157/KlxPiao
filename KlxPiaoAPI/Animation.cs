@@ -36,6 +36,50 @@ namespace KlxPiaoAPI
             Easing = controlPoint;
         }
 
+        /// <summary>
+        /// 重载 == 运算符，比较两个 <see cref="Animation"/> 对象是否相等。
+        /// </summary>
+        /// <param name="cr1">第一个 <see cref="Animation"/> 对象。</param>
+        /// <param name="cr2">第二个 <see cref="Animation"/> 对象。</param>
+        /// <returns>如果两个对象相等，则返回 true；否则返回 false。</returns>
+        public static bool operator ==(Animation anim1, Animation anim2)
+        {
+            return anim1.Time == anim2.Time &&
+                anim1.FPS == anim2.Time &&
+                anim1.Easing == anim2.Easing;
+        }
+
+        /// <summary>
+        /// 重载 != 运算符，比较两个 <see cref="Animation"/> 对象是否不相等。
+        /// </summary>
+        /// <param name="cr1">第一个 <see cref="Animation"/> 对象。</param>
+        /// <param name="cr2">第二个 <see cref="Animation"/> 对象。</param>
+        /// <returns>如果两个对象不相等，则返回 true；否则返回 false。</returns>
+        public static bool operator !=(Animation anim1, Animation anim2)
+        {
+            return !(anim1 == anim2);
+        }
+
+        public readonly override int GetHashCode()
+        {
+            int easingHashCode = Easing == null ? 0 : Easing.GetHashCode();
+            return Time.GetHashCode() ^ FPS.GetHashCode() ^ easingHashCode;
+        }
+
+        public readonly override bool Equals(object? obj)
+        {
+            if (obj == null || obj is not Animation)
+            {
+                return false;
+            }
+            else
+            {
+                Animation anim = (Animation)obj;
+                return Time == anim.Time && FPS == anim.FPS && Easing == anim.Easing;
+            }
+        }
+
+
         public Animation() { }
 
         /// <summary>

@@ -70,6 +70,20 @@ namespace KlxPiaoDemo
                     klxPiaoPanel10.Controls.Add(p);
                 }
             }
+            checkBox10.CheckedChanged += CheckBox10_CheckedChanged;
+            void CheckBox10_CheckedChanged(object? sender, EventArgs e) =>
+                klxPiaoTextBox1.IsFillAndMultiline = checkBox10.Checked;
+
+            checkBox11.CheckedChanged += CheckBox11_CheckedChanged;
+            void CheckBox11_CheckedChanged(object? sender, EventArgs e) =>
+                klxPiaoTextBox1.TextBox.BackColor = checkBox11.Checked ? Color.DarkGray : Color.White;
+
+
+            EnumUtility.ForEachEnum<ContentAlignment>(value => comboBox7.Items.Add(value));
+            comboBox7.SelectedIndex = 0;
+            comboBox7.SelectedIndexChanged += ComboBox7_SelectedIndexChanged;
+            pointBar1.值Changed += PointBar1_值Changed;
+
             //初始化菜单
             foreach (标题按钮样式 value in Enum.GetValues(typeof(标题按钮样式)))
             {
@@ -113,6 +127,16 @@ namespace KlxPiaoDemo
 
             //属性代码生成器
             klxPiaoPanel6.ForEachControl<TextBox>(textBox => { textBox.TextChanged += 生成代码; });
+        }
+
+        private void PointBar1_值Changed(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            klxPiaoTextBox1.TextBoxOffset = pointBar1.值;
+        }
+
+        private void ComboBox7_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            klxPiaoTextBox1.TextBoxAlign = EnumUtility.ReorderEnumValues<ContentAlignment>(comboBox7.SelectedIndex);
         }
 
         //属性代码生成器

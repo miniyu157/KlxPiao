@@ -73,6 +73,8 @@
             KlxPiaoAPI.Animation animation32 = new KlxPiaoAPI.Animation();
             KlxPiaoAPI.Animation animation33 = new KlxPiaoAPI.Animation();
             KlxPiaoAPI.Animation animation34 = new KlxPiaoAPI.Animation();
+            KlxPiaoAPI.Animation animation35 = new KlxPiaoAPI.Animation();
+            KlxPiaoAPI.Animation animation36 = new KlxPiaoAPI.Animation();
             label1 = new Label();
             textBox1 = new TextBox();
             textBox2 = new TextBox();
@@ -173,8 +175,17 @@
             roundedButton2 = new KlxPiaoControls.RoundedButton();
             roundedButton1 = new KlxPiaoControls.RoundedButton();
             tabPage17 = new TabPage();
+            klxPiaoTextBox3 = new KlxPiaoControls.KlxPiaoTextBox();
             klxPiaoTextBox2 = new KlxPiaoControls.KlxPiaoTextBox();
+            slideSwitch8 = new KlxPiaoControls.SlideSwitch();
+            klxPiaoLabel38 = new KlxPiaoControls.KlxPiaoLabel();
+            klxPiaoPanel14 = new KlxPiaoControls.KlxPiaoPanel();
+            klxPiaoLabel37 = new KlxPiaoControls.KlxPiaoLabel();
+            checkBox11 = new CheckBox();
             klxPiaoTextBox1 = new KlxPiaoControls.KlxPiaoTextBox();
+            checkBox10 = new CheckBox();
+            pointBar1 = new KlxPiaoControls.PointBar();
+            comboBox7 = new ComboBox();
             tabPage3 = new TabPage();
             tabControlContainer2 = new KlxPiaoControls.TabControlContainer();
             klxPiaoTabControl2 = new KlxPiaoControls.KlxPiaoTabControl();
@@ -297,6 +308,7 @@
             tabPage12.SuspendLayout();
             tabPage16.SuspendLayout();
             tabPage17.SuspendLayout();
+            klxPiaoPanel14.SuspendLayout();
             tabPage3.SuspendLayout();
             tabControlContainer2.SuspendLayout();
             klxPiaoTabControl2.SuspendLayout();
@@ -2262,8 +2274,11 @@
             // tabPage17
             // 
             tabPage17.BackColor = Color.White;
+            tabPage17.Controls.Add(klxPiaoTextBox3);
             tabPage17.Controls.Add(klxPiaoTextBox2);
-            tabPage17.Controls.Add(klxPiaoTextBox1);
+            tabPage17.Controls.Add(slideSwitch8);
+            tabPage17.Controls.Add(klxPiaoLabel38);
+            tabPage17.Controls.Add(klxPiaoPanel14);
             tabPage17.Location = new Point(6, 4);
             tabPage17.Name = "tabPage17";
             tabPage17.Padding = new Padding(3);
@@ -2271,64 +2286,230 @@
             tabPage17.TabIndex = 7;
             tabPage17.Text = "TextBox";
             // 
+            // klxPiaoTextBox3
+            // 
+            klxPiaoTextBox3.BackColor = Color.White;
+            klxPiaoTextBox3.Location = new Point(232, 310);
+            klxPiaoTextBox3.Name = "klxPiaoTextBox3";
+            klxPiaoTextBox3.Size = new Size(189, 36);
+            klxPiaoTextBox3.TabIndex = 10;
+            klxPiaoTextBox3.Text = "klxPiaoTextBox3";
+            // 
+            // 
+            // 
+            klxPiaoTextBox3.TextBox.BackColor = Color.White;
+            klxPiaoTextBox3.TextBox.BorderStyle = BorderStyle.None;
+            klxPiaoTextBox3.TextBox.Location = new Point(14, 9);
+            klxPiaoTextBox3.TextBox.Name = "";
+            klxPiaoTextBox3.TextBox.Size = new Size(167, 16);
+            klxPiaoTextBox3.TextBox.TabIndex = 0;
+            klxPiaoTextBox3.TextBox.Text = "klxPiaoTextBox3";
+            klxPiaoTextBox3.TextBoxAlign = ContentAlignment.MiddleLeft;
+            klxPiaoTextBox3.TextBoxOffset = new Point(7, 0);
+            klxPiaoTextBox3.圆角大小 = new KlxPiaoAPI.CornerRadius(1F, 1F, 1F, 1F);
+            klxPiaoTextBox3.边框大小 = 2;
+            klxPiaoTextBox3.边框颜色 = Color.FromArgb(192, 192, 255);
+            // 
             // klxPiaoTextBox2
             // 
-            // 
-            // 
-            // 
-            klxPiaoTextBox2.Border.BackColor = Color.White;
-            klxPiaoTextBox2.Border.Location = new Point(0, 0);
-            klxPiaoTextBox2.Border.Name = "";
-            klxPiaoTextBox2.Border.Size = new Size(183, 44);
-            klxPiaoTextBox2.Border.TabIndex = 0;
-            klxPiaoTextBox2.Border.启用投影 = false;
-            klxPiaoTextBox2.Border.圆角大小 = new KlxPiaoAPI.CornerRadius(15F, 15F, 15F, 15F);
-            klxPiaoTextBox2.Border.边框颜色 = Color.Gray;
-            klxPiaoTextBox2.Location = new Point(346, 87);
+            klxPiaoTextBox2.BackColor = Color.White;
+            klxPiaoTextBox2.IsFillAndMultiline = true;
+            klxPiaoTextBox2.Location = new Point(32, 293);
             klxPiaoTextBox2.Name = "klxPiaoTextBox2";
-            klxPiaoTextBox2.Size = new Size(183, 44);
-            klxPiaoTextBox2.TabIndex = 1;
+            klxPiaoTextBox2.Size = new Size(157, 72);
+            klxPiaoTextBox2.TabIndex = 9;
+            klxPiaoTextBox2.Text = "klxPiaoTextBox2\r\nklxPiaoTextBox2\r\nklxPiaoTextBox2";
             // 
             // 
             // 
             klxPiaoTextBox2.TextBox.BackColor = Color.White;
             klxPiaoTextBox2.TextBox.BorderStyle = BorderStyle.None;
-            klxPiaoTextBox2.TextBox.Location = new Point(3, 3);
+            klxPiaoTextBox2.TextBox.Location = new Point(6, 6);
             klxPiaoTextBox2.TextBox.Multiline = true;
             klxPiaoTextBox2.TextBox.Name = "";
-            klxPiaoTextBox2.TextBox.Size = new Size(176, 37);
-            klxPiaoTextBox2.TextBox.TabIndex = 1;
-            klxPiaoTextBox2.TextBox.Text = "文本框控件";
+            klxPiaoTextBox2.TextBox.Size = new Size(145, 60);
+            klxPiaoTextBox2.TextBox.TabIndex = 0;
+            klxPiaoTextBox2.TextBox.Text = "klxPiaoTextBox2\r\nklxPiaoTextBox2\r\nklxPiaoTextBox2";
+            klxPiaoTextBox2.TextBoxAlign = ContentAlignment.MiddleLeft;
+            klxPiaoTextBox2.TextBoxOffset = new Point(5, 5);
+            klxPiaoTextBox2.启用投影 = true;
+            klxPiaoTextBox2.圆角大小 = new KlxPiaoAPI.CornerRadius(35F, 35F, 35F, 35F);
+            klxPiaoTextBox2.边框颜色 = Color.Silver;
+            // 
+            // slideSwitch8
+            // 
+            slideSwitch8.ChangeColors = new Color[]
+    {
+    Color.FromArgb(80, 80, 80),
+    Color.FromArgb(0, 117, 184)
+    };
+            slideSwitch8.ChangeProperty = KlxPiaoControls.SlideSwitch.StyleProperties.NoChange;
+            animation33.Easing = new PointF[]
+    {
+    (PointF)resources.GetObject("animation33.Easing"),
+    (PointF)resources.GetObject("animation33.Easing1"),
+    (PointF)resources.GetObject("animation33.Easing2"),
+    (PointF)resources.GetObject("animation33.Easing3")
+    };
+            animation33.FPS = 30;
+            animation33.Time = 150;
+            slideSwitch8.ColorAnim = animation33;
+            slideSwitch8.Items = new string[]
+    {
+    "功能性",
+    "外观"
+    };
+            slideSwitch8.ItemSize = new Size(108, 30);
+            // 
+            // 
+            // 
+            slideSwitch8.ItemsStyle.BackColor = Color.White;
+            slideSwitch8.ItemsStyle.Cursor = Cursors.Hand;
+            slideSwitch8.ItemsStyle.Location = new Point(0, 2);
+            slideSwitch8.ItemsStyle.Name = "ItemsShow";
+            slideSwitch8.ItemsStyle.Size = new Size(216, 30);
+            slideSwitch8.ItemsStyle.TabIndex = 0;
+            slideSwitch8.ItemsStyle.启用投影 = false;
+            slideSwitch8.ItemsStyle.圆角大小 = new KlxPiaoAPI.CornerRadius(10F, 10F, 10F, 10F);
+            slideSwitch8.Location = new Point(219, 25);
+            slideSwitch8.Name = "slideSwitch8";
+            // 
+            // 
+            // 
+            slideSwitch8.SelectItemStyle.AutoSize = false;
+            slideSwitch8.SelectItemStyle.BackColor = Color.FromArgb(80, 80, 80);
+            slideSwitch8.SelectItemStyle.ForeColor = Color.White;
+            slideSwitch8.SelectItemStyle.Location = new Point(15, 0);
+            slideSwitch8.SelectItemStyle.Name = "SelectShow";
+            slideSwitch8.SelectItemStyle.Size = new Size(80, 35);
+            slideSwitch8.SelectItemStyle.TabIndex = 2;
+            slideSwitch8.SelectItemStyle.Text = "功能性";
+            slideSwitch8.SelectItemStyle.TextAlign = ContentAlignment.MiddleCenter;
+            slideSwitch8.SelectItemStyle.偏移方式 = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            slideSwitch8.SelectItemStyle.启用边框 = true;
+            slideSwitch8.SelectItemStyle.圆角大小 = 10F;
+            slideSwitch8.SelectItemStyle.抗锯齿 = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            slideSwitch8.SelectItemStyle.边框大小 = 1;
+            slideSwitch8.SelectSize = new Size(80, 35);
+            slideSwitch8.Size = new Size(216, 35);
+            slideSwitch8.TabIndex = 8;
+            animation34.Easing = new PointF[]
+    {
+    (PointF)resources.GetObject("animation34.Easing"),
+    (PointF)resources.GetObject("animation34.Easing1"),
+    (PointF)resources.GetObject("animation34.Easing2"),
+    (PointF)resources.GetObject("animation34.Easing3")
+    };
+            animation34.FPS = 100;
+            animation34.Time = 200;
+            slideSwitch8.TransAnim = animation34;
+            slideSwitch8.Visible = false;
+            // 
+            // klxPiaoLabel38
+            // 
+            klxPiaoLabel38.AutoSize = false;
+            klxPiaoLabel38.BackColor = Color.FromArgb(80, 80, 80);
+            klxPiaoLabel38.ForeColor = Color.White;
+            klxPiaoLabel38.Location = new Point(32, 18);
+            klxPiaoLabel38.Name = "klxPiaoLabel38";
+            klxPiaoLabel38.Size = new Size(129, 33);
+            klxPiaoLabel38.TabIndex = 7;
+            klxPiaoLabel38.Text = "功能性";
+            klxPiaoLabel38.TextAlign = ContentAlignment.MiddleCenter;
+            klxPiaoLabel38.Visible = false;
+            klxPiaoLabel38.偏移方式 = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            klxPiaoLabel38.启用边框 = true;
+            klxPiaoLabel38.圆角大小 = 15F;
+            klxPiaoLabel38.抗锯齿 = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            klxPiaoLabel38.边框大小 = 1;
+            // 
+            // klxPiaoPanel14
+            // 
+            klxPiaoPanel14.BackColor = Color.White;
+            klxPiaoPanel14.Controls.Add(klxPiaoLabel37);
+            klxPiaoPanel14.Controls.Add(checkBox11);
+            klxPiaoPanel14.Controls.Add(klxPiaoTextBox1);
+            klxPiaoPanel14.Controls.Add(checkBox10);
+            klxPiaoPanel14.Controls.Add(pointBar1);
+            klxPiaoPanel14.Controls.Add(comboBox7);
+            klxPiaoPanel14.Location = new Point(32, 66);
+            klxPiaoPanel14.Name = "klxPiaoPanel14";
+            klxPiaoPanel14.Size = new Size(400, 211);
+            klxPiaoPanel14.TabIndex = 6;
+            klxPiaoPanel14.启用投影 = false;
+            klxPiaoPanel14.圆角大小 = new KlxPiaoAPI.CornerRadius(15F, 15F, 15F, 15F);
+            // 
+            // klxPiaoLabel37
+            // 
+            klxPiaoLabel37.BackColor = Color.White;
+            klxPiaoLabel37.ForeColor = Color.Black;
+            klxPiaoLabel37.Location = new Point(18, 17);
+            klxPiaoLabel37.Name = "klxPiaoLabel37";
+            klxPiaoLabel37.Size = new Size(360, 17);
+            klxPiaoLabel37.TabIndex = 1;
+            klxPiaoLabel37.Text = "可以使用 TextBoxAlign 和 TextBoxOffset 属性任意控制文本位置";
+            // 
+            // checkBox11
+            // 
+            checkBox11.AutoSize = true;
+            checkBox11.Location = new Point(302, 77);
+            checkBox11.Name = "checkBox11";
+            checkBox11.Size = new Size(87, 21);
+            checkBox11.TabIndex = 5;
+            checkBox11.Text = "高亮文本框";
+            checkBox11.UseVisualStyleBackColor = true;
             // 
             // klxPiaoTextBox1
             // 
-            // 
-            // 
-            // 
-            klxPiaoTextBox1.Border.BackColor = Color.DimGray;
-            klxPiaoTextBox1.Border.Location = new Point(0, 0);
-            klxPiaoTextBox1.Border.Name = "";
-            klxPiaoTextBox1.Border.Size = new Size(256, 254);
-            klxPiaoTextBox1.Border.TabIndex = 0;
-            klxPiaoTextBox1.Border.启用投影 = false;
-            klxPiaoTextBox1.Border.圆角大小 = new KlxPiaoAPI.CornerRadius(36F, 36F, 36F, 36F);
-            klxPiaoTextBox1.Border.边框大小 = 10;
-            klxPiaoTextBox1.Location = new Point(65, 37);
+            klxPiaoTextBox1.BackColor = Color.White;
+            klxPiaoTextBox1.Location = new Point(18, 48);
             klxPiaoTextBox1.Name = "klxPiaoTextBox1";
-            klxPiaoTextBox1.Size = new Size(256, 254);
+            klxPiaoTextBox1.Size = new Size(152, 138);
             klxPiaoTextBox1.TabIndex = 0;
+            klxPiaoTextBox1.Text = "klxPiaoTextBox1";
             // 
             // 
             // 
-            klxPiaoTextBox1.TextBox.BackColor = Color.IndianRed;
+            klxPiaoTextBox1.TextBox.BackColor = Color.White;
             klxPiaoTextBox1.TextBox.BorderStyle = BorderStyle.None;
-            klxPiaoTextBox1.TextBox.ForeColor = Color.White;
-            klxPiaoTextBox1.TextBox.Location = new Point(15, 15);
-            klxPiaoTextBox1.TextBox.Multiline = true;
+            klxPiaoTextBox1.TextBox.Location = new Point(3, 3);
             klxPiaoTextBox1.TextBox.Name = "";
-            klxPiaoTextBox1.TextBox.Size = new Size(224, 222);
-            klxPiaoTextBox1.TextBox.TabIndex = 1;
-            klxPiaoTextBox1.TextBox.Text = "原神启动";
+            klxPiaoTextBox1.TextBox.Size = new Size(145, 16);
+            klxPiaoTextBox1.TextBox.TabIndex = 0;
+            klxPiaoTextBox1.TextBox.Text = "klxPiaoTextBox1";
+            klxPiaoTextBox1.TextBoxAlign = ContentAlignment.TopLeft;
+            klxPiaoTextBox1.圆角大小 = new KlxPiaoAPI.CornerRadius(15F, 15F, 15F, 15F);
+            // 
+            // checkBox10
+            // 
+            checkBox10.AutoSize = true;
+            checkBox10.Location = new Point(302, 50);
+            checkBox10.Name = "checkBox10";
+            checkBox10.Size = new Size(51, 21);
+            checkBox10.TabIndex = 4;
+            checkBox10.Text = "多行";
+            checkBox10.UseVisualStyleBackColor = true;
+            // 
+            // pointBar1
+            // 
+            pointBar1.BackColor = Color.White;
+            pointBar1.Font = new Font("Microsoft YaHei UI", 7.5F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            pointBar1.ForeColor = Color.FromArgb(64, 64, 64);
+            pointBar1.Location = new Point(187, 86);
+            pointBar1.Name = "pointBar1";
+            pointBar1.Size = new Size(100, 100);
+            pointBar1.TabIndex = 2;
+            pointBar1.坐标显示位置 = ContentAlignment.BottomCenter;
+            pointBar1.坐标显示格式 = "Offset X:{X}, Y:{Y}";
+            // 
+            // comboBox7
+            // 
+            comboBox7.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox7.FormattingEnabled = true;
+            comboBox7.Location = new Point(187, 48);
+            comboBox7.Name = "comboBox7";
+            comboBox7.Size = new Size(100, 25);
+            comboBox7.TabIndex = 3;
             // 
             // tabPage3
             // 
@@ -3095,16 +3276,16 @@
     Color.DarkSeaGreen
     };
             slideSwitch6.ChangeProperty = KlxPiaoControls.SlideSwitch.StyleProperties.BackColor;
-            animation33.Easing = new PointF[]
+            animation35.Easing = new PointF[]
     {
-    (PointF)resources.GetObject("animation33.Easing"),
-    (PointF)resources.GetObject("animation33.Easing1"),
-    (PointF)resources.GetObject("animation33.Easing2"),
-    (PointF)resources.GetObject("animation33.Easing3")
+    (PointF)resources.GetObject("animation35.Easing"),
+    (PointF)resources.GetObject("animation35.Easing1"),
+    (PointF)resources.GetObject("animation35.Easing2"),
+    (PointF)resources.GetObject("animation35.Easing3")
     };
-            animation33.FPS = 30;
-            animation33.Time = 150;
-            slideSwitch6.ColorAnim = animation33;
+            animation35.FPS = 30;
+            animation35.Time = 150;
+            slideSwitch6.ColorAnim = animation35;
             slideSwitch6.Items = new string[]
     {
     "C#",
@@ -3145,16 +3326,16 @@
             slideSwitch6.SelectSize = new Size(50, 46);
             slideSwitch6.Size = new Size(116, 46);
             slideSwitch6.TabIndex = 21;
-            animation34.Easing = new PointF[]
+            animation36.Easing = new PointF[]
     {
-    (PointF)resources.GetObject("animation34.Easing"),
-    (PointF)resources.GetObject("animation34.Easing1"),
-    (PointF)resources.GetObject("animation34.Easing2"),
-    (PointF)resources.GetObject("animation34.Easing3")
+    (PointF)resources.GetObject("animation36.Easing"),
+    (PointF)resources.GetObject("animation36.Easing1"),
+    (PointF)resources.GetObject("animation36.Easing2"),
+    (PointF)resources.GetObject("animation36.Easing3")
     };
-            animation34.FPS = 100;
-            animation34.Time = 200;
-            slideSwitch6.TransAnim = animation34;
+            animation36.FPS = 100;
+            animation36.Time = 200;
+            slideSwitch6.TransAnim = animation36;
             slideSwitch6.SelectIndexChanged += SlideSwitch6_SelectIndexChanged;
             // 
             // tabPage8
@@ -3647,6 +3828,8 @@
             tabPage12.ResumeLayout(false);
             tabPage16.ResumeLayout(false);
             tabPage17.ResumeLayout(false);
+            klxPiaoPanel14.ResumeLayout(false);
+            klxPiaoPanel14.PerformLayout();
             tabPage3.ResumeLayout(false);
             tabControlContainer2.ResumeLayout(false);
             klxPiaoTabControl2.ResumeLayout(false);
@@ -3874,8 +4057,17 @@
         private KlxPiaoControls.KlxPiaoLabel klxPiaoLabel35;
         private KlxPiaoControls.KlxPiaoButton klxPiaoButton1;
         private TabPage tabPage17;
-        private KlxPiaoControls.KlxPiaoTextBox klxPiaoTextBox1;
-        private KlxPiaoControls.KlxPiaoTextBox klxPiaoTextBox2;
         private KlxPiaoControls.RoundedButton roundedButton10;
+        private KlxPiaoControls.KlxPiaoTextBox klxPiaoTextBox1;
+        private KlxPiaoControls.KlxPiaoLabel klxPiaoLabel37;
+        private ComboBox comboBox7;
+        private KlxPiaoControls.PointBar pointBar1;
+        private CheckBox checkBox10;
+        private CheckBox checkBox11;
+        private KlxPiaoControls.KlxPiaoPanel klxPiaoPanel14;
+        private KlxPiaoControls.KlxPiaoLabel klxPiaoLabel38;
+        private KlxPiaoControls.SlideSwitch slideSwitch8;
+        private KlxPiaoControls.KlxPiaoTextBox klxPiaoTextBox3;
+        private KlxPiaoControls.KlxPiaoTextBox klxPiaoTextBox2;
     }
 }
