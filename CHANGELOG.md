@@ -8,7 +8,7 @@
 
 ### KlxPiaoAPI
 #### 重命名方法：
- LayoutUtilities.ConvertToPoint -> PaddingConvertToPoint
+- LayoutUtilities.ConvertToPoint -> PaddingConvertToPoint
 #### 新增结构体重载：
 - Animation(int time, int fps, string controlPoint)
 #### 修复结构体运算符重载：
