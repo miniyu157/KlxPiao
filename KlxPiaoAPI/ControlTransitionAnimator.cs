@@ -22,8 +22,9 @@ namespace KlxPiaoAPI
         /// <param name="controlPoints">贝塞尔曲线的控制点数组，留空时缓动效果为Linear。</param>
         /// <param name="FPS">动画的帧率。</param>
         /// <param name="action">每一帧动画完成时执行的操作。</param>
+        /// <param name="isCheckControlPoint">是否检查控制点异常。</param>
         /// <param name="token">用于取消动画的CancellationToken。</param>
-        public static async Task BezierTransition(this Control control, string property, object? startValue, object endValue, int time, PointF[]? controlPoints = null, int FPS = 100, Action<double>? action = default, CancellationToken token = default)
+        public static async Task BezierTransition(this Control control, string property, object? startValue, object endValue, int time, PointF[]? controlPoints = null, int FPS = 100, Action<double>? action = default, bool isCheckControlPoint = true, CancellationToken token = default)
         {
             DateTime startTime = DateTime.Now;
             TimeSpan totalDuration = TimeSpan.FromMilliseconds(time);
@@ -31,6 +32,15 @@ namespace KlxPiaoAPI
 
             startValue ??= control.SetOrGetPropertyValue(property);
             controlPoints ??= [new(0, 0), new(1, 1)];
+
+            //自动补全开始点和结束点
+            if (isCheckControlPoint)
+            {
+                var newControlPoints = controlPoints.ToList();
+                if (controlPoints[0] != new PointF(0, 0)) newControlPoints.Insert(0, new PointF(0, 0));
+                if (controlPoints.First() != new PointF(1, 1)) newControlPoints.Add(new PointF(1, 1));
+                controlPoints = [.. newControlPoints];
+            }
 
             ITypeCollection numberCollection = NumberType.Instance;
             ITypeCollection pointOrSizeCollection = PointOrSizeType.Instance;
@@ -80,10 +90,11 @@ namespace KlxPiaoAPI
         /// <param name="endValue">动画的结束值。</param>
         /// <param name="animation">动画的基本属性，以 <see cref="Animation"/> 结构体表示。</param>
         /// <param name="action">每一帧动画完成时执行的操作。</param>
+        /// <param name="isCheckControlPoint">是否检查控制点异常。</param>
         /// <param name="token">用于取消动画的CancellationToken。</param>
-        public static async Task BezierTransition(this Control control, string property, object? startValue, object endValue, Animation animation, Action<double>? action = default, CancellationToken token = default)
+        public static async Task BezierTransition(this Control control, string property, object? startValue, object endValue, Animation animation, Action<double>? action = default, bool isCheckControlPoint = true, CancellationToken token = default)
         {
-            await BezierTransition(control, property, startValue, endValue, animation.Time, animation.Easing, animation.FPS, action, token);
+            await BezierTransition(control, property, startValue, endValue, animation.Time, animation.Easing, animation.FPS, action, isCheckControlPoint, token);
         }
 
         /// <summary>

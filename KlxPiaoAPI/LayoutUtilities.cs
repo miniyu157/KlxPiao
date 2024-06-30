@@ -5,7 +5,7 @@
     /// </summary>
     public class LayoutUtilities
     {
-        #region (8 个重载) CalculateAlignedPosition
+        #region (4 个重载) CalculateAlignedPosition
         /// <summary>
         /// 根据指定的对齐方式，计算容器矩形内部矩形的位置。
         /// </summary>
@@ -109,62 +109,6 @@
         /// <returns>经过对齐和偏移调整后的内部矩形的位置。</returns>
         public static PointF CalculateAlignedPosition(RectangleF containerRect, Size internalSize, ContentAlignment alignment, Point? offset = null)
         {
-            return CalculateAlignedPosition(containerRect, new SizeF(internalSize.Width, internalSize.Height), alignment, offset);
-        }
-
-        /// <summary>
-        /// 根据指定的对齐方式，计算容器矩形内部矩形的位置。
-        /// </summary>
-        /// <param name="containerRect">包含内部大小的容器矩形。</param>
-        /// <param name="internalSize">要在容器内对齐的内部矩形的大小。</param>
-        /// <param name="alignment">内部矩形在容器内的对齐方式。</param>
-        /// <param name="offset">偏移，用于调整内部矩形在容器中的位置。默认为null。</param>
-        /// <returns>经过对齐和偏移调整后的内部矩形的位置。</returns>
-        public static Point CalculateAlignedPosition(Rectangle containerRect, Size internalSize, ContentAlignment alignment, Padding? padding = null)
-        {
-            Point? offset = padding == null ? null : ConvertToPoint((Padding)padding);
-            return CalculateAlignedPosition(containerRect, internalSize, alignment, offset);
-        }
-
-        /// <summary>
-        /// 根据指定的对齐方式，计算容器矩形内部矩形的位置。
-        /// </summary>
-        /// <param name="containerRect">包含内部大小的容器矩形。</param>
-        /// <param name="internalSize">要在容器内对齐的内部矩形的大小。</param>
-        /// <param name="alignment">内部矩形在容器内的对齐方式。</param>
-        /// <param name="offset">偏移，用于调整内部矩形在容器中的位置。默认为null。</param>
-        /// <returns>经过对齐和偏移调整后的内部矩形的位置。</returns>
-        public static PointF CalculateAlignedPosition(RectangleF containerRect, SizeF internalSize, ContentAlignment alignment, Padding? padding = null)
-        {
-            Point? offset = padding == null ? null : ConvertToPoint((Padding)padding);
-            return CalculateAlignedPosition(containerRect, internalSize, alignment, offset);
-        }
-
-        /// <summary>
-        /// 根据指定的对齐方式，计算容器矩形内部矩形的位置。
-        /// </summary>
-        /// <param name="containerRect">包含内部大小的容器矩形。</param>
-        /// <param name="internalSize">要在容器内对齐的内部矩形的大小。</param>
-        /// <param name="alignment">内部矩形在容器内的对齐方式。</param>
-        /// <param name="offset">偏移，用于调整内部矩形在容器中的位置。默认为null。</param>
-        /// <returns>经过对齐和偏移调整后的内部矩形的位置。</returns>
-        public static Point CalculateAlignedPosition(Rectangle containerRect, SizeF internalSize, ContentAlignment alignment, Padding? padding = null)
-        {
-            Point? offset = padding == null ? null : ConvertToPoint((Padding)padding);
-            return CalculateAlignedPosition(containerRect, new Size((int)internalSize.Width, (int)internalSize.Height), alignment, offset);
-        }
-
-        /// <summary>
-        /// 根据指定的对齐方式，计算容器矩形内部矩形的位置。
-        /// </summary>
-        /// <param name="containerRect">包含内部大小的容器矩形。</param>
-        /// <param name="internalSize">要在容器内对齐的内部矩形的大小。</param>
-        /// <param name="alignment">内部矩形在容器内的对齐方式。</param>
-        /// <param name="offset">偏移，用于调整内部矩形在容器中的位置。默认为null。</param>
-        /// <returns>经过对齐和偏移调整后的内部矩形的位置。</returns>
-        public static PointF CalculateAlignedPosition(RectangleF containerRect, Size internalSize, ContentAlignment alignment, Padding? padding = null)
-        {
-            Point? offset = padding == null ? null : ConvertToPoint((Padding)padding);
             return CalculateAlignedPosition(containerRect, new SizeF(internalSize.Width, internalSize.Height), alignment, offset);
         }
         #endregion
@@ -292,7 +236,7 @@
         /// 一个 <see cref="Point"/> 对象，其中 X 坐标计算为 padding.Left 减去 padding.Right，
         /// Y 坐标计算为 padding.Top 减去 padding.Bottom。
         /// </returns>
-        public static Point ConvertToPoint(Padding padding)
+        public static Point PaddingConvertToPoint(Padding padding)
         {
             return new(padding.Left - padding.Right, padding.Top - padding.Bottom);
         }

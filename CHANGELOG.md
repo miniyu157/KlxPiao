@@ -1,3 +1,52 @@
+# 更新日志
+
+## 版本 1.1.1.0
+### 解决方案
+- 补充 XML 注释
+- 更正错误的 XML 注释
+- 部分代码优化
+
+### KlxPiaoAPI
+#### 重命名方法：
+ LayoutUtilities.ConvertToPoint -> PaddingConvertToPoint
+#### 新增结构体重载：
+- Animation(int time, int fps, string controlPoint)
+#### 修复结构体运算符重载：
+- Animation == Animation 逻辑错误
+#### 优化方法：
+- Animation.ToString
+- ControlTransitionAnimator.BezierTransition 加入控制点检查 (可选参数)
+#### 移除方法重载：
+- LayoutUtilities.CalculateAlignedPosition ```padding``` 参数的重载
+
+### KlxPiaoControls
+- 全部组件的中文属性、枚举类型、方法 -> 英文（TabControlContainer 和 KlxPiaoTabControl 决定重做，暂不更改）
+#### 属性类型变更：
+- KlxPiaoForm.TitleTextAlign (标题位置) 的类型 ```位置``` -> ```HorizontalAlignment```
+- KlxPiaoTrackBar.ValueTextDrawAlign (值显示方式) 的类型 ```文字位置``` -> ```ContentAlignment```
+- KlxPiaoTrackBar.ValueTextDrawOffset (值显示边距) 的类型 ```int``` -> ```Point```
+#### 新增属性：
+- KlxPiaoPictureBox.Font
+- PointBar.CornerRadius
+- PointBar.CoordinateTextOffset
+- PointBar.CrosshairDrawingPriority
+- KlxPiaoTrackBar.IsDrawValueText
+#### 移除属性：
+- BezierCurve.扫描线进度
+- BezierCurve.扫描线颜色
+#### 优化：
+- KlxPiaoTrackBar.ValueTextDisplayFormat (值显示格式) 支持多行输入
+- KlxPiaoTrackBar 的交互属性由 InteractionStyleClass 替代
+#### 修复：
+- BezierCurve.拖动限制 对于键盘无效
+#### 移除事件：
+- PointBar.值Changed
+#### 新增事件：
+- PointBar.ValueChanged
+- PointBar.ValueChangedByCode
+
+---
+
 ## 版本 1.1.0.9
 ### 解决方案
 - 补充 XML 注释

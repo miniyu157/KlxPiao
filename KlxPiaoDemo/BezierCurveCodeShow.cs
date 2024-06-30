@@ -11,7 +11,7 @@ namespace KlxPiaoDemo
             pointfshowTextBox.Text = pointfshow;
             componentModelText.Text = comptext;
 
-            设置全局主题(themeCcolor);
+            SetGlobalTheme(themeCcolor);
         }
 
         private void RoundedButton1_Click(object sender, EventArgs e)

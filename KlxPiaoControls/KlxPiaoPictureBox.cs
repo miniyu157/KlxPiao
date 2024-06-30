@@ -12,31 +12,31 @@ namespace KlxPiaoControls
     /// </remarks>
     public partial class KlxPiaoPictureBox : PictureBox
     {
-        private PriorityLevel _TextDrawPriority;
-        private ContentAlignment _TextAlign;
-        private Point _TextOffset;
-        private bool _ShowText;
+        private PriorityLevel _textDrawPriority;
+        private ContentAlignment _textAlign;
+        private Point _textOffset;
+        private bool _showText;
 
-        private bool _启用边框;
-        private Color _边框外部颜色;
-        private CornerRadius _圆角大小;
-        private int _边框大小;
-        private Color _边框颜色;
+        private bool _isEnableBorder;
+        private Color _baseBackColor;
+        private CornerRadius _borderCornerRadius;
+        private int _borderSize;
+        private Color _borderColor;
 
         public KlxPiaoPictureBox()
         {
             InitializeComponent();
 
-            _TextAlign = ContentAlignment.MiddleCenter;
-            _ShowText = false;
-            _TextDrawPriority = PriorityLevel.Low;
-            _TextOffset = new Point(0, 0);
+            _textAlign = ContentAlignment.MiddleCenter;
+            _showText = false;
+            _textDrawPriority = PriorityLevel.Low;
+            _textOffset = new Point(0, 0);
 
-            _启用边框 = false;
-            _边框外部颜色 = Color.White;
-            _圆角大小 = new CornerRadius(0);
-            _边框大小 = 10;
-            _边框颜色 = Color.LightGray;
+            _isEnableBorder = false;
+            _baseBackColor = Color.White;
+            _borderCornerRadius = new CornerRadius(0);
+            _borderSize = 10;
+            _borderColor = Color.LightGray;
 
             SizeMode = PictureBoxSizeMode.Zoom;
             Size = new Size(155, 155);
@@ -51,8 +51,8 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(PriorityLevel), "Low")]
         public PriorityLevel TextDrawPriority
         {
-            get { return _TextDrawPriority; }
-            set { _TextDrawPriority = value; Invalidate(); }
+            get { return _textDrawPriority; }
+            set { _textDrawPriority = value; Invalidate(); }
         }
         /// <summary>
         /// 将在控件上显示的文本的对其方式。
@@ -62,8 +62,8 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(ContentAlignment), "MiddleCenter")]
         public ContentAlignment TextAlign
         {
-            get { return _TextAlign; }
-            set { _TextAlign = value; Invalidate(); }
+            get { return _textAlign; }
+            set { _textAlign = value; Invalidate(); }
         }
         /// <summary>
         /// 文本绘制时的偏移。
@@ -73,8 +73,8 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Point), "0,0")]
         public Point TextOffset
         {
-            get { return _TextOffset; }
-            set { _TextOffset = value; Invalidate(); }
+            get { return _textOffset; }
+            set { _textOffset = value; Invalidate(); }
         }
         /// <summary>
         /// 是否显示在控件中的文本。
@@ -84,8 +84,8 @@ namespace KlxPiaoControls
         [DefaultValue(false)]
         public bool ShowText
         {
-            get { return _ShowText; }
-            set { _ShowText = value; Invalidate(); }
+            get { return _showText; }
+            set { _showText = value; Invalidate(); }
         }
         [Browsable(true)]
         [Category("KlxPiaoPictureBox文本")]
@@ -103,10 +103,10 @@ namespace KlxPiaoControls
         [Category("KlxPiaoPictureBox外观")]
         [Description("是否启用边框")]
         [DefaultValue(false)]
-        public bool 启用边框
+        public bool IsEnableBorder
         {
-            get { return _启用边框; }
-            set { _启用边框 = value; Invalidate(); }
+            get { return _isEnableBorder; }
+            set { _isEnableBorder = value; Invalidate(); }
         }
         /// <summary>
         /// 获取或设置边框外部的颜色
@@ -114,10 +114,10 @@ namespace KlxPiaoControls
         [Category("KlxPiaoPictureBox外观")]
         [Description("边框外部的颜色")]
         [DefaultValue(typeof(Color), "White")]
-        public Color 边框外部颜色
+        public Color BaseBackColor
         {
-            get { return _边框外部颜色; }
-            set { _边框外部颜色 = value; Invalidate(); }
+            get { return _baseBackColor; }
+            set { _baseBackColor = value; Invalidate(); }
         }
         /// <summary>
         /// 圆角的大小，以 <see cref="CornerRadius"/> 结构体表示。 
@@ -125,10 +125,10 @@ namespace KlxPiaoControls
         [Category("KlxPiaoPictureBox外观")]
         [Description("每个角的圆角大小，自动适应百分比大小或像素大小")]
         [DefaultValue(typeof(CornerRadius), "0,0,0,0")]
-        public CornerRadius 圆角大小
+        public CornerRadius BorderCornerRadius
         {
-            get { return _圆角大小; }
-            set { _圆角大小 = value; Invalidate(); }
+            get { return _borderCornerRadius; }
+            set { _borderCornerRadius = value; Invalidate(); }
         }
         /// <summary>
         /// 获取或设置边框的大小。
@@ -136,10 +136,10 @@ namespace KlxPiaoControls
         [Category("KlxPiaoPictureBox外观")]
         [Description("边框的大小，为0时隐藏边框")]
         [DefaultValue(10)]
-        public int 边框大小
+        public int BorderSize
         {
-            get { return _边框大小; }
-            set { _边框大小 = value; Invalidate(); }
+            get { return _borderSize; }
+            set { _borderSize = value; Invalidate(); }
         }
         /// <summary>
         /// 获取或设置边框的颜色.
@@ -147,10 +147,10 @@ namespace KlxPiaoControls
         [Category("KlxPiaoPictureBox外观")]
         [Description("边框的颜色")]
         [DefaultValue(typeof(Color), "LightGray")]
-        public Color 边框颜色
+        public Color BorderColor
         {
-            get { return _边框颜色; }
-            set { _边框颜色 = value; Invalidate(); }
+            get { return _borderColor; }
+            set { _borderColor = value; Invalidate(); }
         }
         #endregion
 
@@ -159,6 +159,13 @@ namespace KlxPiaoControls
         {
             get { return base.Size; }
             set { base.Size = value; Invalidate(); }
+        }
+
+        [Browsable(true)]
+        public new Font Font
+        {
+            get { return base.Font; }
+            set { base.Font = value; Invalidate(); }
         }
 
         [DefaultValue(typeof(PictureBoxSizeMode), "Zoom")]
@@ -191,12 +198,12 @@ namespace KlxPiaoControls
                 //绘制边框
                 var drawBorder = new Action(() =>
                 {
-                    if (启用边框)
+                    if (IsEnableBorder)
                     {
-                        Pen pen = new(边框颜色, 边框大小 * 2); //修正画笔大小
+                        Pen pen = new(BorderColor, BorderSize * 2); //修正画笔大小
                         if (pen.Width != 0)
                         {
-                            GraphicsPath 圆角路径 = GraphicsExtensions.ConvertToRoundedPath(thisRect, 圆角大小);
+                            GraphicsPath 圆角路径 = GraphicsExtensions.ConvertToRoundedPath(thisRect, BorderCornerRadius);
                             g.DrawPath(pen, 圆角路径);
                         }
                     }
@@ -215,8 +222,8 @@ namespace KlxPiaoControls
                 //填充外部
                 var drawOuter = new Action(() =>
                 {
-                    GraphicsPath 外部路径 = GraphicsExtensions.ConvertToRoundedPath(thisRect, 圆角大小, true);
-                    g.FillPath(new SolidBrush(边框外部颜色), 外部路径);
+                    GraphicsPath 外部路径 = GraphicsExtensions.ConvertToRoundedPath(thisRect, BorderCornerRadius, true);
+                    g.FillPath(new SolidBrush(BaseBackColor), 外部路径);
                 });
 
                 switch (TextDrawPriority)
@@ -242,10 +249,9 @@ namespace KlxPiaoControls
             }
         }
         /// <summary>
-        /// 返回控件绘制的图像
+        /// 返回控件绘制的图像。
         /// </summary>
-        /// <returns></returns>
-        public Bitmap 返回图像()
+        public Bitmap GetControlImage()
         {
             Bitmap bmp = new(Width, Height);
 

@@ -8,6 +8,7 @@
         public KlxPiaoLinkLabel()
         {
             InitializeComponent();
+
             LinkBehavior = LinkBehavior.HoverUnderline;
             BackColor = Color.White;
             LinkColor = Color.Black;

@@ -18,7 +18,7 @@ namespace KlxPiaoControls
         {
             BackColor,
             ForeColor,
-            边框颜色,
+            BorderColor,
             NoChange
         }
 
@@ -55,8 +55,8 @@ namespace KlxPiaoControls
             _UpdateTextOnDrag = true;
             _EnableMouseWheel = true;
             _IsAnimationEnabled = true;
-            _TransAnim = new Animation(200, 100, [new(0, 0), new(0, 1), new(0.67F, 1), new(1, 1)]);
-            _ColorAnim = new Animation(150, 30, [new(0, 0), new(0, 0), new(1, 1), new(1, 1)]);
+            _TransAnim = new Animation(200, 100, "0, 1, 0.67, 1");
+            _ColorAnim = new Animation(150, 30, "0, 0, 1, 1");
 
             DoubleBuffered = true;
             //
@@ -66,16 +66,16 @@ namespace KlxPiaoControls
             // 
             // ItemsShow
             // 
-            ItemsShow.圆角大小 = new CornerRadius(10); //0
-            ItemsShow.启用投影 = false; //true
+            ItemsShow.CornerRadius = new CornerRadius(10); //0
+            ItemsShow.IsEnableShadow = false; //true
             // 
             // SelectShow
             // 
-            SelectShow.边框大小 = 1; //5
-            SelectShow.圆角大小 = 10F; //0
-            SelectShow.抗锯齿 = SmoothingMode.HighQuality; //Default
-            SelectShow.偏移方式 = PixelOffsetMode.HighQuality; //Default
-            SelectShow.启用边框 = true; //false
+            SelectShow.BorderSize = 1; //5
+            SelectShow.CornerRadius = new CornerRadius(10); //0
+            SelectShow.SmoothingMode = SmoothingMode.HighQuality; //Default
+            SelectShow.PixelOffsetMode = PixelOffsetMode.HighQuality; //Default
+            SelectShow.IsEnableBorder = true; //false
             SelectShow.TextAlign = ContentAlignment.MiddleCenter; //TopLeft
             SelectShow.AutoSize = false; //true
             SelectShow.Location = new(3, 0);
@@ -269,7 +269,7 @@ namespace KlxPiaoControls
         /// </summary>
         [Category("SlideSwitch动画")]
         [Description("位移动画的配置")]
-        [DefaultValue(typeof(Animation), "200, 100, [0 0;0 1;0.67 1;1 1]")]
+        [DefaultValue(typeof(Animation), "200, 100, [0 1;0.67 1]")]
         public Animation TransAnim
         {
             get { return _TransAnim; }
@@ -280,7 +280,7 @@ namespace KlxPiaoControls
         /// </summary>
         [Category("SlideSwitch动画")]
         [Description("颜色动画的配置")]
-        [DefaultValue(typeof(Animation), "150, 30, [0 0;0 0;1 1;1 1]")]
+        [DefaultValue(typeof(Animation), "150, 30, [0 0;1 1]")]
         public Animation ColorAnim
         {
             get { return _ColorAnim; }
@@ -426,13 +426,13 @@ namespace KlxPiaoControls
             if (IsAnimationEnabled)
             {
                 //位移
-                _ = SelectShow.BezierTransition("Location", null, targetPosition, TransAnim, default, cts.Token);
+                _ = SelectShow.BezierTransition("Location", null, targetPosition, TransAnim, default, true, cts.Token);
 
                 //颜色
                 if (ChangeProperty != StyleProperties.NoChange)
                 {
                     _ = SelectShow.BezierTransition(GetChangePropertyValue(), null,
-                        targetColor, ColorAnim, default, cts.Token);
+                        targetColor, ColorAnim, default, true, cts.Token);
                 }
             }
             else

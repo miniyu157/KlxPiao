@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass1 = new KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass();
+            KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass2 = new KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass();
+            KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass3 = new KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass();
             labelDemo = new KlxPiaoControls.KlxPiaoLabel();
             groupBox1 = new GroupBox();
             klxPiaoLabel3 = new KlxPiaoControls.KlxPiaoLabel();
@@ -76,15 +79,15 @@
             // 
             labelDemo.AutoSize = false;
             labelDemo.BackColor = Color.White;
+            labelDemo.BorderSize = 0;
             labelDemo.ForeColor = Color.Black;
+            labelDemo.IsEnableBorder = true;
             labelDemo.Location = new Point(25, 27);
             labelDemo.Name = "labelDemo";
             labelDemo.Size = new Size(100, 23);
             labelDemo.TabIndex = 7;
             labelDemo.Text = "KlxPiaoLabel";
             labelDemo.TextAlign = ContentAlignment.MiddleCenter;
-            labelDemo.启用边框 = true;
-            labelDemo.边框大小 = 0;
             labelDemo.SizeChanged += LabelDemo_SizeChanged;
             // 
             // groupBox1
@@ -131,28 +134,28 @@
             // 边框外部Panel
             // 
             边框外部Panel.BackColor = Color.White;
+            边框外部Panel.CornerRadius = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             边框外部Panel.Cursor = Cursors.Hand;
+            边框外部Panel.IsEnableShadow = false;
             边框外部Panel.Location = new Point(161, 90);
             边框外部Panel.Name = "边框外部Panel";
+            边框外部Panel.ShadowDirection = KlxPiaoControls.KlxPiaoPanel.ShadowDirectionEnum.LeftBottomRight;
+            边框外部Panel.ShadowLength = 6;
             边框外部Panel.Size = new Size(50, 50);
             边框外部Panel.TabIndex = 24;
-            边框外部Panel.启用投影 = false;
-            边框外部Panel.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
-            边框外部Panel.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
-            边框外部Panel.投影长度 = 6;
             // 
             // 边框颜色Panel
             // 
             边框颜色Panel.BackColor = Color.LightGray;
+            边框颜色Panel.CornerRadius = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             边框颜色Panel.Cursor = Cursors.Hand;
+            边框颜色Panel.IsEnableShadow = false;
             边框颜色Panel.Location = new Point(60, 90);
             边框颜色Panel.Name = "边框颜色Panel";
+            边框颜色Panel.ShadowDirection = KlxPiaoControls.KlxPiaoPanel.ShadowDirectionEnum.LeftBottomRight;
+            边框颜色Panel.ShadowLength = 6;
             边框颜色Panel.Size = new Size(50, 50);
             边框颜色Panel.TabIndex = 23;
-            边框颜色Panel.启用投影 = false;
-            边框颜色Panel.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
-            边框颜色Panel.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
-            边框颜色Panel.投影长度 = 6;
             // 
             // label9
             // 
@@ -173,35 +176,49 @@
             // 圆角Track
             // 
             圆角Track.BackColor = Color.White;
+            圆角Track.BorderColor = Color.DarkGray;
+            圆角Track.BorderSize = 1;
+            interactionStyleClass1.FocusBorderColor = Color.FromArgb(128, 128, 255);
+            interactionStyleClass1.FocusBorderSize = null;
+            interactionStyleClass1.FocusTrackBackColor = null;
+            interactionStyleClass1.FocusTrackForeColor = null;
+            interactionStyleClass1.MouseOverBorderColor = null;
+            interactionStyleClass1.MouseOverBorderSize = null;
+            interactionStyleClass1.MouseOverTrackBackColor = null;
+            interactionStyleClass1.MouseOverTrackForeColor = Color.LightGray;
+            圆角Track.InteractionStyle = interactionStyleClass1;
+            圆角Track.IsDrawValueText = true;
             圆角Track.Location = new Point(92, 58);
             圆角Track.Name = "圆角Track";
             圆角Track.Size = new Size(158, 15);
             圆角Track.TabIndex = 22;
             圆角Track.Text = "klxPiaoTrackBar2";
-            圆角Track.值显示方式 = KlxPiaoControls.KlxPiaoTrackBar.文字位置.居中;
-            圆角Track.值显示格式 = "{value}%";
-            圆角Track.前景色 = Color.Gainsboro;
-            圆角Track.焦点边框颜色 = Color.FromArgb(128, 128, 255);
-            圆角Track.移入前景色 = Color.LightGray;
-            圆角Track.背景色 = Color.White;
-            圆角Track.边框大小 = 1;
-            圆角Track.边框颜色 = Color.DarkGray;
+            圆角Track.TrackBackColor = Color.White;
+            圆角Track.TrackForeColor = Color.Gainsboro;
+            圆角Track.ValueTextDisplayFormat = "{value}%";
             // 
             // 边框Track
             // 
             边框Track.BackColor = Color.White;
+            边框Track.BorderColor = Color.DarkGray;
+            边框Track.BorderSize = 1;
+            interactionStyleClass2.FocusBorderColor = Color.FromArgb(128, 128, 255);
+            interactionStyleClass2.FocusBorderSize = null;
+            interactionStyleClass2.FocusTrackBackColor = null;
+            interactionStyleClass2.FocusTrackForeColor = null;
+            interactionStyleClass2.MouseOverBorderColor = null;
+            interactionStyleClass2.MouseOverBorderSize = null;
+            interactionStyleClass2.MouseOverTrackBackColor = null;
+            interactionStyleClass2.MouseOverTrackForeColor = Color.LightGray;
+            边框Track.InteractionStyle = interactionStyleClass2;
+            边框Track.IsDrawValueText = true;
             边框Track.Location = new Point(92, 32);
             边框Track.Name = "边框Track";
             边框Track.Size = new Size(158, 15);
             边框Track.TabIndex = 21;
             边框Track.Text = "klxPiaoTrackBar1";
-            边框Track.值显示方式 = KlxPiaoControls.KlxPiaoTrackBar.文字位置.居中;
-            边框Track.前景色 = Color.Gainsboro;
-            边框Track.焦点边框颜色 = Color.FromArgb(128, 128, 255);
-            边框Track.移入前景色 = Color.LightGray;
-            边框Track.背景色 = Color.White;
-            边框Track.边框大小 = 1;
-            边框Track.边框颜色 = Color.DarkGray;
+            边框Track.TrackBackColor = Color.White;
+            边框Track.TrackForeColor = Color.Gainsboro;
             // 
             // panel1
             // 
@@ -273,28 +290,28 @@
             // 前景Panel
             // 
             前景Panel.BackColor = Color.Black;
+            前景Panel.CornerRadius = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             前景Panel.Cursor = Cursors.Hand;
+            前景Panel.IsEnableShadow = false;
             前景Panel.Location = new Point(161, 90);
             前景Panel.Name = "前景Panel";
+            前景Panel.ShadowDirection = KlxPiaoControls.KlxPiaoPanel.ShadowDirectionEnum.LeftBottomRight;
+            前景Panel.ShadowLength = 6;
             前景Panel.Size = new Size(50, 50);
             前景Panel.TabIndex = 24;
-            前景Panel.启用投影 = false;
-            前景Panel.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
-            前景Panel.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
-            前景Panel.投影长度 = 6;
             // 
             // 背景Panel
             // 
             背景Panel.BackColor = Color.White;
+            背景Panel.CornerRadius = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             背景Panel.Cursor = Cursors.Hand;
+            背景Panel.IsEnableShadow = false;
             背景Panel.Location = new Point(60, 90);
             背景Panel.Name = "背景Panel";
+            背景Panel.ShadowDirection = KlxPiaoControls.KlxPiaoPanel.ShadowDirectionEnum.LeftBottomRight;
+            背景Panel.ShadowLength = 6;
             背景Panel.Size = new Size(50, 50);
             背景Panel.TabIndex = 23;
-            背景Panel.启用投影 = false;
-            背景Panel.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
-            背景Panel.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
-            背景Panel.投影长度 = 6;
             // 
             // label1
             // 
@@ -317,20 +334,27 @@
             // 字号Track
             // 
             字号Track.BackColor = Color.White;
+            字号Track.BorderColor = Color.DarkGray;
+            字号Track.BorderSize = 1;
+            interactionStyleClass3.FocusBorderColor = Color.FromArgb(128, 128, 255);
+            interactionStyleClass3.FocusBorderSize = null;
+            interactionStyleClass3.FocusTrackBackColor = null;
+            interactionStyleClass3.FocusTrackForeColor = null;
+            interactionStyleClass3.MouseOverBorderColor = null;
+            interactionStyleClass3.MouseOverBorderSize = null;
+            interactionStyleClass3.MouseOverTrackBackColor = null;
+            interactionStyleClass3.MouseOverTrackForeColor = Color.LightGray;
+            字号Track.InteractionStyle = interactionStyleClass3;
+            字号Track.IsDrawValueText = true;
             字号Track.Location = new Point(92, 32);
+            字号Track.MinValue = 1F;
             字号Track.Name = "字号Track";
             字号Track.Size = new Size(158, 15);
             字号Track.TabIndex = 21;
             字号Track.Text = "klxPiaoTrackBar4";
-            字号Track.值 = 9F;
-            字号Track.值显示方式 = KlxPiaoControls.KlxPiaoTrackBar.文字位置.居中;
-            字号Track.最小值 = 1F;
-            字号Track.前景色 = Color.Gainsboro;
-            字号Track.焦点边框颜色 = Color.FromArgb(128, 128, 255);
-            字号Track.移入前景色 = Color.LightGray;
-            字号Track.背景色 = Color.White;
-            字号Track.边框大小 = 1;
-            字号Track.边框颜色 = Color.DarkGray;
+            字号Track.TrackBackColor = Color.White;
+            字号Track.TrackForeColor = Color.Gainsboro;
+            字号Track.Value = 9F;
             // 
             // groupBox3
             // 
@@ -363,27 +387,28 @@
             // pointBar1
             // 
             pointBar1.BackColor = Color.White;
+            pointBar1.CoordinateDisplayFormat = "X:{X}, Y:{Y}";
             pointBar1.Location = new Point(143, 66);
+            pointBar1.MaxValue = new Point(250, 250);
+            pointBar1.MinValue = new Point(-250, -250);
             pointBar1.Name = "pointBar1";
             pointBar1.Size = new Size(100, 100);
             pointBar1.TabIndex = 28;
-            pointBar1.值 = new Point(2, 2);
-            pointBar1.最大值 = new Point(250, 250);
-            pointBar1.最小值 = new Point(-250, -250);
-            pointBar1.值Changed += PointBar1_值Changed;
+            pointBar1.Value = new Point(2, 2);
+            pointBar1.ValueChanged += PointBar1_值Changed;
             // 
             // 投影颜色Panel
             // 
             投影颜色Panel.BackColor = Color.DarkGray;
+            投影颜色Panel.CornerRadius = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
             投影颜色Panel.Cursor = Cursors.Hand;
+            投影颜色Panel.IsEnableShadow = false;
             投影颜色Panel.Location = new Point(60, 84);
             投影颜色Panel.Name = "投影颜色Panel";
+            投影颜色Panel.ShadowDirection = KlxPiaoControls.KlxPiaoPanel.ShadowDirectionEnum.LeftBottomRight;
+            投影颜色Panel.ShadowLength = 6;
             投影颜色Panel.Size = new Size(50, 50);
             投影颜色Panel.TabIndex = 28;
-            投影颜色Panel.启用投影 = false;
-            投影颜色Panel.圆角大小 = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
-            投影颜色Panel.投影方向 = KlxPiaoControls.KlxPiaoPanel.方向.左下右;
-            投影颜色Panel.投影长度 = 6;
             // 
             // 高质量Check
             // 
@@ -459,13 +484,13 @@
             klxPiaoButton2.FlatAppearance.MouseDownBackColor = Color.FromArgb(230, 230, 230);
             klxPiaoButton2.FlatAppearance.MouseOverBackColor = Color.FromArgb(240, 240, 240);
             klxPiaoButton2.FlatStyle = FlatStyle.Flat;
+            klxPiaoButton2.IsReceiveFocus = false;
             klxPiaoButton2.Location = new Point(21, 117);
             klxPiaoButton2.Name = "klxPiaoButton2";
             klxPiaoButton2.Size = new Size(229, 40);
             klxPiaoButton2.TabIndex = 5;
             klxPiaoButton2.Text = "导出到文件";
             klxPiaoButton2.UseVisualStyleBackColor = true;
-            klxPiaoButton2.可获得焦点 = false;
             klxPiaoButton2.Click += KlxPiaoButton2_Click;
             // 
             // klxPiaoButton1
@@ -474,13 +499,13 @@
             klxPiaoButton1.FlatAppearance.MouseDownBackColor = Color.FromArgb(230, 230, 230);
             klxPiaoButton1.FlatAppearance.MouseOverBackColor = Color.FromArgb(240, 240, 240);
             klxPiaoButton1.FlatStyle = FlatStyle.Flat;
+            klxPiaoButton1.IsReceiveFocus = false;
             klxPiaoButton1.Location = new Point(21, 71);
             klxPiaoButton1.Name = "klxPiaoButton1";
             klxPiaoButton1.Size = new Size(229, 40);
             klxPiaoButton1.TabIndex = 4;
             klxPiaoButton1.Text = "复制到剪贴板";
             klxPiaoButton1.UseVisualStyleBackColor = true;
-            klxPiaoButton1.可获得焦点 = false;
             klxPiaoButton1.Click += KlxPiaoButton1_Click;
             // 
             // label4
@@ -543,13 +568,13 @@
             Controls.Add(groupBox2);
             Controls.Add(panel1);
             Controls.Add(groupBox1);
+            EnableResizeButton = false;
             Name = "KlxPiaoLabelDemoForm";
+            Resizable = false;
             ShowIcon = false;
             Text = "KlxPiaoLabelDemoForm";
-            可调整大小 = false;
-            启用缩放按钮 = false;
-            标题位置 = 位置.中;
-            标题框背景色 = Color.Linen;
+            TitleBoxBackColor = Color.Linen;
+            TitleTextAlign = HorizontalAlignment.Center;
             Load += KlxPiaoLabelDemoForm_Load;
             groupBox1.ResumeLayout(false);
             panel1.ResumeLayout(false);

@@ -1,6 +1,5 @@
 ﻿using KlxPiaoAPI;
 using KlxPiaoControls;
-using System.ComponentModel;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
@@ -39,10 +38,10 @@ namespace KlxPiaoDemo
                         labelDemo.Font = new Font(labelDemo.Font.FontFamily, (int)e.Value, labelDemo.Font.Style);
                         break;
                     case "边框Track":
-                        labelDemo.边框大小 = (int)e.Value;
+                        labelDemo.BorderSize = (int)e.Value;
                         break;
                     case "圆角Track":
-                        labelDemo.圆角大小 = (int)e.Value / 100F;
+                        labelDemo.CornerRadius = new CornerRadius((int)e.Value / 100F);
                         break;
                 }
             }
@@ -70,13 +69,13 @@ namespace KlxPiaoDemo
                             labelDemo.ForeColor = color;
                             break;
                         case "边框颜色Panel":
-                            labelDemo.边框颜色 = color;
+                            labelDemo.BorderColor = color;
                             break;
                         case "边框外部Panel":
-                            labelDemo.边框外部颜色 = color;
+                            labelDemo.BaseBackColor = color;
                             break;
                         case "投影颜色Panel":
-                            labelDemo.投影颜色 = color;
+                            labelDemo.ShadowColor = color;
                             break;
                     }
 
@@ -91,26 +90,26 @@ namespace KlxPiaoDemo
                 switch (checkBox.Name)
                 {
                     case "启用投影Check":
-                        labelDemo.启用投影 = checkBox.Checked;
+                        labelDemo.IsEnableShadow = checkBox.Checked;
                         break;
                     case "颜色减淡Check":
-                        labelDemo.颜色减淡 = checkBox.Checked;
+                        labelDemo.IsEnableColorFading = checkBox.Checked;
                         break;
                     case "投影连线Check":
-                        labelDemo.投影连线 = checkBox.Checked;
+                        labelDemo.IsShadowConnectLine = checkBox.Checked;
                         break;
                     case "高质量Check":
                         if (checkBox.Checked)
                         {
-                            labelDemo.文本呈现质量 = TextRenderingHint.AntiAliasGridFit;
-                            labelDemo.抗锯齿 = SmoothingMode.HighQuality;
-                            labelDemo.偏移方式 = PixelOffsetMode.HighQuality;
+                            labelDemo.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+                            labelDemo.SmoothingMode = SmoothingMode.HighQuality;
+                            labelDemo.PixelOffsetMode = PixelOffsetMode.HighQuality;
                         }
                         else
                         {
-                            labelDemo.文本呈现质量 = TextRenderingHint.SystemDefault;
-                            labelDemo.抗锯齿 = SmoothingMode.Default;
-                            labelDemo.偏移方式 = PixelOffsetMode.Default;
+                            labelDemo.TextRenderingHint = TextRenderingHint.SystemDefault;
+                            labelDemo.SmoothingMode = SmoothingMode.Default;
+                            labelDemo.PixelOffsetMode = PixelOffsetMode.Default;
                         }
                         break;
                 }
@@ -123,9 +122,9 @@ namespace KlxPiaoDemo
             labelDemo.Text = textBox1.Text;
         }
         //投影长度
-        private void PointBar1_值Changed(object sender, PropertyChangedEventArgs e)
+        private void PointBar1_值Changed(object sender, PointBar.ValueChangedEvent e)
         {
-            labelDemo.偏移量 = pointBar1.值;
+            labelDemo.ShadowPosition = e.Point;
         }
         //字体
         private void KlxPiaoLinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -167,7 +166,7 @@ namespace KlxPiaoDemo
         //复制到剪贴板
         private void KlxPiaoButton1_Click(object sender, EventArgs e)
         {
-            Clipboard.SetImage(labelDemo.返回图像());
+            Clipboard.SetImage(labelDemo.GetControlImage());
         }
         //导出到文件
         private void KlxPiaoButton2_Click(object sender, EventArgs e)
@@ -191,7 +190,7 @@ namespace KlxPiaoDemo
                     _ => throw new NotSupportedException("Unsupported file format")
                 };
 
-                labelDemo.返回图像().Save(saveFileDialog.FileName, imageFormat);
+                labelDemo.GetControlImage().Save(saveFileDialog.FileName, imageFormat);
             }
         }
     }

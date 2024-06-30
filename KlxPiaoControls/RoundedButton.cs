@@ -8,7 +8,7 @@ namespace KlxPiaoControls
     /// 一个自定义的带圆角和图像支持的按钮控件。
     /// </summary>
     /// <remarks>
-    /// RoundedButton 继承自 <see cref="Control"/> 类，是原版 <see cref="Button"/> 的强化版本。
+    /// <see cref="RoundedButton"/> 继承自 <see cref="Control"/> 类，是原版 <see cref="Button"/> 的强化版本。
     /// </remarks>
     public partial class RoundedButton : Control
     {
@@ -28,50 +28,50 @@ namespace KlxPiaoControls
             Pixel
         }
 
-        private ContentAlignment _TextAlign;
-        private Image? _Image;
-        private ContentAlignment _ImageAlign;
-        private Padding _ImagePadding;
-        private CornerRadius _ImageCornerRadius;
+        private ContentAlignment _textAlign;
+        private Image? _image;
+        private ContentAlignment _imageAlign;
+        private Point _imageOffset;
+        private CornerRadius _imageCornerRadius;
 
-        private int _边框大小;
-        private Color _边框颜色;
-        private CornerRadius _圆角大小;
-        private Color _外部颜色;
-        private PictureBoxSizeMode _图像大小模式;
-        private SizeF _图像大小修正;
-        private FormatType _图像大小修正格式;
+        private int _borderSize;
+        private Color _borderColor;
+        private CornerRadius _borderCornerRadius;
+        private Color _baseBackColor;
+        private PictureBoxSizeMode _imageSizeMode;
+        private SizeF _imageResizing;
+        private FormatType _imageResizingFormat;
 
-        private bool _启用动画;
-        private 交互样式类 _交互样式 = new();
-        private Animation _颜色过渡配置;
-        private Animation _大小过渡配置;
+        private InteractionStyleClass _interactionStyle = new();
+        private bool _isEnableAnimation;
+        private Animation _colorAnimationConfig;
+        private Animation _sizeAnimationConfig;
 
         public RoundedButton()
         {
             InitializeComponent();
 
-            _TextAlign = ContentAlignment.MiddleCenter;
-            _Image = null;
-            _ImageAlign = ContentAlignment.MiddleCenter;
-            _ImagePadding = new Padding(0);
-            _ImageCornerRadius = new CornerRadius(0);
+            _textAlign = ContentAlignment.MiddleCenter;
+            _image = null;
+            _imageAlign = ContentAlignment.MiddleCenter;
+            _imageOffset = Point.Empty;
+            _imageCornerRadius = new CornerRadius(0);
 
-            _边框大小 = 1;
-            _边框颜色 = Color.Gainsboro;
-            _BorderPen = new Pen(边框颜色, 边框大小);
-            _圆角大小 = new CornerRadius(10);
-            _外部颜色 = Color.White;
-            _图像大小模式 = PictureBoxSizeMode.Zoom;
-            _图像大小修正 = new SizeF(0, 0);
-            _图像大小修正格式 = FormatType.Pixel;
+            _borderSize = 1;
+            _borderColor = Color.Gainsboro;
+            _BorderPen = new Pen(BorderColor, BorderSize);
+            _borderCornerRadius = new CornerRadius(10);
+            _baseBackColor = Color.White;
+            _imageSizeMode = PictureBoxSizeMode.Zoom;
+            _imageResizing = new SizeF(0, 0);
+            _imageResizingFormat = FormatType.Pixel;
 
-            _交互样式.移入背景色 = Color.FromArgb(245, 245, 245);
-            _交互样式.按下背景色 = Color.FromArgb(235, 235, 235);
+            _interactionStyle.OverBackColor = Color.FromArgb(245, 245, 245);
+            _interactionStyle.DownBackColor = Color.FromArgb(235, 235, 235);
 
-            _启用动画 = true;
-            _颜色过渡配置 = new Animation(150, 30, [new(0, 0), new(0, 0), new(1, 1), new(1, 1)]);
-            _大小过渡配置 = new Animation(300, 100, [new(0, 0), new(0.58F, 1), new(1, 1), new(1, 1)]);
+            _isEnableAnimation = true;
+            _colorAnimationConfig = new Animation(150, 30, [new(0, 0), new(1, 1)]);
+            _sizeAnimationConfig = new Animation(300, 100, [new(0.58F, 1), new(1, 1)]);
 
             Size = new Size(116, 43);
             DoubleBuffered = true;
@@ -92,8 +92,8 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(ContentAlignment), "MiddleCenter")]
         public ContentAlignment TextAlign
         {
-            get { return _TextAlign; }
-            set { _TextAlign = value; Invalidate(); }
+            get { return _textAlign; }
+            set { _textAlign = value; Invalidate(); }
         }
 
         #region RoundedButton外观
@@ -105,8 +105,8 @@ namespace KlxPiaoControls
         [DefaultValue(null)]
         public Image? Image
         {
-            get { return _Image; }
-            set { _Image = value; Invalidate(); }
+            get { return _image; }
+            set { _image = value; Invalidate(); }
         }
         /// <summary>
         /// 将在控件上显示的图像的对其方式。
@@ -116,19 +116,19 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(ContentAlignment), "MiddleCenter")]
         public ContentAlignment ImageAlign
         {
-            get { return _ImageAlign; }
-            set { _ImageAlign = value; Invalidate(); }
+            get { return _imageAlign; }
+            set { _imageAlign = value; Invalidate(); }
         }
         /// <summary>
-        /// 图像相对于组件的内边距。
+        /// 图像绘制的偏移。
         /// </summary>
         [Category("RoundedButton外观")]
-        [Description("图像相对于组件的内边距")]
-        [DefaultValue(typeof(Padding), "0,0,0,0")]
-        public Padding ImagePadding
+        [Description("图像绘制的偏移")]
+        [DefaultValue(typeof(Point), "0,0")]
+        public Point ImageOffset
         {
-            get { return _ImagePadding; }
-            set { _ImagePadding = value; Invalidate(); }
+            get { return _imageOffset; }
+            set { _imageOffset = value; Invalidate(); }
         }
         /// <summary>
         /// 边框的大小。
@@ -136,12 +136,12 @@ namespace KlxPiaoControls
         [Category("RoundedButton外观")]
         [Description("边框的大小，为0时隐藏边框")]
         [DefaultValue(1)]
-        public int 边框大小
+        public int BorderSize
         {
-            get => _边框大小;
+            get => _borderSize;
             set
             {
-                _边框大小 = value;
+                _borderSize = value;
                 _BorderPen.Width = value;
                 Invalidate();
             }
@@ -152,12 +152,12 @@ namespace KlxPiaoControls
         [Category("RoundedButton外观")]
         [Description("边框的颜色")]
         [DefaultValue(typeof(Color), "Gainsboro")]
-        public Color 边框颜色
+        public Color BorderColor
         {
-            get => _边框颜色;
+            get => _borderColor;
             set
             {
-                _边框颜色 = value;
+                _borderColor = value;
                 _BorderPen.Color = value;
                 Invalidate();
             }
@@ -168,10 +168,10 @@ namespace KlxPiaoControls
         [Category("RoundedButton外观")]
         [Description("每个角的圆角大小，自动适应百分比大小或像素大小")]
         [DefaultValue(typeof(CornerRadius), "10,10,10,10")]
-        public CornerRadius 圆角大小
+        public CornerRadius BorderCornerRadius
         {
-            get { return _圆角大小; }
-            set { _圆角大小 = value; Invalidate(); }
+            get { return _borderCornerRadius; }
+            set { _borderCornerRadius = value; Invalidate(); }
         }
         /// <summary>
         /// 边框外部的颜色，通常与父容器背景色相同。
@@ -179,10 +179,10 @@ namespace KlxPiaoControls
         [Category("RoundedButton外观")]
         [Description("边框外部的颜色，通常与父容器背景色相同")]
         [DefaultValue(typeof(Color), "White")]
-        public Color 外部颜色
+        public Color BaseBackColor
         {
-            get { return _外部颜色; }
-            set { _外部颜色 = value; Invalidate(); }
+            get { return _baseBackColor; }
+            set { _baseBackColor = value; Invalidate(); }
         }
         /// <summary>
         /// 指定 <see cref="RoundedButton"/> 如何处理图像位置或大小
@@ -190,10 +190,10 @@ namespace KlxPiaoControls
         [Category("RoundedButton外观")]
         [Description("如何处理图像位置或大小")]
         [DefaultValue(typeof(PictureBoxSizeMode), "Zoom")]
-        public PictureBoxSizeMode 图像大小模式
+        public PictureBoxSizeMode ImageSizeMode
         {
-            get { return _图像大小模式; }
-            set { _图像大小模式 = value; Invalidate(); }
+            get { return _imageSizeMode; }
+            set { _imageSizeMode = value; Invalidate(); }
         }
         /// <summary>
         /// 按比例或像素重置图像大小。
@@ -201,10 +201,10 @@ namespace KlxPiaoControls
         [Category("RoundedButton外观")]
         [Description("指定一个新的大小（像素或百分比）缩放图像，新的图像位置会基于原位置居中")]
         [DefaultValue(typeof(SizeF), "0,0")]
-        public SizeF 图像大小修正
+        public SizeF ImageResizing
         {
-            get { return _图像大小修正; }
-            set { _图像大小修正 = value; Invalidate(); }
+            get { return _imageResizing; }
+            set { _imageResizing = value; Invalidate(); }
         }
         /// <summary>
         /// 指定图像大小修正的格式。
@@ -212,10 +212,10 @@ namespace KlxPiaoControls
         [Category("RoundedButton外观")]
         [Description("指定图片大小修正的格式为百分比或像素")]
         [DefaultValue(typeof(FormatType), "Pixel")]
-        public FormatType 图像大小修正格式
+        public FormatType ImageResizingFormat
         {
-            get { return _图像大小修正格式; }
-            set { _图像大小修正格式 = value; Invalidate(); }
+            get { return _imageResizingFormat; }
+            set { _imageResizingFormat = value; Invalidate(); }
         }
         /// <summary>
         /// 图像圆角的大小，可以自动检测百分比或像素。
@@ -225,8 +225,8 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(CornerRadius), "0,0,0,0")]
         public CornerRadius ImageCornerRadius
         {
-            get { return _ImageCornerRadius; }
-            set { _ImageCornerRadius = value; Invalidate(); }
+            get { return _imageCornerRadius; }
+            set { _imageCornerRadius = value; Invalidate(); }
         }
         #endregion
 
@@ -236,20 +236,20 @@ namespace KlxPiaoControls
         /// </summary>
         [Category("RoundedButton交互样式")]
         [Description("交互时是否启用动画")]
-        public bool 启用动画
+        public bool IsEnableAnimation
         {
-            get { return _启用动画; }
-            set { _启用动画 = value; }
+            get { return _isEnableAnimation; }
+            set { _isEnableAnimation = value; }
         }
         /// <summary>
         /// 获取或设置按钮的交互样式。
         /// </summary>
         [Category("RoundedButton交互样式")]
         [Description("定义鼠标交互时按钮的外观")]
-        public 交互样式类 交互样式
+        public InteractionStyleClass InteractionStyle
         {
-            get { return _交互样式; }
-            set { _交互样式 = value; }
+            get { return _interactionStyle; }
+            set { _interactionStyle = value; }
         }
         /// <summary>
         /// 定义鼠标交互时按钮的颜色过渡动画配置。
@@ -257,10 +257,10 @@ namespace KlxPiaoControls
         [Category("RoundedButton交互样式")]
         [Description("定义鼠标交互时按钮的颜色过渡动画配置")]
         [DefaultValue(typeof(Animation), "150, 30, [0 0;0 0;1 1;1 1]")]
-        public Animation 颜色过渡配置
+        public Animation ColorAnimationConfig
         {
-            get { return _颜色过渡配置; }
-            set { _颜色过渡配置 = value; }
+            get { return _colorAnimationConfig; }
+            set { _colorAnimationConfig = value; }
         }
         /// <summary>
         /// 定义鼠标交互时按钮的大小过渡动画配置。
@@ -268,10 +268,10 @@ namespace KlxPiaoControls
         [Category("RoundedButton交互样式")]
         [Description("定义鼠标交互时按钮的大小过渡动画配置")]
         [DefaultValue(typeof(Animation), "300, 100, [0 0;0.58 1;1 1;1 1]")]
-        public Animation 大小过渡配置
+        public Animation SizeAnimationConfig
         {
-            get { return _大小过渡配置; }
-            set { _大小过渡配置 = value; }
+            get { return _sizeAnimationConfig; }
+            set { _sizeAnimationConfig = value; }
         }
         #endregion
 
@@ -279,55 +279,55 @@ namespace KlxPiaoControls
         /// 定义 <see cref="RoundedButton"/> 的交互样式。
         /// </summary>
         [TypeConverter(typeof(ExpandableObjectConverter))]
-        public class 交互样式类
+        public class InteractionStyleClass
         {
             /// <summary>
             /// 获取或设置鼠标移入时组件的背景色。
             /// </summary>
             [Description("鼠标移入时组件的背景色。")]
-            public Color 移入背景色 { get; set; }
+            public Color OverBackColor { get; set; }
 
             /// <summary>
             /// 获取或设置鼠标按下时组件的背景色。
             /// </summary>
             [Description("鼠标按下时组件的背景色。")]
-            public Color 按下背景色 { get; set; }
+            public Color DownBackColor { get; set; }
 
             /// <summary>
             /// 获取或设置鼠标移入时组件的边框颜色。
             /// </summary>
             [Description("鼠标移入时组件的边框颜色。")]
-            public Color 移入边框颜色 { get; set; }
+            public Color OverBorderColor { get; set; }
 
             /// <summary>
             /// 获取或设置鼠标按下时组件的边框颜色。
             /// </summary>
             [Description("鼠标按下时组件的边框颜色。")]
-            public Color 按下边框颜色 { get; set; }
+            public Color DownBorderColor { get; set; }
 
             /// <summary>
             /// 获取或设置鼠标移入时组件的前景色。
             /// </summary>
             [Description("鼠标移入时组件的前景色。")]
-            public Color 移入前景色 { get; set; }
+            public Color OverForeColor { get; set; }
 
             /// <summary>
             /// 获取或设置鼠标按下时组件的前景色。
             /// </summary>
             [Description("鼠标按下时组件的前景色。")]
-            public Color 按下前景色 { get; set; }
+            public Color DownForeColor { get; set; }
 
             /// <summary>
             /// 获取或设置鼠标移入时组件的大小。
             /// </summary>
             [Description("鼠标移入时组件的大小。")]
-            public Size 移入大小 { get; set; }
+            public Size OverSize { get; set; }
 
             /// <summary>
             /// 获取或设置鼠标按下时组件的大小。
             /// </summary>
             [Description("鼠标按下时组件的大小。")]
-            public Size 按下大小 { get; set; }
+            public Size DownSize { get; set; }
 
             public override string ToString()
             {
@@ -363,7 +363,7 @@ namespace KlxPiaoControls
                     Point drawPoint;
                     Size drawSize;
 
-                    switch (图像大小模式)
+                    switch (ImageSizeMode)
                     {
                         case PictureBoxSizeMode.Normal:
                             drawPoint = new Point(0, 0);
@@ -424,18 +424,18 @@ namespace KlxPiaoControls
                     }
 
                     //按指定的像素或比例缩放图片
-                    if (图像大小修正 != new Size(0, 0))
+                    if (ImageResizing != new Size(0, 0))
                     {
-                        int newWidth = 图像大小修正格式 switch
+                        int newWidth = ImageResizingFormat switch
                         {
-                            FormatType.Percentage => (int)(drawSize.Width * 图像大小修正.Width),
-                            FormatType.Pixel => (int)图像大小修正.Width,
+                            FormatType.Percentage => (int)(drawSize.Width * ImageResizing.Width),
+                            FormatType.Pixel => (int)ImageResizing.Width,
                             _ => 0
                         };
-                        int newHeight = 图像大小修正格式 switch
+                        int newHeight = ImageResizingFormat switch
                         {
-                            FormatType.Percentage => (int)(drawSize.Height * 图像大小修正.Height),
-                            FormatType.Pixel => (int)图像大小修正.Height,
+                            FormatType.Percentage => (int)(drawSize.Height * ImageResizing.Height),
+                            FormatType.Pixel => (int)ImageResizing.Height,
                             _ => 0
                         };
 
@@ -448,14 +448,14 @@ namespace KlxPiaoControls
                     }
 
                     using var roundedImage = Image.AddRounded(ImageCornerRadius);
-                    g.DrawImage(roundedImage, new Rectangle(LayoutUtilities.CalculateAlignedPosition(工作区, drawSize, ImageAlign, ImagePadding), drawSize));
+                    g.DrawImage(roundedImage, new Rectangle(LayoutUtilities.CalculateAlignedPosition(工作区, drawSize, ImageAlign, ImageOffset), drawSize));
                 }
 
                 //绘制文本
-                g.DrawString(Text, Font, new SolidBrush(ForeColor), LayoutUtilities.CalculateAlignedPosition(工作区, 文本大小, TextAlign, Padding));
+                g.DrawString(Text, Font, new SolidBrush(ForeColor), LayoutUtilities.CalculateAlignedPosition(工作区, 文本大小, TextAlign, LayoutUtilities.PaddingConvertToPoint(Padding)));
 
                 //边框
-                g.DrawRounded(工作区, 圆角大小, 外部颜色, BorderPen);
+                g.DrawRounded(工作区, BorderCornerRadius, BaseBackColor, BorderPen);
 
                 base.OnPaint(pe);
             }
@@ -469,10 +469,10 @@ namespace KlxPiaoControls
         private readonly List<object?> oldMouseDownData = [];
 
         //目标属性
-        private readonly string[] mouseOverProperties = ["移入背景色", "移入边框颜色", "移入前景色", "移入大小"];
-        private readonly string[] mouseDownProperties = ["按下背景色", "按下边框颜色", "按下前景色", "按下大小"];
+        private readonly string[] mouseOverProperties = ["OverBackColor", "OverBorderColor", "OverForeColor", "OverSize"];
+        private readonly string[] mouseDownProperties = ["DownBackColor", "DownBorderColor", "DownForeColor", "DownSize"];
 
-        private readonly string[] propertyNames = ["BackColor", "边框颜色", "ForeColor", "Size"];
+        private readonly string[] propertyNames = ["BackColor", "BorderColor", "ForeColor", "Size"];
 
         private CancellationTokenSource MouseOverCTS = new();
         private CancellationTokenSource MouseDownCTS = new();
@@ -490,7 +490,7 @@ namespace KlxPiaoControls
             {
                 string property = propertyNames[i];
                 object? currentValue = this.SetOrGetPropertyValue(property);
-                object? targetValue = 交互样式.SetOrGetPropertyValue(mouseOverProperties[i]);
+                object? targetValue = InteractionStyle.SetOrGetPropertyValue(mouseOverProperties[i]);
 
                 oldMouseOverData.Add(currentValue);
 
@@ -498,30 +498,30 @@ namespace KlxPiaoControls
                     ((targetValue is Color color && color != Color.Empty) ||
                         (targetValue is Size size && size != Size.Empty)))
                 {
-                    if (启用动画)
+                    if (IsEnableAnimation)
                     {
                         int time = property switch
                         {
-                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.Time,
-                            "Size" => 大小过渡配置.Time,
+                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.Time,
+                            "Size" => SizeAnimationConfig.Time,
                             _ => 200
                         };
 
                         int FPS = property switch
                         {
-                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.FPS,
-                            "Size" => 大小过渡配置.FPS,
+                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.FPS,
+                            "Size" => SizeAnimationConfig.FPS,
                             _ => 30
                         };
 
                         PointF[]? easing = property switch
                         {
-                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.Easing,
-                            "Size" => 大小过渡配置.Easing,
+                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.Easing,
+                            "Size" => SizeAnimationConfig.Easing,
                             _ => [new(0, 0), new(1, 1)]
                         };
 
-                        _ = this.BezierTransition(property, null, targetValue, new Animation(time, FPS, easing), default, MouseOverCTS.Token);
+                        _ = this.BezierTransition(property, null, targetValue, new Animation(time, FPS, easing), default, true, MouseOverCTS.Token);
                     }
                     else
                     {
@@ -541,37 +541,37 @@ namespace KlxPiaoControls
             for (int i = 0; i < propertyNames.Length; i++)
             {
                 string property = propertyNames[i];
-                object? targetValue = 交互样式.SetOrGetPropertyValue(mouseOverProperties[i]);
+                object? targetValue = InteractionStyle.SetOrGetPropertyValue(mouseOverProperties[i]);
                 object? oldPropertyValue = oldMouseOverData[i];
 
                 if (oldPropertyValue != null &&
                     ((oldPropertyValue is Color color && color != Color.Empty) ||
                         (oldPropertyValue is Size size && size != Size.Empty)))
                 {
-                    if (启用动画)
+                    if (IsEnableAnimation)
                     {
                         int time = property switch
                         {
-                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.Time,
-                            "Size" => 大小过渡配置.Time,
+                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.Time,
+                            "Size" => SizeAnimationConfig.Time,
                             _ => 200
                         };
 
                         int FPS = property switch
                         {
-                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.FPS,
-                            "Size" => 大小过渡配置.FPS,
+                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.FPS,
+                            "Size" => SizeAnimationConfig.FPS,
                             _ => 30
                         };
 
                         PointF[]? easing = property switch
                         {
-                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.Easing,
-                            "Size" => 大小过渡配置.Easing,
+                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.Easing,
+                            "Size" => SizeAnimationConfig.Easing,
                             _ => [new(0, 0), new(1, 1)]
                         };
 
-                        _ = this.BezierTransition(property, null, oldPropertyValue, new Animation(time, FPS, easing), default, MouseOverCTS.Token);
+                        _ = this.BezierTransition(property, null, oldPropertyValue, new Animation(time, FPS, easing), default, true, MouseOverCTS.Token);
                     }
                     else
                     {
@@ -594,7 +594,7 @@ namespace KlxPiaoControls
             {
                 string property = propertyNames[i];
                 object? currentValue = this.SetOrGetPropertyValue(property);
-                object? targetValue = 交互样式.SetOrGetPropertyValue(mouseDownProperties[i]);
+                object? targetValue = InteractionStyle.SetOrGetPropertyValue(mouseDownProperties[i]);
 
                 oldMouseDownData.Add(currentValue);
 
@@ -602,30 +602,30 @@ namespace KlxPiaoControls
                     ((targetValue is Color color && color != Color.Empty) ||
                         (targetValue is Size size && size != Size.Empty)))
                 {
-                    if (启用动画)
+                    if (IsEnableAnimation)
                     {
                         int time = property switch
                         {
-                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.Time,
-                            "Size" => 大小过渡配置.Time,
+                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.Time,
+                            "Size" => SizeAnimationConfig.Time,
                             _ => 200
                         };
 
                         int FPS = property switch
                         {
-                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.FPS,
-                            "Size" => 大小过渡配置.FPS,
+                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.FPS,
+                            "Size" => SizeAnimationConfig.FPS,
                             _ => 30
                         };
 
                         PointF[]? easing = property switch
                         {
-                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.Easing,
-                            "Size" => 大小过渡配置.Easing,
+                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.Easing,
+                            "Size" => SizeAnimationConfig.Easing,
                             _ => [new(0, 0), new(1, 1)]
                         };
 
-                        _ = this.BezierTransition(property, null, targetValue, new Animation(time, FPS, easing), default, MouseDownCTS.Token);
+                        _ = this.BezierTransition(property, null, targetValue, new Animation(time, FPS, easing), default, true, MouseDownCTS.Token);
                     }
                     else
                     {
@@ -645,37 +645,37 @@ namespace KlxPiaoControls
             for (int i = 0; i < propertyNames.Length; i++)
             {
                 string property = propertyNames[i];
-                object? targetValue = 交互样式.SetOrGetPropertyValue(mouseDownProperties[i]);
+                object? targetValue = InteractionStyle.SetOrGetPropertyValue(mouseDownProperties[i]);
                 object? oldPropertyValue = oldMouseDownData[i];
 
                 if (oldPropertyValue != null &&
                     ((oldPropertyValue is Color color && color != Color.Empty) ||
                         (oldPropertyValue is Size size && size != Size.Empty)))
                 {
-                    if (启用动画)
+                    if (IsEnableAnimation)
                     {
                         int time = property switch
                         {
-                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.Time,
-                            "Size" => 大小过渡配置.Time,
+                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.Time,
+                            "Size" => SizeAnimationConfig.Time,
                             _ => 200
                         };
 
                         int FPS = property switch
                         {
-                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.FPS,
-                            "Size" => 大小过渡配置.FPS,
+                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.FPS,
+                            "Size" => SizeAnimationConfig.FPS,
                             _ => 30
                         };
 
                         PointF[]? easing = property switch
                         {
-                            "BackColor" or "边框颜色" or "ForeColor" => 颜色过渡配置.Easing,
-                            "Size" => 大小过渡配置.Easing,
+                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.Easing,
+                            "Size" => SizeAnimationConfig.Easing,
                             _ => [new(0, 0), new(1, 1)]
                         };
 
-                        _ = this.BezierTransition(property, null, oldPropertyValue, new Animation(time, FPS, easing), default, MouseDownCTS.Token);
+                        _ = this.BezierTransition(property, null, oldPropertyValue, new Animation(time, FPS, easing), default, true, MouseDownCTS.Token);
                     }
                     else
                     {

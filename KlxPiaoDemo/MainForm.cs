@@ -4,50 +4,97 @@ using KlxPiaoDemo.Properties;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Text;
-using static KlxPiaoAPI.ControlTransitionAnimator;
 
 namespace KlxPiaoDemo
 {
-    public partial class 主窗体 : KlxPiaoForm
+    public partial class MainForm : KlxPiaoForm
     {
-        public 主窗体()
+        public MainForm()
         {
             InitializeComponent();
+            Load += MainWindow_Load;
         }
 
         private readonly int[] 随机颜色范围 = [195, 255];
         private readonly Random rand = new();
-        private void 主窗体_Load(object sender, EventArgs e)
+        private void MainWindow_Load(object? sender, EventArgs e)
         {
+            //暂时解决渲染错误
+            slideSwitch9.SelectIndex = 1;
+            slideSwitch9.SelectIndex = 0;
+
             Text = $"{KlxPiaoControlsInfo.GetProductName()} & {KlxPiaoAPIInfo.GetProductName()} {KlxPiaoControlsInfo.GetProductVersion()} Demo";
 
-            //控件.PictureBox
-            Pic_SizePixelTrackBar.最大值 = klxPiaoPictureBox1.Width;
-            Pic_SizeTrackBar.最小值 = klxPiaoPictureBox1.Width / 2;
-            Pic_SizeTrackBar.最大值 = (float)(klxPiaoPictureBox1.Width * 1.2F);
+            #region KlxPiaoControls.PictureBox
+            Pic_SizeTrack.Value = klxPiaoPictureBox1.Width;
+            Pic_SizeTrack.MinValue = klxPiaoPictureBox1.Width / 2;
+            Pic_SizeTrack.MaxValue = (float)(klxPiaoPictureBox1.Width * 1.2F);
+            Pic_BorderTrack.Value = klxPiaoPictureBox1.BorderSize;
+            Pic_RoundedTrack.Value = klxPiaoPictureBox1.BorderCornerRadius.TopLeft;
 
-            Pic_BorderTrackBar.值 = klxPiaoPictureBox1.边框大小;
-            Pic_FilletTrackBar.值 = klxPiaoPictureBox1.圆角大小.TopLeft;
-            Pic_SizeTrackBar.值 = klxPiaoPictureBox1.Width;
+            Pic_BorderTrack.ValueChanged += Pic_Track_ValueChanged;
+            Pic_RoundedTrack.ValueChanged += Pic_Track_ValueChanged;
+            Pic_SizeTrack.ValueChanged += Pic_Track_ValueChanged;
 
-            Pic_SizePixelTrackBar.值 = Pic_FilletTrackBar.值 / klxPiaoPictureBox1.Width;
+            slideSwitch9.SelectIndexChanged += SlideSwitch9_SelectIndexChanged;
 
-            Pic_BorderTrackBar.ValueChanged += Pic_Track_值Changed;
-            Pic_FilletTrackBar.ValueChanged += Pic_Track_值Changed;
-            Pic_SizeTrackBar.ValueChanged += Pic_Track_值Changed;
-            Pic_SizePixelTrackBar.ValueChanged += Pic_Track_值Changed;
-            //控件.Panel
-            foreach (Control p in klxPiaoPanel8.Controls)
+
+            void SlideSwitch9_SelectIndexChanged(object? sender, SlideSwitch.IndexChangedEventArgs e)
             {
-                p.Click += Controls_Panel_Click;
+                klxPiaoPictureBox1.BorderCornerRadius = slideSwitch9.SelectIndex == 0
+                                ? new CornerRadius(Pic_RoundedTrack.Value)
+                                : new CornerRadius(Pic_RoundedTrack.Value * klxPiaoPictureBox1.Width);
             }
-            //初始化皮肤编辑器
+
+            void Pic_Track_ValueChanged(object? sender, KlxPiaoTrackBar.ValueChangedEventArgs e)
+            {
+                if (sender is KlxPiaoTrackBar c)
+                {
+                    switch (c.Name)
+                    {
+                        //边框大小
+                        case "Pic_BorderTrack":
+                            klxPiaoPictureBox1.BorderSize = (int)e.Value;
+                            break;
+
+                        //圆角大小
+                        case "Pic_RoundedTrack":
+                            klxPiaoPictureBox1.BorderCornerRadius = slideSwitch9.SelectIndex == 0
+                                ? new CornerRadius(e.Value)
+                                : new CornerRadius(e.Value * klxPiaoPictureBox1.Width);
+                            break;
+
+                        //大小
+                        case "Pic_SizeTrack":
+                            klxPiaoPictureBox1.Size = new Size((int)e.Value, (int)e.Value);
+                            panel2.Left = klxPiaoPictureBox1.Left + 25 + klxPiaoPictureBox1.Width;
+                            break;
+                    }
+                }
+            }
+            #endregion
+
+            #region KlxPiaoControls.Panel
+            TabPage_UI_Panel.ForEachControl<KlxPiaoPanel>(panel => panel.Click += UI_Panel_Click);
+
+            void UI_Panel_Click(object? sender, EventArgs e)
+            {
+                if (sender is KlxPiaoPanel panel)
+                {
+                    Graphics g = panel.CreateGraphics();
+                    g.DrawRectangle(new Pen(Color.Red, 1), panel.GetClientRectangle());
+                }
+            }
+            #endregion
+
+            #region ThemeEidt
             foreach (Control p in klxPiaoPanel7.Controls)
             {
                 p.Click += ThemeEditor_Click;
                 p.Paint += ThemeEditor_Paint;
             }
-            klxPiaoTrackBar4.值 = 标题按钮颜色反馈;
+            klxPiaoTrackBar4.Value = InteractionColorScale;
+
             //生成随机的颜色
             int 横边距 = 6;
             int 纵边距 = 6;
@@ -58,9 +105,9 @@ namespace KlxPiaoDemo
                 {
                     KlxPiaoPanel p = new()
                     {
-                        边框大小 = 1,
-                        启用投影 = false,
-                        圆角大小 = new CornerRadius(0.36F),
+                        BorderSize = 1,
+                        IsEnableShadow = false,
+                        CornerRadius = new CornerRadius(0.36F),
                         Size = new Size(45, 45),
                         Cursor = Cursors.Hand,
                         BackColor = Color.FromArgb(rand.Next(随机颜色范围[0], 随机颜色范围[1]), rand.Next(随机颜色范围[0], 随机颜色范围[1]), rand.Next(随机颜色范围[0], 随机颜色范围[1]))
@@ -70,6 +117,9 @@ namespace KlxPiaoDemo
                     klxPiaoPanel10.Controls.Add(p);
                 }
             }
+            #endregion
+
+            #region KlxPiaoControls.TextBox
             checkBox10.CheckedChanged += CheckBox10_CheckedChanged;
             void CheckBox10_CheckedChanged(object? sender, EventArgs e) =>
                 klxPiaoTextBox1.IsFillAndMultiline = checkBox10.Checked;
@@ -78,68 +128,58 @@ namespace KlxPiaoDemo
             void CheckBox11_CheckedChanged(object? sender, EventArgs e) =>
                 klxPiaoTextBox1.TextBox.BackColor = checkBox11.Checked ? Color.DarkGray : Color.White;
 
-
             EnumUtility.ForEachEnum<ContentAlignment>(value => comboBox7.Items.Add(value));
+
             comboBox7.SelectedIndex = 0;
             comboBox7.SelectedIndexChanged += ComboBox7_SelectedIndexChanged;
-            pointBar1.值Changed += PointBar1_值Changed;
+            pointBar1.ValueChanged += PointBar1_值Changed;
 
-            //初始化菜单
-            foreach (标题按钮样式 value in Enum.GetValues(typeof(标题按钮样式)))
+            void PointBar1_值Changed(object? sender, PointBar.ValueChangedEvent e)
             {
-                comboBox1.Items.Add(value.ToString());
+                klxPiaoTextBox1.TextBoxOffset = e.Point;
             }
-            comboBox1.SelectedIndex = (int)标题按钮显示;
-            foreach (窗体位置 value in Enum.GetValues(typeof(窗体位置)))
-            {
-                comboBox2.Items.Add(value.ToString());
-            }
-            comboBox2.SelectedIndex = (int)快捷缩放方式;
-            foreach (窗体位置 value in Enum.GetValues(typeof(窗体位置)))
-            {
-                comboBox3.Items.Add(value.ToString());
-            }
-            comboBox3.SelectedIndex = (int)拖动方式;
-            foreach (位置 value in Enum.GetValues(typeof(位置)))
-            {
-                comboBox4.Items.Add(value.ToString());
-            }
-            comboBox4.SelectedIndex = (int)标题位置;
-            foreach (两端 value in Enum.GetValues(typeof(两端)))
-            {
-                comboBox5.Items.Add(value.ToString());
-            }
-            comboBox5.SelectedIndex = (int)标题按钮位置;
-            foreach (风格 value in Enum.GetValues(typeof(风格)))
-            {
-                comboBox6.Items.Add(value.ToString());
-            }
-            comboBox6.SelectedIndex = (int)主题;
 
-            klxPiaoTrackBar1.值 = 标题框高度;
-            klxPiaoTrackBar2.值 = 标题左右边距;
-            klxPiaoTrackBar3.值 = 标题按钮宽度;
-            klxPiaoTrackBar5.值 = 标题按钮图标大小.Width;
+            void ComboBox7_SelectedIndexChanged(object? sender, EventArgs e)
+            {
+                klxPiaoTextBox1.TextBoxAlign = EnumUtility.ReorderEnumValues<ContentAlignment>(comboBox7.SelectedIndex);
+            }
+            #endregion
 
-            checkBox1.Checked = 启用缩放动画;
-            checkBox2.Checked = 可调整大小;
+            #region Home
+            EnumUtility.ForEachEnum<TitleButtonStyle>(value => comboBox1.Items.Add(value));
+            comboBox1.SelectedIndex = (int)TitleButtons;
+
+            EnumUtility.ForEachEnum<WindowPosition>(value => comboBox2.Items.Add(value));
+            comboBox2.SelectedIndex = (int)ShortcutResizeMode;
+
+            EnumUtility.ForEachEnum<WindowPosition>(value => comboBox3.Items.Add(value));
+            comboBox3.SelectedIndex = (int)DragMode;
+
+            EnumUtility.ForEachEnum<HorizontalAlignment>(value => comboBox4.Items.Add(value));
+            comboBox4.SelectedIndex = (int)TitleTextAlign;
+
+            EnumUtility.ForEachEnum<HorizontalEnds>(value => comboBox5.Items.Add(value));
+            comboBox5.SelectedIndex = (int)TitleButtonAlign;
+
+            EnumUtility.ForEachEnum<Style>(value => comboBox6.Items.Add(value));
+            comboBox6.SelectedIndex = (int)Theme;
+
+            klxPiaoTrackBar1.Value = TitleBoxHeight;
+            klxPiaoTrackBar2.Value = TitleTextMargin;
+            klxPiaoTrackBar3.Value = TitleButtonWidth;
+            klxPiaoTrackBar5.Value = TitleButtonIconSize.Width;
+
+            checkBox1.Checked = EnableResizeAnimation;
+            checkBox2.Checked = Resizable;
             checkBox3.Checked = ShowIcon;
+            #endregion
 
-            //属性代码生成器
+            #region 属性代码生成器
             klxPiaoPanel6.ForEachControl<TextBox>(textBox => { textBox.TextChanged += 生成代码; });
+            #endregion
         }
 
-        private void PointBar1_值Changed(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            klxPiaoTextBox1.TextBoxOffset = pointBar1.值;
-        }
-
-        private void ComboBox7_SelectedIndexChanged(object? sender, EventArgs e)
-        {
-            klxPiaoTextBox1.TextBoxAlign = EnumUtility.ReorderEnumValues<ContentAlignment>(comboBox7.SelectedIndex);
-        }
-
-        //属性代码生成器
+        #region 属性代码生成器
         private void 生成代码(object? sender, EventArgs e)
         {
             string 名称 = textBox1.Text;
@@ -160,99 +200,56 @@ namespace KlxPiaoDemo
                 textBox4.Text = $"_{名称} = {默认值}";
                 textBox5.Text = $"        ''' <summary>\r\n        ''' {描述}。\r\n        ''' </summary>\r\n        <Category(\"{类别}\")>\r\n        <Description(\"{描述}\")>\r\n        <DefaultValue(GetType({类型}), \"{默认值}\")>\r\n        Public Property {名称} As {类型}\r\n            Get\r\n                Return _{名称}\r\n            End Get\r\n            Set(value As {类型})\r\n                _{名称} = value\r\n                Invalidate()\r\n            End Set\r\n        End Property";
             }
-
         }
         private void SlideSwitch6_SelectIndexChanged(object sender, EventArgs e)
         {
             生成代码(sender, e);
         }
-        #region 控件.PictureBox
-        //会造成栈溢出，大概是KlxPiaoTrackBar引起的
-        private void Pic_Track_值Changed(object? sender, KlxPiaoTrackBar.ValueChangedEventArgs e)
-        {
-            if (sender is KlxPiaoTrackBar c)
-            {
-                switch (c.Name)
-                {
-                    //边框大小
-                    case "Pic_BorderTrackBar":
-                        klxPiaoPictureBox1.边框大小 = (int)e.Value;
-                        break;
-
-                    //圆角大小(百分比)
-                    case "Pic_FilletTrackBar":
-                        klxPiaoPictureBox1.圆角大小 = new CornerRadius(e.Value);
-                        Pic_SizePixelTrackBar.值 = klxPiaoPictureBox1.Width * e.Value;
-                        break;
-
-                    //圆角大小(像素)
-                    case "Pic_SizePixelTrackBar": //打错了
-                        klxPiaoPictureBox1.圆角大小 = new CornerRadius(e.Value);
-                        Pic_FilletTrackBar.值 = e.Value / klxPiaoPictureBox1.Width;
-                        break;
-
-                    //大小
-                    case "Pic_SizeTrackBar":
-                        klxPiaoPictureBox1.Size = new Size((int)e.Value, (int)e.Value);
-                        panel2.Left = klxPiaoPictureBox1.Left + 25 + klxPiaoPictureBox1.Width;
-                        Pic_SizePixelTrackBar.最大值 = klxPiaoPictureBox1.Width;
-                        break;
-                }
-            }
-        }
-        #endregion
-
-        #region 控件.Panel
-        //显示工作区矩形
-        private void Controls_Panel_Click(object? sender, EventArgs e)
-        {
-            if (sender is KlxPiaoPanel panel)
-            {
-                Graphics g = panel.CreateGraphics();
-                g.DrawRectangle(new Pen(Color.Red, 1), panel.获取工作区矩形());
-            }
-        }
         #endregion
 
         #region 调整菜单
+        private void KlxPiaoButton2_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 3; //皮肤编辑器的索引
+        }
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            标题按钮显示 = (标题按钮样式)comboBox1.SelectedIndex;
+            TitleButtons = (TitleButtonStyle)comboBox1.SelectedIndex;
         }
 
         private void ComboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            快捷缩放方式 = (窗体位置)comboBox2.SelectedIndex;
+            ShortcutResizeMode = (WindowPosition)comboBox2.SelectedIndex;
         }
 
         private void ComboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            拖动方式 = (窗体位置)comboBox3.SelectedIndex;
+            DragMode = (WindowPosition)comboBox3.SelectedIndex;
         }
 
         private void ComboBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
-            标题位置 = (位置)comboBox4.SelectedIndex;
+            TitleTextAlign = (HorizontalAlignment)comboBox4.SelectedIndex;
         }
 
         private void ComboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
-            标题按钮位置 = (两端)comboBox5.SelectedIndex;
+            TitleButtonAlign = (HorizontalEnds)comboBox5.SelectedIndex;
         }
 
         private void ComboBox6_SelectedIndexChanged(object sender, EventArgs e)
         {
-            主题 = (风格)comboBox6.SelectedIndex;
+            Theme = (Style)comboBox6.SelectedIndex;
         }
 
         private void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
-            启用缩放动画 = checkBox1.Checked;
+            EnableResizeAnimation = checkBox1.Checked;
         }
 
         private void CheckBox2_CheckedChanged(object sender, EventArgs e)
         {
-            可调整大小 = checkBox2.Checked;
+            Resizable = checkBox2.Checked;
         }
 
         private void CheckBox3_CheckedChanged(object sender, EventArgs e)
@@ -262,23 +259,23 @@ namespace KlxPiaoDemo
 
         private void KlxPiaoTrackBar1_值Changed(object sender, KlxPiaoTrackBar.ValueChangedEventArgs e)
         {
-            标题框高度 = (int)klxPiaoTrackBar1.值;
-            tabControl1.Top = 标题框高度 + 9;
+            TitleBoxHeight = (int)klxPiaoTrackBar1.Value;
+            tabControl1.Top = TitleBoxHeight + 9;
         }
 
         private void KlxPiaoTrackBar2_值Changed(object sender, KlxPiaoTrackBar.ValueChangedEventArgs e)
         {
-            标题左右边距 = (int)klxPiaoTrackBar2.值;
+            TitleTextMargin = (int)klxPiaoTrackBar2.Value;
         }
 
         private void KlxPiaoTrackBar3_值Changed(object sender, KlxPiaoTrackBar.ValueChangedEventArgs e)
         {
-            标题按钮宽度 = (int)klxPiaoTrackBar3.值;
+            TitleButtonWidth = (int)klxPiaoTrackBar3.Value;
         }
 
         private void KlxPiaoTrackBar5_值Changed(object sender, KlxPiaoTrackBar.ValueChangedEventArgs e)
         {
-            标题按钮图标大小 = new SizeF(klxPiaoTrackBar5.值, klxPiaoTrackBar5.值);
+            TitleButtonIconSize = new SizeF(klxPiaoTrackBar5.Value, klxPiaoTrackBar5.Value);
         }
         #endregion
 
@@ -302,23 +299,23 @@ namespace KlxPiaoDemo
                     switch (c.Name)
                     {
                         case "Edit_标题框背景色":
-                            标题框背景色 = selectColor;
-                            标题框前景色 = ColorProcessor.GetBrightness(selectColor) > 127 ? Color.Black : Color.White;
+                            TitleBoxBackColor = selectColor;
+                            TitleBoxForeColor = ColorProcessor.GetBrightness(selectColor) > 127 ? Color.Black : Color.White;
                             break;
                         case "Edit_标题框前景色":
-                            标题框前景色 = selectColor;
+                            TitleBoxForeColor = selectColor;
                             break;
                         case "Edit_边框颜色":
-                            边框颜色 = selectColor;
+                            BorderColor = selectColor;
                             break;
                         case "Edit_未激活标题框背景色":
-                            未激活标题框背景色 = selectColor;
+                            InactiveTitleBoxBackColor = selectColor;
                             break;
                         case "Edit_未激活标题框前景色":
-                            未激活标题框前景色 = selectColor;
+                            InactiveTitleBoxForeColor = selectColor;
                             break;
                         case "Edit_未激活边框颜色":
-                            未激活边框颜色 = selectColor;
+                            InactiveBorderColor = selectColor;
                             break;
                     }
                 }
@@ -332,31 +329,31 @@ namespace KlxPiaoDemo
                 switch (c.Name)
                 {
                     case "Edit_标题框背景色":
-                        c.BackColor = 标题框背景色;
+                        c.BackColor = TitleBoxBackColor;
                         break;
                     case "Edit_标题框前景色":
-                        c.BackColor = 标题框前景色;
+                        c.BackColor = TitleBoxForeColor;
                         break;
                     case "Edit_边框颜色":
-                        c.BackColor = 边框颜色;
+                        c.BackColor = BorderColor;
                         break;
                     case "Edit_未激活标题框背景色":
-                        c.BackColor = 未激活标题框背景色;
+                        c.BackColor = InactiveTitleBoxBackColor;
                         break;
                     case "Edit_未激活标题框前景色":
-                        c.BackColor = 未激活标题框前景色;
+                        c.BackColor = InactiveTitleBoxForeColor;
                         break;
                     case "Edit_未激活边框颜色":
-                        c.BackColor = 未激活边框颜色;
+                        c.BackColor = InactiveBorderColor;
                         break;
                 }
             }
         }
         private void Show_按钮背景_Paint(object sender, PaintEventArgs e)
         {
-            Show_按钮背景.BackColor = 标题框背景色;
-            Show_按钮移入.BackColor = ColorProcessor.AdjustBrightness(Show_按钮背景.BackColor, 标题按钮颜色反馈);
-            Show_按钮按下.BackColor = ColorProcessor.AdjustBrightness(Show_按钮移入.BackColor, 标题按钮颜色反馈);
+            Show_按钮背景.BackColor = TitleBoxBackColor;
+            Show_按钮移入.BackColor = ColorProcessor.AdjustBrightness(Show_按钮背景.BackColor, InteractionColorScale);
+            Show_按钮按下.BackColor = ColorProcessor.AdjustBrightness(Show_按钮移入.BackColor, InteractionColorScale);
         }
         private void 主窗体_Activated(object sender, EventArgs e)
         {
@@ -369,7 +366,7 @@ namespace KlxPiaoDemo
         //修改反馈偏移
         private void KlxPiaoTrackBar4_值Changed(object sender, KlxPiaoTrackBar.ValueChangedEventArgs e)
         {
-            标题按钮颜色反馈 = klxPiaoTrackBar4.值;
+            InteractionColorScale = klxPiaoTrackBar4.Value;
             foreach (Control c in klxPiaoPanel9.Controls)
             {
                 if (c is KlxPiaoPanel p)
@@ -396,17 +393,17 @@ namespace KlxPiaoDemo
                 switch (e.Button)
                 {
                     case MouseButtons.Left:
-                        设置全局主题(newThemeColor, true);
+                        SetGlobalTheme(newThemeColor, true);
 
                         break;
                     case MouseButtons.Right:
                         KlxPiaoForm klxfm = new()
                         {
-                            边框颜色 = Color.FromArgb(147, 135, 248),
-                            标题框背景色 = 标题框背景色,
-                            标题框前景色 = 标题框前景色,
-                            标题按钮显示 = 标题按钮样式.仅关闭,
-                            可调整大小 = false,
+                            BorderColor = Color.FromArgb(147, 135, 248),
+                            TitleBoxBackColor = TitleBoxBackColor,
+                            TitleBoxForeColor = TitleBoxForeColor,
+                            TitleButtons = TitleButtonStyle.CloseOnly,
+                            Resizable = false,
                             Text = "提示：",
                             Size = new Size(250, 150),
                             ShowIcon = false,
@@ -414,11 +411,11 @@ namespace KlxPiaoDemo
                         KlxPiaoLabel tip = new()
                         {
                             AutoSize = false,
-                            Size = klxfm.获取工作区大小(),
+                            Size = klxfm.GetClientSize(),
                             Text = $"RGB [{c.BackColor.R} {c.BackColor.G} {c.BackColor.B}]",
-                            Location = klxfm.获取工作区矩形().Location,
+                            Location = klxfm.GetClientRectangle().Location,
                             TextAlign = ContentAlignment.MiddleCenter,
-                            Padding = new Padding(0, 0, 0, klxfm.标题框高度 / 2)
+                            Padding = new Padding(0, 0, 0, klxfm.TitleBoxHeight / 2)
                         };
                         klxfm.Controls.Add(tip);
                         klxfm.ShowDialog();
@@ -427,12 +424,6 @@ namespace KlxPiaoDemo
             }
         }
         #endregion
-
-        //切换到皮肤编辑器
-        private void KlxPiaoButton2_Click(object sender, EventArgs e)
-        {
-            tabControl1.SelectedIndex = 3; //皮肤编辑器的索引
-        }
 
         #region 矩阵排板计算工具
         private void KlxPiaoButton4_Click(object sender, EventArgs e)
@@ -521,14 +512,15 @@ namespace KlxPiaoDemo
         }
         #endregion
 
-        //控件.Label
+        #region KlxPiaoControls.Label
         private void KlxPiaoButton5_Click(object sender, EventArgs e)
         {
             KlxPiaoLabelDemoForm labeldemo = new();
             labeldemo.Show();
         }
-        //控件.Form(功能)
+        #endregion
 
+        #region KlxPiaoControls.Form (Func)
         private void KlxPiaoButton6_Click(object sender, EventArgs e)
         {
             try
@@ -541,8 +533,8 @@ namespace KlxPiaoDemo
                 if (selectFile.ShowDialog() == DialogResult.OK)
                 {
                     FontFamily fontFamily = FileUtils.LoadFontFamily(selectFile.FileName);
-                    设置全局字体(fontFamily);
-                    this.ForEachControl<KlxPiaoLabel>(label => label.文本呈现质量 = TextRenderingHint.AntiAliasGridFit);
+                    SetGlobalFont(fontFamily);
+                    this.ForEachControl<KlxPiaoLabel>(label => label.TextRenderingHint = TextRenderingHint.AntiAliasGridFit);
                 }
             }
             catch
@@ -551,13 +543,14 @@ namespace KlxPiaoDemo
             }
 
         }
+        #endregion
 
-        #region KlxPiaoAPI.控件
+        #region KlxPiaoAPI.Control
         private void KlxPiaoButton1_Click(object sender, EventArgs e)
         {
             StringBuilder pointfsshowtext = new();
             StringBuilder comptext = new();
-            PointF[] pointFs = [.. bezierCurve1.控制点集合];
+            PointF[] pointFs = [.. bezierCurve1.ControlPoints];
             pointfsshowtext.Append('[');
             comptext.Append("[DefaultValue(typeof(Animation), \"Time, FPS, [");
             for (int i = 0; i < pointFs.Length; i++)
@@ -577,21 +570,21 @@ namespace KlxPiaoDemo
                 }
             }
 
-            BezierCurveCodeShow form = new(pointfsshowtext.ToString(), comptext.ToString(), 标题框背景色)
+            BezierCurveCodeShow form = new(pointfsshowtext.ToString(), comptext.ToString(), TitleBoxBackColor)
             {
-                主题 = 主题
+                Theme = Theme
             };
             form.ShowDialog();
         }
-        private void BezierCurve1_控制点拖动(object sender, KlxPiaoControls.BezierCurve.ControlPointDrag? e) //不会读取e的信息，因此声明可为null
+        private void BezierCurve1_控制点拖动(object sender, KlxPiaoControls.BezierCurve.ControlPointChangedEvent? e) //不会读取e的信息，因此声明可为null
         {
             StringBuilder pointsList = new();
 
-            for (int i = 0; i < bezierCurve1.控制点集合.Count; i++)
+            for (int i = 0; i < bezierCurve1.ControlPoints.Count; i++)
             {
-                pointsList.Append($"{bezierCurve1.控制点集合[i].X},{bezierCurve1.控制点集合[i].Y}");
+                pointsList.Append($"{bezierCurve1.ControlPoints[i].X},{bezierCurve1.ControlPoints[i].Y}");
 
-                if (i != bezierCurve1.控制点集合.Count - 1) pointsList.AppendLine();
+                if (i != bezierCurve1.ControlPoints.Count - 1) pointsList.AppendLine();
             }
 
             textBox18.Text = pointsList.ToString();
@@ -607,22 +600,22 @@ namespace KlxPiaoDemo
             {
                 Point 目标位置 = 控件动画Panel.Location == new Point(24, 271) ? new Point(435, 253) : new Point(24, 271);
                 _ = 控件动画Panel.BezierTransition("Location",
-                    null, 目标位置, new Animation((int)klxPiaoTrackBar12.值, 100, [.. bezierCurve1.控制点集合]),
-                    default, cts.Token);
+                    null, 目标位置, new Animation((int)klxPiaoTrackBar12.Value, 100, [.. bezierCurve1.ControlPoints]),
+                    default, false, cts.Token);
             }
             if (大小过渡Check.Checked)
             {
                 Size 目标大小 = 控件动画Panel.Size == new Size(70, 70) ? new Size(130, 130) : new Size(70, 70);
                 _ = 控件动画Panel.BezierTransition("Size",
-                    null, 目标大小, (int)klxPiaoTrackBar12.值, [.. bezierCurve1.控制点集合], 100,
-                    default, cts.Token);
+                    null, 目标大小, (int)klxPiaoTrackBar12.Value, [.. bezierCurve1.ControlPoints], 100,
+                    default, false, cts.Token);
             }
             if (颜色过渡Check.Checked)
             {
                 Color 目标颜色 = Color.FromArgb(rand.Next(0, 255), rand.Next(0, 255), rand.Next(0, 255));
                 _ = 控件动画Panel.BezierTransition("BackColor",
-                    null, 目标颜色, (int)klxPiaoTrackBar12.值, null, 100,
-                    default, cts.Token);
+                    null, 目标颜色, (int)klxPiaoTrackBar12.Value, null, 100,
+                    default, false, cts.Token);
             }
         }
         private void 停止But_Click(object sender, EventArgs e)
@@ -653,56 +646,56 @@ namespace KlxPiaoDemo
 
                 if (points.Count != 0)
                 {
-                    bezierCurve1.控制点集合 = points;
+                    bezierCurve1.ControlPoints = points;
                 }
                 else
                 {
-                    g.DrawString("请添加控制点", Font, new SolidBrush(Color.Red), bezierCurve1.获取工作区矩形().Location);
+                    g.DrawString("请添加控制点", Font, new SolidBrush(Color.Red), bezierCurve1.GetClientRectangle().Location);
                 }
             }
             catch
             {
-                g.DrawString("输入的控制点有误", Font, new SolidBrush(Color.Red), bezierCurve1.获取工作区矩形().Location);
+                g.DrawString("输入的控制点有误", Font, new SolidBrush(Color.Red), bezierCurve1.GetClientRectangle().Location);
             }
         }
         private void CheckBox7_CheckedChanged(object sender, EventArgs e)
         {
-            bezierCurve1.可拖动两端 = checkBox7.Checked;
+            bezierCurve1.IsStartAndEndPointDraggable = checkBox7.Checked;
         }
         private void CheckBox9_CheckedChanged(object sender, EventArgs e)
         {
-            bezierCurve1.拖动时显示控制点信息 = checkBox9.Checked;
+            bezierCurve1.IsDisplayControlPointTextWhileDragging = checkBox9.Checked;
         }
         private void KlxPiaoTrackBar11_值Changed(object sender, KlxPiaoTrackBar.ValueChangedEventArgs e)
         {
-            bezierCurve1.绘制精度 = klxPiaoTrackBar11.值;
+            bezierCurve1.DrawingAccuracy = klxPiaoTrackBar11.Value;
         }
         //添加，删除
         private void KlxPiaoButton7_Click(object sender, EventArgs e)
         {
-            bezierCurve1.AddControlPoint(new PointF(0.5F, 0.5F), bezierCurve1.控制点集合.Count / 2);
+            bezierCurve1.AddControlPoint(new PointF(0.5F, 0.5F), bezierCurve1.ControlPoints.Count / 2);
             BezierCurve1_控制点拖动(sender, null); //刷新文本框
         }
         private void KlxPiaoButton8_Click(object sender, EventArgs e)
         {
-            if (bezierCurve1.控制点集合.Count != 3)
+            if (bezierCurve1.ControlPoints.Count != 3)
             {
-                bezierCurve1.RemoveControlPoint(bezierCurve1.控制点集合.Count / 2);
+                bezierCurve1.RemoveControlPoint(bezierCurve1.ControlPoints.Count / 2);
                 BezierCurve1_控制点拖动(sender, null); //刷新文本框
             }
         }
         //辅助线
         private void CheckBox8_CheckedChanged(object sender, EventArgs e)
         {
-            bezierCurve1.辅助线显示方式 = checkBox8.Checked switch
+            bezierCurve1.GuidelineDraw = checkBox8.Checked switch
             {
-                true => KlxPiaoControls.BezierCurve.辅助线绘制.两端实线_中间虚线,
-                false => KlxPiaoControls.BezierCurve.辅助线绘制.不绘制
+                true => KlxPiaoControls.BezierCurve.GuidelineDrawMode.BothEndsSolid_MiddleDashed,
+                false => KlxPiaoControls.BezierCurve.GuidelineDrawMode.DoNotDraw
             };
         }
         #endregion
 
-        //转换器代码生成器
+        #region 转换器代码生成器
         private void KlxPiaoButton9_Click(object sender, EventArgs e)
         {
             //结构
@@ -821,9 +814,9 @@ namespace KlxPiaoDemo
                 .Replace("{结构名称1}", 结构名称Text.Text + "1")
                 .Replace("{结构名称2}", 结构名称Text.Text + "2");
         }
+        #endregion
 
-
-        //KlxPiaoControls.RoundedButton
+        #region KlxPiaoControls.RoundedButton
         private void SlideSwitch7_SelectIndexChanged(object sender, SlideSwitch.IndexChangedEventArgs e)
         {
             switch (e.SelectIndex)
@@ -839,7 +832,9 @@ namespace KlxPiaoDemo
         }
         private void SetRoundedButton(bool check)
         {
-            tabPage16.ForEachControl<RoundedButton>(roundedbutton => { roundedbutton.启用动画 = check; });
+            TabPage_UI_RoundedButton.ForEachControl<RoundedButton>(roundedbutton => { roundedbutton.IsEnableAnimation = check; });
         }
+        #endregion
+
     }
 }

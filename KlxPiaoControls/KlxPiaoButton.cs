@@ -10,16 +10,16 @@ namespace KlxPiaoControls
     /// </remarks>
     public partial class KlxPiaoButton : Button
     {
-        private bool _可获得焦点;
+        private bool _isReceiveFocus;
         private Size _ImageSize;
 
         [Category("KlxPiaoButton特性")]
         [Description("控件是否可获得焦点")]
         [DefaultValue(true)]
-        public bool 可获得焦点
+        public bool IsReceiveFocus
         {
-            get { return _可获得焦点; }
-            set { _可获得焦点 = value; Invalidate(); }
+            get { return _isReceiveFocus; }
+            set { _isReceiveFocus = value; Invalidate(); }
         }
         [Category("KlxPiaoButton特性")]
         [Description("设置显示在按钮上Image的大小，留空时使用系统默认的大小")]
@@ -44,12 +44,12 @@ namespace KlxPiaoControls
             DoubleBuffered = true;
 
             _ImageSize = new Size(0, 0);
-            _可获得焦点 = true;
+            _isReceiveFocus = true;
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
         {
-            SetStyle(ControlStyles.Selectable, 可获得焦点);
+            SetStyle(ControlStyles.Selectable, IsReceiveFocus);
 
             base.OnPaint(pevent);
 

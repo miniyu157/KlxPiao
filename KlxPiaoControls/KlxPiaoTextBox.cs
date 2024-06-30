@@ -29,9 +29,9 @@ namespace KlxPiaoControls
             //
             // KlxPiaoPanel（继承自）
             //
-            启用投影 = false;
-            边框颜色 = Color.Gray;
-            圆角大小 = new CornerRadius(35);
+            IsEnableShadow = false;
+            BorderColor = Color.Gray;
+            CornerRadius = new CornerRadius(35);
             BackColor = Color.White;
             Size = new Size(144, 26);
             Cursor = Cursors.IBeam;
@@ -161,68 +161,68 @@ namespace KlxPiaoControls
         #endregion
 
         #region 会触发外观刷新或覆盖默认值的属性
-        public new int 边框大小
+        public new int BorderSize
         {
-            get => base.边框大小;
+            get => base.BorderSize;
             set
             {
-                if (base.边框大小 != value)
+                if (base.BorderSize != value)
                 {
-                    base.边框大小 = value;
+                    base.BorderSize = value;
                     RefreshControlRect();
                 }
             }
         }
 
         [DefaultValue(typeof(Color), "Gray")]
-        public new Color 边框颜色
+        public new Color BorderColor
         {
-            get => base.边框颜色;
+            get => base.BorderColor;
             set
             {
-                if (base.边框颜色 != value)
+                if (base.BorderColor != value)
                 {
-                    base.边框颜色 = value;
+                    base.BorderColor = value;
                 }
             }
         }
 
         [DefaultValue(typeof(CornerRadius), "13,13,13,13")]
-        public new CornerRadius 圆角大小
+        public new CornerRadius CornerRadius
         {
-            get => base.圆角大小;
+            get => base.CornerRadius;
             set
             {
-                if (base.圆角大小 != value)
+                if (base.CornerRadius != value)
                 {
-                    base.圆角大小 = value;
+                    base.CornerRadius = value;
                     RefreshControlRect();
                 }
             }
         }
 
         [DefaultValue(false)]
-        public new bool 启用投影
+        public new bool IsEnableShadow
         {
-            get => base.启用投影;
+            get => base.IsEnableShadow;
             set
             {
-                if (base.启用投影 != value)
+                if (base.IsEnableShadow != value)
                 {
-                    base.启用投影 = value;
+                    base.IsEnableShadow = value;
                     RefreshControlRect();
                 }
             }
         }
 
-        public new 方向 投影方向
+        public new ShadowDirectionEnum ShadowDirection
         {
-            get => base.投影方向;
+            get => base.ShadowDirection;
             set
             {
-                if (base.投影方向 != value)
+                if (base.ShadowDirection != value)
                 {
-                    base.投影方向 = value;
+                    base.ShadowDirection = value;
                     RefreshControlRect();
                 }
             }
@@ -248,9 +248,9 @@ namespace KlxPiaoControls
         private void RefreshControlRect()
         {
             Rectangle thisRect = new(0, 0, Width, Height);
-            Rectangle baseTextBoxRect = 启用投影
-                ? 获取工作区矩形().ScaleRectangle(-2)
-                : thisRect.ScaleRectangle(-边框大小 * 2).GetInnerFitRectangle(圆角大小);
+            Rectangle baseTextBoxRect = IsEnableShadow
+                ? GetClientRectangle().ScaleRectangle(-2)
+                : thisRect.ScaleRectangle(-BorderSize * 2).GetInnerFitRectangle(CornerRadius);
 
             if (IsFillAndMultiline)
             {
@@ -307,6 +307,7 @@ namespace KlxPiaoControls
         {
             isSelect = false;
             oldPos = 0;
+
             base.OnMouseUp(e);
         }
         #endregion
