@@ -58,8 +58,9 @@ namespace KlxPiaoControls
         //基本外观
         private int _borderSize;
         private Color _borderColor;
-        private Size _zeroToOneSizeRange;
+        private Size _zeroToOneSize;
         private ContentAlignment _zeroToOnePosition;
+        private Point _ZeroToOneOffset;
 
         //曲线外观
         private Color _curveColor;
@@ -136,12 +137,13 @@ namespace KlxPiaoControls
 
             _borderSize = 2;
             _borderColor = Color.Gray;
-            _zeroToOneSizeRange = new Size(200, 200);
+            _zeroToOneSize = new Size(200, 200);
             _zeroToOnePosition = ContentAlignment.MiddleCenter;
-            _guidelineColor = Color.Black;
-            _curveColor = Color.Black;
-            _controlPointColor = Color.Red;
+            _ZeroToOneOffset = Point.Empty;
 
+            _curveColor = Color.Red;
+            _controlPointColor = Color.Red;
+            _guidelineColor = Color.Black;
             _startAndEndPointColor = Color.Blue;
             _curveSize = 2;
             _controlPointSize = 8;
@@ -193,10 +195,10 @@ namespace KlxPiaoControls
         [Category("BezierCurve基本外观")]
         [Description("0-1范围内所占用的大小（像素）")]
         [DefaultValue(typeof(Size), "200,200")]
-        public Size ZeroToOneSizeRange
+        public Size ZeroToOneSize
         {
-            get { return _zeroToOneSizeRange; }
-            set { _zeroToOneSizeRange = value; Invalidate(); }
+            get { return _zeroToOneSize; }
+            set { _zeroToOneSize = value; Invalidate(); }
         }
         /// <summary>
         /// 获取或设置内部的位置。
@@ -209,6 +211,17 @@ namespace KlxPiaoControls
             get { return _zeroToOnePosition; }
             set { _zeroToOnePosition = value; Invalidate(); }
         }
+        /// <summary>
+        /// 获取或设置内部位置的偏移。
+        /// </summary>
+        [Category("BezierCurve基本外观")]
+        [Description("0-1范围内矩形位置的偏移")]
+        [DefaultValue(typeof(Point), "0,0")]
+        public Point ZeroToOneOffset
+        {
+            get { return _ZeroToOneOffset; }
+            set { _ZeroToOneOffset = value; Invalidate(); }
+        }
         #endregion
 
         #region BezierCurve曲线外观
@@ -217,7 +230,7 @@ namespace KlxPiaoControls
         /// </summary>
         [Category("BezierCurve曲线外观")]
         [Description("曲线的颜色")]
-        [DefaultValue(typeof(Color), "Black")]
+        [DefaultValue(typeof(Color), "Red")]
         public Color CurveColor
         {
             get { return _curveColor; }
@@ -416,12 +429,6 @@ namespace KlxPiaoControls
             get { return base.Size; }
             set { base.Size = value; }
         }
-        [DefaultValue(typeof(Padding), "0,0,0,0")]
-        public new Padding Padding
-        {
-            get { return base.Padding; }
-            set { base.Padding = value; Refresh(); }
-        }
 
         #region 方法
         /// <summary>
@@ -491,7 +498,7 @@ namespace KlxPiaoControls
         /// </summary>
         public int GetDragIndex()
         {
-            return 拖动的索引;
+            return dragingIndex;
         }
         #endregion
 
@@ -505,16 +512,16 @@ namespace KlxPiaoControls
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
             Rectangle thisRect = new(0, 0, Width, Height);
-            RectangleF 工作区 = new(LayoutUtilities.CalculateAlignedPosition(thisRect, ZeroToOneSizeRange, ZeroToOnePosition, LayoutUtilities.PaddingConvertToPoint(Padding)), ZeroToOneSizeRange);
+            RectangleF clientRect = new(LayoutUtilities.CalculateAlignedPosition(thisRect, ZeroToOneSize, ZeroToOnePosition, ZeroToOneOffset), ZeroToOneSize);
 
             //绘制边框
             if (BorderSize != 0)
             {
-                g.DrawRectangle(new Pen(BorderColor, BorderSize), 工作区);
+                g.DrawRectangle(new Pen(BorderColor, BorderSize), clientRect);
             }
 
             //除边框以外的工作区
-            绘制区域 = new(工作区.X + BorderSize / 2, 工作区.Y + BorderSize / 2, 工作区.Width - BorderSize, 工作区.Height - BorderSize);
+            绘制区域 = new(clientRect.X + BorderSize / 2, clientRect.Y + BorderSize / 2, clientRect.Width - BorderSize, clientRect.Height - BorderSize);
 
             //将控制点集合添加到绘制数组，以便后续绘制
             绘制数组.Clear();
@@ -527,9 +534,9 @@ namespace KlxPiaoControls
             //绘制辅助线
             if (GuidelineDraw != GuidelineDrawMode.DoNotDraw && GuidelineSize != 0)
             {
-                绘制辅助线(g, 绘制数组);
+                DrawGuideline(g, 绘制数组);
 
-                void 绘制辅助线(Graphics g, List<PointF> points)
+                void DrawGuideline(Graphics g, List<PointF> points)
                 {
                     Pen pen1 = new(GuidelineColor, GuidelineSize);                           //实线画笔
                     Pen pen2 = new(GuidelineColor, GuidelineSize) { DashPattern = [8, 4] };  //虚线画笔
@@ -545,6 +552,7 @@ namespace KlxPiaoControls
                                 g.DrawLine(drawPen, points[i], points[i + 1]);
                             }
                             break;
+
                         case GuidelineDrawMode.DrawOnlyBothEndsGuidelines:
                             g.DrawLine(pen1, points[0], points[1]);
                             g.DrawLine(pen1, points[^1], points[^2]);  //old: [points.Count - 1], points[points.Count - 2]
@@ -557,7 +565,7 @@ namespace KlxPiaoControls
             for (float i = 0; i <= 1; i += DrawingAccuracy)
             {
                 PointF pointF = KlxPiaoAPI.BezierCurve.CalculateBezierPointByTime(i, [.. ControlPoints]);
-                SolidBrush bezBrush = new(Color.Red);
+                SolidBrush bezBrush = new(CurveColor);
                 g.FillEllipse(bezBrush, new RectangleF(
                     new PointF(
                         绘制区域.X + pointF.X * 绘制区域.Width - CurveSize / 2,
@@ -595,24 +603,24 @@ namespace KlxPiaoControls
             //绘制控制点信息
             if (IsDisplayControlPointTextWhileDragging)
             {
-                PointF dragPointF = ControlPoints[拖动的索引];
+                PointF dragPointF = ControlPoints[dragingIndex];
 
                 var replacements = new Dictionary<string, string>
                 {
-                    { "{index}", 拖动的索引.ToString() },
+                    { "{index}", dragingIndex.ToString() },
                     { "{x}", dragPointF.X.ToString() },
                     { "{y}", dragPointF.Y.ToString() }
                 };
 
-                g.DrawString(ControlPointTextDisplayFormat.ReplaceMultiple(replacements), Font, new SolidBrush(ForeColor), 绘制数组[拖动的索引]);
+                g.DrawString(ControlPointTextDisplayFormat.ReplaceMultiple(replacements), Font, new SolidBrush(ForeColor), 绘制数组[dragingIndex]);
             }
 
             base.OnPaint(e);
         }
 
         //控制点拖动
-        private bool 正在拖动;
-        private int 拖动的索引;
+        private bool isDraging;
+        private int dragingIndex;
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
@@ -621,7 +629,7 @@ namespace KlxPiaoControls
             if (e.Button == MouseButtons.Left)
             {
                 float minDistance = float.MaxValue;
-                拖动的索引 = -1;
+                dragingIndex = -1;
 
                 int 开始索引 = IsStartAndEndPointDraggable ? 0 : 1;
                 int 结束索引 = IsStartAndEndPointDraggable ? 绘制数组.Count - 1 : 绘制数组.Count - 2;
@@ -635,13 +643,13 @@ namespace KlxPiaoControls
                     if (distance < minDistance)
                     {
                         minDistance = distance;
-                        拖动的索引 = i;
+                        dragingIndex = i;
                     }
                 }
 
-                if (拖动的索引 != -1)
+                if (dragingIndex != -1)
                 {
-                    正在拖动 = !(!IsStartAndEndPointDraggable && (拖动的索引 == 0 || 拖动的索引 == ControlPoints.Count - 1));
+                    isDraging = !(!IsStartAndEndPointDraggable && (dragingIndex == 0 || dragingIndex == ControlPoints.Count - 1));
                 }
 
                 Focus();
@@ -652,9 +660,9 @@ namespace KlxPiaoControls
         {
             base.OnMouseMove(e);
 
-            if (正在拖动)
+            if (isDraging)
             {
-                OnControlPointChanged(new ControlPointChangedEvent(拖动的索引, ControlPoints[拖动的索引]));
+                OnControlPointChanged(new ControlPointChangedEvent(dragingIndex, ControlPoints[dragingIndex]));
 
                 float newX = (float)Math.Round((e.X - 绘制区域.X + 1) / 绘制区域.Width, DecimalPlaces);
                 float newY = (float)Math.Round(1 - (e.Y - 绘制区域.Y + 1) / 绘制区域.Height, DecimalPlaces);
@@ -698,7 +706,7 @@ namespace KlxPiaoControls
                     }
                 }
 
-                SetControlPoint(拖动的索引, pointF);
+                SetControlPoint(dragingIndex, pointF);
             }
         }
 
@@ -706,12 +714,12 @@ namespace KlxPiaoControls
         {
             base.OnMouseUp(e);
 
-            正在拖动 = false;
+            isDraging = false;
         }
 
         protected override void OnPreviewKeyDown(PreviewKeyDownEventArgs e)
         {
-            if (拖动的索引 != -1)
+            if (dragingIndex != -1)
             {
                 switch (e.KeyCode)
                 {
@@ -721,8 +729,8 @@ namespace KlxPiaoControls
                     case Keys.Right:
                         e.IsInputKey = true;
 
-                        float newX = ControlPoints[拖动的索引].X;
-                        float newY = ControlPoints[拖动的索引].Y;
+                        float newX = ControlPoints[dragingIndex].X;
+                        float newY = ControlPoints[dragingIndex].Y;
 
                         switch (e.KeyCode)
                         {
@@ -763,8 +771,8 @@ namespace KlxPiaoControls
                                 break;
                         }
 
-                        SetControlPoint(拖动的索引, new PointF((float)Math.Round(newX, DecimalPlaces), (float)Math.Round(newY, DecimalPlaces)));
-                        OnControlPointChanged(new ControlPointChangedEvent(拖动的索引, ControlPoints[拖动的索引]));
+                        SetControlPoint(dragingIndex, new PointF((float)Math.Round(newX, DecimalPlaces), (float)Math.Round(newY, DecimalPlaces)));
+                        OnControlPointChanged(new ControlPointChangedEvent(dragingIndex, ControlPoints[dragingIndex]));
                         break;
 
                     default:

@@ -210,8 +210,8 @@
         /// <returns>按矩阵排列的点列表。</returns>
         public static List<PointF> CalculateGridPoints(SizeF containerSize, SizeF cellSize, Size matrixSize, Padding padding)
         {
-            float x间距 = (containerSize.Width - padding.Left - padding.Right - cellSize.Width * matrixSize.Width) / (matrixSize.Width - 1);
-            float y间距 = (containerSize.Height - padding.Top - padding.Bottom - cellSize.Height * matrixSize.Height) / (matrixSize.Height - 1);
+            float xSpacing = (containerSize.Width - padding.Left - padding.Right - cellSize.Width * matrixSize.Width) / (matrixSize.Width - 1);
+            float ySpacing = (containerSize.Height - padding.Top - padding.Bottom - cellSize.Height * matrixSize.Height) / (matrixSize.Height - 1);
 
             List<PointF> points = [];
 
@@ -220,8 +220,8 @@
                 for (int x = 0; x < matrixSize.Width; x++)
                 {
                     points.Add(new PointF(
-                        padding.Left + x * (cellSize.Width + x间距),
-                        padding.Top + y * (cellSize.Height + y间距)
+                        padding.Left + x * (cellSize.Width + xSpacing),
+                        padding.Top + y * (cellSize.Height + ySpacing)
                     ));
                 }
             }
@@ -233,7 +233,7 @@
         /// </summary>
         /// <param name="padding">要转换的 <see cref="Padding"/> 对象。</param>
         /// <returns>
-        /// 一个 <see cref="Point"/> 对象，其中 X 坐标计算为 padding.Left 减去 padding.Right，
+        /// <see cref="Point"/> 对象，其中 X 坐标计算为 padding.Left 减去 padding.Right，
         /// Y 坐标计算为 padding.Top 减去 padding.Bottom。
         /// </returns>
         public static Point PaddingConvertToPoint(Padding padding)

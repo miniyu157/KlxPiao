@@ -10,10 +10,10 @@ namespace KlxPiaoAPI
         /// <summary>
         /// 在指定区域绘制带有圆角的矩形。
         /// </summary>
-        /// <param name="g">用于绘制的 Graphics 对象。</param>
-        /// <param name="rect">定义绘制的矩形区域</param>
-        /// <param name="cornerRadius">每个角的圆角大小，自动检测是百分比大小还是像素大小。</param>
-        /// <param name="clear">圆角区域外部颜色。</param>
+        /// <param name="g">用于绘制的 <see cref="Graphics"/> 对象。</param>
+        /// <param name="rect">定义绘制的矩形区域。</param>
+        /// <param name="cornerRadius">圆角半径，以 <see cref="CornerRadius"/> 结构体表示。</param>
+        /// <param name="clear">圆角区域外部颜色（基底颜色）。</param>
         /// <param name="pen">指定绘制边框的画笔。</param>
         public static void DrawRounded(this Graphics g, Rectangle rect, CornerRadius cornerRadius, Color clear, Pen pen)
         {
@@ -22,28 +22,30 @@ namespace KlxPiaoAPI
                 return;
             }
 
-            pen = new(pen.Color, pen.Width * 2); //修正画笔大小
+            //修正画笔大小
+            Pen newPen = (Pen)pen.Clone();
+            newPen.Width = pen.Width * 2;
 
             //绘制边框
-            if (pen.Width != 0)
+            if (newPen.Width != 0)
             {
-                GraphicsPath 圆角路径 = ConvertToRoundedPath(rect, cornerRadius);
-                g.DrawPath(pen, 圆角路径);
+                GraphicsPath roundedPath = ConvertToRoundedPath(rect, cornerRadius);
+                g.DrawPath(newPen, roundedPath);
             }
 
             //填充外部
-            GraphicsPath 外部路径 = ConvertToRoundedPath(rect, cornerRadius, true);
-            g.FillPath(new SolidBrush(clear), 外部路径);
+            GraphicsPath externalPath = ConvertToRoundedPath(rect, cornerRadius, true);
+            g.FillPath(new SolidBrush(clear), externalPath);
         }
 
         /// <summary>
         /// 在指定区域绘制带有圆角的矩形。
         /// </summary>
-        /// <param name="g">用于绘制的 Graphics 对象。</param>
-        /// <param name="rect">定义绘制的矩形区域</param>
-        /// <param name="cornerRadius">每个角的圆角大小，自动检测是百分比大小还是像素大小。</param>
-        /// <param name="clear">圆角区域外部颜色。</param>
-        /// <param name="brush">指定填充的 <see cref="SolidBrush"/></param>
+        /// <param name="g">用于绘制的 <see cref="Graphics"/> 对象。</param>
+        /// <param name="rect">定义绘制的矩形区域。</param>
+        /// <param name="cornerRadius">圆角半径，以 <see cref="CornerRadius"/> 结构体表示。</param>
+        /// <param name="clear">圆角区域外部颜色（基底颜色）。</param>
+        /// <param name="brush">指定填充的 <see cref="SolidBrush"/>。</param>
         public static void DrawRounded(this Graphics g, Rectangle rect, CornerRadius cornerRadius, Color clear, SolidBrush brush)
         {
             if (rect.Width == 0 || rect.Height == 0)
@@ -52,12 +54,12 @@ namespace KlxPiaoAPI
             }
 
             //填充内部
-            GraphicsPath 圆角路径 = ConvertToRoundedPath(rect, cornerRadius);
-            g.FillPath(brush, 圆角路径);
+            GraphicsPath roundedPath = ConvertToRoundedPath(rect, cornerRadius);
+            g.FillPath(brush, roundedPath);
 
             //填充外部
-            GraphicsPath 外部路径 = ConvertToRoundedPath(rect, cornerRadius, true);
-            g.FillPath(new SolidBrush(clear), 外部路径);
+            GraphicsPath externalPath = ConvertToRoundedPath(rect, cornerRadius, true);
+            g.FillPath(new SolidBrush(clear), externalPath);
         }
 
         /// <summary>
@@ -65,147 +67,94 @@ namespace KlxPiaoAPI
         /// </summary>
         /// <param name="rect">提供的矩形。</param>
         /// <param name="cornerRadius">角半径，以 <see cref="CornerRadius"/> 结构体表示。</param>
-        /// <param name="returnOuterPath">是否返回除圆角区域外的路径</param>
+        /// <param name="returnOuterPath">是否返回除圆角区域外的路径。</param>
         /// <returns>表示圆角路径的 <see cref="GraphicsPath"/> 。</returns>
         public static GraphicsPath ConvertToRoundedPath(Rectangle rect, CornerRadius cornerRadius, bool returnOuterPath = false)
         {
             //作为百分比时，使用较短的一侧
-            float 基准尺寸 = Math.Min(rect.Width, rect.Height);
+            float referenceSize = Math.Min(rect.Width, rect.Height);
 
-            //获取顶点和中点
-            Point TopCenterPoint = rect.GetTopCenterPoint();
-            Point BottomCenterPoint = rect.GetBottomCenterPoint();
-            Point LeftCenterPoint = rect.GetLeftCenterPoint();
-            Point RightCenterPoint = rect.GetRightCenterPoint();
-            Point TopLeftPoint = rect.GetTopLeftPoint();
-            Point TopRightPoint = rect.GetTopRightPoint();
-            Point BottomLeftPoint = rect.GetBottomLeftPoint();
-            Point BottomRightPoint = rect.GetBottomRightPoint();
+            //获取各个点
+            Point topCenterPoint = rect.GetTopCenterPoint();
+            Point bottomCenterPoint = rect.GetBottomCenterPoint();
+            Point leftCenterPoint = rect.GetLeftCenterPoint();
+            Point rightCenterPoint = rect.GetRightCenterPoint();
+            Point topLeftPoint = rect.GetTopLeftPoint();
+            Point topRightPoint = rect.GetTopRightPoint();
+            Point bottomLeftPoint = rect.GetBottomLeftPoint();
+            Point bottomRightPoint = rect.GetBottomRightPoint();
 
-            GraphicsPath 圆角路径 = new();
-
-            //圆角数据
-            float TopLeft = cornerRadius.TopLeft;
-            float TopRight = cornerRadius.TopRight;
-            float BottomRight = cornerRadius.BottomRight;
-            float BottomLeft = cornerRadius.BottomLeft;
+            //角半径
+            float topLeft = cornerRadius.TopLeft;
+            float topRight = cornerRadius.TopRight;
+            float bottomRight = cornerRadius.BottomRight;
+            float bottomLeft = cornerRadius.BottomLeft;
 
             //矫正圆角大小使其在合理范围之内
-            if (TopLeft > 基准尺寸) TopLeft = 基准尺寸;
-            if (TopRight > 基准尺寸) TopRight = 基准尺寸;
-            if (BottomRight > 基准尺寸) BottomRight = 基准尺寸;
-            if (BottomLeft > 基准尺寸) BottomLeft = 基准尺寸;
+            if (topLeft > referenceSize) topLeft = referenceSize;
+            if (topRight > referenceSize) topRight = referenceSize;
+            if (bottomRight > referenceSize) bottomRight = referenceSize;
+            if (bottomLeft > referenceSize) bottomLeft = referenceSize;
 
             //四个圆角区域的矩形
-            Rectangle TopLeftRect = Rectangle.Empty;
-            Rectangle TopRightRect = Rectangle.Empty;
-            Rectangle BottomRightRect = Rectangle.Empty;
-            Rectangle BottomLeftRect = Rectangle.Empty;
+            Size GetCornerRectSize(double cR) => cR switch
+            {
+                > 0 and <= 1 => new Size((int)(referenceSize * cR), (int)(referenceSize * cR)),
+                > 1 => new Size((int)cR, (int)cR),
+                _ => Size.Empty
+            };
 
-            //左上角路径
-            if (TopLeft == 0F)
+            Size topLeftRectSize = GetCornerRectSize(topLeft);
+            Size topRightRectSize = GetCornerRectSize(topRight);
+            Size bottomRightRectSize = GetCornerRectSize(bottomRight);
+            Size bottomLeftRectSize = GetCornerRectSize(bottomLeft);
+
+            Point topLeftRectPos = new(rect.X, rect.Y);
+            Point topRightRectPos = new(rect.Right - topRightRectSize.Width, rect.Y);
+            Point bottomRightRectPos = new(rect.Right - bottomRightRectSize.Width, rect.Bottom - bottomRightRectSize.Height);
+            Point bottomLeftRectPos = new(rect.X, rect.Bottom - bottomLeftRectSize.Height);
+
+            Rectangle topLeftRect = new(topLeftRectPos, topLeftRectSize);
+            Rectangle topRightRect = new(topRightRectPos, topRightRectSize);
+            Rectangle bottomRightRect = new(bottomRightRectPos, bottomRightRectSize);
+            Rectangle bottomLeftRect = new(bottomLeftRectPos, bottomLeftRectSize);
+
+            void AddRoundedPath(GraphicsPath graphicsPath, float cR, Rectangle cRRect, Point cRLine1, Point cRLine2, int arc1, int arc2)
             {
-                圆角路径.AddLine(LeftCenterPoint, TopLeftPoint);
-            }
-            else
-            {
-                TopLeftRect.Size = TopLeft switch
+                if (!returnOuterPath)
                 {
-                    > 0 and <= 1 => new((int)(基准尺寸 * TopLeft), (int)(基准尺寸 * TopLeft)),
-                    > 1 => new((int)TopLeft, (int)TopLeft),
-                    _ => Size.Empty
-                };
-                TopLeftRect.Location = new(rect.X, rect.Y);
-                圆角路径.AddArc(TopLeftRect, 180, 90);
-            }
-
-            //右上角路径
-            if (TopRight == 0F)
-            {
-                圆角路径.AddLine(TopCenterPoint, TopRightPoint);
-            }
-            else
-            {
-                TopRightRect.Size = TopRight switch
+                    if (cR == 0)
+                        graphicsPath.AddLine(cRLine1, cRLine2);
+                    else
+                        graphicsPath.AddArc(cRRect, arc1, arc2);
+                }
+                else if (cR != 0)
                 {
-                    > 0 and <= 1 => new((int)(基准尺寸 * TopRight), (int)(基准尺寸 * TopRight)),
-                    > 1 => new((int)TopRight, (int)TopRight),
-                    _ => Size.Empty
-                };
-                TopRightRect.Location = new(rect.Right - TopRightRect.Width, rect.Y);
-                圆角路径.AddArc(TopRightRect, 270, 90);
+                    graphicsPath.AddArc(cRRect, arc1, arc2);
+                    graphicsPath.AddLine(cRLine1, cRLine2);
+                    graphicsPath.CloseFigure();
+                }
             }
-
-            //右下角路径
-            if (BottomRight == 0F)
-            {
-                圆角路径.AddLine(RightCenterPoint, BottomRightPoint);
-            }
-            else
-            {
-                BottomRightRect.Size = BottomRight switch
-                {
-                    > 0 and <= 1 => new((int)(基准尺寸 * BottomRight), (int)(基准尺寸 * BottomRight)),
-                    > 1 => new((int)BottomRight, (int)BottomRight),
-                    _ => Size.Empty
-                };
-                BottomRightRect.Location = new(rect.Right - BottomRightRect.Width, rect.Bottom - BottomRightRect.Height);
-                圆角路径.AddArc(BottomRightRect, 0, 90);
-            }
-
-            //左下角路径
-            if (BottomLeft == 0F)
-            {
-                圆角路径.AddLine(BottomCenterPoint, BottomLeftPoint);
-            }
-            else
-            {
-                BottomLeftRect.Size = BottomLeft switch
-                {
-                    > 0 and <= 1 => new((int)(基准尺寸 * BottomLeft), (int)(基准尺寸 * BottomLeft)),
-                    > 1 => new((int)BottomLeft, (int)BottomLeft),
-                    _ => Size.Empty
-                };
-                BottomLeftRect.Location = new(rect.X, rect.Bottom - BottomLeftRect.Height);
-                圆角路径.AddArc(BottomLeftRect, 90, 90);
-            }
-
-            圆角路径.CloseAllFigures();
 
             if (!returnOuterPath)
             {
-                return 圆角路径;
+                GraphicsPath roundedPath = new();
+                AddRoundedPath(roundedPath, topLeft, topLeftRect, leftCenterPoint, topLeftPoint, 180, 90);
+                AddRoundedPath(roundedPath, topRight, topRightRect, topCenterPoint, topRightPoint, 270, 90);
+                AddRoundedPath(roundedPath, bottomRight, bottomRightRect, rightCenterPoint, bottomRightPoint, 0, 90);
+                AddRoundedPath(roundedPath, bottomLeft, bottomLeftRect, bottomCenterPoint, bottomLeftPoint, 90, 90);
+                roundedPath.CloseAllFigures();
+                return roundedPath;
             }
             else
             {
-                GraphicsPath 外部路径 = new();
-
-                if (TopLeft != 0)
-                {
-                    外部路径.AddArc(TopLeftRect, 180, 90);
-                    外部路径.AddLine(TopLeftPoint, LeftCenterPoint);
-                    外部路径.CloseFigure();
-                }
-                if (TopRight != 0)
-                {
-                    外部路径.AddArc(TopRightRect, 270, 90);
-                    外部路径.AddLine(TopRightPoint, TopCenterPoint);
-                    外部路径.CloseFigure();
-                }
-                if (BottomRight != 0)
-                {
-                    外部路径.AddArc(BottomRightRect, 0, 90);
-                    外部路径.AddLine(BottomRightPoint, RightCenterPoint);
-                    外部路径.CloseFigure();
-                }
-                if (BottomLeft != 0)
-                {
-                    外部路径.AddArc(BottomLeftRect, 90, 90);
-                    外部路径.AddLine(BottomLeftPoint, BottomCenterPoint);
-                    外部路径.CloseFigure();
-                }
-
-                return 外部路径;
+                GraphicsPath externalPath = new();
+                AddRoundedPath(externalPath, topLeft, topLeftRect, topLeftPoint, leftCenterPoint, 180, 90);
+                AddRoundedPath(externalPath, topRight, topRightRect, topRightPoint, topCenterPoint, 270, 90);
+                AddRoundedPath(externalPath, bottomRight, bottomRightRect, bottomRightPoint, rightCenterPoint, 0, 90);
+                AddRoundedPath(externalPath, bottomLeft, bottomLeftRect, bottomLeftPoint, bottomCenterPoint, 90, 90);
+                externalPath.CloseAllFigures();
+                return externalPath;
             }
         }
     }

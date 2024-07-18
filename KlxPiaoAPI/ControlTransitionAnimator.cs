@@ -24,16 +24,16 @@ namespace KlxPiaoAPI
         /// <param name="action">每一帧动画完成时执行的操作。</param>
         /// <param name="isCheckControlPoint">是否检查控制点异常。</param>
         /// <param name="token">用于取消动画的CancellationToken。</param>
-        public static async Task BezierTransition(this Control control, string property, object? startValue, object endValue, int time, PointF[]? controlPoints = null, int FPS = 100, Action<double>? action = default, bool isCheckControlPoint = true, CancellationToken token = default)
+        public static async Task BezierTransition(this Control control, string property, object? startValue, object? endValue, int time, PointF[]? controlPoints = null, int FPS = 100, Action<double>? action = default, bool isCheckControlPoint = true, CancellationToken token = default)
         {
             DateTime startTime = DateTime.Now;
             TimeSpan totalDuration = TimeSpan.FromMilliseconds(time);
-            bool isRunning = false; //true表示动画完成
+            bool isRunning = false;
 
+            if (endValue == null) return;
             startValue ??= control.SetOrGetPropertyValue(property);
             controlPoints ??= [new(0, 0), new(1, 1)];
 
-            //自动补全开始点和结束点
             if (isCheckControlPoint)
             {
                 var newControlPoints = controlPoints.ToList();
@@ -92,7 +92,7 @@ namespace KlxPiaoAPI
         /// <param name="action">每一帧动画完成时执行的操作。</param>
         /// <param name="isCheckControlPoint">是否检查控制点异常。</param>
         /// <param name="token">用于取消动画的CancellationToken。</param>
-        public static async Task BezierTransition(this Control control, string property, object? startValue, object endValue, Animation animation, Action<double>? action = default, bool isCheckControlPoint = true, CancellationToken token = default)
+        public static async Task BezierTransition(this Control control, string property, object? startValue, object? endValue, Animation animation, Action<double>? action = default, bool isCheckControlPoint = true, CancellationToken token = default)
         {
             await BezierTransition(control, property, startValue, endValue, animation.Time, animation.Easing, animation.FPS, action, isCheckControlPoint, token);
         }
@@ -113,7 +113,7 @@ namespace KlxPiaoAPI
         {
             DateTime startTime = DateTime.Now;
             TimeSpan totalDuration = TimeSpan.FromMilliseconds(time);
-            bool isRunning = false; //true表示动画完成
+            bool isRunning = false;
 
             startValue ??= control.SetOrGetPropertyValue(property);
 

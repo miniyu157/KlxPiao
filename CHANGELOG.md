@@ -1,5 +1,29 @@
 # 更新日志
 
+## 版本 1.1.1.1
+### 解决方案
+- 优化部分 XML 注释
+- 部分代码优化
+
+### KlxPiaoAPI
+#### 新增方法：
+- (扩展) object.GetPropertyType
+- (扩展) object.GetPropertyInfo
+#### 优化方法参数：
+- (扩展) Control.BezierTransition 参数 ```endValue``` 可为 null
+#### 修复：
+- (扩展) Graphics.DrawRounded ```pen``` 会抛弃原有特性的问题
+
+### KlxPiaoControls
+#### 新增属性：
+- BezierCurve.ZeroToOneOffset
+#### 重命名属性：
+- BezierCurve.ZeroToOneSizeRange -> ZeroToOneSize
+#### 修复：
+- BezierCurve.CurveColor 失效的问题
+
+---
+
 ## 版本 1.1.1.0
 ### 解决方案
 - 补充 XML 注释

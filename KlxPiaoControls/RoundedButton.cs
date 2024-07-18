@@ -252,7 +252,7 @@ namespace KlxPiaoControls
             set { _interactionStyle = value; }
         }
         /// <summary>
-        /// 定义鼠标交互时按钮的颜色过渡动画配置。
+        /// 定义鼠标交互时按钮的颜色过渡动画配置，以 <see cref="Animation"/> 结构体表示。
         /// </summary>
         [Category("RoundedButton交互样式")]
         [Description("定义鼠标交互时按钮的颜色过渡动画配置")]
@@ -263,7 +263,7 @@ namespace KlxPiaoControls
             set { _colorAnimationConfig = value; }
         }
         /// <summary>
-        /// 定义鼠标交互时按钮的大小过渡动画配置。
+        /// 定义鼠标交互时按钮的大小过渡动画配置，以 <see cref="Animation"/> 结构体表示。
         /// </summary>
         [Category("RoundedButton交互样式")]
         [Description("定义鼠标交互时按钮的大小过渡动画配置")]
@@ -337,6 +337,10 @@ namespace KlxPiaoControls
 
         //缓存Pen
         private Pen _BorderPen;
+
+        /// <summary>
+        /// 获取或设置边框的画笔。
+        /// </summary>
         [Browsable(false)]
         public Pen BorderPen
         {
@@ -464,235 +468,119 @@ namespace KlxPiaoControls
         }
 
         #region 交互样式
-        //存储数据
-        private readonly List<object?> oldMouseOverData = [];
-        private readonly List<object?> oldMouseDownData = [];
+        private enum PropertyAction
+        {
+            Update,
+            Reset
+        }
 
-        //目标属性
-        private readonly string[] mouseOverProperties = ["OverBackColor", "OverBorderColor", "OverForeColor", "OverSize"];
-        private readonly string[] mouseDownProperties = ["DownBackColor", "DownBorderColor", "DownForeColor", "DownSize"];
+        private enum EventType
+        {
+            Over,
+            Down
+        }
 
-        private readonly string[] propertyNames = ["BackColor", "BorderColor", "ForeColor", "Size"];
-
+        private readonly object?[] oldOverProperties = new object?[4];
+        private readonly object?[] oldDownProperties = new object?[4];
+        private readonly string[] properties = ["BackColor", "BorderColor", "ForeColor", "Size"];
+        private readonly string[] overProperties = ["OverBackColor", "OverBorderColor", "OverForeColor", "OverSize"];
+        private readonly string[] downProperties = ["DownBackColor", "DownBorderColor", "DownForeColor", "DownSize"];
         private CancellationTokenSource MouseOverCTS = new();
         private CancellationTokenSource MouseDownCTS = new();
 
         protected override void OnMouseEnter(EventArgs e)
         {
+            UpdateProperties(overProperties, oldOverProperties, PropertyAction.Update, EventType.Over);
+
             base.OnMouseEnter(e);
-
-            MouseOverCTS.Cancel();
-            MouseOverCTS = new CancellationTokenSource();
-
-            oldMouseOverData.Clear();
-
-            for (int i = 0; i < propertyNames.Length; i++)
-            {
-                string property = propertyNames[i];
-                object? currentValue = this.SetOrGetPropertyValue(property);
-                object? targetValue = InteractionStyle.SetOrGetPropertyValue(mouseOverProperties[i]);
-
-                oldMouseOverData.Add(currentValue);
-
-                if (targetValue != null &&
-                    ((targetValue is Color color && color != Color.Empty) ||
-                        (targetValue is Size size && size != Size.Empty)))
-                {
-                    if (IsEnableAnimation)
-                    {
-                        int time = property switch
-                        {
-                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.Time,
-                            "Size" => SizeAnimationConfig.Time,
-                            _ => 200
-                        };
-
-                        int FPS = property switch
-                        {
-                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.FPS,
-                            "Size" => SizeAnimationConfig.FPS,
-                            _ => 30
-                        };
-
-                        PointF[]? easing = property switch
-                        {
-                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.Easing,
-                            "Size" => SizeAnimationConfig.Easing,
-                            _ => [new(0, 0), new(1, 1)]
-                        };
-
-                        _ = this.BezierTransition(property, null, targetValue, new Animation(time, FPS, easing), default, true, MouseOverCTS.Token);
-                    }
-                    else
-                    {
-                        this.SetOrGetPropertyValue(property, targetValue);
-                    }
-                }
-            }
         }
 
         protected override void OnMouseLeave(EventArgs e)
         {
+            UpdateProperties(overProperties, oldOverProperties, PropertyAction.Reset, EventType.Over);
+
             base.OnMouseLeave(e);
-
-            MouseOverCTS.Cancel();
-            MouseOverCTS = new CancellationTokenSource();
-
-            for (int i = 0; i < propertyNames.Length; i++)
-            {
-                string property = propertyNames[i];
-                object? targetValue = InteractionStyle.SetOrGetPropertyValue(mouseOverProperties[i]);
-                object? oldPropertyValue = oldMouseOverData[i];
-
-                if (oldPropertyValue != null &&
-                    ((oldPropertyValue is Color color && color != Color.Empty) ||
-                        (oldPropertyValue is Size size && size != Size.Empty)))
-                {
-                    if (IsEnableAnimation)
-                    {
-                        int time = property switch
-                        {
-                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.Time,
-                            "Size" => SizeAnimationConfig.Time,
-                            _ => 200
-                        };
-
-                        int FPS = property switch
-                        {
-                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.FPS,
-                            "Size" => SizeAnimationConfig.FPS,
-                            _ => 30
-                        };
-
-                        PointF[]? easing = property switch
-                        {
-                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.Easing,
-                            "Size" => SizeAnimationConfig.Easing,
-                            _ => [new(0, 0), new(1, 1)]
-                        };
-
-                        _ = this.BezierTransition(property, null, oldPropertyValue, new Animation(time, FPS, easing), default, true, MouseOverCTS.Token);
-                    }
-                    else
-                    {
-                        this.SetOrGetPropertyValue(property, oldPropertyValue);
-                    }
-                }
-            }
         }
-
         protected override void OnMouseDown(MouseEventArgs e)
         {
+            UpdateProperties(downProperties, oldDownProperties, PropertyAction.Update, EventType.Down);
+
             base.OnMouseDown(e);
-
-            MouseDownCTS.Cancel();
-            MouseDownCTS = new CancellationTokenSource();
-
-            oldMouseDownData.Clear();
-
-            for (int i = 0; i < propertyNames.Length; i++)
-            {
-                string property = propertyNames[i];
-                object? currentValue = this.SetOrGetPropertyValue(property);
-                object? targetValue = InteractionStyle.SetOrGetPropertyValue(mouseDownProperties[i]);
-
-                oldMouseDownData.Add(currentValue);
-
-                if (targetValue != null &&
-                    ((targetValue is Color color && color != Color.Empty) ||
-                        (targetValue is Size size && size != Size.Empty)))
-                {
-                    if (IsEnableAnimation)
-                    {
-                        int time = property switch
-                        {
-                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.Time,
-                            "Size" => SizeAnimationConfig.Time,
-                            _ => 200
-                        };
-
-                        int FPS = property switch
-                        {
-                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.FPS,
-                            "Size" => SizeAnimationConfig.FPS,
-                            _ => 30
-                        };
-
-                        PointF[]? easing = property switch
-                        {
-                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.Easing,
-                            "Size" => SizeAnimationConfig.Easing,
-                            _ => [new(0, 0), new(1, 1)]
-                        };
-
-                        _ = this.BezierTransition(property, null, targetValue, new Animation(time, FPS, easing), default, true, MouseDownCTS.Token);
-                    }
-                    else
-                    {
-                        this.SetOrGetPropertyValue(property, targetValue);
-                    }
-                }
-            }
         }
-
         protected override void OnMouseUp(MouseEventArgs e)
         {
+            UpdateProperties(downProperties, oldDownProperties, PropertyAction.Reset, EventType.Down);
+
             base.OnMouseUp(e);
+        }
 
-            MouseDownCTS.Cancel();
-            MouseDownCTS = new CancellationTokenSource();
-
-            for (int i = 0; i < propertyNames.Length; i++)
+        private void UpdateProperties(string[] interactionPropArray, object?[] oldPropertiesArray, PropertyAction action, EventType eventType)
+        {
+            switch (eventType)
             {
-                string property = propertyNames[i];
-                object? targetValue = InteractionStyle.SetOrGetPropertyValue(mouseDownProperties[i]);
-                object? oldPropertyValue = oldMouseDownData[i];
+                case EventType.Over:
+                    MouseOverCTS.Cancel();
+                    MouseOverCTS = new();
+                    break;
 
-                if (oldPropertyValue != null &&
-                    ((oldPropertyValue is Color color && color != Color.Empty) ||
-                        (oldPropertyValue is Size size && size != Size.Empty)))
+                case EventType.Down:
+                    MouseDownCTS.Cancel();
+                    MouseDownCTS = new();
+                    break;
+            }
+
+            for (int i = 0; i < properties.Length; i++)
+            {
+                string propertyName = properties[i];
+                var interactionProp = InteractionStyle.SetOrGetPropertyValue(interactionPropArray[i]);
+
+                if (interactionProp != null &&
+                    ((interactionProp is Color color && color != Color.Empty) ||
+                        (interactionProp is Size size && size != Size.Empty)))
                 {
-                    if (IsEnableAnimation)
+                    Animation animation = this.GetPropertyType(propertyName).Name switch
                     {
-                        int time = property switch
-                        {
-                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.Time,
-                            "Size" => SizeAnimationConfig.Time,
-                            _ => 200
-                        };
+                        "Color" => ColorAnimationConfig,
+                        "Size" => SizeAnimationConfig,
+                        _ => new(200, 30, "0, 0, 1, 1")
+                    };
 
-                        int FPS = property switch
-                        {
-                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.FPS,
-                            "Size" => SizeAnimationConfig.FPS,
-                            _ => 30
-                        };
+                    switch (action)
+                    {
+                        case PropertyAction.Update:
+                            oldPropertiesArray[i] = this.SetOrGetPropertyValue(propertyName);
+                            SetValue(interactionProp);
+                            break;
 
-                        PointF[]? easing = property switch
-                        {
-                            "BackColor" or "BorderColor" or "ForeColor" => ColorAnimationConfig.Easing,
-                            "Size" => SizeAnimationConfig.Easing,
-                            _ => [new(0, 0), new(1, 1)]
-                        };
-
-                        _ = this.BezierTransition(property, null, oldPropertyValue, new Animation(time, FPS, easing), default, true, MouseDownCTS.Token);
+                        case PropertyAction.Reset:
+                            SetValue(oldPropertiesArray[i]);
+                            break;
                     }
-                    else
+
+                    void SetValue(object? newValue)
                     {
-                        this.SetOrGetPropertyValue(property, oldPropertyValue);
+                        if (IsEnableAnimation)
+                        {
+                            switch (eventType)
+                            {
+                                case EventType.Over:
+                                    _ = this.BezierTransition(propertyName, null, newValue, animation, default, true, MouseOverCTS.Token);
+                                    break;
+
+                                case EventType.Down:
+                                    _ = this.BezierTransition(propertyName, null, newValue, animation, default, true, MouseDownCTS.Token);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            this.SetOrGetPropertyValue(propertyName, newValue);
+                        }
                     }
                 }
             }
         }
         #endregion
-
-        //修改布局时立即重绘
-        protected override void OnPaddingChanged(EventArgs e)
-        {
-            Refresh();
-
-            base.OnPaddingChanged(e);
-        }
 
         protected override void OnTextChanged(EventArgs e)
         {

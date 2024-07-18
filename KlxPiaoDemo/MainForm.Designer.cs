@@ -2854,12 +2854,16 @@ namespace KlxPiaoDemo
             // bezierCurve1
             // 
             bezierCurve1.ControlPoints = (List<PointF>)resources.GetObject("bezierCurve1.ControlPoints");
+            bezierCurve1.DrawingAccuracy = 0.003F;
+            bezierCurve1.IsDisplayControlPointTextWhileDragging = false;
             bezierCurve1.Location = new Point(3, 3);
             bezierCurve1.Name = "bezierCurve1";
             bezierCurve1.Padding = new Padding(25, 5, 0, 0);
             bezierCurve1.Size = new Size(576, 383);
             bezierCurve1.TabIndex = 36;
             bezierCurve1.Text = "bezierCurve1";
+            bezierCurve1.ZeroToOneOffset = new Point(25, 5);
+            bezierCurve1.ZeroToOnePosition = ContentAlignment.TopLeft;
             bezierCurve1.ControlPointChanged += BezierCurve1_控制点拖动;
             // 
             // tabPage14

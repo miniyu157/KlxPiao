@@ -44,6 +44,44 @@ namespace KlxPiaoAPI
         /// <exception cref="ArgumentException">当属性名称为空或属性不存在时抛出。</exception>
         public static object? SetOrGetPropertyValue(this object obj, string propertyName, object? newValue = null)
         {
+            PropertyInfo property = obj.GetPropertyInfo(propertyName);
+
+            if (newValue != null)
+            {
+                if (!property.PropertyType.IsAssignableFrom(newValue.GetType()))
+                    throw new ArgumentException($"值类型 {newValue.GetType().Name} 与属性类型 {property.PropertyType.Name} 不匹配。", nameof(newValue));
+
+                property.SetValue(obj, newValue);
+
+                return null;
+            }
+            else
+            {
+                return property.GetValue(obj);
+            }
+        }
+
+        /// <summary>
+        /// 获取一个对象中属性的类型。
+        /// </summary>
+        /// <param name="obj">要操作的对象。</param>
+        /// <param name="propertyName">属性的名称。</param>
+        /// <returns><see cref="Type"/> 属性的类型。</returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static Type GetPropertyType(this object obj, string propertyName)
+        {
+            return obj.GetPropertyInfo(propertyName).PropertyType;
+        }
+
+        /// <summary>
+        /// 获取一个对象中的属性。
+        /// </summary>
+        /// <param name="obj">要操作的对象。</param>
+        /// <param name="propertyName">属性的名称。</param>
+        /// <returns><see cref="PropertyInfo"/> 属性的信息。</returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static PropertyInfo GetPropertyInfo(this object obj, string propertyName)
+        {
             ArgumentNullException.ThrowIfNull(obj);
 
             if (string.IsNullOrEmpty(propertyName))
@@ -51,20 +89,7 @@ namespace KlxPiaoAPI
 
             Type type = obj.GetType();
 
-            PropertyInfo property = type.GetProperty(propertyName) ?? throw new ArgumentException($"属性 {propertyName} 在类型 {type.Name} 中不存在", nameof(propertyName));
-
-            if (newValue != null)
-            {
-                if (!property.PropertyType.IsAssignableFrom(newValue.GetType()))
-                    throw new ArgumentException($"值类型 {newValue.GetType().Name} 与属性类型 {property.PropertyType.Name} 不匹配", nameof(newValue));
-
-                property.SetValue(obj, newValue);
-                return null;
-            }
-            else
-            {
-                return property.GetValue(obj);
-            }
+            return type.GetProperty(propertyName) ?? throw new ArgumentException($"属性 {propertyName} 在类型 {type.Name} 中不存在。", nameof(propertyName));
         }
     }
 }

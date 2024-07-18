@@ -46,7 +46,7 @@ namespace KlxPiaoAPI
             {
                 MatchMode.Regex => ExtractWithRegex(inputText, leadingText, trailingText),
                 MatchMode.StringIndex => ExtractWithIndex(inputText, leadingText, trailingText),
-                _ => throw new ArgumentException("指定了无效的匹配模式", nameof(mode))
+                _ => throw new ArgumentException("指定了无效的匹配模式。", nameof(mode))
             };
         }
 
