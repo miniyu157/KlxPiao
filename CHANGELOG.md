@@ -13,6 +13,7 @@
 - DataUtility.MergeListsToDictionary
 - NetworkOperations.TryGetHTMLContentAsync
 - NetworkOperations.DownloadFileAsync
+- NetworkOperations.GetImageFromUrlAsync
 #### 修复：
 - FileUtils.LoadFontFamily 注释不显示的问题
 #### 转为扩展方法：
@@ -23,6 +24,7 @@
 - KlxPiaoForm.CloseButtonClick
 #### 新增方法
 - RoundedButton.PerformClick
+- KlxPiaoForm.CloseForm
 
 ---
 
