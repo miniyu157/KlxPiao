@@ -203,7 +203,7 @@ namespace KlxPiaoControls
                         Pen pen = new(BorderColor, BorderSize * 2); //修正画笔大小
                         if (pen.Width != 0)
                         {
-                            GraphicsPath 圆角路径 = GraphicsExtensions.ConvertToRoundedPath(thisRect, BorderCornerRadius);
+                            GraphicsPath 圆角路径 = thisRect.ConvertToRoundedPath(BorderCornerRadius);
                             g.DrawPath(pen, 圆角路径);
                         }
                     }
@@ -222,7 +222,7 @@ namespace KlxPiaoControls
                 //填充外部
                 var drawOuter = new Action(() =>
                 {
-                    GraphicsPath 外部路径 = GraphicsExtensions.ConvertToRoundedPath(thisRect, BorderCornerRadius, true);
+                    GraphicsPath 外部路径 = thisRect.ConvertToRoundedPath(BorderCornerRadius, true);
                     g.FillPath(new SolidBrush(BaseBackColor), 外部路径);
                 });
 
@@ -247,21 +247,6 @@ namespace KlxPiaoControls
                         break;
                 }
             }
-        }
-        /// <summary>
-        /// 返回控件绘制的图像。
-        /// </summary>
-        public Bitmap GetControlImage()
-        {
-            Bitmap bmp = new(Width, Height);
-
-            using (Graphics g = Graphics.FromImage(bmp))
-            {
-                PaintEventArgs e = new(g, new Rectangle(0, 0, Width, Height));
-                OnPaint(e);
-            }
-
-            return bmp;
         }
     }
 }

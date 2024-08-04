@@ -8,6 +8,18 @@ namespace KlxPiaoAPI
     public static class ControlAndPropertyUtils
     {
         /// <summary>
+        /// 返回控件绘制的图像。
+        /// </summary>
+        public static Bitmap GetControlImage(this Control control)
+        {
+            Bitmap bmp = new(control.ClientSize.Width, control.ClientSize.Height);
+
+            control.DrawToBitmap(bmp, control.ClientRectangle);
+
+            return bmp;
+        }
+
+        /// <summary>
         /// 遍历指定容器中的控件，并对匹配的控件执行指定的操作。
         /// </summary>
         /// <typeparam name="T">要匹配的控件类型。</typeparam>

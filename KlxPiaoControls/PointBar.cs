@@ -384,7 +384,7 @@ namespace KlxPiaoControls
                 Pen pen = new(BorderColor, BorderSize * 2); //修正画笔大小
                 if (pen.Width != 0)
                 {
-                    GraphicsPath 圆角路径 = GraphicsExtensions.ConvertToRoundedPath(thisRect, CornerRadius);
+                    GraphicsPath 圆角路径 = thisRect.ConvertToRoundedPath(CornerRadius);
                     g.DrawPath(pen, 圆角路径);
                 }
                 g.SmoothingMode = SmoothingMode.Default;
@@ -414,7 +414,7 @@ namespace KlxPiaoControls
             {
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                GraphicsPath 外部路径 = GraphicsExtensions.ConvertToRoundedPath(thisRect, CornerRadius, true);
+                GraphicsPath 外部路径 = thisRect.ConvertToRoundedPath(CornerRadius, true);
                 g.FillPath(new SolidBrush(BaseBackColor), 外部路径);
                 g.SmoothingMode = SmoothingMode.Default;
                 g.PixelOffsetMode = PixelOffsetMode.Default;

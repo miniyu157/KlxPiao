@@ -595,5 +595,13 @@ namespace KlxPiaoControls
 
             base.OnSizeChanged(e);
         }
+
+        /// <summary>
+        /// 触发 OnClick 事件。
+        /// </summary>
+        public void PerformClick()
+        {
+            OnClick(EventArgs.Empty);
+        }
     }
 }

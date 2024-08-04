@@ -134,7 +134,7 @@
             // 边框外部Panel
             // 
             边框外部Panel.BackColor = Color.White;
-            边框外部Panel.CornerRadius = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
+            边框外部Panel.CornerRadius = new KlxPiaoAPI.CornerRadius(15F, 15F, 15F, 15F);
             边框外部Panel.Cursor = Cursors.Hand;
             边框外部Panel.IsEnableShadow = false;
             边框外部Panel.Location = new Point(161, 90);
@@ -147,7 +147,7 @@
             // 边框颜色Panel
             // 
             边框颜色Panel.BackColor = Color.LightGray;
-            边框颜色Panel.CornerRadius = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
+            边框颜色Panel.CornerRadius = new KlxPiaoAPI.CornerRadius(15F, 15F, 15F, 15F);
             边框颜色Panel.Cursor = Cursors.Hand;
             边框颜色Panel.IsEnableShadow = false;
             边框颜色Panel.Location = new Point(60, 90);
@@ -290,7 +290,7 @@
             // 前景Panel
             // 
             前景Panel.BackColor = Color.Black;
-            前景Panel.CornerRadius = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
+            前景Panel.CornerRadius = new KlxPiaoAPI.CornerRadius(15F, 15F, 15F, 15F);
             前景Panel.Cursor = Cursors.Hand;
             前景Panel.IsEnableShadow = false;
             前景Panel.Location = new Point(161, 90);
@@ -303,7 +303,7 @@
             // 背景Panel
             // 
             背景Panel.BackColor = Color.White;
-            背景Panel.CornerRadius = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
+            背景Panel.CornerRadius = new KlxPiaoAPI.CornerRadius(15F, 15F, 15F, 15F);
             背景Panel.Cursor = Cursors.Hand;
             背景Panel.IsEnableShadow = false;
             背景Panel.Location = new Point(60, 90);
@@ -387,7 +387,11 @@
             // pointBar1
             // 
             pointBar1.BackColor = Color.White;
-            pointBar1.CoordinateDisplayFormat = "X:{X}, Y:{Y}";
+            pointBar1.CoordinateDisplayFormat = "Offset: X:{X} Y:{Y}";
+            pointBar1.CoordinateTextAlign = ContentAlignment.BottomCenter;
+            pointBar1.CoordinateTextOffset = new Point(0, -3);
+            pointBar1.CornerRadius = new KlxPiaoAPI.CornerRadius(15F, 15F, 15F, 15F);
+            pointBar1.Font = new Font("Microsoft YaHei UI", 7.5F, FontStyle.Regular, GraphicsUnit.Point, 134);
             pointBar1.Location = new Point(143, 66);
             pointBar1.MaxValue = new Point(250, 250);
             pointBar1.MinValue = new Point(-250, -250);
@@ -400,7 +404,7 @@
             // 投影颜色Panel
             // 
             投影颜色Panel.BackColor = Color.DarkGray;
-            投影颜色Panel.CornerRadius = new KlxPiaoAPI.CornerRadius(0.36F, 0.36F, 0.36F, 0.36F);
+            投影颜色Panel.CornerRadius = new KlxPiaoAPI.CornerRadius(15F, 15F, 15F, 15F);
             投影颜色Panel.Cursor = Cursors.Hand;
             投影颜色Panel.IsEnableShadow = false;
             投影颜色Panel.Location = new Point(60, 84);

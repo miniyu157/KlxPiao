@@ -29,12 +29,12 @@ namespace KlxPiaoAPI
             //绘制边框
             if (newPen.Width != 0)
             {
-                GraphicsPath roundedPath = ConvertToRoundedPath(rect, cornerRadius);
+                GraphicsPath roundedPath = rect.ConvertToRoundedPath(cornerRadius);
                 g.DrawPath(newPen, roundedPath);
             }
 
             //填充外部
-            GraphicsPath externalPath = ConvertToRoundedPath(rect, cornerRadius, true);
+            GraphicsPath externalPath = rect.ConvertToRoundedPath(cornerRadius, true);
             g.FillPath(new SolidBrush(clear), externalPath);
         }
 
@@ -54,11 +54,11 @@ namespace KlxPiaoAPI
             }
 
             //填充内部
-            GraphicsPath roundedPath = ConvertToRoundedPath(rect, cornerRadius);
+            GraphicsPath roundedPath = rect.ConvertToRoundedPath(cornerRadius);
             g.FillPath(brush, roundedPath);
 
             //填充外部
-            GraphicsPath externalPath = ConvertToRoundedPath(rect, cornerRadius, true);
+            GraphicsPath externalPath = rect.ConvertToRoundedPath(cornerRadius, true);
             g.FillPath(new SolidBrush(clear), externalPath);
         }
 
@@ -69,7 +69,7 @@ namespace KlxPiaoAPI
         /// <param name="cornerRadius">角半径，以 <see cref="CornerRadius"/> 结构体表示。</param>
         /// <param name="returnOuterPath">是否返回除圆角区域外的路径。</param>
         /// <returns>表示圆角路径的 <see cref="GraphicsPath"/> 。</returns>
-        public static GraphicsPath ConvertToRoundedPath(Rectangle rect, CornerRadius cornerRadius, bool returnOuterPath = false)
+        public static GraphicsPath ConvertToRoundedPath(this Rectangle rect, CornerRadius cornerRadius, bool returnOuterPath = false)
         {
             //作为百分比时，使用较短的一侧
             float referenceSize = Math.Min(rect.Width, rect.Height);

@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using System.Text;
+﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace KlxPiaoAPI
 {
@@ -80,38 +80,26 @@ namespace KlxPiaoAPI
         /// 处理字符串的第一个字符，根据其大小写转换为相反的大小写。
         /// </summary>
         /// <param name="input">要处理的字符串。</param>
-        /// <param name="failstring">处理无效时追加的字符。</param>
+        /// <param name="failstring">与原文本相同时追加的字符。</param>
         /// <returns>返回处理后的字符串。</returns>
-        /// <exception cref="ArgumentException">参数无效时抛出。</exception>
+        /// <exception cref="ArgumentException">参数为空时抛出。</exception>
         public static string ProcessFirstChar(this string input, string failstring = "")
         {
             if (string.IsNullOrEmpty(input))
             {
-                throw new ArgumentException("参数 'input' 不能为空");
+                throw new ArgumentException("参数 'input' 不能为空", nameof(input));
             }
 
             char firstChar = input[0];
+            string newText = char.IsUpper(firstChar)
+                ? char.ToLower(firstChar) + input[1..]
+                : char.ToUpper(firstChar) + input[1..];
 
-            if (char.IsUpper(firstChar))
+            if (newText == input)
             {
-                var 小写副本 = char.ToLower(firstChar) + input[1..];
-
-                if (小写副本 == input)
-                {
-                    return input + failstring;
-                }
-                return 小写副本;
+                return input + failstring;
             }
-            else
-            {
-                var 大写副本 = char.ToUpper(firstChar) + input[1..];
-
-                if (大写副本 == input)
-                {
-                    return input + failstring;
-                }
-                return 大写副本;
-            }
+            return newText;
         }
 
         /// <summary>

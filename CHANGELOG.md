@@ -1,5 +1,31 @@
 # 更新日志
 
+## 版本 1.1.1.2
+### 解决方案
+- 部分代码优化
+
+### KlxPiaoAPI
+#### 新增类：
+- DataUtility (提供数据处理的实用工具类)
+#### 新增方法：
+- (扩展) Control.GetControlImage
+- (扩展) Bitmap.ReplaceColor
+- DataUtility.MergeListsToDictionary
+- NetworkOperations.TryGetHTMLContentAsync
+- NetworkOperations.DownloadFileAsync
+#### 修复：
+- FileUtils.LoadFontFamily 注释不显示的问题
+#### 转为扩展方法：
+- GraphicsExtensions.ConvertToRoundedPath
+
+### KlxPiaoControls
+#### 新增事件
+- KlxPiaoForm.CloseButtonClick
+#### 新增方法
+- RoundedButton.PerformClick
+
+---
+
 ## 版本 1.1.1.1
 ### 解决方案
 - 优化部分 XML 注释

@@ -196,6 +196,21 @@ namespace KlxPiaoControls
             MinimizeButton.IsReceiveFocus = false;
         }
 
+        #region Events
+        /// <summary>
+        /// 用户单击关闭按钮的事件。
+        /// </summary>
+        public event EventHandler<EventArgs>? CloseButtonClick;
+
+        /// <summary>
+        /// 引发 <see cref="CloseButtonClick"/> 事件。
+        /// </summary>
+        protected virtual void OnCloseButtonClick(EventArgs e)
+        {
+            CloseButtonClick?.Invoke(this, EventArgs.Empty);
+        }
+        #endregion
+
         private void TitleButtons_Paint(object? sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -793,7 +808,10 @@ namespace KlxPiaoControls
 
         //关闭
         bool isClosing = false;
-        private void CloseForm()
+        /// <summary>
+        /// 关闭窗体（带有动画）。
+        /// </summary>
+        public void CloseForm()
         {
             if (!isClosing)
             {
@@ -879,6 +897,7 @@ namespace KlxPiaoControls
         #region 标题按钮事件
         private void CloseButton_Click(object? sender, EventArgs e)
         {
+            OnCloseButtonClick(EventArgs.Empty);
             CloseForm();
         }
 
