@@ -1,13 +1,63 @@
-﻿using System.Drawing.Imaging;
+﻿using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
 namespace KlxPiaoAPI
 {
     /// <summary>
-    /// 提供对 <see cref="Bitmap"/> 和 <see cref="Image"/> 的扩展方法。
+    /// 主要提供对 <see cref="Bitmap"/> 和 <see cref="Image"/> 的扩展方法。
     /// </summary>
     public static class ImageExtensions
     {
+        /// <summary>
+        /// 调整原始图像大小并应用基础颜色作为背景颜色。
+        /// </summary>
+        /// <param name="originalImage">要调整大小的原始图像。</param>
+        /// <param name="baseColor">基础背景颜色。</param>
+        /// <param name="newSize">新的图像尺寸。</param>
+        /// <returns>调整大小后的图像。</returns>
+        public static Bitmap ResetImage(this Bitmap originalImage, Size? newSize, Color? baseColor = null)
+        {
+            int newWidth = newSize == null ? originalImage.Width : newSize.Value.Width;
+            int newHeight = newSize == null ? originalImage.Height : newSize.Value.Height;
+
+            Bitmap newBitmap = new(newWidth, newHeight);
+
+            using Graphics g = Graphics.FromImage(newBitmap);
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            g.CompositingQuality = CompositingQuality.HighQuality;
+            if (baseColor != null) g.Clear(baseColor.Value);
+            g.DrawImage(originalImage, 0, 0, newWidth, newHeight);
+
+            return newBitmap;
+        }
+
+        /// <summary>
+        /// 调整原始图像大小并应用基础颜色作为背景颜色。
+        /// </summary>
+        /// <param name="originalImage">要调整大小的原始图像。</param>
+        /// <param name="baseColor">基础背景颜色。</param>
+        /// <param name="newSize">新的图像尺寸。</param>
+        /// <returns>调整大小后的图像。</returns>
+        public static Image ResetImage(this Image originalImage, Size? newSize, Color? baseColor = null)
+        {
+            return ((Bitmap)originalImage).ResetImage(newSize, baseColor);
+        }
+
+        /// <summary>
+        /// 调整原始图像大小并应用基础颜色作为背景颜色。
+        /// </summary>
+        /// <param name="originalImage">要调整大小的原始图像。</param>
+        /// <param name="baseColor">基础背景颜色。</param>
+        /// <param name="newSize">新的图像尺寸。</param>
+        /// <returns>调整大小后的图像。</returns>
+        public static Icon ResetImage(this Icon originalImage, Size? newSize, Color? baseColor = null)
+        {
+            return Icon.FromHandle(originalImage.ToBitmap().ResetImage(newSize, baseColor).GetHicon());
+        }
+
         /// <summary>
         /// 替换位图图像中的指定颜色。
         /// </summary>

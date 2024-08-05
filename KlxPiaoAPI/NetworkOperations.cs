@@ -70,28 +70,21 @@
         }
 
         /// <summary>
-        /// 从指定的 URL 获取图像并将其转换为 Bitmap 对象。
-        /// 如果指定了大小，则调整图像到该大小。
+        /// 从指定的 URL 获取图像，并根据需要将其保存到指定路径。
         /// </summary>
-        /// <param name="url">图像的 URL。</param>
-        /// <param name="size">可选参数，指定返回图像的大小。如果未提供，则返回原始大小的图像。</param>
-        /// <returns>返回的 Bitmap 对象。</returns>
-        public static async Task<Bitmap> GetImageFromUrlAsync(string url, Size? size = null)
+        /// <param name="url">图像的 URL 。</param>
+        /// <param name="savePath">可选的保存路径。如果提供此参数，图像将保存到该路径。</param>
+        /// <returns>从 URL 获取的原始位图图像。</returns>
+        public static async Task<Bitmap> GetImageFromUrlAsync(string url, string? savePath = null)
         {
             using HttpClient client = new();
             byte[] imageBytes = await client.GetByteArrayAsync(url);
-
             using MemoryStream ms = new(imageBytes);
             Bitmap originalBitmap = new(ms);
+            
+            if (savePath != null) originalBitmap.Save(savePath);
 
-            if (size.HasValue)
-            {
-                return new Bitmap(originalBitmap, size.Value);
-            }
-            else
-            {
-                return originalBitmap;
-            }
+            return originalBitmap;
         }
     }
 }

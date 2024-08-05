@@ -1,5 +1,21 @@
 # 更新日志
 
+## 版本 1.1.1.3
+### KlxPiaoAPI
+#### 新增类：
+- RichTextBoxExtensions (提供 RichTextBox 用于快速操作的扩展方法)
+#### 新增方法：
+- (扩展) RichTextBox.InsertText
+- (扩展) DataUtility.TruncateStringToFitWidth
+- (扩展) List\<string\>.TruncateToFitWidth
+- (扩展) Bitmap.ResetImage
+- (扩展) Image.ResetImage
+- (扩展) Icon.ResetImage
+#### 方法签名变更：
+- NetworkOperations.GetImageFromUrlAsync ```(string url, Size? size = null)``` -> ```(string url, string? savePath = null)```
+
+---
+
 ## 版本 1.1.1.2
 ### 解决方案
 - 部分代码优化
