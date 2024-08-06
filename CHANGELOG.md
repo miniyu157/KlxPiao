@@ -1,5 +1,20 @@
 # 更新日志
 
+## 版本 1.1.1.4
+### KlxPiaoAPI
+#### 新增方法：
+- (扩展) Dictionary<Tkey, TValue>.SwapDictionaryElements
+- (扩展) List\<T\>.SwapListElements
+- (扩展) RichTextBox.ContainsImage
+- (扩展) Color.ToHex
+- (扩展) Color.ToHexAlpha
+- ColorProcessor.FromHex
+#### 转为扩展方法
+- ColorProcessor.AdjustBrightness
+- ColorProcessor.SetBrightness
+
+---
+
 ## 版本 1.1.1.3
 ### KlxPiaoAPI
 #### 新增类：

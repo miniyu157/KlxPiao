@@ -1,4 +1,6 @@
-﻿namespace KlxPiaoAPI
+﻿using System.Text.RegularExpressions;
+
+namespace KlxPiaoAPI
 {
     /// <summary>
     /// 提供 <see cref="RichTextBox"/> 用于快速操作的扩展方法。
@@ -21,6 +23,22 @@
             richTextBox.AppendText(text);
             richTextBox.SelectionColor = richTextBox.ForeColor;
             richTextBox.SelectionFont = richTextBox.Font;
+        }
+
+        /// <summary>
+        /// 检查 <see cref="RichTextBox"/> 是否包含图像。
+        /// </summary>
+        /// <param name="richTextBox"><see cref="RichTextBox"/> 对象。</param>
+        /// <returns>若包含图像，则返回 true, 否则返回 false。</returns>
+        public static bool ContainsImage(this RichTextBox richTextBox)
+        {
+            string? rtfContent = richTextBox.Rtf;
+            if (rtfContent == null) return false;
+            string imagePattern = @"\\pict";
+            Regex regex = new(imagePattern);
+            MatchCollection matches = regex.Matches(rtfContent);
+
+            return matches.Count > 0;
         }
     }
 }

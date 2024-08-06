@@ -68,5 +68,40 @@
         {
             return list.Select(item => item.TruncateStringToFitWidth(maxWidth, font, omitText)).ToList();
         }
+
+        /// <summary>
+        /// 交换列表中两个指定索引位置的元素。
+        /// </summary>
+        /// <param name="items">要操作的列表。</param>
+        /// <param name="index1">第一个索引位置。</param>
+        /// <param name="index2">第二个索引位置。</param>
+        /// <returns>交换后的列表。</returns>
+        public static List<T> SwapListElements<T>(this List<T> items, int index1, int index2)
+        {
+            if (index1 < 0 || index1 >= items.Count)
+                throw new ArgumentOutOfRangeException(nameof(index1), "索引超出了范围。");
+
+            if (index2 < 0 || index2 >= items.Count)
+                throw new ArgumentOutOfRangeException(nameof(index2), "索引超出了范围。");
+
+            (items[index2], items[index1]) = (items[index1], items[index2]);
+            return items;
+        }
+
+        /// <summary>
+        /// 交换字典中两个指定索引位置的键值对。
+        /// </summary>
+        /// <param name="dictionary">要操作的字典。</param>
+        /// <param name="index1">第一个索引位置。</param>
+        /// <param name="index2">第二个索引位置。</param>
+        /// <returns>交换后的字典。</returns>
+        /// <typeparam name="TKey">字典中的键的类型。</typeparam>
+        /// <typeparam name="TValue">字典中的值的类型。</typeparam>
+        public static Dictionary<TKey, TValue> SwapDictionaryElements<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, int index1, int index2) where TKey : notnull
+        {
+            return DataUtility.MergeListsToDictionary(
+                SwapListElements(dictionary.Keys.ToList(), index1, index2),
+                SwapListElements(dictionary.Values.ToList(), index1, index2));
+        }
     }
 }
