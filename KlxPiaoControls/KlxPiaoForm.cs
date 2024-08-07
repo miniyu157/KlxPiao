@@ -209,6 +209,7 @@ namespace KlxPiaoControls
         }
         #endregion
 
+        #region Private Properties
         private Color _borderColor;
         private Style _theme;
 
@@ -238,10 +239,8 @@ namespace KlxPiaoControls
         private CloseButtonAction _closeButtonFunction;
         private StartupSequence _startupOrder;
         private bool _enableShadow;
-
-        private Color _inactiveTitleBoxBackColor;
-        private Color _inactiveTitleBoxForeColor;
-        private Color _inactiveBorderColor;
+        private bool _enableChangeInactiveTitleBoxForeColor;
+        #endregion
 
         private void InitializeTitleButton()
         {
@@ -406,6 +405,7 @@ namespace KlxPiaoControls
             _enableResizeButton = true;
             _enableMinimizeButton = true;
             _titleButtonDisabledColor = Color.DarkGray;
+            _enableChangeInactiveTitleBoxForeColor = true;
 
             _dragMode = WindowPosition.TitleBarOnly;
             _shortcutResizeMode = WindowPosition.TitleBarOnly;
@@ -418,16 +418,14 @@ namespace KlxPiaoControls
             _startupOrder = StartupSequence.WaitOnLoadThenAnimate;
             _enableShadow = true;
 
-            _inactiveTitleBoxBackColor = Color.Transparent;
-            _inactiveTitleBoxForeColor = SystemColors.WindowFrame;
-            _inactiveBorderColor = Color.Silver;
-
             BackColor = Color.White;
             Text = Name;
             StartPosition = FormStartPosition.CenterScreen;
             Size = new Size(700, 450);
             FormBorderStyle = FormBorderStyle.None;
             DoubleBuffered = true;
+
+            MinimumSize = new Size(TitleButtonWidth, TitleBoxHeight);
         }
 
         #region KlxPiaoForm外观
@@ -604,6 +602,17 @@ namespace KlxPiaoControls
             get { return _titleButtonDisabledColor; }
             set { _titleButtonDisabledColor = value; Refresh(); }
         }
+        /// <summary>
+        /// 获取或设置窗体未激活时是否改变标题框的前景色。
+        /// </summary>
+        [Category("KlxPiaoForm标题框")]
+        [Description("窗体未激活时是否改变标题框的前景色")]
+        [DefaultValue(true)]
+        public bool EnableChangeInactiveTitleBoxForeColor
+        {
+            get { return _enableChangeInactiveTitleBoxForeColor; }
+            set { _enableChangeInactiveTitleBoxForeColor = value; }
+        }
         #endregion
 
         #region KlxPiaoForm特性
@@ -695,7 +704,7 @@ namespace KlxPiaoControls
         public StartupSequence StartupOrder
         {
             get { return _startupOrder; }
-            set { _startupOrder = value; Invalidate(); }
+            set { _startupOrder = value; }
         }
         /// <summary>
         /// 获取或设置是否启用 Windows 窗体的圆角和阴影(会使窗体边框功能失效)。
@@ -706,40 +715,7 @@ namespace KlxPiaoControls
         public bool EnableShadow
         {
             get { return _enableShadow; }
-            set { _enableShadow = value; Invalidate(); }
-        }
-        #endregion
-
-        #region KlxPiaoForm焦点
-        /// <summary>
-        /// 获取或设置窗体未激活时标题框的背景色。
-        /// </summary>
-        [Category("KlxPiaoForm焦点")]
-        [Description("窗体未激活时标题框的背景色，Transparent：未激活时不改变背景色")]
-        public Color InactiveTitleBoxBackColor
-        {
-            get { return _inactiveTitleBoxBackColor; }
-            set { _inactiveTitleBoxBackColor = value; Invalidate(); }
-        }
-        /// <summary>
-        /// 获取或设置窗体未激活时标题框的前景色。
-        /// </summary>
-        [Category("KlxPiaoForm焦点")]
-        [Description("窗体未激活时标题文字前景色和窗体按钮的前景色，Transparent：未激活时不改变前景色")]
-        public Color InactiveTitleBoxForeColor
-        {
-            get { return _inactiveTitleBoxForeColor; }
-            set { _inactiveTitleBoxForeColor = value; Invalidate(); }
-        }
-        /// <summary>
-        /// 获取或设置窗体未激活时的边框颜色。
-        /// </summary>
-        [Category("KlxPiaoForm焦点")]
-        [Description("窗体未激活时边框的颜色，Transparent：未激活时不改变边框颜色")]
-        public Color InactiveBorderColor
-        {
-            get { return _inactiveBorderColor; }
-            set { _inactiveBorderColor = value; Invalidate(); }
+            set { _enableShadow = value; }
         }
         #endregion
 
@@ -778,7 +754,7 @@ namespace KlxPiaoControls
             }
 
             //更新标题按钮属性
-            UpdateTitleButtonProperty([CloseButton, ResizeButton, MinimizeButton]);
+            UpdateTitleButtonProperties([CloseButton, ResizeButton, MinimizeButton]);
             switch (TitleButtonAlign)
             {
                 case HorizontalEnds.Right:
@@ -893,17 +869,22 @@ namespace KlxPiaoControls
                 g.DrawImage(icon, new Point((TitleBoxHeight - icon.Height) / 2 + 1, (TitleBoxHeight - icon.Height) / 2));
             }
 
+            if (adjustBorder == AdjustBorder.Adjusted)
+            {
+                Cursor = Cursors.Default;
+            }
+
             base.OnPaint(pe);
         }
 
-        private void UpdateTitleButtonProperty(KlxPiaoButton[] buttons)
+        private void UpdateTitleButtonProperties(KlxPiaoButton[] buttons)
         {
             foreach (KlxPiaoButton b in buttons)
             {
                 b.Size = new Size(TitleButtonWidth, TitleBoxHeight - 1);
                 b.BackColor = TitleBoxBackColor;
-                b.FlatAppearance.MouseOverBackColor = ColorProcessor.AdjustBrightness(TitleBoxBackColor, InteractionColorScale);
-                b.FlatAppearance.MouseDownBackColor = ColorProcessor.AdjustBrightness(b.FlatAppearance.MouseOverBackColor, InteractionColorScale);
+                b.FlatAppearance.MouseOverBackColor = TitleBoxBackColor.AdjustBrightness(InteractionColorScale);
+                b.FlatAppearance.MouseDownBackColor = b.FlatAppearance.MouseOverBackColor.AdjustBrightness(InteractionColorScale);
 
                 CloseButton.Enabled = EnableCloseButton;
                 ResizeButton.Enabled = EnableResizeButton;
@@ -911,10 +892,79 @@ namespace KlxPiaoControls
             }
         }
 
-        //关闭
-        bool isClosing = false;
+        #region 标题按钮事件
+        private void CloseButton_Click(object? sender, EventArgs e)
+        {
+            OnCloseButtonClick(EventArgs.Empty);
+            CloseForm();
+        }
+
+        private void ResizeButton_Click(object? sender, EventArgs e)
+        {
+            Cursor = Cursors.Default;
+            switch (WindowState)
+            {
+                case FormWindowState.Normal:
+                    if (EnableResizeAnimation)
+                    {
+                        Opacity = 0;
+                        Task.Run(async () =>
+                        {
+                            for (float i = 0; i <= 1; i += 0.1F)
+                            {
+                                Invoke(() => { Opacity = i; });
+                                await Task.Delay(10);
+                            }
+                            Invoke(() => { Opacity = 1; });
+                        });
+                    }
+                    WindowState = FormWindowState.Maximized;
+                    break;
+
+                case FormWindowState.Maximized:
+                    if (EnableResizeAnimation)
+                    {
+                        Opacity = 0;
+                        Task.Run(async () =>
+                        {
+                            for (float i = 0; i <= 1; i += 0.1F)
+                            {
+                                Invoke(() => { Opacity = i; });
+                                await Task.Delay(10);
+                            }
+                            Invoke(() => { Opacity = 1; });
+                        });
+                    }
+                    WindowState = FormWindowState.Normal;
+                    break;
+            }
+
+            base.OnSizeChanged(e);
+        }
+
+        private void MinimizeButton_Click(object? sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
+        }
+        #endregion
+
+        #region 关闭事件
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            CloseForm();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            CloseForm();
+        }
+
+        private bool isClosing = false;
+
         /// <summary>
-        /// 关闭窗体（带有动画）。
+        /// 根据 <see cref="CloseButtonFunction"/> 属性执行关闭动画。
         /// </summary>
         public void CloseForm()
         {
@@ -998,65 +1048,8 @@ namespace KlxPiaoControls
                 }
             }
         }
-
-
-        #region 标题按钮事件
-        private void CloseButton_Click(object? sender, EventArgs e)
-        {
-            OnCloseButtonClick(EventArgs.Empty);
-            CloseForm();
-        }
-
-        private void ResizeButton_Click(object? sender, EventArgs e)
-        {
-            Cursor = Cursors.Default;
-            switch (WindowState)
-            {
-                case FormWindowState.Normal:
-                    if (EnableResizeAnimation)
-                    {
-                        Opacity = 0;
-                        Task.Run(async () =>
-                        {
-                            for (float i = 0; i <= 1; i += 0.1F)
-                            {
-                                Invoke(() => { Opacity = i; });
-                                await Task.Delay(10);
-                            }
-                            Invoke(() => { Opacity = 1; });
-                        });
-                    }
-                    WindowState = FormWindowState.Maximized;
-                    break;
-
-                case FormWindowState.Maximized:
-                    if (EnableResizeAnimation)
-                    {
-                        Opacity = 0;
-                        Task.Run(async () =>
-                        {
-                            for (float i = 0; i <= 1; i += 0.1F)
-                            {
-                                Invoke(() => { Opacity = i; });
-                                await Task.Delay(10);
-                            }
-                            Invoke(() => { Opacity = 1; });
-                        });
-                    }
-                    WindowState = FormWindowState.Normal;
-                    break;
-            }
-
-            base.OnSizeChanged(e);
-        }
-
-        private void MinimizeButton_Click(object? sender, EventArgs e)
-        {
-            WindowState = FormWindowState.Minimized;
-        }
         #endregion
 
-        //启动
         protected override void OnLoad(EventArgs e)
         {
             if (!EnableStartupAnimation)
@@ -1084,42 +1077,24 @@ namespace KlxPiaoControls
                 FormBorderStyle = FormBorderStyle.FixedDialog;
                 FormBorderStyle = FormBorderStyle.None;
 
-                //防止启动闪烁
+                //防止启动时闪烁黑色区域
                 Refresh();
             }
         }
 
-        #region 关闭事件
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            base.OnClosing(e);
-            CloseForm();
-        }
-
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-            CloseForm();
-        }
-        #endregion
-
-        #region 外观改变时重绘
         protected override void OnTextChanged(EventArgs e)
         {
-            Refresh();
-
+            Invalidate(new Rectangle(0, 0, Width, TitleBoxHeight));
             base.OnTextChanged(e);
         }
 
         protected override void OnSizeChanged(EventArgs e)
         {
-            Refresh();
-
+            Invalidate(new Rectangle(0, 0, Width, TitleBoxHeight));
+            Update();
             base.OnSizeChanged(e);
         }
-        #endregion
 
-        //快捷缩放放手机（双击）
         protected override void OnDoubleClick(EventArgs e)
         {
             if (TitleButtons == TitleButtonStyle.ShowAll && EnableResizeButton)
@@ -1128,7 +1103,7 @@ namespace KlxPiaoControls
                 {
                     ResizeButton_Click(ResizeButton, e);
                 }
-                else if (ShortcutResizeMode == WindowPosition.TitleBarOnly && 按下位置.Y <= TitleBoxHeight)
+                else if (ShortcutResizeMode == WindowPosition.TitleBarOnly && mouseDownPos.Y <= TitleBoxHeight)
                 {
                     ResizeButton_Click(ResizeButton, e);
                 }
@@ -1137,56 +1112,56 @@ namespace KlxPiaoControls
             base.OnDoubleClick(e);
         }
 
-        #region 窗体拖动和调整大小
-        private enum 调整位置
+        #region drag and resize
+        private enum AdjustBorder
         {
-            西, 北, 东, 南, 调完了, 西北, 东北, 西南, 东南
+            left, top, right, bottom, Adjusted, leftTop, rightTop, leftBottom, rightBottom
         }
 
-        private Point 按下位置 = Point.Empty;
-        private readonly int 判定 = 7;
-        private 调整位置 正在调整位置 = 调整位置.调完了;
-        private Point 原来的位置 = Point.Empty;
-        private Size 原来的大小 = Size.Empty;
+        private Point mouseDownPos = Point.Empty;
+        private readonly int determinationSize = 7;
+        private AdjustBorder adjustBorder = AdjustBorder.Adjusted;
+        private Point oldPos = Point.Empty;
+        private Size oldSize = Size.Empty;
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            按下位置 = e.Location;
+            mouseDownPos = e.Location;
 
             //传递正在调整的位置
             if (Resizable && WindowState != FormWindowState.Maximized)
             {
-                原来的位置 = Location;
-                原来的大小 = Size;
+                oldPos = Location;
+                oldSize = Size;
 
-                bool 西 = e.X <= 判定;
-                bool 东 = e.X >= Width - 判定;
-                bool 北 = e.Y <= 判定;
-                bool 南 = e.Y >= Height - 判定;
+                bool left = e.X <= determinationSize;
+                bool right = e.X >= Width - determinationSize;
+                bool top = e.Y <= determinationSize;
+                bool bottom = e.Y >= Height - determinationSize;
 
-                if (西)
+                if (left)
                 {
-                    if (北) { 正在调整位置 = 调整位置.西北; }
-                    else if (南) { 正在调整位置 = 调整位置.西南; }
-                    else { 正在调整位置 = 调整位置.西; }
+                    if (top) { adjustBorder = AdjustBorder.leftTop; }
+                    else if (bottom) { adjustBorder = AdjustBorder.leftBottom; }
+                    else { adjustBorder = AdjustBorder.left; }
                 }
-                else if (东)
+                else if (right)
                 {
-                    if (北) { 正在调整位置 = 调整位置.东北; }
-                    else if (南) { 正在调整位置 = 调整位置.东南; }
-                    else { 正在调整位置 = 调整位置.东; }
+                    if (top) { adjustBorder = AdjustBorder.rightTop; }
+                    else if (bottom) { adjustBorder = AdjustBorder.rightBottom; }
+                    else { adjustBorder = AdjustBorder.right; }
                 }
-                else if (北)
+                else if (top)
                 {
-                    正在调整位置 = 调整位置.北;
+                    adjustBorder = AdjustBorder.top;
                 }
-                else if (南)
+                else if (bottom)
                 {
-                    正在调整位置 = 调整位置.南;
+                    adjustBorder = AdjustBorder.bottom;
                 }
                 else
                 {
-                    正在调整位置 = 调整位置.调完了;
+                    adjustBorder = AdjustBorder.Adjusted;
                 }
             }
 
@@ -1196,34 +1171,34 @@ namespace KlxPiaoControls
         protected override void OnMouseMove(MouseEventArgs e)
         {
             //拖动
-            if (e.Button == MouseButtons.Left && 按下位置 != Point.Empty && 正在调整位置 == 调整位置.调完了 && WindowState != FormWindowState.Maximized)
+            if (e.Button == MouseButtons.Left && mouseDownPos != Point.Empty && adjustBorder == AdjustBorder.Adjusted && WindowState != FormWindowState.Maximized)
             {
-                if (DragMode == WindowPosition.EntireWindow || (DragMode == WindowPosition.TitleBarOnly && 按下位置.Y <= TitleBoxHeight))
+                if (DragMode == WindowPosition.EntireWindow || (DragMode == WindowPosition.TitleBarOnly && mouseDownPos.Y <= TitleBoxHeight))
                 {
-                    Location = new Point(Location.X + e.X - 按下位置.X, Location.Y + e.Y - 按下位置.Y);
+                    Location = new Point(Location.X + e.X - mouseDownPos.X, Location.Y + e.Y - mouseDownPos.Y);
                 }
             }
 
             //适应光标
             if (Resizable && WindowState != FormWindowState.Maximized)
             {
-                bool 西 = e.X <= 判定;
-                bool 东 = e.X >= Width - 判定;
-                bool 北 = e.Y <= 判定;
-                bool 南 = e.Y >= Height - 判定;
-                if (西)
+                bool left = e.X <= determinationSize;
+                bool right = e.X >= Width - determinationSize;
+                bool top = e.Y <= determinationSize;
+                bool bottom = e.Y >= Height - determinationSize;
+                if (left)
                 {
-                    if (北) { Cursor = Cursors.SizeNWSE; }
-                    else if (南) { Cursor = Cursors.SizeNESW; }
+                    if (top) { Cursor = Cursors.SizeNWSE; }
+                    else if (bottom) { Cursor = Cursors.SizeNESW; }
                     else { Cursor = Cursors.SizeWE; }
                 }
-                else if (东)
+                else if (right)
                 {
-                    if (北) { Cursor = Cursors.SizeNESW; }
-                    else if (南) { Cursor = Cursors.SizeNWSE; }
+                    if (top) { Cursor = Cursors.SizeNESW; }
+                    else if (bottom) { Cursor = Cursors.SizeNWSE; }
                     else { Cursor = Cursors.SizeWE; }
                 }
-                else if (北 || 南)
+                else if (top || bottom)
                 {
                     Cursor = Cursors.SizeNS;
                 }
@@ -1233,38 +1208,47 @@ namespace KlxPiaoControls
                 }
 
                 //调整大小
-                if (正在调整位置 != 调整位置.调完了)
+                if (adjustBorder != AdjustBorder.Adjusted)
                 {
-                    switch (正在调整位置)
+                    switch (adjustBorder)
                     {
-                        case 调整位置.东:
-                            Width = Cursor.Position.X - Left; break;
-                        case 调整位置.南:
-                            Height = Cursor.Position.Y - Top; break;
-                        case 调整位置.西:
-                            Left = Cursor.Position.X;
-                            Width = 原来的大小.Width + 原来的位置.X - Cursor.Position.X;
+                        case AdjustBorder.right:
+                            Width = Cursor.Position.X - Left;
                             break;
-                        case 调整位置.北:
-                            Top = Cursor.Position.Y;
-                            Height = 原来的大小.Height + 原来的位置.Y - Cursor.Position.Y;
-                            break;
-                        case 调整位置.西北:
-                            Location = Cursor.Position;
-                            Width = 原来的大小.Width + 原来的位置.X - Cursor.Position.X;
-                            Height = 原来的大小.Height + 原来的位置.Y - Cursor.Position.Y;
-                            break;
-                        case 调整位置.西南:
-                            Left = Cursor.Position.X;
-                            Width = 原来的大小.Width + 原来的位置.X - Cursor.Position.X;
+
+                        case AdjustBorder.bottom:
                             Height = Cursor.Position.Y - Top;
                             break;
-                        case 调整位置.东北:
+
+                        case AdjustBorder.left:
+                            Left = Cursor.Position.X;
+                            Width = oldSize.Width + oldPos.X - Cursor.Position.X;
+                            break;
+
+                        case AdjustBorder.top:
+                            Top = Cursor.Position.Y;
+                            Height = oldSize.Height + oldPos.Y - Cursor.Position.Y;
+                            break;
+
+                        case AdjustBorder.leftTop:
+                            Location = Cursor.Position;
+                            Width = oldSize.Width + oldPos.X - Cursor.Position.X;
+                            Height = oldSize.Height + oldPos.Y - Cursor.Position.Y;
+                            break;
+
+                        case AdjustBorder.leftBottom:
+                            Left = Cursor.Position.X;
+                            Width = oldSize.Width + oldPos.X - Cursor.Position.X;
+                            Height = Cursor.Position.Y - Top;
+                            break;
+
+                        case AdjustBorder.rightTop:
                             Top = Cursor.Position.Y;
                             Width = Cursor.Position.X - Left;
-                            Height = 原来的大小.Height + 原来的位置.Y - Cursor.Position.Y;
+                            Height = oldSize.Height + oldPos.Y - Cursor.Position.Y;
                             break;
-                        case 调整位置.东南:
+
+                        case AdjustBorder.rightBottom:
                             Width = Cursor.Position.X - Left;
                             Height = Cursor.Position.Y - Top;
                             break;
@@ -1277,8 +1261,8 @@ namespace KlxPiaoControls
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            按下位置 = Point.Empty;
-            正在调整位置 = 调整位置.调完了;
+            mouseDownPos = Point.Empty;
+            adjustBorder = AdjustBorder.Adjusted;
             base.OnMouseUp(e);
         }
 
@@ -1288,25 +1272,24 @@ namespace KlxPiaoControls
             //传递正在调整的位置
             if (Resizable && WindowState != FormWindowState.Maximized)
             {
-                原来的位置 = Location;
-                原来的大小 = Size;
+                oldPos = Location;
+                oldSize = Size;
 
-                bool 东 = e.X >= Width - 判定;
-                bool 北 = e.Y <= 判定;
+                bool right = e.X >= Width - determinationSize;
+                bool top = e.Y <= determinationSize;
 
-                if (东 && 北)
+                if (right && top)
                 {
-                    正在调整位置 = 调整位置.东北;
+                    adjustBorder = AdjustBorder.rightTop;
                 }
-                else if (东)
+                else if (right)
                 {
-                    正在调整位置 = 调整位置.东;
+                    adjustBorder = AdjustBorder.right;
                 }
-                else if (北)
+                else if (top)
                 {
-                    正在调整位置 = 调整位置.北;
+                    adjustBorder = AdjustBorder.top;
                 }
-
             }
         }
 
@@ -1315,18 +1298,18 @@ namespace KlxPiaoControls
             //适应光标
             if (Resizable && WindowState != FormWindowState.Maximized)
             {
-                bool 东 = e.X >= Width - 判定;
-                bool 北 = e.Y <= 判定;
+                bool right = e.X >= Width - determinationSize;
+                bool top = e.Y <= determinationSize;
 
-                if (东 && 北)
+                if (right && top)
                 {
                     Cursor = Cursors.SizeNESW;
                 }
-                else if (东)
+                else if (right)
                 {
                     Cursor = Cursors.SizeWE;
                 }
-                else if (北)
+                else if (top)
                 {
                     Cursor = Cursors.SizeNS;
                 }
@@ -1336,20 +1319,23 @@ namespace KlxPiaoControls
                 }
 
                 //调整大小
-                if (正在调整位置 != 调整位置.调完了)
+                if (adjustBorder != AdjustBorder.Adjusted)
                 {
-                    switch (正在调整位置)
+                    switch (adjustBorder)
                     {
-                        case 调整位置.东:
-                            Width = Cursor.Position.X - Left; break;
-                        case 调整位置.北:
-                            Top = Cursor.Position.Y;
-                            Height = 原来的大小.Height + 原来的位置.Y - Cursor.Position.Y;
+                        case AdjustBorder.right:
+                            Width = Cursor.Position.X - Left;
                             break;
-                        case 调整位置.东北:
+
+                        case AdjustBorder.top:
+                            Top = Cursor.Position.Y;
+                            Height = oldSize.Height + oldPos.Y - Cursor.Position.Y;
+                            break;
+
+                        case AdjustBorder.rightTop:
                             Top = Cursor.Position.Y;
                             Width = Cursor.Position.X - Left;
-                            Height = 原来的大小.Height + 原来的位置.Y - Cursor.Position.Y;
+                            Height = oldSize.Height + oldPos.Y - Cursor.Position.Y;
                             break;
                     }
                 }
@@ -1358,62 +1344,52 @@ namespace KlxPiaoControls
 
         private void TitleButton_MouseUp(object? sender, MouseEventArgs e)
         {
-            按下位置 = Point.Empty;
-            正在调整位置 = 调整位置.调完了;
+            mouseDownPos = Point.Empty;
+            adjustBorder = AdjustBorder.Adjusted;
         }
         #endregion
 
-        #region 焦点反馈
-        private Color oldBackColor = Color.Empty;
-        private Color oldForeColor = Color.Empty;
-        private Color oldBorderColor = Color.Empty;
+        #region EnableChangeInactiveTitleBoxForeColor
+        Color oldColor = Color.Empty;
         protected override void OnActivated(EventArgs e)
         {
-            if (oldBackColor == Color.Empty)
+            if (EnableChangeInactiveTitleBoxForeColor && oldColor != Color.Empty)
             {
-                oldBackColor = TitleBoxBackColor;
+                TitleBoxForeColor = oldColor;
             }
-            if (oldForeColor == Color.Empty)
-            {
-                oldForeColor = TitleBoxForeColor;
-            }
-            if (oldBorderColor == Color.Empty)
-            {
-                oldBorderColor = BorderColor;
-            }
-            TitleBoxBackColor = oldBackColor;
-            TitleBoxForeColor = oldForeColor;
-            BorderColor = oldBorderColor;
-
-            Refresh();
-
             base.OnActivated(e);
         }
 
         protected override void OnDeactivate(EventArgs e)
         {
-            oldBackColor = TitleBoxBackColor;
-            oldForeColor = TitleBoxForeColor;
-            oldBorderColor = BorderColor;
-
-            if (InactiveTitleBoxBackColor != Color.Transparent)
+            static int Clamp(int value, int min, int max)
             {
-                TitleBoxBackColor = InactiveTitleBoxBackColor;
+                return Math.Max(min, Math.Min(max, value));
             }
-            if (InactiveTitleBoxForeColor != Color.Transparent)
+            if (EnableChangeInactiveTitleBoxForeColor)
             {
-                TitleBoxForeColor = InactiveTitleBoxForeColor;
-            }
-            if (InactiveBorderColor != Color.Transparent)
-            {
-                BorderColor = InactiveBorderColor;
-            }
+                oldColor = TitleBoxForeColor;
+                int brightnessAdjustment = TitleBoxForeColor.GetBrightness() > 127 ? -125 : 125;
 
-            Refresh();
+                int newR = Clamp(oldColor.R + brightnessAdjustment, 0, 225);
+                int newG = Clamp(oldColor.G + brightnessAdjustment, 0, 225);
+                int newB = Clamp(oldColor.B + brightnessAdjustment, 0, 225);
 
+                TitleBoxForeColor = Color.FromArgb(newR, newG, newB);
+            }
             base.OnDeactivate(e);
         }
         #endregion
+
+        #region Public Method
+        /// <summary>
+        /// 获取工作区的矩形。
+        /// </summary>
+        /// <returns>用户区域的矩形。</returns>
+        public Rectangle GetClientRectangle()
+        {
+            return new Rectangle(GetClientLocation(), GetClientSize());
+        }
 
         /// <summary>
         /// 获取工作区的大小。
@@ -1421,16 +1397,16 @@ namespace KlxPiaoControls
         /// <returns>用户区域的大小。</returns>
         public Size GetClientSize()
         {
-            return new Size(Width - 2, Height - TitleBoxHeight - 1);
+            return new Size(Width - 3, Height - TitleBoxHeight - 2);
         }
 
         /// <summary>
-        /// 获取工作区的矩形。
+        /// 获取工作区的左上角坐标。
         /// </summary>
-        /// <returns>用户区域的矩形。</returns>
-        public Rectangle GetClientRectangle()
+        /// <returns>用户区域的大小。</returns>
+        public Point GetClientLocation()
         {
-            return new Rectangle(new Point(1, TitleBoxHeight), GetClientSize());
+            return new Point(1, TitleBoxHeight);
         }
 
         /// <summary>
@@ -1501,5 +1477,6 @@ namespace KlxPiaoControls
                 }, true);
             }
         }
+        #endregion
     }
 }

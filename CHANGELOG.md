@@ -1,15 +1,31 @@
 # 更新日志
 
+## 版本 1.1.1.6
+### KlxPiaoControls
+#### 优化
+- KlxPiaoForm 减少闪烁
+#### 修复方法
+- KlxPiaoForm.GetClientRectangle 偏移调整
+- KlxPiaoForm.GetClientSize 偏移调整
+#### 新增方法
+- KlxPiaoForm.GetClientLocation
+#### 移除属性
+- InactiveTitleBoxForeColor (改为自动适应)
+- InactiveTitleBoxBackColor
+- InactiveBorderColor
+
+---
+
 ## 版本 1.1.1.5
 ### KlxPiaoControls
-#### 新增属性：
+#### 新增属性
 - KlxPiaoForm.EnableShadow
 
 ---
 
 ## 版本 1.1.1.4
 ### KlxPiaoAPI
-#### 新增方法：
+#### 新增方法
 - (扩展) Dictionary<Tkey, TValue>.SwapDictionaryElements
 - (扩展) List\<T\>.SwapListElements
 - (扩展) RichTextBox.ContainsImage
@@ -24,16 +40,16 @@
 
 ## 版本 1.1.1.3
 ### KlxPiaoAPI
-#### 新增类：
+#### 新增类
 - RichTextBoxExtensions (提供 RichTextBox 用于快速操作的扩展方法)
-#### 新增方法：
+#### 新增方法
 - (扩展) RichTextBox.InsertText
 - (扩展) DataUtility.TruncateStringToFitWidth
 - (扩展) List\<string\>.TruncateToFitWidth
 - (扩展) Bitmap.ResetImage
 - (扩展) Image.ResetImage
 - (扩展) Icon.ResetImage
-#### 方法签名变更：
+#### 方法签名变更
 - NetworkOperations.GetImageFromUrlAsync ```(string url, Size? size = null)``` -> ```(string url, string? savePath = null)```
 
 ---
@@ -43,18 +59,18 @@
 - 部分代码优化
 
 ### KlxPiaoAPI
-#### 新增类：
+#### 新增类
 - DataUtility (提供数据处理的实用工具类)
-#### 新增方法：
+#### 新增方法
 - (扩展) Control.GetControlImage
 - (扩展) Bitmap.ReplaceColor
 - DataUtility.MergeListsToDictionary
 - NetworkOperations.TryGetHTMLContentAsync
 - NetworkOperations.DownloadFileAsync
 - NetworkOperations.GetImageFromUrlAsync
-#### 修复：
+#### 修复
 - FileUtils.LoadFontFamily 注释不显示的问题
-#### 转为扩展方法：
+#### 转为扩展方法
 - GraphicsExtensions.ConvertToRoundedPath
 
 ### KlxPiaoControls
@@ -72,20 +88,20 @@
 - 部分代码优化
 
 ### KlxPiaoAPI
-#### 新增方法：
+#### 新增方法
 - (扩展) object.GetPropertyType
 - (扩展) object.GetPropertyInfo
-#### 优化方法参数：
+#### 优化方法参数
 - (扩展) Control.BezierTransition 参数 ```endValue``` 可为 null
-#### 修复：
+#### 修复
 - (扩展) Graphics.DrawRounded ```pen``` 会抛弃原有特性的问题
 
 ### KlxPiaoControls
-#### 新增属性：
+#### 新增属性
 - BezierCurve.ZeroToOneOffset
-#### 重命名属性：
+#### 重命名属性
 - BezierCurve.ZeroToOneSizeRange -> ZeroToOneSize
-#### 修复：
+#### 修复
 - BezierCurve.CurveColor 失效的问题
 
 ---
@@ -97,41 +113,41 @@
 - 部分代码优化
 
 ### KlxPiaoAPI
-#### 重命名方法：
+#### 重命名方法
 - LayoutUtilities.ConvertToPoint -> PaddingConvertToPoint
-#### 新增结构体重载：
+#### 新增结构体重载
 - Animation(int time, int fps, string controlPoint)
-#### 修复结构体运算符重载：
+#### 修复结构体运算符重载
 - Animation == Animation 逻辑错误
-#### 优化方法：
+#### 优化方法
 - Animation.ToString
 - ControlTransitionAnimator.BezierTransition 加入控制点检查 (可选参数)
-#### 移除方法重载：
+#### 移除方法重载
 - LayoutUtilities.CalculateAlignedPosition ```padding``` 参数的重载
 
 ### KlxPiaoControls
 - 全部组件的中文属性、枚举类型、方法 -> 英文（TabControlContainer 和 KlxPiaoTabControl 决定重做，暂不更改）
-#### 属性类型变更：
+#### 属性类型变更
 - KlxPiaoForm.TitleTextAlign (标题位置) 的类型 ```位置``` -> ```HorizontalAlignment```
 - KlxPiaoTrackBar.ValueTextDrawAlign (值显示方式) 的类型 ```文字位置``` -> ```ContentAlignment```
 - KlxPiaoTrackBar.ValueTextDrawOffset (值显示边距) 的类型 ```int``` -> ```Point```
-#### 新增属性：
+#### 新增属性
 - KlxPiaoPictureBox.Font
 - PointBar.CornerRadius
 - PointBar.CoordinateTextOffset
 - PointBar.CrosshairDrawingPriority
 - KlxPiaoTrackBar.IsDrawValueText
-#### 移除属性：
+#### 移除属性
 - BezierCurve.扫描线进度
 - BezierCurve.扫描线颜色
-#### 优化：
+#### 优化
 - KlxPiaoTrackBar.ValueTextDisplayFormat (值显示格式) 支持多行输入
 - KlxPiaoTrackBar 的交互属性由 InteractionStyleClass 替代
-#### 修复：
+#### 修复
 - BezierCurve.拖动限制 对于键盘无效
-#### 移除事件：
+#### 移除事件
 - PointBar.值Changed
-#### 新增事件：
+#### 新增事件
 - PointBar.ValueChanged
 - PointBar.ValueChangedByCode
 
@@ -148,32 +164,32 @@
 - KlxPiaoTextBox.边框颜色 设置为 ```199, 199, 199``` 时失效的问题
 - KlxPiaoTextBox 的外观更改时嵌入的 TextBox 不会立即重置的问题
 - KlxPiaoTextBox.鼠标无法选取的问题
-#### 优化：
+#### 优化
 - KlxPiaoPanel 内存占用
-#### 新增属性：
+#### 新增属性
 - KlxPiaoText.Text
 - KlxPiaoText.TextBoxAlign
 - KlxPiaoText.TextBoxOffset
 - KlxPiaoText.IsFillAndMultiline
 
 ### KlxPiaoAPI
-#### 新增类：
+#### 新增类
 - EnumUtility (提供枚举类型的扩展方法)
-#### 新增方法：
+#### 新增方法
 - EnumUtility.ForEachEnum
 - EnumUtility.ReorderEnumValues
-#### 优化：
+#### 优化
 - AnimationConverter 的 ```ToString``` 方法 和 ```ConvertFrom``` 方法进行了优化。现在，我们不再使用固定的逗号（,）作为字段分隔符，而是使用当前文化设置的列表分隔符。这样可以确保在处理不同文化设置时，我们的程序能够正确地生成和解析数据。
 #### 新增方法:
 - (+1 重载) LayoutUtilities.AdjustContentAlignment
 - LayoutUtilities.GetVerticalAlignment
 - LayoutUtilities.GetHorizontalAlignment
-#### 重载结构体运算符：
+#### 重载结构体运算符
 - CornerRadius == CornerRadius
 - CornerRadius != CornerRadius
 - Animation == Animation
 - Animation ！= Animation
-#### 重载结构体方法：
+#### 重载结构体方法
 - CornerRadus.GetHashCode
 - CornerRadus.Equals
 - Animation.GetHashCode
@@ -186,49 +202,49 @@
 - 补充 XML 注释
 
 ### KlxPiaoAPI
-#### 新增类：
+#### 新增类
 - RectangleExtensions (提供 Rectangle 扩展方法的实用工具类)
 - CornerRadiusExtensions (提供 CornerRadius 扩展方法的实用工具类)
 - ControlAndPropertyUtils (提供操作控件和处理对象属性的静态工具方法）
 - TypeInterpolator (插值器类型，用于处理各种类型的插值操作)
-#### 重命名类：
+#### 重命名类
 - 控件 -> ControlTransitionAnimator
 - 网络 -> NetworkOperations
-#### 重命名委托：
+#### 重命名委托
 - 控件.自定义函数 -> CustomProgressCurve
-#### 重命名方法：
+#### 重命名方法
 - (扩展, +1 重载) 控件.贝塞尔过渡动画 -> BezierTransition
 - (扩展) 控件.自定义过渡动画 -> CustomTransition
 - 网络.获取页面内容 -> GetHTMLContentAsync
 #### 方法迁移和重命名方法；
 - (扩展) 控件.遍历 -> ControlAndPropertyUtils.ForEachControl
 - (扩展) 控件.SetOrGetPropertyValue -> ControlAndPropertyUtils.SetOrGetPropertyValue
-#### 新增方法：
+#### 新增方法
 - (扩展, +1 重载) Rectangle.GetInnerFitRectangle
 - (扩展, +1 重载) Rectangle.ScaleRectangle
 - (扩展, +5 重载) CornerRadius.ToPixel
 - (+6 重载) TypeInterpolator.Interpolator
-#### 重载运算符：
+#### 重载运算符
 - CornerRadius + CornerRadius
 - CornerRadius * int
 - CornerRadius / float
 
 ### KlxPiaoControls
-#### 新增属性：
+#### 新增属性
 - SlideSwitch.IsAnimationEnabled
 - SlideSwitch.TransAnim
 - SlideSwitch.ColorAnim
-#### 新增组件：
+#### 新增组件
 - KlxPiaoTextBox
-#### 重命名枚举类型：
+#### 重命名枚举类型
 - SlideSwitch.Properties -> StyleProperties
-#### 修复：
+#### 修复
 - SlideSwitch 滑动时使用鼠标交互会闪烁
-#### 优化：
+#### 优化
 - KlxPiaoForm.设置全局主题 支持 KlxPiaoPanel
 
 ### KlxPiaoControls & KlxPiaoAPI Demo
-#### 新增功能：
+#### 新增功能
 - KlxPiaoAPI.控件 新增 '生成代码'
 
 ---
@@ -239,7 +255,7 @@
 - 更正错误的 XML 注释
 
 ### KlxPiaoAPI
-#### 重命名方法：
+#### 重命名方法
 - FileUtils.加载字体 -> LoadFontFamily
 - LayoutUtilities.计算网格点 -> CalculateGridPoints
 - (扩展) string.批量替换 -> ReplaceMultiple
@@ -250,27 +266,27 @@
 - (扩展) string.提取所有中间文本 -> ExtractAllBetween
 - KlxPiaoAPIInfo.产品版本 -> GetProductVersion
 - KlxPiaoAPIInfo.产品名称 -> GetProductName
-#### 新增方法：
+#### 新增方法
 - (+1 重载) 控件.贝塞尔过渡动画
-#### 重命名类：
+#### 重命名类
 - 关于KlxPiaoAPI -> KlxPiaoAPIInfo
-#### 新增类：
+#### 新增类
 - Animation (结构体，用于表示一个动画的基本组成元素)
 - AnimationConverter (Animation 的转换器)
 
 ### KlxPiaoControls
-#### 修复：
+#### 修复
 - RoundedButton.边框颜色 不能被正确重置的问题
-#### 属性迁移：
+#### 属性迁移
 - RoundedButton.交互样式.启用动画 -> RoundedButton.启用动画
-#### 新增属性：
+#### 新增属性
 - RoundedButton.颜色过渡配置
 - RoundedButton.大小过渡配置
 - RoundedButton.交互样式.移入大小
 - RoundedButton.交互样式.按下大小
-#### 重命名类：
+#### 重命名类
 - 关于KlxPiaoControls -> KlxPiaoControlsInfo
-#### 重命名方法：
+#### 重命名方法
 - KlxPiaoControlsInfo.产品版本 -> GetProductVersion
 - KlxPiaoControlsInfo.产品名称 -> GetProductName
 
@@ -282,12 +298,12 @@
 - 更正错误的 XML 注释
 
 ### KlxPiaoAPI
-#### 新增方法：
+#### 新增方法
 - (+4 重载) LayoutUtilities.CalculateAlignedPosition
 - LayoutUtilities.ConvertToPoint
 
 ### KlxPiaoControl
-#### 新增属性：
+#### 新增属性
 - BezierCurve.拖动限制
 - KlxPiaoPictureBox.Text
 - KlxPiaoPictureBox.TextAlign
@@ -295,18 +311,18 @@
 - KlxPiaoPictureBox.ShowText
 - KlxPiaoPictureBox.ForeColor
 - KlxPiaoPictureBox.TextDrawPriority
-#### 移除事件：
+#### 移除事件
 - KlxPiaoTrackBar.值Changed
-#### 新增事件：
+#### 新增事件
 - KlxPiaoTrackBar.ValueChanged
 - KlxPiaoTrackBar.ValueChangedByCode
-#### 修复：
+#### 修复
 - BezierCurve 绘制控制点时产生的偏移
-#### 优化：
+#### 优化
 - BezierCurve 代码优化
 
 ### KlxPiaoControls & KlxPiaoAPI Demo
-#### 优化：
+#### 优化
 - 属性代码生成器新增 XML 注释
 
 ---
@@ -317,7 +333,7 @@
 - 更正错误的 XML 注释
 
 ### KlxPiaoAPI
-#### 重命名类：
+#### 重命名类
 - 类型 -> TypeChecker
 - 绘图 -> GraphicsExtensions
 - 图像 -> ImageExtensions
@@ -326,22 +342,22 @@
 - 字符串 -> StringExtensions
 - 实用功能 -> SystemUtils
 - 实用功能.快捷方式 -> ShortcutCreator
-#### 移除类：
+#### 移除类
 - 数学
-#### 重命名方法：
+#### 重命名方法
 - 类型.判断 -> IsTypes
 - 绘图.绘制圆角 -> DrawRounded
 - 绘图.转为圆角路径 -> ConvertToRoundedPath
 - 图像.添加圆角 -> AddRounded
 - 实用功能.通知系统刷新 -> RefreshFileAssociations
-#### 新增方法：
+#### 新增方法
 - ColorProcessor.SetBrightness
 - KlxPiaoForm.设置全局主题
-#### 移除方法：
+#### 移除方法
 - 图像.替换颜色
-#### 转为扩展方法：
+#### 转为扩展方法
 - TypeChecker (object).IsTypes
-#### 优化：
+#### 优化
 - BezierCurve.CalculateBezierPointByTime 性能优化 (可选参数)
 - BezierCurve.CalculateBezierPoint 性能优化 (可选参数)
 - CornerRadius 的构造函数
@@ -351,10 +367,10 @@
 - 控件.自定义过渡动画 代码优化
 
 ### KlxPiaoControls
-#### 优化：
+#### 优化
 - RoundedButton 内存占用过高
 - BezierCurve 的控制点绘制逻辑
-#### 修复：
+#### 修复
 - KlxPiaoForm.设置全局字体 容器内控件失效
 
 ---
@@ -364,23 +380,23 @@
 - 修复错误的 XML 注释
 
 ### KlxPiaoAPI
-#### 优化方法：
+#### 优化方法
 - 控件.贝塞尔过渡动画
 - 控件.自定义过渡动画
-#### 移除方法：
+#### 移除方法
 - 控件.设置属性
 - 控件.设置属性
-#### 新增方法：
+#### 新增方法
 - (扩展) object.SetOrGetPropertyValue
 
 ### KlxPiaoControls
-#### 新增属性：
+#### 新增属性
 - BezierCurve.扫描线进度
 - BezierCurve.扫描线颜色
-#### 移除属性：
+#### 移除属性
 - RoundedButton.交互样式.移入大小
 - RoundedButton.交互样式.按下大小
-#### 优化：
+#### 优化
 - RoundedButton 的动画逻辑
 - SlideSwitch 的鼠标滚轮动画
 - KlxPiaoForm 启动动画逻辑
@@ -392,28 +408,28 @@
 - 补充XML注释
 
 ### KlxPiaoAPI
-#### 新增类：
+#### 新增类
 - LayoutUtilities (提供布局和排板计算的工具类)
-#### 新增方法：
+#### 新增方法
 - LayoutUtilities.CalculateAlignedPosition
 - (扩展) 图像.添加圆角
-#### 方法迁移：
+#### 方法迁移
 - 数学.计算网格点 -> LayoutUtilities.计算网格点
-#### 优化：
+#### 优化
 - 控件.贝塞尔过渡动画 的方法参数
 
 ### KlxPiaoControls
-#### 重命名：
+#### 重命名
 - SlideSwitch.Attributes -> Properties
 - SlideSwitch.ChangeAttributes -> ChangeProperty
 - KlxPiaoPictureBox.圆角百分比 -> 圆角大小
-#### 优化：
+#### 优化
 - KlxPiaoPictureBox 支持自定义圆角
-#### 新增组件：
+#### 新增组件
 - RoundedButton
 
 ### KlxPiaoControls & KLxPiaoAPI Demo
-#### 优化：
+#### 优化
 - 属性代码生成器
 
 ---
@@ -423,33 +439,33 @@
 - 补充XML注释
 
 ### KlxPiaoAPI
-#### 重命名类：
+#### 重命名类
 - 动画 -> BezierCurve
-#### 优化方法：
+#### 优化方法
 - 控件.遍历
 
 ### KlxPiaoControls
-#### 新增属性：
+#### 新增属性
 - KlxPiaoTrackBar.反向绘制
 - KlxPiaoTrackBar.跟随时偏移
 - KlxPiaoTrackBar.值显示方式.跟随
-#### 重命名属性：
+#### 重命名属性
 - KlxPiaoLabel.圆角百分比 -> 圆角大小
-#### 移除组件：
+#### 移除组件
 - Switch
-#### 新增组件：
+#### 新增组件
 - SlideSwitch
-#### 优化：
+#### 优化
 - KlxPiaoTrackBar 支持竖直拖动
 - KlxPiaoPanel 绘制顺序
-#### 修复：
+#### 修复
 - KlxPiaoPanel.圆角大小 不能正确重置的问题
 
 ---
 
 ## 版本 1.1.0.1
 ### KlxPiaoAPI
-#### 新增方法：
+#### 新增方法
 - (扩展)String.转换小写
 - (扩展)String.转换大写
 - (扩展)String.方法参数处理
@@ -461,41 +477,41 @@
 - 数学.等差数列求和
 - 数学.等比数列求和
 - 网络.获取页面内容
-#### 新增类：
+#### 新增类
 - RectanglePoints (提供获取矩形各个位置点的扩展方法)
 - TextExtractor (用于从文本中提取子字符串的实用工具类)
 - 实用功能 (提供各种实用工具方法的类)
 - 实用功能.快捷方式 (用于创建快捷方式的类)
 - 网络 (提供网络相关操作的功能)
-#### 转为扩展方法：
+#### 转为扩展方法
 - String.批量替换
 - Control.遍历
 - Control.读取属性
 - Control.设置属性
 - Control.贝塞尔过渡动画
 - Control.自定义过渡动画
-#### 仍存在问题：
+#### 仍存在问题
 - 控件 中提供的异步方法优化
 - 绘图 的代码逻辑优化
 
 ### KlxPiaoControls
-#### 优化：
+#### 优化
 - KlxPiaoLabel 的边框绘制逻辑
 - KlxPiaoPanel 的边框绘制逻辑
 - KlxPiaoPictureBox 的边框绘制逻辑
 - KlxPiaoTrackBar 的边框绘制逻辑
-#### 新增属性：
+#### 新增属性
 - KlxPiaoTrackBar.圆角大小
-#### 重命名属性：
+#### 重命名属性
 - KlxPiaoPanel.圆角百分比 -> 圆角大小
-#### 仍存在问题：
+#### 仍存在问题
 - KlxPiaoButton.ImageSize 属性，反复调整时图像会模糊
 - KlxPiaoTabControl 不能设计时交互
 - KlxPiaoForm.ShowDialog() 方法的优化问题
 - KlxPiaoTrackBar 的竖直拖动
 
 ### KlxPiaoControls & KlxPiaoAPI Demo
-#### 新增功能：
+#### 新增功能
 - 简单转换器代码生成器
 
 ---
@@ -507,18 +523,18 @@
 - 重命名 KlxPiaoAPI -> KlxPiao
 
 ### KlxPiaoControls
-#### 新增组件：
+#### 新增组件
 - BezierCurve
-#### 移除组件：
+#### 移除组件
 - KlxPiaoProgressBar
-#### 重命名组件：
+#### 重命名组件
 - KlxPiaoTabControl -> TabControlContainer
 - KlxPiaoTabPage -> KlxPiaoTabControl
-#### 重命名属性：
+#### 重命名属性
 - KlxPiaoForm.窗体按钮 -> 标题按钮显示
-#### 新增方法：
+#### 新增方法
 - KlxPiaoForm.设置全局字体
-#### 移除方法：
+#### 移除方法
 - KlxPiaoForm.设置WindowState
 - KlxPiaoForm.自动生成主题
 - KlxPiaoForm.复制主题
@@ -528,7 +544,7 @@
 - TabControlContainer.获取选项卡索引
 - TabControlContainer.获取绑定的KlxPiaoTabControl
 - TabControlContainer.获取选中选项卡文字
-#### 新增属性：
+#### 新增属性
 - KlxPiaoForm.标题按钮位置
 - KlxPiaoForm.标题按钮图标大小
 - KlxPiaoForm.标题按钮颜色反馈
@@ -547,27 +563,27 @@
 - KlxPiaoTrackBar.值显示格式
 - KlxPiaoButton.ImageSize
 - PointBar.坐标显示格式
-#### 移除属性：
+#### 移除属性
 - KlxPiaoForm的大部分冗余属性
 - KlxPiaoTrackBar.Text
 - TabControlContainer.Text
 - PointBar.Text
-#### 修复：
+#### 修复
 - KlxPiaoForm.ShowIcon 属性无效的问题
 - KlxPiaoForm的标题按钮可被Tab键选中的问题
 - KlxPiaoLabel.Padding 属性无效的问题
 - KlxPiaoLabel.AutoSize 属性自动设置为false的问题
-#### 优化：
+#### 优化
 - KlxPiaoForm的启动和关闭动画
 - KlxPiaoForm的最大化 / 还原 动画
 - KlxPiaoForm的标题按钮图标不再使用贴图
-#### 目前仍存在问题：
+#### 目前仍存在问题
 - KlxPiaoButton.ImageSize 的属性反复调整时，图像会模糊
 - KlxPiaoTabControl 不能设计时交互
 - KlxPiaoForm.ShowDialog 方法的优化问题
 
 ### KlxPiaoAPI
-#### 新增方法：
+#### 新增方法
 - 类型.判断
 - 数学.计算网格点
 - 动画.CalculateBezierPointByTime
@@ -575,25 +591,25 @@
 - 控件.遍历
 - 控件.自定义过渡动画
 - 字符串.批量替换
-#### 移除方法：
+#### 移除方法
 - 控件.据时间进度返回坐标
-#### 重命名方法：
+#### 重命名方法
 - 控件.过渡动画 -> 贝塞尔过渡动画
-#### 新增接口：
+#### 新增接口
 - 类型.ITypeCollection
-#### 优化：
+#### 优化
 - 控件.读取属性 的代码逻辑
 - 控件.设置属性 的代码逻辑
-#### 修复：
+#### 修复
 - 控件.过渡动画 不响应Point,Size等属性的问题
 
 ---
 
 ## 版本 1.0.3.4
-#### 修复：
+#### 修复
 - KlxPiaoPanel.获取工作区矩形 方法在 启用投影=False 时失效
 - KlxPiaoPanel.获取工作区大小 方法在 启用投影=False 时失效
-#### 新增组件：
+#### 新增组件
 - Switch
 
 ---

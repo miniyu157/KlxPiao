@@ -3127,7 +3127,7 @@ namespace KlxPiaoDemo
             klxPiaoLabel8.Name = "klxPiaoLabel8";
             klxPiaoLabel8.Size = new Size(146, 50);
             klxPiaoLabel8.TabIndex = 12;
-            klxPiaoLabel8.Text = "未激活边框颜色";
+            klxPiaoLabel8.Text = "未激活边框颜色\r\n    (1.1.1.6 弃用)";
             klxPiaoLabel8.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // Edit_标题框背景色
@@ -3178,7 +3178,7 @@ namespace KlxPiaoDemo
             klxPiaoLabel9.Name = "klxPiaoLabel9";
             klxPiaoLabel9.Size = new Size(146, 50);
             klxPiaoLabel9.TabIndex = 10;
-            klxPiaoLabel9.Text = "未激活标题框前景色";
+            klxPiaoLabel9.Text = "未激活标题框前景色\r\n    (1.1.1.6 弃用)";
             klxPiaoLabel9.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // klxPiaoLabel6
@@ -3228,7 +3228,7 @@ namespace KlxPiaoDemo
             klxPiaoLabel10.Name = "klxPiaoLabel10";
             klxPiaoLabel10.Size = new Size(146, 50);
             klxPiaoLabel10.TabIndex = 8;
-            klxPiaoLabel10.Text = "未激活标题框背景色";
+            klxPiaoLabel10.Text = "未激活标题框背景色\r\n    (1.1.1.6 弃用)";
             klxPiaoLabel10.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // klxPiaoLabel7

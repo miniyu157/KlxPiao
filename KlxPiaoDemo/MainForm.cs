@@ -300,23 +300,13 @@ namespace KlxPiaoDemo
                     switch (c.Name)
                     {
                         case "Edit_标题框背景色":
-                            TitleBoxBackColor = selectColor;
-                            TitleBoxForeColor = ColorProcessor.GetBrightness(selectColor) > 127 ? Color.Black : Color.White;
+                            SetGlobalTheme(selectColor, false);
                             break;
                         case "Edit_标题框前景色":
                             TitleBoxForeColor = selectColor;
                             break;
                         case "Edit_边框颜色":
                             BorderColor = selectColor;
-                            break;
-                        case "Edit_未激活标题框背景色":
-                            InactiveTitleBoxBackColor = selectColor;
-                            break;
-                        case "Edit_未激活标题框前景色":
-                            InactiveTitleBoxForeColor = selectColor;
-                            break;
-                        case "Edit_未激活边框颜色":
-                            InactiveBorderColor = selectColor;
                             break;
                     }
                 }
@@ -337,15 +327,6 @@ namespace KlxPiaoDemo
                         break;
                     case "Edit_边框颜色":
                         c.BackColor = BorderColor;
-                        break;
-                    case "Edit_未激活标题框背景色":
-                        c.BackColor = InactiveTitleBoxBackColor;
-                        break;
-                    case "Edit_未激活标题框前景色":
-                        c.BackColor = InactiveTitleBoxForeColor;
-                        break;
-                    case "Edit_未激活边框颜色":
-                        c.BackColor = InactiveBorderColor;
                         break;
                 }
             }
