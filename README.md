@@ -8,31 +8,31 @@
 
 ## 预览
 
-![home](Screenshot/home.png)
+![home](screenshot/home.png)
 
 
-![label](Screenshot/label.png)
+![label](screenshot/label.png)
 
 
-![theme](Screenshot/theme.png)
+![theme](screenshot/theme.png)
 
 
-![picturebox](Screenshot/picturebox.png)
+![picturebox](screenshot/picturebox.png)
 
 
-![panel](Screenshot/panel.png)
+![panel](screenshot/panel.png)
 
 
-![slideswitch](Screenshot/slideswitch.png)
+![slideswitch](screenshot/slideswitch.png)
 
 
-![button](Screenshot/button.png)
+![button](screenshot/button.png)
 
 
-![trackbar](Screenshot/trackbar.png)
+![trackbar](screenshot/trackbar.png)
 
 
-![labeldemo](Screenshot/labeldemo.png)
+![labeldemo](screenshot/labeldemo.png)
 
 
-![api_control](Screenshot/api_control.png)
+![api_control](screenshot/api_control.png)
