@@ -5,10 +5,10 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyVersion>1.1.1.4</AssemblyVersion>
-    <FileVersion>1.1.1.4</FileVersion>
+    <AssemblyVersion>1.1.1.5</AssemblyVersion>
+    <FileVersion>1.1.1.5</FileVersion>
 	<Copyright>KlxPiao Copyright © 2024</Copyright>
-    <Version>1.1.1.4</Version>
+    <Version>1.1.1.5</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 

@@ -182,7 +182,8 @@ namespace KlxPiaoDemo
         #region 属性代码生成器
         private void 生成代码(object? sender, EventArgs e)
         {
-            string 名称 = textBox1.Text;
+            string 名称 = textBox1.Text.ProcessFirstChar();
+            string 公有名称 = textBox1.Text;
             string 类型 = textBox2.Text;
             string 默认值 = textBox6.Text;
             string 类别 = textBox20.Text;
@@ -192,13 +193,13 @@ namespace KlxPiaoDemo
             {
                 textBox3.Text = $"private {类型} _{名称};";
                 textBox4.Text = $"_{名称} = {默认值};";
-                textBox5.Text = $"        /// <summary>\r\n        /// {描述}。\r\n        /// </summary>\r\n        [Category(\"{类别}\")]\r\n        [Description(\"{描述}\")]\r\n        [DefaultValue(typeof({类型}), \"{默认值}\")]\r\n        public {类型} {名称}\r\n        {{\r\n            get {{ return _{名称}; }}\r\n            set {{ _{名称} = value; Invalidate(); }}\r\n        }}";
+                textBox5.Text = $"        /// <summary>\r\n        /// {描述}。\r\n        /// </summary>\r\n        [Category(\"{类别}\")]\r\n        [Description(\"{描述}\")]\r\n        [DefaultValue(typeof({类型}), \"{默认值}\")]\r\n        public {类型} {公有名称}\r\n        {{\r\n            get {{ return _{名称}; }}\r\n            set {{ _{名称} = value; Invalidate(); }}\r\n        }}";
             }
             else if (slideSwitch6.SelectIndex == 1)
             {
                 textBox3.Text = $"Dim _{名称} As {类型}";
                 textBox4.Text = $"_{名称} = {默认值}";
-                textBox5.Text = $"        ''' <summary>\r\n        ''' {描述}。\r\n        ''' </summary>\r\n        <Category(\"{类别}\")>\r\n        <Description(\"{描述}\")>\r\n        <DefaultValue(GetType({类型}), \"{默认值}\")>\r\n        Public Property {名称} As {类型}\r\n            Get\r\n                Return _{名称}\r\n            End Get\r\n            Set(value As {类型})\r\n                _{名称} = value\r\n                Invalidate()\r\n            End Set\r\n        End Property";
+                textBox5.Text = $"        ''' <summary>\r\n        ''' {描述}。\r\n        ''' </summary>\r\n        <Category(\"{类别}\")>\r\n        <Description(\"{描述}\")>\r\n        <DefaultValue(GetType({类型}), \"{默认值}\")>\r\n        Public Property {公有名称} As {类型}\r\n            Get\r\n                Return _{名称}\r\n            End Get\r\n            Set(value As {类型})\r\n                _{名称} = value\r\n                Invalidate()\r\n            End Set\r\n        End Property";
             }
         }
         private void SlideSwitch6_SelectIndexChanged(object sender, EventArgs e)

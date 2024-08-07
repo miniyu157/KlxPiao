@@ -1,6 +1,7 @@
 ﻿using KlxPiaoAPI;
 using System.ComponentModel;
 using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
 
 namespace KlxPiaoControls
 {
@@ -10,6 +11,94 @@ namespace KlxPiaoControls
     /// <remarks><see cref="KlxPiaoForm"/> 继承自 <see cref="Form"/>，涵盖了原版 <see cref="Form"/> 的功能。</remarks>
     public partial class KlxPiaoForm : Form
     {
+        #region RoundedAndShadow
+        [LibraryImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+        private static partial IntPtr CreateRoundRectRgn
+        (
+            int nLeftRect,      // x-coordinate of upper-left corner
+            int nTopRect,       // y-coordinate of upper-left corner
+            int nRightRect,     // x-coordinate of lower-right corner
+            int nBottomRect,    // y-coordinate of lower-right corner
+            int nWidthEllipse,  // height of ellipse
+            int nHeightEllipse  // width of ellipse
+        );
+
+        [LibraryImport("dwmapi.dll")]
+        public static partial int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMarInset);
+
+        [LibraryImport("dwmapi.dll")]
+        public static partial int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
+
+        [LibraryImport("dwmapi.dll")]
+        public static partial int DwmIsCompositionEnabled(ref int pfEnabled);
+
+        private bool m_aeroEnabled;                     // variables for box shadow
+        private const int CS_DROPSHADOW = 0x00020000;
+        private const int WM_NCPAINT = 0x0085;
+
+        public struct MARGINS                           // struct for box shadow
+        {
+            public int leftWidth;
+            public int rightWidth;
+            public int topHeight;
+            public int bottomHeight;
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                m_aeroEnabled = CheckAeroEnabled();
+
+                CreateParams cp = base.CreateParams;
+                if (!m_aeroEnabled)
+                    cp.ClassStyle |= CS_DROPSHADOW;
+
+                return cp;
+            }
+        }
+
+        private static bool CheckAeroEnabled()
+        {
+            if (Environment.OSVersion.Version.Major >= 6)
+            {
+                int enabled = 0;
+                DwmIsCompositionEnabled(ref enabled);
+                return (enabled == 1);
+            }
+            return false;
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            if (EnableShadow)
+            {
+                switch (m.Msg)
+                {
+                    case WM_NCPAINT:                        // box shadow
+                        if (m_aeroEnabled)
+                        {
+                            var v = 2;
+                            DwmSetWindowAttribute(Handle, 2, ref v, 4);
+                            MARGINS margins = new()
+                            {
+                                bottomHeight = 1,
+                                leftWidth = 1,
+                                rightWidth = 1,
+                                topHeight = 1
+                            };
+                            DwmExtendFrameIntoClientArea(Handle, ref margins);
+
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            base.WndProc(ref m);
+        }
+        #endregion
+
         #region Enums
         /// <summary>
         /// 表示横向两端的枚举。
@@ -148,6 +237,7 @@ namespace KlxPiaoControls
         private bool _resizable;
         private CloseButtonAction _closeButtonFunction;
         private StartupSequence _startupOrder;
+        private bool _enableShadow;
 
         private Color _inactiveTitleBoxBackColor;
         private Color _inactiveTitleBoxForeColor;
@@ -326,6 +416,7 @@ namespace KlxPiaoControls
             _resizable = true;
             _closeButtonFunction = CloseButtonAction.CloseWindow;
             _startupOrder = StartupSequence.WaitOnLoadThenAnimate;
+            _enableShadow = true;
 
             _inactiveTitleBoxBackColor = Color.Transparent;
             _inactiveTitleBoxForeColor = SystemColors.WindowFrame;
@@ -606,6 +697,17 @@ namespace KlxPiaoControls
             get { return _startupOrder; }
             set { _startupOrder = value; Invalidate(); }
         }
+        /// <summary>
+        /// 获取或设置是否启用 Windows 窗体的圆角和阴影(会使窗体边框功能失效)。
+        /// </summary>
+        [Category("KlxPiaoForm特性")]
+        [Description("启用 Windows 窗体的圆角和阴影(会使窗体边框颜色属性失效)")]
+        [DefaultValue(true)]
+        public bool EnableShadow
+        {
+            get { return _enableShadow; }
+            set { _enableShadow = value; Invalidate(); }
+        }
         #endregion
 
         #region KlxPiaoForm焦点
@@ -655,6 +757,9 @@ namespace KlxPiaoControls
         protected override void OnPaint(PaintEventArgs pe)
         {
             Graphics g = pe.Graphics;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
             Rectangle thisRect = new(0, 0, Width, Height);
 
             g.Clear(BackColor);
@@ -666,7 +771,7 @@ namespace KlxPiaoControls
             }
 
             //绘制边框
-            if (!(AutoHideWindowBorder && WindowState == FormWindowState.Maximized))
+            if (!(AutoHideWindowBorder && WindowState == FormWindowState.Maximized) && !EnableShadow)
             {
                 using Pen borderPen = new(BorderColor, 1);
                 g.DrawRectangle(borderPen, new Rectangle(thisRect.X, thisRect.Y, thisRect.Width - 1, thisRect.Height - 1));
@@ -893,6 +998,7 @@ namespace KlxPiaoControls
                 }
             }
         }
+
 
         #region 标题按钮事件
         private void CloseButton_Click(object? sender, EventArgs e)

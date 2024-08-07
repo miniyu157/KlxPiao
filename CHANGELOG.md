@@ -1,5 +1,12 @@
 # 更新日志
 
+## 版本 1.1.1.5
+### KlxPiaoControls
+#### 新增属性：
+- KlxPiaoForm.EnableShadow
+
+---
+
 ## 版本 1.1.1.4
 ### KlxPiaoAPI
 #### 新增方法：
