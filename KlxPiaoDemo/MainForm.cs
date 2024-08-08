@@ -119,32 +119,6 @@ namespace KlxPiaoDemo
             }
             #endregion
 
-            #region KlxPiaoControls.TextBox
-            checkBox10.CheckedChanged += CheckBox10_CheckedChanged;
-            void CheckBox10_CheckedChanged(object? sender, EventArgs e) =>
-                klxPiaoTextBox1.IsFillAndMultiline = checkBox10.Checked;
-
-            checkBox11.CheckedChanged += CheckBox11_CheckedChanged;
-            void CheckBox11_CheckedChanged(object? sender, EventArgs e) =>
-                klxPiaoTextBox1.TextBox.BackColor = checkBox11.Checked ? Color.DarkGray : Color.White;
-
-            EnumUtility.ForEachEnum<ContentAlignment>(value => comboBox7.Items.Add(value));
-
-            comboBox7.SelectedIndex = 0;
-            comboBox7.SelectedIndexChanged += ComboBox7_SelectedIndexChanged;
-            pointBar1.ValueChanged += PointBar1_值Changed;
-
-            void PointBar1_值Changed(object? sender, PointBar.ValueChangedEvent e)
-            {
-                klxPiaoTextBox1.TextBoxOffset = e.Point;
-            }
-
-            void ComboBox7_SelectedIndexChanged(object? sender, EventArgs e)
-            {
-                klxPiaoTextBox1.TextBoxAlign = EnumUtility.ReorderEnumValues<ContentAlignment>(comboBox7.SelectedIndex);
-            }
-            #endregion
-
             #region Home
             EnumUtility.ForEachEnum<TitleButtonStyle>(value => comboBox1.Items.Add(value));
             comboBox1.SelectedIndex = (int)TitleButtons;
@@ -817,6 +791,5 @@ namespace KlxPiaoDemo
             TabPage_UI_RoundedButton.ForEachControl<RoundedButton>(roundedbutton => { roundedbutton.IsEnableAnimation = check; });
         }
         #endregion
-
     }
 }

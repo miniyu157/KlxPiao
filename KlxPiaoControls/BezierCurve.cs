@@ -10,7 +10,7 @@ namespace KlxPiaoControls
     [DefaultEvent("ControlPointChanged")]
     public partial class BezierCurve : Control
     {
-        #region Enums
+        #region enums
         /// <summary>
         /// 一个枚举类型，用于表示辅助线绘制的方式
         /// </summary>
@@ -54,7 +54,7 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        #region Private Properties
+        #region private properties
         //基本外观
         private int _borderSize;
         private Color _borderColor;
@@ -84,7 +84,7 @@ namespace KlxPiaoControls
         private string _controlPointTextDisplayFormat;
         #endregion
 
-        #region 事件
+        #region events
         /// <summary>
         /// 表示当控制点发生变化时引发的事件。
         /// </summary>
@@ -166,11 +166,11 @@ namespace KlxPiaoControls
             SetStyle(ControlStyles.Selectable, true);
         }
 
-        #region BezierCurve基本外观
+        #region BezierCurve Basic Appearance
         /// <summary>
         /// 获取或设置边框的大小。
         /// </summary>
-        [Category("BezierCurve基本外观")]
+        [Category("BezierCurve Basic Appearance")]
         [Description("边框的大小")]
         [DefaultValue(2)]
         public int BorderSize
@@ -181,7 +181,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置边框的颜色。
         /// </summary>
-        [Category("BezierCurve基本外观")]
+        [Category("BezierCurve Basic Appearance")]
         [Description("边框的颜色")]
         [DefaultValue(typeof(Color), "Gray")]
         public Color BorderColor
@@ -192,7 +192,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置内部的大小。
         /// </summary>
-        [Category("BezierCurve基本外观")]
+        [Category("BezierCurve Basic Appearance")]
         [Description("0-1范围内所占用的大小（像素）")]
         [DefaultValue(typeof(Size), "200,200")]
         public Size ZeroToOneSize
@@ -203,7 +203,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置内部的位置。
         /// </summary>
-        [Category("BezierCurve基本外观")]
+        [Category("BezierCurve Basic Appearance")]
         [Description("0-1范围内矩形所在的位置")]
         [DefaultValue(typeof(ContentAlignment), "MiddleCenter")]
         public ContentAlignment ZeroToOnePosition
@@ -214,7 +214,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置内部位置的偏移。
         /// </summary>
-        [Category("BezierCurve基本外观")]
+        [Category("BezierCurve Basic Appearance")]
         [Description("0-1范围内矩形位置的偏移")]
         [DefaultValue(typeof(Point), "0,0")]
         public Point ZeroToOneOffset
@@ -224,11 +224,11 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        #region BezierCurve曲线外观
+        #region BezierCurve Curve Appearance
         /// <summary>
         /// 获取或设置曲线的颜色。
         /// </summary>
-        [Category("BezierCurve曲线外观")]
+        [Category("BezierCurve Curve Appearance")]
         [Description("曲线的颜色")]
         [DefaultValue(typeof(Color), "Red")]
         public Color CurveColor
@@ -239,7 +239,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置控制点的颜色。
         /// </summary>
-        [Category("BezierCurve曲线外观")]
+        [Category("BezierCurve Curve Appearance")]
         [Description("控制点的颜色")]
         [DefaultValue(typeof(Color), "Red")]
         public Color ControlPointColor
@@ -250,7 +250,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置辅助线的颜色。
         /// </summary>
-        [Category("BezierCurve曲线外观")]
+        [Category("BezierCurve Curve Appearance")]
         [Description("辅助线的颜色")]
         [DefaultValue(typeof(Color), "Black")]
         public Color GuidelineColor
@@ -261,7 +261,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置开始点或结束点的颜色。
         /// </summary>
-        [Category("BezierCurve曲线外观")]
+        [Category("BezierCurve Curve Appearance")]
         [Description("开始点和结束点的颜色")]
         [DefaultValue(typeof(Color), "Blue")]
         public Color StartAndEndPointColor
@@ -272,7 +272,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置曲线的大小。
         /// </summary>
-        [Category("BezierCurve曲线外观")]
+        [Category("BezierCurve Curve Appearance")]
         [Description("曲线的大小（宽度）")]
         [DefaultValue(2)]
         public int CurveSize
@@ -283,7 +283,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置控制点的大小。
         /// </summary>
-        [Category("BezierCurve曲线外观")]
+        [Category("BezierCurve Curve Appearance")]
         [Description("控制点的大小")]
         [DefaultValue(8)]
         public int ControlPointSize
@@ -294,7 +294,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置辅助线的大小。
         /// </summary>
-        [Category("BezierCurve曲线外观")]
+        [Category("BezierCurve Curve Appearance")]
         [Description("辅助线的大小")]
         [DefaultValue(1)]
         public int GuidelineSize
@@ -305,7 +305,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置辅助线绘制方式。
         /// </summary>
-        [Category("BezierCurve曲线外观")]
+        [Category("BezierCurve Curve Appearance")]
         [Description("是否辅助线显示方式")]
         [DefaultValue(typeof(GuidelineDrawMode), "BothEndsSolid_MiddleDashed")]
         public GuidelineDrawMode GuidelineDraw
@@ -316,7 +316,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 曲线绘制的精度，数值越小精度越高。
         /// </summary>
-        [Category("BezierCurve曲线外观")]
+        [Category("BezierCurve Curve Appearance")]
         [Description("曲线绘制的精度，数值越小精度越高")]
         [DefaultValue(0.005F)]
         public float DrawingAccuracy
@@ -327,7 +327,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置是否显示控制点。
         /// </summary>
-        [Category("BezierCurve曲线外观")]
+        [Category("BezierCurve Curve Appearance")]
         [Description("是否显示控制点")]
         [DefaultValue(true)]
         public bool IsDisplayControlPoint
@@ -337,11 +337,11 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        #region BezierCurve基本属性
+        #region BezierCurve Basic Properties
         /// <summary>
         /// 获取或设置控制点集合。
         /// </summary>
-        [Category("BezierCurve基本属性")]
+        [Category("BezierCurve Basic Properties")]
         [Description("贝塞尔曲线的控制点集合")]
         public List<PointF> ControlPoints
         {
@@ -357,7 +357,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 拖动设置控制点的值精度。
         /// </summary>
-        [Category("BezierCurve基本属性")]
+        [Category("BezierCurve Basic Properties")]
         [Description("每个控制点保留的小数位数")]
         [DefaultValue(2)]
         public int DecimalPlaces
@@ -368,7 +368,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置是否可拖动开始点和结束点。
         /// </summary>
-        [Category("BezierCurve基本属性")]
+        [Category("BezierCurve Basic Properties")]
         [Description("是否可拖动曲线的两端（开始点和结束点）")]
         [DefaultValue(false)]
         public bool IsStartAndEndPointDraggable
@@ -379,7 +379,7 @@ namespace KlxPiaoControls
         /// <summary>
         ///控制点拖动时是否自动吸附顶点。
         /// </summary>
-        [Category("BezierCurve基本属性")]
+        [Category("BezierCurve Basic Properties")]
         [Description("拖动时是否自动吸附顶点")]
         [DefaultValue(true)]
         public bool IsEnableAutoAdsorption
@@ -390,7 +390,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 对控制点拖动时做出的限制。
         /// </summary>
-        [Category("BezierCurve基本属性")]
+        [Category("BezierCurve Basic Properties")]
         [Description("表示控制点拖动时的限制方式。")]
         [DefaultValue(typeof(ConstraintMode), "XAxisOnly")]
         public ConstraintMode DragConstraint
@@ -401,7 +401,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置拖动时是否显示控制点信息。
         /// </summary>
-        [Category("BezierCurve基本属性")]
+        [Category("BezierCurve Basic Properties")]
         [Description("拖动时是否显示控制点坐标")]
         [DefaultValue(true)]
         public bool IsDisplayControlPointTextWhileDragging
@@ -413,7 +413,7 @@ namespace KlxPiaoControls
         /// 获取或设置显示控制点信息的格式。
         /// </summary>
         /// <remarks>占位符：<br/>- {index}：索引<br/>- {x}：X<br/>- {y}：Y。</remarks>
-        [Category("BezierCurve基本属性")]
+        [Category("BezierCurve Basic Properties")]
         [Description("控制点显示的格式，拖动时显示控制点信息为True时生效")]
         [DefaultValue("({index}) X:{x},Y:{y}")]
         public string ControlPointTextDisplayFormat
@@ -430,7 +430,7 @@ namespace KlxPiaoControls
             set { base.Size = value; }
         }
 
-        #region 方法
+        #region method
         /// <summary>
         /// 设置指定索引处的控制点。
         /// </summary>
@@ -446,6 +446,7 @@ namespace KlxPiaoControls
             ControlPoints[index] = value;
             Invalidate();
         }
+
         /// <summary>
         /// 添加一个控制点到数组中。
         /// </summary>
@@ -463,6 +464,7 @@ namespace KlxPiaoControls
             }
             Invalidate();
         }
+
         /// <summary>
         /// 移除指定索引处的控制点。
         /// </summary>
@@ -486,24 +488,20 @@ namespace KlxPiaoControls
                 throw new Exception("控制点数量至少为2，或指定的索引不存在");
             }
         }
+
         /// <summary>
         /// 获取内部区域除边框外的工作区矩形
         /// </summary>
-        public RectangleF GetClientRectangle()
-        {
-            return 绘制区域;
-        }
+        public RectangleF GetClientRectangle() => drawRect;
+
         /// <summary>
         /// 获取正在拖动到控制点索引
         /// </summary>
-        public int GetDragIndex()
-        {
-            return dragingIndex;
-        }
+        public int GetDragIndex() => dragingIndex;
         #endregion
 
-        private readonly List<PointF> 绘制数组 = [];
-        private RectangleF 绘制区域;
+        private readonly List<PointF> drawPoints = [];
+        private RectangleF drawRect;
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -514,27 +512,27 @@ namespace KlxPiaoControls
             Rectangle thisRect = new(0, 0, Width, Height);
             RectangleF clientRect = new(LayoutUtilities.CalculateAlignedPosition(thisRect, ZeroToOneSize, ZeroToOnePosition, ZeroToOneOffset), ZeroToOneSize);
 
-            //绘制边框
+            //draw border
             if (BorderSize != 0)
             {
                 g.DrawRectangle(new Pen(BorderColor, BorderSize), clientRect);
             }
 
-            //除边框以外的工作区
-            绘制区域 = new(clientRect.X + BorderSize / 2, clientRect.Y + BorderSize / 2, clientRect.Width - BorderSize, clientRect.Height - BorderSize);
+            //client rectangle(no border)
+            drawRect = new(clientRect.X + BorderSize / 2, clientRect.Y + BorderSize / 2, clientRect.Width - BorderSize, clientRect.Height - BorderSize);
 
-            //将控制点集合添加到绘制数组，以便后续绘制
-            绘制数组.Clear();
+            //control points convert to draw points
+            drawPoints.Clear();
             foreach (PointF pointF in ControlPoints)
             {
-                PointF newPointF = new(绘制区域.X + pointF.X * 绘制区域.Width, 绘制区域.Y + (1 - pointF.Y) * 绘制区域.Height);
-                绘制数组.Add(newPointF);
+                PointF newPointF = new(drawRect.X + pointF.X * drawRect.Width, drawRect.Y + (1 - pointF.Y) * drawRect.Height);
+                drawPoints.Add(newPointF);
             }
 
-            //绘制辅助线
+            //draw guideline
             if (GuidelineDraw != GuidelineDrawMode.DoNotDraw && GuidelineSize != 0)
             {
-                DrawGuideline(g, 绘制数组);
+                DrawGuideline(g, drawPoints);
 
                 void DrawGuideline(Graphics g, List<PointF> points)
                 {
@@ -561,35 +559,35 @@ namespace KlxPiaoControls
                 }
             }
 
-            //绘制曲线
+            //draw curve
             for (float i = 0; i <= 1; i += DrawingAccuracy)
             {
                 PointF pointF = KlxPiaoAPI.BezierCurve.CalculateBezierPointByTime(i, [.. ControlPoints]);
                 SolidBrush bezBrush = new(CurveColor);
                 g.FillEllipse(bezBrush, new RectangleF(
                     new PointF(
-                        绘制区域.X + pointF.X * 绘制区域.Width - CurveSize / 2,
-                        绘制区域.Y + (1 - pointF.Y) * 绘制区域.Height - CurveSize / 2),
+                        drawRect.X + pointF.X * drawRect.Width - CurveSize / 2,
+                        drawRect.Y + (1 - pointF.Y) * drawRect.Height - CurveSize / 2),
                     new SizeF(CurveSize, CurveSize)
                     ));
             }
 
-            //绘制控制点
+            //draw control point
             if (IsDisplayControlPoint)
             {
                 //使其控制点能覆盖端点
                 DrawPointControl(0);
-                DrawPointControl(绘制数组.Count - 1);
+                DrawPointControl(drawPoints.Count - 1);
 
-                for (int i = 1; i < 绘制数组.Count - 1; i++)
+                for (int i = 1; i < drawPoints.Count - 1; i++)
                 {
                     DrawPointControl(i);
                 }
 
                 void DrawPointControl(int index)
                 {
-                    Color drawColor = (index == 0 || index == 绘制数组.Count - 1) ? StartAndEndPointColor : ControlPointColor;
-                    PointF pointF = 绘制数组[index];
+                    Color drawColor = (index == 0 || index == drawPoints.Count - 1) ? StartAndEndPointColor : ControlPointColor;
+                    PointF pointF = drawPoints[index];
                     SolidBrush controlPointBrush = new(drawColor);
                     g.FillEllipse(controlPointBrush, new RectangleF(
                         new PointF(
@@ -600,7 +598,7 @@ namespace KlxPiaoControls
                 }
             }
 
-            //绘制控制点信息
+            //draw control point text
             if (IsDisplayControlPointTextWhileDragging)
             {
                 PointF dragPointF = ControlPoints[dragingIndex];
@@ -612,32 +610,30 @@ namespace KlxPiaoControls
                     { "{y}", dragPointF.Y.ToString() }
                 };
 
-                g.DrawString(ControlPointTextDisplayFormat.ReplaceMultiple(replacements), Font, new SolidBrush(ForeColor), 绘制数组[dragingIndex]);
+                g.DrawString(ControlPointTextDisplayFormat.ReplaceMultiple(replacements), Font, new SolidBrush(ForeColor), drawPoints[dragingIndex]);
             }
 
             base.OnPaint(e);
         }
 
-        //控制点拖动
+        //draw control point
         private bool isDraging;
         private int dragingIndex;
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            base.OnMouseDown(e);
-
             if (e.Button == MouseButtons.Left)
             {
                 float minDistance = float.MaxValue;
                 dragingIndex = -1;
 
-                int 开始索引 = IsStartAndEndPointDraggable ? 0 : 1;
-                int 结束索引 = IsStartAndEndPointDraggable ? 绘制数组.Count - 1 : 绘制数组.Count - 2;
+                int startIndex = IsStartAndEndPointDraggable ? 0 : 1;
+                int endIndex = IsStartAndEndPointDraggable ? drawPoints.Count - 1 : drawPoints.Count - 2;
 
                 //计算距离最近的点，进行拖动
-                for (int i = 开始索引; i <= 结束索引; i++)
+                for (int i = startIndex; i <= endIndex; i++)
                 {
-                    PointF controlPoint = 绘制数组[i];
+                    PointF controlPoint = drawPoints[i];
                     float distance = (e.X - controlPoint.X) * (e.X - controlPoint.X) +
                                      (e.Y - controlPoint.Y) * (e.Y - controlPoint.Y);
                     if (distance < minDistance)
@@ -654,18 +650,18 @@ namespace KlxPiaoControls
 
                 Focus();
             }
+
+            base.OnMouseDown(e);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            base.OnMouseMove(e);
-
             if (isDraging)
             {
                 OnControlPointChanged(new ControlPointChangedEvent(dragingIndex, ControlPoints[dragingIndex]));
 
-                float newX = (float)Math.Round((e.X - 绘制区域.X + 1) / 绘制区域.Width, DecimalPlaces);
-                float newY = (float)Math.Round(1 - (e.Y - 绘制区域.Y + 1) / 绘制区域.Height, DecimalPlaces);
+                float newX = (float)Math.Round((e.X - drawRect.X + 1) / drawRect.Width, DecimalPlaces);
+                float newY = (float)Math.Round(1 - (e.Y - drawRect.Y + 1) / drawRect.Height, DecimalPlaces);
 
                 switch (DragConstraint)
                 {
@@ -695,7 +691,7 @@ namespace KlxPiaoControls
                     PointF[] vertices = [new(0, 0), new(1, 0), new(0, 1), new(1, 1)];
 
                     //检查是否在任意顶点的圆形范围内
-                    float snapRadius = 10F / 绘制区域.Width; // 转换为0-1范围的单位
+                    float snapRadius = 10F / drawRect.Width; // 转换为0-1范围的单位
                     foreach (var vertex in vertices)
                     {
                         if (Math.Sqrt(Math.Pow(pointF.X - vertex.X, 2) + Math.Pow(pointF.Y - vertex.Y, 2)) <= snapRadius)
@@ -708,13 +704,15 @@ namespace KlxPiaoControls
 
                 SetControlPoint(dragingIndex, pointF);
             }
+
+            base.OnMouseMove(e);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            base.OnMouseUp(e);
-
             isDraging = false;
+
+            base.OnMouseUp(e);
         }
 
         protected override void OnPreviewKeyDown(PreviewKeyDownEventArgs e)

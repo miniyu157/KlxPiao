@@ -13,10 +13,11 @@ namespace KlxPiaoControls
     {
         private bool _isEnableShadow;
         private Color _shadowColor;
-        private bool _isShadowConnectLine; //投影连线
+        private bool _isShadowConnectLine;
         private Point _shadowPosition;
+        private bool _isEnableColorFading;
+        private bool _isNaturalShadowEffectEnabled;
 
-        private bool _isEnableColorFading; //颜色减淡
         private bool _isEnableBorder;
         private Color _baseBackColor;
         private CornerRadius _cornerRadius;
@@ -27,6 +28,7 @@ namespace KlxPiaoControls
         private SmoothingMode _smoothingMode;
         private InterpolationMode _interpolationMode;
         private PixelOffsetMode _pixelOffsetMode;
+        private Point _drawTextOffset;
 
         public KlxPiaoLabel()
         {
@@ -37,6 +39,7 @@ namespace KlxPiaoControls
             _isShadowConnectLine = true;
             _shadowPosition = new Point(2, 2);
             _isEnableColorFading = false;
+            _isNaturalShadowEffectEnabled = true;
 
             _isEnableBorder = false;
             _baseBackColor = Color.White;
@@ -48,6 +51,7 @@ namespace KlxPiaoControls
             _smoothingMode = SmoothingMode.Default;
             _interpolationMode = InterpolationMode.Default;
             _pixelOffsetMode = PixelOffsetMode.Default;
+            _drawTextOffset = Point.Empty;
 
             ForeColor = Color.Black;
             BackColor = Color.White;
@@ -62,11 +66,11 @@ namespace KlxPiaoControls
             set { base.AutoSize = value; }
         }
 
-        #region KlxPiaoLabel投影
+        #region KlxPiaoLabel Shadow
         /// <summary>
         /// 获取或设置是否启用投影。
         /// </summary>
-        [Category("KlxPiaoLabel投影")]
+        [Category("KlxPiaoLabel Shadow")]
         [Description("是否启用投影")]
         [DefaultValue(false)]
         public bool IsEnableShadow
@@ -77,7 +81,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置投影的颜色。
         /// </summary>
-        [Category("KlxPiaoLabel投影")]
+        [Category("KlxPiaoLabel Shadow")]
         [Description("投影的颜色")]
         [DefaultValue(typeof(Color), "DarkGray")]
         public Color ShadowColor
@@ -88,9 +92,9 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置投影的位置。
         /// </summary>
-        [Category("KlxPiaoLabel投影")]
+        [Category("KlxPiaoLabel Shadow")]
         [Description("投影的长度和方向")]
-        [DefaultValue(typeof(Point), "2,2")]
+        [DefaultValue(typeof(Point), "2, 2")]
         public Point ShadowPosition
         {
             get { return _shadowPosition; }
@@ -99,7 +103,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置是否将投影与本体连线。
         /// </summary>
-        [Category("KlxPiaoLabel投影")]
+        [Category("KlxPiaoLabel Shadow")]
         [Description("是否将投影与本体连线")]
         [DefaultValue(true)]
         public bool IsShadowConnectLine
@@ -110,7 +114,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置是否启用颜色减淡。
         /// </summary>
-        [Category("KlxPiaoLabel投影")]
+        [Category("KlxPiaoLabel Shadow")]
         [Description("是否启用颜色减淡")]
         [DefaultValue(false)]
         public bool IsEnableColorFading
@@ -118,13 +122,24 @@ namespace KlxPiaoControls
             get { return _isEnableColorFading; }
             set { _isEnableColorFading = value; Invalidate(); }
         }
+        /// <summary>
+        /// 获取或设置是否启用自然投影效果。
+        /// </summary>
+        [Category("KlxPiaoLabel Shadow")]
+        [Description("是否启用自然投影效果(需启用 IsEnableColorFading 和 IsShadowConnectLine)")]
+        [DefaultValue(true)]
+        public bool IsNaturalShadowEffectEnabled
+        {
+            get { return _isNaturalShadowEffectEnabled; }
+            set { _isNaturalShadowEffectEnabled = value; Invalidate(); }
+        }
         #endregion
 
-        #region KlxPiaoLabel边框
+        #region KlxPiaoLabel Border
         /// <summary>
         /// 获取或设置是否启用边框。
         /// </summary>
-        [Category("KlxPiaoLabel边框")]
+        [Category("KlxPiaoLabel Border")]
         [Description("是否启用边框")]
         [DefaultValue(false)]
         public bool IsEnableBorder
@@ -135,7 +150,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置圆角外的背景色。
         /// </summary>
-        [Category("KlxPiaoLabel边框")]
+        [Category("KlxPiaoLabel Border")]
         [Description("边框外部的颜色，通常与父容器背景色相同")]
         [DefaultValue(typeof(Color), "White")]
         public Color BaseBackColor
@@ -146,7 +161,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置圆角的大小，以 <see cref="KlxPiaoAPI.CornerRadius"/> 结构体表示。
         /// </summary>
-        [Category("KlxPiaoLabel边框")]
+        [Category("KlxPiaoLabel Border")]
         [Description("圆角大小，自动检测是百分比大小还是像素大小。")]
         [DefaultValue(typeof(CornerRadius), "0,0,0,0")]
         public CornerRadius CornerRadius
@@ -157,7 +172,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置边框的大小.
         /// </summary>
-        [Category("KlxPiaoLabel边框")]
+        [Category("KlxPiaoLabel Border")]
         [Description("边框的大小，为0时隐藏边框")]
         [DefaultValue(5)]
         public int BorderSize
@@ -168,7 +183,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置边框的颜色。
         /// </summary>
-        [Category("KlxPiaoLabel边框")]
+        [Category("KlxPiaoLabel Border")]
         [Description("边框的颜色")]
         [DefaultValue(typeof(Color), "LightGray")]
         public Color BorderColor
@@ -178,11 +193,11 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        #region KlxPiaoLabel质量
+        #region KlxPiaoLabel Drawing
         /// <summary>
         /// 文本呈现的质量，以 <see cref="System.Drawing.Text.TextRenderingHint"/> 枚举类型表示。
         /// </summary>
-        [Category("KlxPiaoLabel质量")]
+        [Category("KlxPiaoLabel Drawing")]
         [Description("指定文本呈现的质量")]
         [DefaultValue(typeof(TextRenderingHint), "SystemDefault")]
         public TextRenderingHint TextRenderingHint
@@ -193,7 +208,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 边框抗锯齿的质量，以 <see cref="System.Drawing.Drawing2D.SmoothingMode"/> 枚举类型表示。
         /// </summary>
-        [Category("KlxPiaoLabel质量")]
+        [Category("KlxPiaoLabel Drawing")]
         [Description("指定是否将平滑处理（抗锯齿）应用于直线、曲线和已填充区域的边缘")]
         [DefaultValue(typeof(SmoothingMode), "Default")]
         public SmoothingMode SmoothingMode
@@ -204,7 +219,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 缩放或旋转图像时使用的算法，以 <see cref="System.Drawing.Drawing2D.InterpolationMode"/> 枚举类型表示。
         /// </summary>
-        [Category("KlxPiaoLabel质量")]
+        [Category("KlxPiaoLabel Drawing")]
         [Description("缩放或旋转图像时使用的算法")]
         [DefaultValue(typeof(InterpolationMode), "Default")]
         public InterpolationMode InterpolationMode
@@ -215,13 +230,24 @@ namespace KlxPiaoControls
         /// <summary>
         /// 像素偏移的方式，以 <see cref="System.Drawing.Drawing2D.PixelOffsetMode"/> 枚举类型表示。
         /// </summary>
-        [Category("KlxPiaoLabel质量")]
+        [Category("KlxPiaoLabel Drawing")]
         [Description("指定在呈现期间像素偏移的方式")]
         [DefaultValue(typeof(PixelOffsetMode), "Default")]
         public PixelOffsetMode PixelOffsetMode
         {
             get { return _pixelOffsetMode; }
             set { _pixelOffsetMode = value; Invalidate(); }
+        }
+        /// <summary>
+        /// 获取或设置文本绘制的偏移。
+        /// </summary>
+        [Category("KlxPiaoLabel Drawing")]
+        [Description("文本绘制的偏移")]
+        [DefaultValue(typeof(Point), "0, 0")]
+        public Point DrawTextOffset
+        {
+            get { return _drawTextOffset; }
+            set { _drawTextOffset = value; Invalidate(); }
         }
         #endregion
 
@@ -240,97 +266,53 @@ namespace KlxPiaoControls
 
             PointF drawPosition = PointF.Empty;
             Rectangle thisRect = new(0, 0, Width, Height);
+            SizeF textSize = g.MeasureString(Text, Font);
 
-            SizeF TextSize = g.MeasureString(Text, Font);
-
-            //适应文字位置
             if (!AutoSize)
             {
-                drawPosition = LayoutUtilities.CalculateAlignedPosition(thisRect, TextSize, TextAlign, LayoutUtilities.PaddingConvertToPoint(Padding));
+                drawPosition = LayoutUtilities.CalculateAlignedPosition(thisRect, textSize, TextAlign, DrawTextOffset);
             }
 
-            //绘制投影
             if (IsEnableShadow)
             {
-                using SolidBrush brush = new(ShadowColor);
+                Color startColor = ShadowColor;
+                Color endColor = BackColor;
+                using SolidBrush shadowBrush = new(startColor);
+
+                if (IsShadowConnectLine)
                 {
-                    if (IsShadowConnectLine)
+                    int xAlpha = IsEnableColorFading ? (ShadowPosition.X == 0 ? 0 : 255 / Math.Abs(ShadowPosition.X)) : 255;
+                    int yAlpha = IsEnableColorFading ? (ShadowPosition.Y == 0 ? 0 : 255 / Math.Abs(ShadowPosition.Y)) : 255;
+
+                    for (int x = 0; x != ShadowPosition.X; x += (ShadowPosition.X > 0 ? 1 : -1))
                     {
-                        int xFading = IsEnableColorFading ? (ShadowPosition.X == 0 ? 0 : 255 / Math.Abs(ShadowPosition.X)) : 255;
-                        int yFading = IsEnableColorFading ? (ShadowPosition.Y == 0 ? 0 : 255 / Math.Abs(ShadowPosition.Y)) : 255;
-
-                        int xFadingR = (ShadowPosition.X == 0 ? 0 : (255 - ShadowColor.R) / Math.Abs(ShadowPosition.X));
-                        int xFadingG = (ShadowPosition.X == 0 ? 0 : (255 - ShadowColor.G) / Math.Abs(ShadowPosition.X));
-                        int xFadingB = (ShadowPosition.X == 0 ? 0 : (255 - ShadowColor.B) / Math.Abs(ShadowPosition.X));
-
-                        int yFadingR = (ShadowPosition.Y == 0 ? 0 : (255 - ShadowColor.R) / Math.Abs(ShadowPosition.Y));
-                        int yFadingG = (ShadowPosition.Y == 0 ? 0 : (255 - ShadowColor.G) / Math.Abs(ShadowPosition.Y));
-                        int yFadingB = (ShadowPosition.Y == 0 ? 0 : (255 - ShadowColor.B) / Math.Abs(ShadowPosition.Y));
-
-                        if (ShadowPosition.X == 0 || ShadowPosition.Y == 0)
-                        {
-                            //Axis and 0,0
-
-                            //x
-                            for (int x = 0; x != ShadowPosition.X; x += (ShadowPosition.X > 0 ? 1 : -1))
-                            {
-                                int fadingFrequency = Math.Abs(ShadowPosition.X) - Math.Abs(x);
-                                Color color = IsEnableColorFading ? Color.FromArgb(255 - fadingFrequency * xFadingR, 255 - fadingFrequency * xFadingG, 255 - fadingFrequency * xFadingB) : ShadowColor;
-                                g.DrawString(Text, Font, new SolidBrush(Color.FromArgb(xFading, color)), new PointF(drawPosition.X + x, drawPosition.Y));
-                            }
-                            //y
-                            for (int y = 0; y != ShadowPosition.Y; y += (ShadowPosition.Y > 0 ? 1 : -1))
-                            {
-                                int fadingFrequency = Math.Abs(ShadowPosition.Y) - Math.Abs(y);
-                                Color color = IsEnableColorFading ? Color.FromArgb(255 - fadingFrequency * yFadingR, 255 - fadingFrequency * yFadingG, 255 - fadingFrequency * yFadingB) : ShadowColor;
-
-                                g.DrawString(Text, Font, new SolidBrush(Color.FromArgb(yFading, color)), new PointF(drawPosition.X, drawPosition.Y + y));
-                            }
-                        }
-                        else
-                        {
-                            bool approashX = Math.Abs(ShadowPosition.X) < Math.Abs(ShadowPosition.Y) / Math.PI;
-                            bool approachY = Math.Abs(ShadowPosition.Y) < Math.Abs(ShadowPosition.X) / Math.PI;
-
-                            //Draw on the x-axis
-                            if (!approashX)
-                            {
-                                for (int x = 0; x != ShadowPosition.X; x += (ShadowPosition.X > 0 ? 1 : -1))
-                                {
-                                    float slope = ShadowPosition.Y / (float)ShadowPosition.X;
-
-                                    //颜色减淡
-                                    int fadingFrequency = Math.Abs(ShadowPosition.X) - Math.Abs(x);
-                                    Color color = IsEnableColorFading ? Color.FromArgb(255 - fadingFrequency * xFadingR, 255 - fadingFrequency * xFadingG, 255 - fadingFrequency * xFadingB) : ShadowColor;
-
-                                    g.DrawString(Text, Font, new SolidBrush(Color.FromArgb(xFading, color)), new PointF(drawPosition.X + x, drawPosition.Y + x * slope));
-                                }
-                            }
-
-                            //Draw on the y-axis
-                            if (!approachY)
-                            {
-                                for (int y = 0; y != ShadowPosition.Y; y += (ShadowPosition.Y > 0 ? 1 : -1))
-                                {
-                                    float slope = ShadowPosition.X / (float)ShadowPosition.Y;
-
-                                    //颜色减淡
-                                    int fadingFrequency = Math.Abs(ShadowPosition.Y) - Math.Abs(y);
-                                    Color color = IsEnableColorFading ? Color.FromArgb(255 - fadingFrequency * yFadingR, 255 - fadingFrequency * yFadingG, 255 - fadingFrequency * yFadingB) : ShadowColor;
-
-                                    g.DrawString(Text, Font, new SolidBrush(Color.FromArgb(yFading, color)), new PointF(drawPosition.X + y * slope, drawPosition.Y + y));
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        g.DrawString(Text, Font, brush, new PointF(drawPosition.X + ShadowPosition.X, drawPosition.Y + ShadowPosition.Y));
+                        double progress = Math.Abs((double)x / ShadowPosition.X);
+                        int drawAlpha = IsNaturalShadowEffectEnabled ? xAlpha : (int)(255 * (1 - progress));
+                        SolidBrush drawBrush = IsEnableColorFading
+                            ? new(Color.FromArgb(drawAlpha, TypeInterpolator.Interpolator(startColor, endColor, progress)))
+                            : shadowBrush;
+                        float slope = ShadowPosition.Y / (float)ShadowPosition.X;
+                        g.DrawString(Text, Font, drawBrush, new PointF(drawPosition.X + x, drawPosition.Y + x * slope));
                     }
 
-                    //baseText
-                    g.DrawString(Text, Font, new SolidBrush(ForeColor), drawPosition);
+                    for (int y = 0; y != ShadowPosition.Y; y += (ShadowPosition.Y > 0 ? 1 : -1))
+                    {
+                        double progress = Math.Abs((double)y / ShadowPosition.Y);
+                        int drawAlpha = IsNaturalShadowEffectEnabled ? yAlpha : (int)(255 * (1 - progress));
+                        SolidBrush drawBrush = IsEnableColorFading
+                            ? new(Color.FromArgb(drawAlpha, TypeInterpolator.Interpolator(startColor, endColor, progress)))
+                            : shadowBrush;
+                        float slope = ShadowPosition.X / (float)ShadowPosition.Y;
+                        g.DrawString(Text, Font, drawBrush, new PointF(drawPosition.X + y * slope, drawPosition.Y + y));
+                    }
                 }
+                else
+                {
+                    g.DrawString(Text, Font, shadowBrush, new PointF(drawPosition.X + ShadowPosition.X, drawPosition.Y + ShadowPosition.Y));
+                }
+
+                //baseText
+                g.DrawString(Text, Font, new SolidBrush(ForeColor), drawPosition);
             }
             else
             {
@@ -340,25 +322,8 @@ namespace KlxPiaoControls
 
             if (IsEnableBorder)
             {
-                Rectangle 区域 = new(0, 0, Width, Height);
-                g.DrawRounded(区域, CornerRadius, BaseBackColor, new Pen(BorderColor, BorderSize));
+                g.DrawRounded(thisRect, CornerRadius, BaseBackColor, new Pen(BorderColor, BorderSize));
             }
-        }
-
-        /// <summary>
-        /// 返回控件绘制的图像。
-        /// </summary>
-        public Bitmap GetControlImage()
-        {
-            Bitmap bmp = new(Width, Height);
-
-            using (Graphics g = Graphics.FromImage(bmp))
-            {
-                PaintEventArgs e = new(g, new Rectangle(0, 0, Width, Height));
-                OnPaint(e);
-            }
-
-            return bmp;
         }
     }
 }

@@ -1,5 +1,41 @@
 # 更新日志
 
+## 版本 1.2.0.0
+### 解决方案
+- 部分代码优化
+
+### KlxPiaoControls
+#### 优化
+- KlxPiaoForm 部分属性设置时减少闪烁
+- KlxPiaoForm.OnDeactivate 处理逻辑
+- KlxPiaoLabel 投影的绘制逻辑
+- KlxPiaoLabel 投影的减淡颜色由 ```#FFFFFF``` 改为 ```BackColor```
+- KlxPiaoPanel 投影的绘制逻辑
+- KlxPiaoPanel 投影的减淡颜色由 ```#FFFFFF``` 改为 ```BaseBackColor```
+#### 修复
+- KlxPiaoPanel.GetClientRectangle 偏移调整
+- KlxPiaoPanel.GetClientSize 偏移调整
+#### 新增方法
+- KlxPiaoForm.InvalidateTitleBox
+- KlxPiaoForm.RefreshTitleBoxButton
+- KlxPiaoForm.ResizeButtonPerformClick
+- KlxPiaoPanel.GetClientLocation
+#### 移除组件
+- KlxPiaoButton
+- KlxPiaoTextBox
+#### 新增属性
+- KlxPiaoForm.TitleTextOffset
+- KlxPiaoLabel.DrawTextOffset (原以 Padding 表示偏移)
+- KlxPiaoLabel.IsNaturalShadowEffectEnabled
+#### 重命名并转为扩展方法
+- ColorProcessor.GetBrightness -> (扩展) Color.GetBrightnessForYUV
+#### 方法签名变更
+- KlxPiaoForm.SetGlobalTheme ```(Color? themeColor = null, bool IsApplyToControls = true)``` -> ```(Color themeColor, bool IsApplyToControls = true)```
+#### 结构体构造函数签名变更
+- Animation ```(int time, int fps, string? controlPoint)``` -> ```(int time, int fps, string controlPoint)```
+
+---
+
 ## 版本 1.1.1.6
 ### KlxPiaoControls
 #### 优化

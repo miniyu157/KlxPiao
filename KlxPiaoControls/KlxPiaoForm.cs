@@ -8,21 +8,10 @@ namespace KlxPiaoControls
     /// <summary>
     /// 一个美化的 WinForms 窗体控件，提供多种自定义风格和功能选项。
     /// </summary>
-    /// <remarks><see cref="KlxPiaoForm"/> 继承自 <see cref="Form"/>，涵盖了原版 <see cref="Form"/> 的功能。</remarks>
+    /// <remarks><see cref="KlxPiaoForm"/> 继承自 <see cref="Form"/>，是原版 <see cref="Form"/> 的增强版本。</remarks>
     public partial class KlxPiaoForm : Form
     {
-        #region RoundedAndShadow
-        [LibraryImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-        private static partial IntPtr CreateRoundRectRgn
-        (
-            int nLeftRect,      // x-coordinate of upper-left corner
-            int nTopRect,       // y-coordinate of upper-left corner
-            int nRightRect,     // x-coordinate of lower-right corner
-            int nBottomRect,    // y-coordinate of lower-right corner
-            int nWidthEllipse,  // height of ellipse
-            int nHeightEllipse  // width of ellipse
-        );
-
+        #region rounded and shadow
         [LibraryImport("dwmapi.dll")]
         public static partial int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMarInset);
 
@@ -99,7 +88,7 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        #region Enums
+        #region enums
         /// <summary>
         /// 表示横向两端的枚举。
         /// </summary>
@@ -209,7 +198,7 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        #region Private Properties
+        #region private properties
         private Color _borderColor;
         private Style _theme;
 
@@ -219,6 +208,7 @@ namespace KlxPiaoControls
         private Font _titleFont;
         private HorizontalAlignment _titleTextAlign;
         private int _titleTextMargin;
+        private Point _titleTextOffset;
         private TitleButtonStyle _titleButtons;
         private int _titleButtonWidth;
         private HorizontalEnds _titleButtonAlign;
@@ -240,6 +230,21 @@ namespace KlxPiaoControls
         private StartupSequence _startupOrder;
         private bool _enableShadow;
         private bool _enableChangeInactiveTitleBoxForeColor;
+        #endregion
+
+        #region events
+        /// <summary>
+        /// 用户单击关闭按钮的事件。
+        /// </summary>
+        public event EventHandler<EventArgs>? CloseButtonClick;
+
+        /// <summary>
+        /// 引发 <see cref="CloseButtonClick"/> 事件。
+        /// </summary>
+        protected virtual void OnCloseButtonClick(EventArgs e)
+        {
+            CloseButtonClick?.Invoke(this, EventArgs.Empty);
+        }
         #endregion
 
         private void InitializeTitleButton()
@@ -268,37 +273,10 @@ namespace KlxPiaoControls
             ResizeButton.MouseUp += TitleButton_MouseUp;
             MinimizeButton.MouseUp += TitleButton_MouseUp;
 
-            CloseButton.Font = new Font("微软雅黑", 10.5F, FontStyle.Regular);
-            ResizeButton.Font = new Font("微软雅黑", 10.5F, FontStyle.Regular);
-            MinimizeButton.Font = new Font("微软雅黑", 10.5F, FontStyle.Regular);
-
             CloseButton.Top = 1;
             ResizeButton.Top = 1;
             MinimizeButton.Top = 1;
-
-            CloseButton.FlatAppearance.BorderSize = 0;
-            ResizeButton.FlatAppearance.BorderSize = 0;
-            MinimizeButton.FlatAppearance.BorderSize = 0;
-
-            CloseButton.IsReceiveFocus = false;
-            ResizeButton.IsReceiveFocus = false;
-            MinimizeButton.IsReceiveFocus = false;
         }
-
-        #region Events
-        /// <summary>
-        /// 用户单击关闭按钮的事件。
-        /// </summary>
-        public event EventHandler<EventArgs>? CloseButtonClick;
-
-        /// <summary>
-        /// 引发 <see cref="CloseButtonClick"/> 事件。
-        /// </summary>
-        protected virtual void OnCloseButtonClick(EventArgs e)
-        {
-            CloseButtonClick?.Invoke(this, EventArgs.Empty);
-        }
-        #endregion
 
         private void TitleButtons_Paint(object? sender, PaintEventArgs e)
         {
@@ -396,6 +374,7 @@ namespace KlxPiaoControls
             _titleFont = new Font("Microsoft YaHei UI", 9);
             _titleTextAlign = HorizontalAlignment.Left;
             _titleTextMargin = 11;
+            _titleTextOffset = Point.Empty;
             _titleButtons = TitleButtonStyle.ShowAll;
             _titleButtonWidth = 40;
             _titleButtonAlign = HorizontalEnds.Right;
@@ -428,11 +407,11 @@ namespace KlxPiaoControls
             MinimumSize = new Size(TitleButtonWidth, TitleBoxHeight);
         }
 
-        #region KlxPiaoForm外观
+        #region KlxPiaoForm Appearance
         /// <summary>
         /// 获取或设置边框的颜色。
         /// </summary>
-        [Category("KlxPiaoForm外观")]
+        [Category("KlxPiaoForm Appearance")]
         [Description("窗体边框的颜色")]
         public Color BorderColor
         {
@@ -442,20 +421,20 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置主题风格。
         /// </summary>
-        [Category("KlxPiaoForm外观")]
+        [Category("KlxPiaoForm Appearance")]
         [Description("窗体的视觉风格")]
         public Style Theme
         {
             get { return _theme; }
-            set { _theme = value; Refresh(); }
+            set { _theme = value; RefreshTitleBoxButton(); }
         }
         #endregion
 
-        #region KlxPiaoForm标题框
+        #region KlxPiaoForm Title Box
         /// <summary>
         /// 获取或设置标题框的高度。
         /// </summary>
-        [Category("KlxPiaoForm标题框")]
+        [Category("KlxPiaoForm Title Box")]
         [Description("标题框的高度")]
         public int TitleBoxHeight
         {
@@ -465,7 +444,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置标题框的背景色。
         /// </summary>
-        [Category("KlxPiaoForm标题框")]
+        [Category("KlxPiaoForm Title Box")]
         [Description("标题框的背景色")]
         public Color TitleBoxBackColor
         {
@@ -475,17 +454,17 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置标题框的前景色。
         /// </summary>
-        [Category("KlxPiaoForm标题框")]
+        [Category("KlxPiaoForm Title Box")]
         [Description("标题框的前景色")]
         public Color TitleBoxForeColor
         {
             get { return _titleBoxForeColor; }
-            set { _titleBoxForeColor = value; Refresh(); }
+            set { _titleBoxForeColor = value; InvalidateTitleBox(); RefreshTitleBoxButton(); }
         }
         /// <summary>
         /// 获取或设置标题的字体。
         /// </summary>
-        [Category("KlxPiaoForm标题框")]
+        [Category("KlxPiaoForm Title Box")]
         [Description("标题的字体")]
         public Font TitleFont
         {
@@ -495,7 +474,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置标题文字的位置。
         /// </summary>
-        [Category("KlxPiaoForm标题框")]
+        [Category("KlxPiaoForm Title Box")]
         [Description("标题文字位于标题框的位置")]
         public HorizontalAlignment TitleTextAlign
         {
@@ -505,7 +484,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置标题文字的边距。
         /// </summary>
-        [Category("KlxPiaoForm标题框")]
+        [Category("KlxPiaoForm Title Box")]
         [Description("标题文字位于标题框的左右边距")]
         public int TitleTextMargin
         {
@@ -513,9 +492,19 @@ namespace KlxPiaoControls
             set { _titleTextMargin = value; Invalidate(); }
         }
         /// <summary>
+        /// 获取或设置标题位置的偏移。
+        /// </summary>
+        [Category("KlxPiaoForm Title Box")]
+        [Description("标题位置的偏移")]
+        public Point TitleTextOffset
+        {
+            get { return _titleTextOffset; }
+            set { _titleTextOffset = value; Invalidate(); }
+        }
+        /// <summary>
         /// 获取或设置标题按钮的呈现形式。
         /// </summary>
-        [Category("KlxPiaoForm标题框")]
+        [Category("KlxPiaoForm Title Box")]
         [Description("显示在标题框的按钮")]
         public TitleButtonStyle TitleButtons
         {
@@ -525,7 +514,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置标题按钮的宽度。
         /// </summary>
-        [Category("KlxPiaoForm标题框")]
+        [Category("KlxPiaoForm Title Box")]
         [Description("标题按钮的宽度")]
         public int TitleButtonWidth
         {
@@ -535,7 +524,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置标题按钮的位置。
         /// </summary>
-        [Category("KlxPiaoForm标题框")]
+        [Category("KlxPiaoForm Title Box")]
         [Description("标题按钮的位置")]
         public HorizontalEnds TitleButtonAlign
         {
@@ -545,27 +534,27 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置标题按钮的图标大小。
         /// </summary>
-        [Category("KlxPiaoForm标题框")]
+        [Category("KlxPiaoForm Title Box")]
         [Description("标题按钮图标绘制大小")]
         public SizeF TitleButtonIconSize
         {
             get { return _titleButtonIconSize; }
-            set { _titleButtonIconSize = value; Refresh(); }
+            set { _titleButtonIconSize = value; RefreshTitleBoxButton(); }
         }
         /// <summary>
         /// 获取或设置标题按钮鼠标交互时颜色改变的大小。
         /// </summary>
-        [Category("KlxPiaoForm标题框")]
+        [Category("KlxPiaoForm Title Box")]
         [Description("决定标题按钮移入和按下的背景色，范围 -1.00 到 +1.00")]
         public float InteractionColorScale
         {
             get { return _interactionColorScale; }
-            set { _interactionColorScale = value; Invalidate(); }
+            set { _interactionColorScale = value; }
         }
         /// <summary>
         /// 获取或设置是否启用关闭按钮。
         /// </summary>
-        [Category("KlxPiaoForm标题框")]
+        [Category("KlxPiaoForm Title Box")]
         [Description("是否启用关闭按钮")]
         public bool EnableCloseButton
         {
@@ -575,7 +564,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置是否启用缩放按钮。
         /// </summary>
-        [Category("KlxPiaoForm标题框")]
+        [Category("KlxPiaoForm Title Box")]
         [Description("是否启用缩放按钮")]
         public bool EnableResizeButton
         {
@@ -585,7 +574,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置是否启用最小化按钮。
         /// </summary>
-        [Category("KlxPiaoForm标题框")]
+        [Category("KlxPiaoForm Title Box")]
         [Description("是否启用最小化按钮")]
         public bool EnableMinimizeButton
         {
@@ -595,19 +584,18 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置标题按钮未启用时的前景色。
         /// </summary>
-        [Category("KlxPiaoForm标题框")]
+        [Category("KlxPiaoForm Title Box")]
         [Description("标题按钮未启用时的前景色")]
         public Color TitleButtonDisabledColor
         {
             get { return _titleButtonDisabledColor; }
-            set { _titleButtonDisabledColor = value; Refresh(); }
+            set { _titleButtonDisabledColor = value; RefreshTitleBoxButton(); }
         }
         /// <summary>
         /// 获取或设置窗体未激活时是否改变标题框的前景色。
         /// </summary>
-        [Category("KlxPiaoForm标题框")]
+        [Category("KlxPiaoForm Title Box")]
         [Description("窗体未激活时是否改变标题框的前景色")]
-        [DefaultValue(true)]
         public bool EnableChangeInactiveTitleBoxForeColor
         {
             get { return _enableChangeInactiveTitleBoxForeColor; }
@@ -615,11 +603,11 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        #region KlxPiaoForm特性
+        #region KlxPiaoForm Properties
         /// <summary>
         /// 获取或设置窗体拖动的方式。
         /// </summary>
-        [Category("KlxPiaoForm特性")]
+        [Category("KlxPiaoForm Properties")]
         [Description("窗体拖动的方式")]
         public WindowPosition DragMode
         {
@@ -629,7 +617,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置最大化或还原的快捷方式。
         /// </summary>
-        [Category("KlxPiaoForm特性")]
+        [Category("KlxPiaoForm Properties")]
         [Description("最大化或还原的快捷方式，仅缩放按钮显示并启用时生效")]
         public WindowPosition ShortcutResizeMode
         {
@@ -639,7 +627,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置是否启用启动动画。
         /// </summary>
-        [Category("KlxPiaoForm特性")]
+        [Category("KlxPiaoForm Properties")]
         [Description("是否启用启动动画")]
         public bool EnableStartupAnimation
         {
@@ -649,7 +637,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置是否启用关闭动画。
         /// </summary>
-        [Category("KlxPiaoForm特性")]
+        [Category("KlxPiaoForm Properties")]
         [Description("是否启用关闭动画")]
         public bool EnableCloseAnimation
         {
@@ -659,7 +647,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置是否启用 最大化/还原 动画。
         /// </summary>
-        [Category("KlxPiaoForm特性")]
+        [Category("KlxPiaoForm Properties")]
         [Description("是否启用最大化或还原的动画")]
         public bool EnableResizeAnimation
         {
@@ -669,7 +657,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置是否在全屏时自动隐藏窗体边框。
         /// </summary>
-        [Category("KlxPiaoForm特性")]
+        [Category("KlxPiaoForm Properties")]
         [Description("设置为True后，全屏时自动隐藏窗体边框")]
         public bool AutoHideWindowBorder
         {
@@ -679,7 +667,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置是否可调整大小。
         /// </summary>
-        [Category("KlxPiaoForm特性")]
+        [Category("KlxPiaoForm Properties")]
         [Description("窗体是否可调整大小")]
         public bool Resizable
         {
@@ -689,7 +677,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置关闭按钮的功能。
         /// </summary>
-        [Category("KlxPiaoForm特性")]
+        [Category("KlxPiaoForm Properties")]
         [Description("用户单击关闭按钮时执行的操作")]
         public CloseButtonAction CloseButtonFunction
         {
@@ -699,7 +687,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置启动动画和 OnLoad 事件的顺序，以 <see cref="StartupSequence"/> 枚举类型表示。
         /// </summary>
-        [Category("KlxPiaoForm特性")]
+        [Category("KlxPiaoForm Properties")]
         [Description("启动动画和Load事件的顺序")]
         public StartupSequence StartupOrder
         {
@@ -709,7 +697,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置是否启用 Windows 窗体的圆角和阴影(会使窗体边框功能失效)。
         /// </summary>
-        [Category("KlxPiaoForm特性")]
+        [Category("KlxPiaoForm Properties")]
         [Description("启用 Windows 窗体的圆角和阴影(会使窗体边框颜色属性失效)")]
         [DefaultValue(true)]
         public bool EnableShadow
@@ -726,48 +714,71 @@ namespace KlxPiaoControls
             set { base.FormBorderStyle = value; }
         }
 
-        private readonly KlxPiaoButton CloseButton = new();
-        private readonly KlxPiaoButton ResizeButton = new();
-        private readonly KlxPiaoButton MinimizeButton = new();
+        private bool isClosing = false;
+        private class TitleButton : Button
+        {
+            public TitleButton()
+            {
+                FlatStyle = FlatStyle.Flat;
+                FlatAppearance.BorderSize = 0;
+                SetStyle(ControlStyles.Selectable, false);
+            }
+        }
+
+        private readonly TitleButton CloseButton = new();
+        private readonly TitleButton ResizeButton = new();
+        private readonly TitleButton MinimizeButton = new();
 
         protected override void OnPaint(PaintEventArgs pe)
         {
+            Rectangle thisRect = new(0, 0, Width, Height);
             Graphics g = pe.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-            Rectangle thisRect = new(0, 0, Width, Height);
-
             g.Clear(BackColor);
 
-            //绘制标题框
+            //draw titlebox
             using (Brush brush = new SolidBrush(TitleBoxBackColor))
             {
                 g.FillRectangle(brush, new Rectangle(thisRect.X, thisRect.Y, thisRect.Width, TitleBoxHeight));
             }
 
-            //绘制边框
+            //draw border
             if (!(AutoHideWindowBorder && WindowState == FormWindowState.Maximized) && !EnableShadow)
             {
                 using Pen borderPen = new(BorderColor, 1);
                 g.DrawRectangle(borderPen, new Rectangle(thisRect.X, thisRect.Y, thisRect.Width - 1, thisRect.Height - 1));
             }
 
-            //更新标题按钮属性
-            UpdateTitleButtonProperties([CloseButton, ResizeButton, MinimizeButton]);
+            //update title button properties
+            TitleButton[] buttons = [CloseButton, ResizeButton, MinimizeButton];
+            foreach (TitleButton b in buttons)
+            {
+                b.Size = new Size(TitleButtonWidth, TitleBoxHeight - 1);
+                b.BackColor = TitleBoxBackColor;
+                b.FlatAppearance.MouseOverBackColor = TitleBoxBackColor.AdjustBrightness(InteractionColorScale);
+                b.FlatAppearance.MouseDownBackColor = b.FlatAppearance.MouseOverBackColor.AdjustBrightness(InteractionColorScale);
+
+                CloseButton.Enabled = EnableCloseButton;
+                ResizeButton.Enabled = EnableResizeButton;
+                MinimizeButton.Enabled = EnableMinimizeButton;
+            }
+
+            //update title button pos
             switch (TitleButtonAlign)
             {
                 case HorizontalEnds.Right:
                     CloseButton.Left = Width - TitleButtonWidth - 1;
                     ResizeButton.Left = Width - TitleButtonWidth * 2 - 1;
                     break;
+
                 case HorizontalEnds.Left:
                     CloseButton.Left = 1;
                     ResizeButton.Left = TitleButtonWidth + 1;
                     break;
             }
 
-            //更新标题按钮显示
+            //update title button show
             switch (TitleButtons)
             {
                 case TitleButtonStyle.ShowAll:
@@ -813,7 +824,7 @@ namespace KlxPiaoControls
                     break;
             }
 
-            //绘制标题文字
+            //draw title text
             using (Brush brush = new SolidBrush(TitleBoxForeColor))
             {
                 SizeF TextSize = g.MeasureString(Text, TitleFont);
@@ -854,21 +865,22 @@ namespace KlxPiaoControls
 
                 int y = (int)((TitleBoxHeight - TextSize.Height) / 2);
 
-                //根据图标位置进行偏移
+                //offset
                 int drawX = (Icon != null && ShowIcon && TitleTextAlign == HorizontalAlignment.Left)
                     ? x + (TitleBoxHeight - Icon.ToBitmap().Height) + 1
                     : x;
 
-                g.DrawString(Text, TitleFont, brush, new Point(drawX, y));
+                g.DrawString(Text, TitleFont, brush, new Point(drawX + TitleTextOffset.X, y + TitleTextOffset.Y));
             }
 
-            //绘制图标
+            //draw icon
             if (Icon != null && ShowIcon)
             {
                 using Bitmap icon = Icon.ToBitmap();
                 g.DrawImage(icon, new Point((TitleBoxHeight - icon.Height) / 2 + 1, (TitleBoxHeight - icon.Height) / 2));
             }
 
+            //recovery cursor
             if (adjustBorder == AdjustBorder.Adjusted)
             {
                 Cursor = Cursors.Default;
@@ -877,22 +889,7 @@ namespace KlxPiaoControls
             base.OnPaint(pe);
         }
 
-        private void UpdateTitleButtonProperties(KlxPiaoButton[] buttons)
-        {
-            foreach (KlxPiaoButton b in buttons)
-            {
-                b.Size = new Size(TitleButtonWidth, TitleBoxHeight - 1);
-                b.BackColor = TitleBoxBackColor;
-                b.FlatAppearance.MouseOverBackColor = TitleBoxBackColor.AdjustBrightness(InteractionColorScale);
-                b.FlatAppearance.MouseDownBackColor = b.FlatAppearance.MouseOverBackColor.AdjustBrightness(InteractionColorScale);
-
-                CloseButton.Enabled = EnableCloseButton;
-                ResizeButton.Enabled = EnableResizeButton;
-                MinimizeButton.Enabled = EnableMinimizeButton;
-            }
-        }
-
-        #region 标题按钮事件
+        #region title button click
         private void CloseButton_Click(object? sender, EventArgs e)
         {
             OnCloseButtonClick(EventArgs.Empty);
@@ -948,7 +945,7 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        #region 关闭事件
+        #region OnClosing OnClosed
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
@@ -960,93 +957,35 @@ namespace KlxPiaoControls
             base.OnClosed(e);
             CloseForm();
         }
+        #endregion
 
-        private bool isClosing = false;
-
-        /// <summary>
-        /// 根据 <see cref="CloseButtonFunction"/> 属性执行关闭动画。
-        /// </summary>
-        public void CloseForm()
+        #region OnActivated OnDeactivate
+        private Color oldColor = Color.Empty;
+        protected override void OnActivated(EventArgs e)
         {
-            if (!isClosing)
+            if (EnableChangeInactiveTitleBoxForeColor && oldColor != Color.Empty)
             {
-                isClosing = true;
-
-                if (EnableCloseAnimation)
-                {
-                    //定格窗体
-                    Bitmap newbit = new(Width, Height);
-                    PictureBox picbox = new()
-                    {
-                        SizeMode = PictureBoxSizeMode.Zoom,
-                        Image = newbit,
-                        Location = new Point(0, 0)
-                    };
-                    using (Graphics g = Graphics.FromImage(newbit))
-                    {
-                        g.CopyFromScreen(Left, Top, 0, 0, Size);
-                    }
-                    if (CloseButtonFunction != CloseButtonAction.HideWindow) Controls.Clear();
-                    Controls.Add(picbox);
-
-                    Size oldSize = Size;
-                    Point oldPosition = Location;
-                    float Length = 7F;
-
-                    var fadeOutTask = Task.Run(async () =>
-                    {
-                        for (float i = 1; i >= 0; i -= (1 / Length))
-                        {
-                            Invoke(() => { Opacity = i; });
-                            await Task.Delay(10);
-                        }
-                    });
-
-                    var shrinkTask = Task.Run(async () =>
-                    {
-                        for (int i = 0; i <= Length; i++)
-                        {
-                            Invoke(() =>
-                            {
-                                Size -= new Size(i, i);
-                                Location += new Size(i / 2, i / 2);
-                                picbox.Size = Size; //缩放窗体
-                            });
-                            await Task.Delay(10);
-                        }
-                    });
-
-                    Action action = CloseButtonFunction switch
-                    {
-                        CloseButtonAction.CloseWindow => new Action(Close),
-                        CloseButtonAction.HideWindow => new Action(() =>
-                        {
-                            Hide();
-                            Controls.Remove(picbox);
-                            Opacity = 1;
-                            Size = oldSize;
-                            Location = oldPosition;
-                            isClosing = false;
-                        }),
-                        CloseButtonAction.ExitApplication => new Action(Application.Exit),
-                        _ => new Action(() => { }),
-                    };
-
-                    Task.WhenAll(fadeOutTask, shrinkTask).ContinueWith(t => Invoke(action));
-                }
-                else
-                {
-                    Action action = CloseButtonFunction switch
-                    {
-                        CloseButtonAction.CloseWindow => new Action(Close),
-                        CloseButtonAction.HideWindow => new Action(Hide),
-                        CloseButtonAction.ExitApplication => new Action(Application.Exit),
-                        _ => new Action(() => { }),
-                    };
-
-                    action();
-                }
+                TitleBoxForeColor = oldColor;
             }
+            base.OnActivated(e);
+        }
+
+        protected override void OnDeactivate(EventArgs e)
+        {
+            static int Clamp(int value, int min, int max) => Math.Max(min, Math.Min(max, value));
+
+            if (EnableChangeInactiveTitleBoxForeColor)
+            {
+                oldColor = TitleBoxForeColor;
+                int brightnessAdjustment = TitleBoxForeColor.GetBrightness() > 0.5 ? -75 : 125;
+
+                int newR = Clamp(oldColor.R + brightnessAdjustment, 0, 225);
+                int newG = Clamp(oldColor.G + brightnessAdjustment, 0, 225);
+                int newB = Clamp(oldColor.B + brightnessAdjustment, 0, 225);
+
+                TitleBoxForeColor = Color.FromArgb(newR, newG, newB);
+            }
+            base.OnDeactivate(e);
         }
         #endregion
 
@@ -1084,14 +1023,16 @@ namespace KlxPiaoControls
 
         protected override void OnTextChanged(EventArgs e)
         {
-            Invalidate(new Rectangle(0, 0, Width, TitleBoxHeight));
+            InvalidateTitleBox();
+
             base.OnTextChanged(e);
         }
 
         protected override void OnSizeChanged(EventArgs e)
         {
-            Invalidate(new Rectangle(0, 0, Width, TitleBoxHeight));
+            InvalidateTitleBox();
             Update();
+
             base.OnSizeChanged(e);
         }
 
@@ -1119,7 +1060,7 @@ namespace KlxPiaoControls
         }
 
         private Point mouseDownPos = Point.Empty;
-        private readonly int determinationSize = 7;
+        private readonly int determinationSize = 7; //判定大小
         private AdjustBorder adjustBorder = AdjustBorder.Adjusted;
         private Point oldPos = Point.Empty;
         private Size oldSize = Size.Empty;
@@ -1266,7 +1207,7 @@ namespace KlxPiaoControls
             base.OnMouseUp(e);
         }
 
-        //对于标题按钮特殊处理，只响应北和东
+        //对于标题按钮特殊处理，只响应 top 和 right
         private void TitleButton_MouseDown(object? sender, MouseEventArgs e)
         {
             //传递正在调整的位置
@@ -1349,39 +1290,116 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        #region EnableChangeInactiveTitleBoxForeColor
-        Color oldColor = Color.Empty;
-        protected override void OnActivated(EventArgs e)
+        #region public method
+        /// <summary>
+        /// 切换 WindowState (带有动画)。
+        /// </summary>
+        public void ResizeButtonPerformClick() => ResizeButton.PerformClick();
+
+        /// <summary>
+        /// 根据 <see cref="CloseButtonFunction"/> 属性执行关闭动画。
+        /// </summary>
+        public void CloseForm()
         {
-            if (EnableChangeInactiveTitleBoxForeColor && oldColor != Color.Empty)
+            if (!isClosing)
             {
-                TitleBoxForeColor = oldColor;
+                isClosing = true;
+
+                if (EnableCloseAnimation)
+                {
+                    //定格窗体
+                    Bitmap newbit = new(Width, Height);
+                    PictureBox picbox = new()
+                    {
+                        SizeMode = PictureBoxSizeMode.Zoom,
+                        Image = newbit,
+                        Location = new Point(0, 0)
+                    };
+                    using (Graphics g = Graphics.FromImage(newbit))
+                    {
+                        g.CopyFromScreen(Left, Top, 0, 0, Size);
+                    }
+                    if (CloseButtonFunction != CloseButtonAction.HideWindow) Controls.Clear();
+                    Controls.Add(picbox);
+
+                    Size oldSize = Size;
+                    Point oldPosition = Location;
+                    float Length = 7F;
+
+                    var fadeOutTask = Task.Run(async () =>
+                    {
+                        for (float i = 1; i >= 0; i -= (1 / Length))
+                        {
+                            Invoke(() => { Opacity = i; });
+                            await Task.Delay(10);
+                        }
+                    });
+
+                    var shrinkTask = Task.Run(async () =>
+                    {
+                        for (int i = 0; i <= Length; i++)
+                        {
+                            Invoke(() =>
+                            {
+                                Size -= new Size(i, i);
+                                Location += new Size(i / 2, i / 2);
+                                picbox.Size = Size; //缩放窗体
+                            });
+                            await Task.Delay(10);
+                        }
+                    });
+
+                    Action action = CloseButtonFunction switch
+                    {
+                        CloseButtonAction.CloseWindow => new Action(Close),
+                        CloseButtonAction.HideWindow => new Action(() =>
+                        {
+                            Hide();
+                            Controls.Remove(picbox);
+                            Opacity = 1;
+                            Size = oldSize;
+                            Location = oldPosition;
+                            isClosing = false;
+                        }),
+                        CloseButtonAction.ExitApplication => new Action(Application.Exit),
+                        _ => new Action(() => { }),
+                    };
+
+                    Task.WhenAll(fadeOutTask, shrinkTask).ContinueWith(t => Invoke(action));
+                }
+                else
+                {
+                    Action action = CloseButtonFunction switch
+                    {
+                        CloseButtonAction.CloseWindow => new Action(Close),
+                        CloseButtonAction.HideWindow => new Action(Hide),
+                        CloseButtonAction.ExitApplication => new Action(Application.Exit),
+                        _ => new Action(() => { }),
+                    };
+
+                    action();
+                }
             }
-            base.OnActivated(e);
         }
 
-        protected override void OnDeactivate(EventArgs e)
+        /// <summary>
+        /// 立即重绘标题按钮。
+        /// </summary>
+        public void RefreshTitleBoxButton()
         {
-            static int Clamp(int value, int min, int max)
-            {
-                return Math.Max(min, Math.Min(max, value));
-            }
-            if (EnableChangeInactiveTitleBoxForeColor)
-            {
-                oldColor = TitleBoxForeColor;
-                int brightnessAdjustment = TitleBoxForeColor.GetBrightness() > 127 ? -125 : 125;
-
-                int newR = Clamp(oldColor.R + brightnessAdjustment, 0, 225);
-                int newG = Clamp(oldColor.G + brightnessAdjustment, 0, 225);
-                int newB = Clamp(oldColor.B + brightnessAdjustment, 0, 225);
-
-                TitleBoxForeColor = Color.FromArgb(newR, newG, newB);
-            }
-            base.OnDeactivate(e);
+            CloseButton.Refresh();
+            ResizeButton.Refresh();
+            MinimizeButton.Refresh();
         }
-        #endregion
 
-        #region Public Method
+        /// <summary>
+        /// 通知标题框重绘。
+        /// </summary>
+        public void InvalidateTitleBox()
+        {
+            Invalidate(new Rectangle(0, 0, Width, TitleBoxHeight));
+        }
+
         /// <summary>
         /// 获取工作区的矩形。
         /// </summary>
@@ -1429,18 +1447,16 @@ namespace KlxPiaoControls
         /// </summary>
         /// <param name="themeColor">主题色。</param>
         /// <param name="IsApplyToControls">是否应用于控件。</param>
-        public void SetGlobalTheme(Color? themeColor = null, bool IsApplyToControls = true)
+        public void SetGlobalTheme(Color themeColor, bool IsApplyToControls = true)
         {
-            themeColor = themeColor == null ? TitleBoxBackColor : themeColor;
-
-            TitleBoxBackColor = (Color)themeColor;
-            TitleBoxForeColor = ColorProcessor.GetBrightness((Color)themeColor) > 127 ? Color.Black : Color.White;
+            TitleBoxBackColor = themeColor;
+            TitleBoxForeColor = themeColor.GetBrightnessForYUV() > 127 ? Color.Black : Color.White;
 
             if (IsApplyToControls)
             {
-                Color butBorderColor = ColorProcessor.SetBrightness((Color)themeColor, 210);
-                Color mouseOverColor = ColorProcessor.SetBrightness(butBorderColor, 250);
-                Color mouseDownColor = ColorProcessor.SetBrightness(butBorderColor, 240);
+                Color butBorderColor = themeColor.SetBrightness(210);
+                Color mouseOverColor = butBorderColor.SetBrightness(250);
+                Color mouseDownColor = butBorderColor.SetBrightness(240);
 
                 this.ForEachControl<RoundedButton>(but =>
                 {
@@ -1459,13 +1475,6 @@ namespace KlxPiaoControls
                         but.InteractionStyle.DownBackColor = mouseDownColor;
                         but.BorderColor = butBorderColor;
                     }
-                }, true);
-
-                this.ForEachControl<KlxPiaoButton>(but =>
-                {
-                    but.FlatAppearance.BorderColor = butBorderColor;
-                    but.FlatAppearance.MouseOverBackColor = mouseOverColor;
-                    but.FlatAppearance.MouseDownBackColor = mouseDownColor;
                 }, true);
 
                 this.ForEachControl<KlxPiaoPanel>(panel =>

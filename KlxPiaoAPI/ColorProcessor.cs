@@ -23,11 +23,11 @@
         }
 
         /// <summary>
-        /// 获取颜色的亮度。
+        /// 获取颜色的亮度（根据YUV颜色模型）。
         /// </summary>
         /// <param name="color">要计算亮度的颜色。</param>
-        /// <returns>颜色的亮度值，范围从0到255。</returns>
-        public static double GetBrightness(Color color)
+        /// <returns>颜色的亮度值，范围从 0 到 255。</returns>
+        public static double GetBrightnessForYUV(this Color color)
         {
             return 0.299 * color.R + 0.587 * color.G + 0.114 * color.B;
         }
@@ -41,29 +41,29 @@
         /// <returns>调整后的颜色，其亮度接近于指定的目标亮度值。</returns>
         public static Color SetBrightness(this Color color, double Brightness, double precision = 0.008)
         {
-            double 当前亮度 = GetBrightness(color);
-            double newBrightness = 当前亮度;
+            double oldBrightness = color.GetBrightnessForYUV();
+            double newBrightness = oldBrightness;
 
             Color newColor = color;
             Color oldColor = Color.Empty;
 
-            if (当前亮度 > Brightness) //变暗
+            if (oldBrightness > Brightness) //变暗
             {
                 while (newBrightness > Brightness)
                 {
                     oldColor = newColor; //记录调整前颜色
                     newColor = AdjustBrightness(newColor, -precision);
-                    newBrightness = GetBrightness(newColor);
+                    newBrightness = newColor.GetBrightnessForYUV();
                 }
                 return oldColor;
             }
-            else if (当前亮度 < Brightness) //变亮
+            else if (oldBrightness < Brightness) //变亮
             {
                 while (newBrightness < Brightness)
                 {
                     oldColor = newColor; //记录调整前颜色
                     newColor = AdjustBrightness(newColor, +precision);
-                    newBrightness = GetBrightness(newColor);
+                    newBrightness = newColor.GetBrightnessForYUV();
                 }
                 return oldColor;
             }

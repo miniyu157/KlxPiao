@@ -43,7 +43,7 @@
             边框Track = new KlxPiaoControls.KlxPiaoTrackBar();
             panel1 = new Panel();
             groupBox2 = new GroupBox();
-            klxPiaoLinkLabel1 = new KlxPiaoControls.KlxPiaoLinkLabel();
+            klxPiaoLinkLabel1 = new LinkLabel();
             klxPiaoLabel4 = new KlxPiaoControls.KlxPiaoLabel();
             klxPiaoLabel5 = new KlxPiaoControls.KlxPiaoLabel();
             前景Panel = new KlxPiaoControls.KlxPiaoPanel();
@@ -61,8 +61,8 @@
             启用投影Check = new CheckBox();
             textBox1 = new TextBox();
             groupBox4 = new GroupBox();
-            klxPiaoButton2 = new KlxPiaoControls.KlxPiaoButton();
-            klxPiaoButton1 = new KlxPiaoControls.KlxPiaoButton();
+            klxPiaoButton2 = new Button();
+            klxPiaoButton1 = new Button();
             label4 = new Label();
             textBox3 = new TextBox();
             textBox2 = new TextBox();
@@ -488,7 +488,6 @@
             klxPiaoButton2.FlatAppearance.MouseDownBackColor = Color.FromArgb(230, 230, 230);
             klxPiaoButton2.FlatAppearance.MouseOverBackColor = Color.FromArgb(240, 240, 240);
             klxPiaoButton2.FlatStyle = FlatStyle.Flat;
-            klxPiaoButton2.IsReceiveFocus = false;
             klxPiaoButton2.Location = new Point(21, 117);
             klxPiaoButton2.Name = "klxPiaoButton2";
             klxPiaoButton2.Size = new Size(229, 40);
@@ -503,7 +502,6 @@
             klxPiaoButton1.FlatAppearance.MouseDownBackColor = Color.FromArgb(230, 230, 230);
             klxPiaoButton1.FlatAppearance.MouseOverBackColor = Color.FromArgb(240, 240, 240);
             klxPiaoButton1.FlatStyle = FlatStyle.Flat;
-            klxPiaoButton1.IsReceiveFocus = false;
             klxPiaoButton1.Location = new Point(21, 71);
             klxPiaoButton1.Name = "klxPiaoButton1";
             klxPiaoButton1.Size = new Size(229, 40);
@@ -611,7 +609,7 @@
         private Label label1;
         private Label label2;
         private KlxPiaoControls.KlxPiaoTrackBar 字号Track;
-        private KlxPiaoControls.KlxPiaoLinkLabel klxPiaoLinkLabel1;
+        private LinkLabel klxPiaoLinkLabel1;
         private GroupBox groupBox3;
         private CheckBox 启用投影Check;
         private KlxPiaoControls.KlxPiaoLabel klxPiaoLabel6;
@@ -627,7 +625,7 @@
         private Label label4;
         private TextBox textBox3;
         private Label label5;
-        private KlxPiaoControls.KlxPiaoButton klxPiaoButton2;
-        private KlxPiaoControls.KlxPiaoButton klxPiaoButton1;
+        private Button klxPiaoButton2;
+        private Button klxPiaoButton1;
     }
 }

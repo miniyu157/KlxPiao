@@ -8,7 +8,7 @@ namespace KlxPiaoControls
     /// 表示一个具有自定义外观和投影效果的面板控件。
     /// </summary>
     /// <remarks>
-    /// <see cref="KlxPiaoPanel"/> 继承自 <see cref="Panel"/> 类，可以设置边框样式、圆角大小、投影效果等外观属性。
+    /// <see cref="KlxPiaoPanel"/> 继承自 <see cref="Panel"/>，是原版 <see cref="Panel"/> 的增强版本。
     /// </remarks>
     [DefaultEvent("Click")]
     public partial class KlxPiaoPanel : Panel
@@ -63,11 +63,11 @@ namespace KlxPiaoControls
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
         }
 
-        #region KlxPiaoPanel外观
+        #region KlxPiaoPanel Appearance
         /// <summary>
         /// 获取或设置边框的颜色。
         /// </summary>
-        [Category("KlxPiaoPanel外观")]
+        [Category("KlxPiaoPanel Appearance")]
         [Description("边框的颜色")]
         [DefaultValue(typeof(Color), "199,199,199")]
         public Color BorderColor
@@ -78,7 +78,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置边框外部的颜色。
         /// </summary>
-        [Category("KlxPiaoPanel外观")]
+        [Category("KlxPiaoPanel Appearance")]
         [Description("边框外部的颜色，通常与父容器背景色相同")]
         [DefaultValue(typeof(Color), "White")]
         public Color BaseBackColor
@@ -89,7 +89,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置边框大小。
         /// </summary>
-        [Category("KlxPiaoPanel外观")]
+        [Category("KlxPiaoPanel Appearance")]
         [Description("边框的大小，启用阴影时失效")]
         [DefaultValue(1)]
         public int BorderSize
@@ -100,7 +100,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置圆角的大小，以 <see cref="KlxPiaoAPI.CornerRadius"/> 结构体表示。
         /// </summary>
-        [Category("KlxPiaoPanel外观")]
+        [Category("KlxPiaoPanel Appearance")]
         [Description("每个角的圆角大小，自动检测是百分比大小还是像素大小。")]
         [DefaultValue(typeof(CornerRadius), "0,0,0,0")]
         public CornerRadius CornerRadius
@@ -111,7 +111,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置是否启用投影。
         /// </summary>
-        [Category("KlxPiaoPanel外观")]
+        [Category("KlxPiaoPanel Appearance")]
         [Description("是否启用投影")]
         [DefaultValue(true)]
         public bool IsEnableShadow
@@ -122,7 +122,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置投影的长度。
         /// </summary>
-        [Category("KlxPiaoPanel外观")]
+        [Category("KlxPiaoPanel Appearance")]
         [Description("投影的长度")]
         [DefaultValue(5)]
         public int ShadowLength
@@ -133,7 +133,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置投影的颜色。
         /// </summary>
-        [Category("KlxPiaoPanel外观")]
+        [Category("KlxPiaoPanel Appearance")]
         [Description("投影的颜色，减淡到白色")]
         [DefaultValue(typeof(Color), "142,142,142")]
         public Color ShadowColor
@@ -144,7 +144,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置投影的方向，以 <see cref="ShadowDirectionEnum"/> 枚举类型表示。
         /// </summary>
-        [Category("KlxPiaoPanel外观")]
+        [Category("KlxPiaoPanel Appearance")]
         [Description("投影的方向")]
         [DefaultValue(typeof(ShadowDirectionEnum), "BottomRight")]
         public ShadowDirectionEnum ShadowDirection
@@ -172,86 +172,56 @@ namespace KlxPiaoControls
         {
             using Bitmap bitmap = new(Width, Height);
             {
+                Rectangle thisRect = new(0, 0, Width, Height);
                 using Graphics g = Graphics.FromImage(bitmap);
-                g.Clear(Color.White);
 
-                int 递减R = (255 - ShadowColor.R) / ShadowLength;
-                int 递减G = (255 - ShadowColor.G) / ShadowLength;
-                int 递减B = (255 - ShadowColor.B) / ShadowLength;
+                g.Clear(BaseBackColor);
 
-                int 递减值 = 255 / ShadowLength;
+                Color startColor = ShadowColor;
+                Color endColor = BaseBackColor;
+                int decrementValue = ShadowLength == 0 ? 0 : 255 / ShadowLength;
 
                 if (IsEnableShadow)
                 {
-                    Rectangle 边框Rect = Rectangle.Empty;
-                    Rectangle 背景Rect = Rectangle.Empty;
-
-                    switch (ShadowDirection)
+                    //shadow
+                    for (int i = 0; i <= ShadowLength; i++)
                     {
-                        case ShadowDirectionEnum.BottomRight:
-                            边框Rect = new Rectangle(0, 0, Width - ShadowLength - 1, Height - ShadowLength - 1);
-                            背景Rect = new Rectangle(1, 1, Width - ShadowLength - 2, Height - ShadowLength - 2);
-
-                            for (int i = 0; i <= ShadowLength; i++)
-                            {
-                                SolidBrush brush = new(Color.FromArgb(递减值, 255 - i * 递减R, 255 - i * 递减G, 255 - i * 递减B));
-                                g.FillRectangle(brush, new Rectangle(ShadowLength - i, ShadowLength - i, Width - ShadowLength, Height - ShadowLength));
-                            }
-                            break;
-                        case ShadowDirectionEnum.BottomLeft:
-                            边框Rect = new Rectangle(ShadowLength, 0, Width - ShadowLength - 1, Height - ShadowLength - 1);
-                            背景Rect = new Rectangle(ShadowLength + 1, 1, Width - ShadowLength - 2, Height - ShadowLength - 2);
-
-                            for (int i = 0; i <= ShadowLength; i++)
-                            {
-                                SolidBrush brush = new(Color.FromArgb(递减值, 255 - i * 递减R, 255 - i * 递减G, 255 - i * 递减B));
-                                g.FillRectangle(brush, new Rectangle(i, ShadowLength - i, Width - ShadowLength, Height - ShadowLength));
-                            }
-                            break;
-                        case ShadowDirectionEnum.LeftBottomRight:
-                            边框Rect = new Rectangle(ShadowLength, 0, Width - ShadowLength * 2 - 1, Height - ShadowLength - 1);
-                            背景Rect = new Rectangle(ShadowLength + 1, 1, Width - ShadowLength * 2 - 2, Height - ShadowLength - 2);
-
-                            for (int i = 0; i <= ShadowLength; i++)
-                            {
-                                SolidBrush brush = new(Color.FromArgb(递减值, 255 - i * 递减R, 255 - i * 递减G, 255 - i * 递减B));
-                                g.FillRectangle(brush, new Rectangle(ShadowLength * 2 - i, ShadowLength - i, Width - ShadowLength * 2, Height - ShadowLength));
-                                g.FillRectangle(brush, new Rectangle(i, ShadowLength - i, Width - ShadowLength * 2, Height - ShadowLength));
-
-                            }
-                            break;
+                        //1.1.1.7 开发日志
+                        //这里使用 Interpolator 插值的逻辑会出错，不知道是为什么
+                        using SolidBrush brush = new(Color.FromArgb(decrementValue,
+                            Math.Max(startColor.R, endColor.R) - i * (Math.Abs(endColor.R - startColor.R) / ShadowLength),
+                            Math.Max(startColor.G, endColor.G) - i * (Math.Abs(endColor.G - startColor.G) / ShadowLength),
+                            Math.Max(startColor.B, endColor.B) - i * (Math.Abs(endColor.B - startColor.B) / ShadowLength)));
+                        g.FillRectangle(brush, new Rectangle(ShadowLength * 2 - i, ShadowLength - i, Width - ShadowLength * 2, Height - ShadowLength));
+                        g.FillRectangle(brush, new Rectangle(i, ShadowLength - i, Width - ShadowLength * 2, Height - ShadowLength));
                     }
-                    //边框
+
+                    //border
                     using Pen borderPen = new(BorderColor, 1);
-                    {
-                        g.DrawRectangle(borderPen, 边框Rect);
-                    }
-                    //背景
+                    g.DrawRectangle(borderPen, GetClientRectangle());
+
+                    //background
                     using SolidBrush backBrush = new(BackColor);
-                    {
-                        g.FillRectangle(backBrush, 背景Rect);
-                    }
+                    g.FillRectangle(backBrush, AdjustRectangle(GetClientRectangle(), -1));
                 }
-                else //不启用投影
+                else
                 {
                     g.SmoothingMode = SmoothingMode.AntiAlias;
                     g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-                    // 背景
-                    using (SolidBrush brush = new(BackColor))
-                    {
-                        g.FillRectangle(brush, new Rectangle(0, 0, Width, Height));
-                    }
+                    //background
+                    using SolidBrush backBrush = new(BackColor);
+                    g.FillRectangle(backBrush, thisRect);
 
-                    Rectangle 区域 = new(0, 0, Width, Height);
-
-                    g.DrawRounded(区域, CornerRadius, BaseBackColor, new Pen(BorderColor, BorderSize));
+                    g.DrawRounded(thisRect, CornerRadius, BaseBackColor, new Pen(BorderColor, BorderSize));
                 }
                 pe.Graphics.DrawImage(bitmap, 0, 0);
             }
 
             base.OnPaint(pe);
         }
+
+        #region public method
         /// <summary>
         /// 获取工作区的大小。
         /// </summary>
@@ -260,41 +230,52 @@ namespace KlxPiaoControls
         {
             if (IsEnableShadow)
             {
-                if (ShadowDirection == ShadowDirectionEnum.LeftBottomRight)
+                return ShadowDirection switch
                 {
-                    return new Size(Width - ShadowLength * 2, Height - ShadowLength);
-                }
-                else
-                {
-                    return new Size(Width - ShadowLength, Height - ShadowLength);
-                }
+                    ShadowDirectionEnum.BottomLeft => new Size(Width - ShadowLength - 1, Height - ShadowLength - 1),
+                    ShadowDirectionEnum.BottomRight => new Size(Width - ShadowLength - 1, Height - ShadowLength - 1),
+                    ShadowDirectionEnum.LeftBottomRight => new Size(Width - ShadowLength * 2 - 1, Height - ShadowLength - 1),
+                    _ => Size
+                };
             }
             else
             {
                 return new Size(Width - BorderSize * 2, Height - BorderSize * 2);
             }
         }
+
+        /// <summary>
+        /// 获取工作区的左上角坐标。
+        /// </summary>
+        /// <returns>用户区域的大小。</returns>
+        public Point GetClientLocation()
+        {
+            if (IsEnableShadow)
+            {
+                return ShadowDirection switch
+                {
+                    ShadowDirectionEnum.BottomLeft => new Point(ShadowLength, 0),
+                    ShadowDirectionEnum.BottomRight => new Point(0, 0),
+                    ShadowDirectionEnum.LeftBottomRight => new Point(ShadowLength, 0),
+                    _ => Point.Empty
+                };
+            }
+            else
+            {
+                return new Point(BorderSize, BorderSize);
+            }
+        }
+
         /// <summary>
         /// 获取工作区的矩形。
         /// </summary>
         /// <returns>除投影或边框内的矩形。</returns>
-        public Rectangle GetClientRectangle()
+        public Rectangle GetClientRectangle() => new(GetClientLocation(), GetClientSize());
+        #endregion
+
+        private static Rectangle AdjustRectangle(Rectangle rectangle, int adjust)
         {
-            if (IsEnableShadow)
-            {
-                if (ShadowDirection == ShadowDirectionEnum.BottomRight)
-                {
-                    return new Rectangle(new Point(0, 0), GetClientSize());
-                }
-                else
-                {
-                    return new Rectangle(new Point(ShadowLength, 0), GetClientSize());
-                }
-            }
-            else
-            {
-                return new Rectangle(new Point(BorderSize, BorderSize), GetClientSize());
-            }
+            return new Rectangle(rectangle.X - adjust, rectangle.Y - adjust, rectangle.Width + adjust, rectangle.Height + adjust);
         }
     }
 }

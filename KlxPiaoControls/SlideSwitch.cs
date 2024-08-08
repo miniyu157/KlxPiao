@@ -341,7 +341,7 @@ namespace KlxPiaoControls
             itemsRect.Clear();
             for (int i = 0; i < Items.Length; i++)
             {
-                //响应Padding
+                //响应 Padding
                 int newWidth = (Width - Padding.Horizontal) / Items.Length;
                 itemsRect.Add(new Rectangle(new Point(i * newWidth + Padding.Left, 0), new Size(newWidth, ItemSize.Height)));
             }

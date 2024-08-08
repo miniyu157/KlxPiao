@@ -35,8 +35,8 @@ namespace KlxPiaoControls
         private CornerRadius _cornerRadius;
         private Color _borderColor;
         private Color _baseBackColor;
-        private Color _crosshairColor; //准星
-        private Color _axisColor; //坐标轴
+        private Color _crosshairColor;
+        private Color _axisColor;
         private int _borderSize;
         private int _crosshairSize;
         private PriorityLevel _crosshairDrawingPriority;
@@ -85,6 +85,7 @@ namespace KlxPiaoControls
             DoubleBuffered = true;
         }
 
+        #region events
         /// <summary>
         /// 值改变事件。
         /// </summary>
@@ -123,13 +124,13 @@ namespace KlxPiaoControls
         {
             ValueChangedByCode?.Invoke(this, e);
         }
+        #endregion
 
-
-        #region PointBar外观
+        #region PointBar Appearance
         /// <summary>
         /// 获取或设置圆角的大小，以 <see cref="KlxPiaoAPI.CornerRadius"/> 结构体表示。
         /// </summary>
-        [Category("PointBar外观")]
+        [Category("PointBar Appearance")]
         [Description("边框每个角的角半径，自动检测百分比或像素大小")]
         [DefaultValue(typeof(CornerRadius), "0,0,0,0")]
         public CornerRadius CornerRadius
@@ -141,7 +142,7 @@ namespace KlxPiaoControls
         /// 获取或设置坐标显示的格式。
         /// </summary>
         /// <remarks>占位符：<br/>- {x}：X<br/>- {y}：Y。</remarks>
-        [Category("PointBar外观")]
+        [Category("PointBar Appearance")]
         [Description("边框的颜色")]
         [DefaultValue("X:{X},Y:{Y}")]
         public string CoordinateDisplayFormat
@@ -152,7 +153,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置绘制坐标时产生的偏移。
         /// </summary>
-        [Category("PointBar外观")]
+        [Category("PointBar Appearance")]
         [Description("绘制坐标时产生的偏移")]
         [DefaultValue(typeof(Point), "0,0")]
         public Point CoordinateTextOffset
@@ -163,7 +164,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置边框的颜色。
         /// </summary>
-        [Category("PointBar外观")]
+        [Category("PointBar Appearance")]
         [Description("边框的颜色")]
         [DefaultValue(typeof(Color), "Gray")]
         public Color BorderColor
@@ -174,7 +175,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置圆角外部的颜色。
         /// </summary>
-        [Category("PointBar外观")]
+        [Category("PointBar Appearance")]
         [Description("边框外部的颜色")]
         [DefaultValue(typeof(Color), "White")]
         public Color BaseBackColor
@@ -185,7 +186,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置准星的颜色。
         /// </summary>
-        [Category("PointBar外观")]
+        [Category("PointBar Appearance")]
         [Description("准星的颜色")]
         [DefaultValue(typeof(Color), "Red")]
         public Color CrosshairColor
@@ -196,7 +197,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置准星绘制的优先级。
         /// </summary>
-        [Category("PointBar外观")]
+        [Category("PointBar Appearance")]
         [Description("准星绘制的优先级")]
         [DefaultValue(typeof(PriorityLevel), "Low")]
         public PriorityLevel CrosshairDrawingPriority
@@ -207,7 +208,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置坐标轴的颜色。
         /// </summary>
-        [Category("PointBar外观")]
+        [Category("PointBar Appearance")]
         [Description("坐标轴的颜色")]
         [DefaultValue(typeof(Color), "LightPink")]
         public Color AxisColor
@@ -218,7 +219,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置边框的大小。
         /// </summary>
-        [Category("PointBar外观")]
+        [Category("PointBar Appearance")]
         [Description("边框的大小")]
         [DefaultValue(1)]
         public int BorderSize
@@ -229,7 +230,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置准星的大小。
         /// </summary>
-        [Category("PointBar外观")]
+        [Category("PointBar Appearance")]
         [Description("准星的大小，为0时隐藏准星")]
         [DefaultValue(5)]
         public int CrosshairSize
@@ -240,7 +241,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置是否显示坐标轴。
         /// </summary>
-        [Category("PointBar外观")]
+        [Category("PointBar Appearance")]
         [Description("显示以0,0为中心的坐标轴")]
         [DefaultValue(true)]
         public bool DisplayAxis
@@ -251,7 +252,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置是否显示坐标信息。
         /// </summary>
-        [Category("PointBar外观")]
+        [Category("PointBar Appearance")]
         [Description("是否显示坐标信息")]
         [DefaultValue(true)]
         public bool DisplayCoordinates
@@ -262,7 +263,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置坐标显示的位置。
         /// </summary>
-        [Category("PointBar外观")]
+        [Category("PointBar Appearance")]
         [Description("坐标显示的位置")]
         [DefaultValue(typeof(ContentAlignment), "TopLeft")]
         public ContentAlignment CoordinateTextAlign
@@ -272,11 +273,11 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        #region PointBar属性
+        #region PointBar Properties
         /// <summary>
         /// 获取或设置最小值。
         /// </summary>
-        [Category("PointBar属性")]
+        [Category("PointBar Properties")]
         [Description("坐标的最小值")]
         [DefaultValue(typeof(Point), "-100,-100")]
         public Point MinValue
@@ -287,7 +288,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置最大值。
         /// </summary>
-        [Category("PointBar属性")]
+        [Category("PointBar Properties")]
         [Description("坐标的最大值")]
         [DefaultValue(typeof(Point), "100,100")]
         public Point MaxValue
@@ -298,7 +299,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置当前的值。
         /// </summary>
-        [Category("PointBar属性")]
+        [Category("PointBar Properties")]
         [Description("坐标的值")]
         [DefaultValue(typeof(Point), "0,0")]
         public Point Value
@@ -315,7 +316,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置是否响应键盘。
         /// </summary>
-        [Category("PointBar属性")]
+        [Category("PointBar Properties")]
         [Description("是否可以通过方向键调整")]
         [DefaultValue(true)]
         public bool RespondToKeyboard
@@ -326,7 +327,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置键盘一次响应的大小。
         /// </summary>
-        [Category("PointBar属性")]
+        [Category("PointBar Properties")]
         [Description("通过方向键一次移动的大小")]
         [DefaultValue(1)]
         public int ResponseSize
@@ -337,7 +338,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置坐标系的类型。
         /// </summary>
-        [Category("PointBar属性")]
+        [Category("PointBar Properties")]
         [Description("ComputerGraphicsCoordinateSystem（第一象限在右下角）和CartesianCoordinateSystem（第一象限在右上角）")]
         [DefaultValue(typeof(CoordinateSystem), "ComputerGraphicsCoordinateSystem")]
         public CoordinateSystem CoordinateSystemType
@@ -353,69 +354,68 @@ namespace KlxPiaoControls
             get { return base.Text; }
             set { base.Text = value; Invalidate(); }
         }
+
         protected override void OnPaint(PaintEventArgs pe)
         {
-            base.OnPaint(pe);
-
             Graphics g = pe.Graphics;
             Rectangle thisRect = new(0, 0, Width, Height);
 
-            int x总长 = MaxValue.X - MinValue.X;
-            int y总长 = MaxValue.Y - MinValue.Y;
+            int xRange = MaxValue.X - MinValue.X;
+            int yRange = MaxValue.Y - MinValue.Y;
 
-            //绘制坐标轴
+            //draw axis
             if (DisplayAxis)
             {
-                using Pen 坐标系Pen = new(AxisColor, 1);
+                using Pen axisPen = new(AxisColor, 1);
 
-                float y轴 = (0 - MinValue.X) / (float)x总长;
-                float x轴 = (0 - MinValue.Y) / (float)y总长;
+                float yAxis = (0 - MinValue.X) / (float)xRange;
+                float xAxis = (0 - MinValue.Y) / (float)yRange;
 
-                if (CoordinateSystemType == CoordinateSystem.CartesianCoordinateSystem) { x轴 = 1 - x轴; }
+                if (CoordinateSystemType == CoordinateSystem.CartesianCoordinateSystem) { xAxis = 1 - xAxis; }
 
-                g.DrawLine(坐标系Pen, Width * y轴, 0, Width * y轴, Height);
-                g.DrawLine(坐标系Pen, 0, Height * x轴, Width, Height * x轴);
+                g.DrawLine(axisPen, Width * yAxis, 0, Width * yAxis, Height);
+                g.DrawLine(axisPen, 0, Height * xAxis, Width, Height * xAxis);
             }
 
-            var 绘制边框 = new Action(() =>
+            var drawBorder = new Action(() =>
             {
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.PixelOffsetMode = PixelOffsetMode.HighQuality;
                 Pen pen = new(BorderColor, BorderSize * 2); //修正画笔大小
                 if (pen.Width != 0)
                 {
-                    GraphicsPath 圆角路径 = thisRect.ConvertToRoundedPath(CornerRadius);
-                    g.DrawPath(pen, 圆角路径);
+                    using GraphicsPath roundedPath = thisRect.ConvertToRoundedPath(CornerRadius);
+                    g.DrawPath(pen, roundedPath);
                 }
                 g.SmoothingMode = SmoothingMode.Default;
                 g.PixelOffsetMode = PixelOffsetMode.Default;
             });
 
-            var 绘制准星 = new Action(() =>
+            var drawCrosshair = new Action(() =>
             {
-                Pen 准星Pen = new(CrosshairColor, 1);
-                void 画出十字(Point 坐标, int 长度)
+                Pen crosshairPen = new(CrosshairColor, 1);
+                void drawCrosshair(Point corr, int px)
                 {
-                    double x比例 = (坐标.X - MinValue.X) / (double)x总长;
-                    double y比例 = (坐标.Y - MinValue.Y) / (double)y总长;
+                    double xPercentage = (corr.X - MinValue.X) / (double)xRange;
+                    double yPercentage = (corr.Y - MinValue.Y) / (double)yRange;
 
-                    if (CoordinateSystemType == CoordinateSystem.CartesianCoordinateSystem) { y比例 = 1 - y比例; }
+                    if (CoordinateSystemType == CoordinateSystem.CartesianCoordinateSystem) yPercentage = 1 - yPercentage;
 
-                    int newx = (int)(Width * x比例);
-                    int newy = (int)(Height * y比例);
+                    int newx = (int)(Width * xPercentage);
+                    int newy = (int)(Height * yPercentage);
 
-                    g.DrawLine(准星Pen, newx - 长度, newy, newx + 长度, newy);
-                    g.DrawLine(准星Pen, newx, newy - 长度, newx, newy + 长度);
+                    g.DrawLine(crosshairPen, newx - px, newy, newx + px, newy);
+                    g.DrawLine(crosshairPen, newx, newy - px, newx, newy + px);
                 }
-                画出十字(Value + new Size(1, 1), CrosshairSize);
+                drawCrosshair(Value + new Size(1, 1), CrosshairSize);
             });
 
-            var 填充外部 = new Action(() =>
+            var drawOuter = new Action(() =>
             {
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                GraphicsPath 外部路径 = thisRect.ConvertToRoundedPath(CornerRadius, true);
-                g.FillPath(new SolidBrush(BaseBackColor), 外部路径);
+                using GraphicsPath outerPath = thisRect.ConvertToRoundedPath(CornerRadius, true);
+                g.FillPath(new SolidBrush(BaseBackColor), outerPath);
                 g.SmoothingMode = SmoothingMode.Default;
                 g.PixelOffsetMode = PixelOffsetMode.Default;
             });
@@ -423,25 +423,25 @@ namespace KlxPiaoControls
             switch (CrosshairDrawingPriority)
             {
                 case PriorityLevel.Low:     //文本覆盖图像
-                    绘制准星();
-                    绘制边框();
-                    填充外部();
+                    drawCrosshair();
+                    drawBorder();
+                    drawOuter();
                     break;
 
                 case PriorityLevel.Medium:  //文本覆盖边框，不得超出圆角
-                    绘制边框();
-                    绘制准星();
-                    填充外部();
+                    drawBorder();
+                    drawCrosshair();
+                    drawOuter();
                     break;
 
                 case PriorityLevel.High:    //覆盖全部元素
-                    绘制边框();
-                    填充外部();
-                    绘制准星();
+                    drawBorder();
+                    drawOuter();
+                    drawCrosshair();
                     break;
             }
 
-            //绘制值
+            //draw text
             if (DisplayCoordinates)
             {
                 var replacements = new Dictionary<string, string> {
@@ -449,74 +449,74 @@ namespace KlxPiaoControls
                     {"{Y}", Value.Y.ToString()}
                 };
 
-                string 文字 = CoordinateDisplayFormat.ReplaceMultiple(replacements);
+                string text = CoordinateDisplayFormat.ReplaceMultiple(replacements);
                 using SolidBrush Textbrush = new(ForeColor);
 
-                SizeF 文字大小 = g.MeasureString(文字, Font);
-                Point 文字位置 = LayoutUtilities.CalculateAlignedPosition(thisRect, 文字大小, CoordinateTextAlign, CoordinateTextOffset);
+                SizeF textSize = g.MeasureString(text, Font);
+                Point textPos = LayoutUtilities.CalculateAlignedPosition(thisRect, textSize, CoordinateTextAlign, CoordinateTextOffset);
 
-                g.DrawString(文字, Font, Textbrush, 文字位置);
+                g.DrawString(text, Font, Textbrush, textPos);
             }
+
+            base.OnPaint(pe);
         }
 
-        bool 正在拖动 = false;
+        bool draging = false;
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            base.OnMouseDown(e);
-
             if (e.Button == MouseButtons.Left)
             {
-                int x轴总长度 = MaxValue.X - MinValue.X;
-                int y轴总长度 = MaxValue.Y - MinValue.Y;
+                int xRange = MaxValue.X - MinValue.X;
+                int yRange = MaxValue.Y - MinValue.Y;
 
                 Value = new Point(
-                    MinValue.X + (int)(x轴总长度 * (e.Location.X / (float)Width)),
-                    MinValue.Y + (int)(y轴总长度 * (CoordinateSystemType == CoordinateSystem.CartesianCoordinateSystem ? 1 - e.Location.Y / (float)Height : e.Location.Y / (float)Height))
+                    MinValue.X + (int)(xRange * (e.Location.X / (float)Width)),
+                    MinValue.Y + (int)(yRange * (CoordinateSystemType == CoordinateSystem.CartesianCoordinateSystem ? 1 - e.Location.Y / (float)Height : e.Location.Y / (float)Height))
                 );
 
                 OnValueChanged(new ValueChangedEvent(Value));
 
-                正在拖动 = true;
+                draging = true;
             }
-
             Focus();
+
+            base.OnMouseDown(e);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            base.OnMouseMove(e);
-
-            if (正在拖动)
+            if (draging)
             {
-                int x轴总长度 = MaxValue.X - MinValue.X;
-                int y轴总长度 = MaxValue.Y - MinValue.Y;
+                int xRange = MaxValue.X - MinValue.X;
+                int yRange = MaxValue.Y - MinValue.Y;
 
                 Value = new Point(
-                    MinValue.X + (int)(x轴总长度 * (e.Location.X / (float)Width)),
-                    MinValue.Y + (int)(y轴总长度 * (CoordinateSystemType == CoordinateSystem.CartesianCoordinateSystem ? 1 - e.Location.Y / (float)Height : e.Location.Y / (float)Height))
+                    MinValue.X + (int)(xRange * (e.Location.X / (float)Width)),
+                    MinValue.Y + (int)(yRange * (CoordinateSystemType == CoordinateSystem.CartesianCoordinateSystem ? 1 - e.Location.Y / (float)Height : e.Location.Y / (float)Height))
                 );
 
-                if (Value.X < MinValue.X) { Value = new Point(MinValue.X, Value.Y); }
-                if (Value.X > MaxValue.X) { Value = new Point(MaxValue.X, Value.Y); }
-                if (Value.Y < MinValue.Y) { Value = new Point(Value.X, MinValue.Y); }
-                if (Value.Y > MaxValue.Y) { Value = new Point(Value.X, MaxValue.Y); }
+                if (Value.X < MinValue.X) Value = new Point(MinValue.X, Value.Y);
+                if (Value.X > MaxValue.X) Value = new Point(MaxValue.X, Value.Y);
+                if (Value.Y < MinValue.Y) Value = new Point(Value.X, MinValue.Y);
+                if (Value.Y > MaxValue.Y) Value = new Point(Value.X, MaxValue.Y);
 
                 OnValueChanged(new ValueChangedEvent(Value));
 
                 Refresh();
             }
+
+            base.OnMouseMove(e);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
+            draging = false;
+
             base.OnMouseUp(e);
-            正在拖动 = false;
         }
 
         protected override void OnPreviewKeyDown(PreviewKeyDownEventArgs e)
         {
-            base.OnPreviewKeyDown(e);
-
             if (!RespondToKeyboard) return;
 
             switch (e.KeyCode)
@@ -526,28 +526,31 @@ namespace KlxPiaoControls
                 case Keys.Left:
                 case Keys.Right:
                     e.IsInputKey = true;
-                    Point 移动后的值 = Value;
+                    Point newValue = Value;
 
                     switch (e.KeyCode)
                     {
                         case Keys.Up:
-                            移动后的值.Y -= ResponseSize * (CoordinateSystemType == CoordinateSystem.ComputerGraphicsCoordinateSystem ? 1 : -1);
+                            newValue.Y -= ResponseSize * (CoordinateSystemType == CoordinateSystem.ComputerGraphicsCoordinateSystem ? 1 : -1);
                             break;
+
                         case Keys.Down:
-                            移动后的值.Y += ResponseSize * (CoordinateSystemType == CoordinateSystem.ComputerGraphicsCoordinateSystem ? 1 : -1);
+                            newValue.Y += ResponseSize * (CoordinateSystemType == CoordinateSystem.ComputerGraphicsCoordinateSystem ? 1 : -1);
                             break;
+
                         case Keys.Left:
-                            移动后的值.X -= ResponseSize;
+                            newValue.X -= ResponseSize;
                             break;
+
                         case Keys.Right:
-                            移动后的值.X += ResponseSize;
+                            newValue.X += ResponseSize;
                             break;
                     }
 
-                    移动后的值.X = Math.Max(MinValue.X, Math.Min(MaxValue.X, 移动后的值.X));
-                    移动后的值.Y = Math.Max(MinValue.Y, Math.Min(MaxValue.Y, 移动后的值.Y));
+                    newValue.X = Math.Max(MinValue.X, Math.Min(MaxValue.X, newValue.X));
+                    newValue.Y = Math.Max(MinValue.Y, Math.Min(MaxValue.Y, newValue.Y));
 
-                    Value = 移动后的值;
+                    Value = newValue;
 
                     OnValueChanged(new ValueChangedEvent(Value));
                     break;
@@ -556,6 +559,8 @@ namespace KlxPiaoControls
                     e.IsInputKey = false;
                     break;
             }
+
+            base.OnPreviewKeyDown(e);
         }
     }
 }

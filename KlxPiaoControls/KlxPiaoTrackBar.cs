@@ -13,7 +13,7 @@ namespace KlxPiaoControls
     [DefaultEvent("ValueChanged")]
     public partial class KlxPiaoTrackBar : Control
     {
-        #region Enums
+        #region enums
         /// <summary>
         /// 表示鼠标滚轮响应的方向。
         /// </summary>
@@ -80,7 +80,7 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        #region Private Properties
+        #region private properties
         //基本外观
         private Color _trackBackColor;
         private Color _trackForeColor;
@@ -143,12 +143,11 @@ namespace KlxPiaoControls
             SetStyle(ControlStyles.Selectable, true);
         }
 
-        #region Public Properties
-        #region KlxPiaoTrackBar基本外观
+        #region KlxPiaoTrackBar Basic Appearance
         /// <summary>
         /// 获取或设置绘制区域的背景色。
         /// </summary>
-        [Category("KlxPiaoTrackBar基本外观")]
+        [Category("KlxPiaoTrackBar Basic Appearance")]
         [Description("绘制区域的背景色")]
         [DefaultValue(typeof(Color), "Gainsboro")]
         public Color TrackBackColor
@@ -159,7 +158,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置绘制区域的前景色。
         /// </summary>
-        [Category("KlxPiaoTrackBar基本外观")]
+        [Category("KlxPiaoTrackBar Basic Appearance")]
         [Description("绘制区域的前景色")]
         [DefaultValue(typeof(Color), "Gray")]
         public Color TrackForeColor
@@ -170,7 +169,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置边框的大小。
         /// </summary>
-        [Category("KlxPiaoTrackBar基本外观")]
+        [Category("KlxPiaoTrackBar Basic Appearance")]
         [Description("边框的大小")]
         [DefaultValue(0)]
         public int BorderSize
@@ -181,7 +180,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置边框的颜色。
         /// </summary>
-        [Category("KlxPiaoTrackBar基本外观")]
+        [Category("KlxPiaoTrackBar Basic Appearance")]
         [Description("边框的颜色")]
         [DefaultValue(typeof(Color), "0,210,212")]
         public Color BorderColor
@@ -192,7 +191,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置圆角的大小，以 <see cref="KlxPiaoAPI.CornerRadius"/> 结构体表示。
         /// </summary>
-        [Category("KlxPiaoTrackBar基本外观")]
+        [Category("KlxPiaoTrackBar Basic Appearance")]
         [Description("圆角的大小，支持百分比大小或像素大小")]
         [DefaultValue(1F)]
         public float CornerRadius
@@ -215,7 +214,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置是否反向绘制拖动条。
         /// </summary>
-        [Category("KlxPiaoTrackBar基本外观")]
+        [Category("KlxPiaoTrackBar Basic Appearance")]
         [Description("是否进行反向绘制")]
         [DefaultValue(false)]
         public bool IsReverseDrawing
@@ -225,11 +224,11 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        #region KlxPiaoTrackBar值属性
+        #region KlxPiaoTrackBar Basic Properties
         /// <summary>
         /// 获取或设置当前的值。
         /// </summary>
-        [Category("KlxPiaoTrackBar值属性")]
+        [Category("KlxPiaoTrackBar Basic Properties")]
         [Description("当前的值")]
         [DefaultValue(0F)]
         public float Value
@@ -247,7 +246,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置最大值。
         /// </summary>
-        [Category("KlxPiaoTrackBar值属性")]
+        [Category("KlxPiaoTrackBar Basic Properties")]
         [Description("最大的值")]
         [DefaultValue(100F)]
         public float MaxValue
@@ -258,7 +257,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置最小值。
         /// </summary>
-        [Category("KlxPiaoTrackBar值属性")]
+        [Category("KlxPiaoTrackBar Basic Properties")]
         [Description("最小的值")]
         [DefaultValue(0F)]
         public float MinValue
@@ -269,7 +268,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置小数点后保留的位数。
         /// </summary>
-        [Category("KlxPiaoTrackBar值属性")]
+        [Category("KlxPiaoTrackBar Basic Properties")]
         [Description("保留的小数位数，决定值的精度")]
         [DefaultValue(0)]
         public int DecimalPlaces
@@ -279,11 +278,11 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        #region KlxPiaoTrackBar交互方式
+        #region KlxPiaoTrackBar Interaction
         /// <summary>
         /// 获取或设置 <see cref="KlxPiaoTrackBar"/> 的交互样式。
         /// </summary>
-        [Category("KlxPiaoTrackBar交互方式")]
+        [Category("KlxPiaoTrackBar Interaction")]
         [Description("用户交互时的外观")]
         public InteractionStyleClass InteractionStyle
         {
@@ -293,7 +292,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置鼠标滚轮响应的方式。
         /// </summary>
-        [Category("KlxPiaoTrackBar交互方式")]
+        [Category("KlxPiaoTrackBar Interaction")]
         [Description("鼠标滚轮响应的方式，正向：向上增加，向下减少；逆向：向上减少，向下增加")]
         [DefaultValue(typeof(MouseWheelResponseMode), "Forward")]
         public MouseWheelResponseMode MouseWheelResponse
@@ -304,7 +303,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置键盘响应的方式。
         /// </summary>
-        [Category("KlxPiaoTrackBar交互方式")]
+        [Category("KlxPiaoTrackBar Interaction")]
         [Description("键盘响应的方式")]
         [DefaultValue(typeof(KeyboardResponseMode), "AllDirections")]
         public KeyboardResponseMode KeyboardResponse
@@ -315,7 +314,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置通过鼠标滚轮或键盘交互，一次调整的大小。
         /// </summary>
-        [Category("KlxPiaoTrackBar交互方式")]
+        [Category("KlxPiaoTrackBar Interaction")]
         [Description("鼠标滚轮或键盘交互，一次调整的大小")]
         [DefaultValue(1F)]
         public float ResponseSize
@@ -325,11 +324,11 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        #region KlxPiaoTrackBar文本绘制
+        #region KlxPiaoTrackBar TextDrawing
         /// <summary>
         /// 获取或设置值文本的对齐方式。
         /// </summary>
-        [Category("KlxPiaoTrackBar文本绘制")]
+        [Category("KlxPiaoTrackBar TextDrawing")]
         [Description("值文本的对齐方式")]
         [DefaultValue(typeof(ContentAlignment), "MiddleCenter")]
         public ContentAlignment ValueTextDrawAlign
@@ -340,7 +339,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置值文本绘制的格式。
         /// </summary>
-        [Category("KlxPiaoTrackBar文本绘制")]
+        [Category("KlxPiaoTrackBar TextDrawing")]
         [Description("值显示的格式")]
         [DefaultValue("{value}")]
         [Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design", typeof(System.Drawing.Design.UITypeEditor))]
@@ -353,7 +352,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置值文本绘制的偏移。
         /// </summary>
-        [Category("KlxPiaoTrackBar文本绘制")]
+        [Category("KlxPiaoTrackBar TextDrawing")]
         [Description("值文本的偏移")]
         [DefaultValue(typeof(Point), "0,0")]
         public Point ValueTextDrawOffset
@@ -364,7 +363,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置值是否绘制值文本。
         /// </summary>
-        [Category("KlxPiaoTrackBar文本绘制")]
+        [Category("KlxPiaoTrackBar TextDrawing")]
         [Description("是否绘制值文本")]
         [DefaultValue(false)]
         public bool IsDrawValueText
@@ -373,9 +372,8 @@ namespace KlxPiaoControls
             set { _isDrawValueText = value; Invalidate(); }
         }
         #endregion
-        #endregion
 
-        #region 事件
+        #region events
         /// <summary>
         /// 值改变事件处理器。
         /// </summary>
@@ -503,10 +501,12 @@ namespace KlxPiaoControls
             g.Clear(!IsReverseDrawing ? TrackBackColor : TrackForeColor);
 
             //如果非用户设置 Value，则根据值的大小计算绘制百分比
-            if (!(draging || Wheeling || keyboarding))
-                drawPercentage = !IsReverseDrawing ? (Value - MinValue) / (MaxValue - MinValue) : (MaxValue - Value) / (MaxValue - MinValue);
+            if (!(draging || wheeling || keyboarding))
+                drawPercentage = !IsReverseDrawing 
+                    ? (Value - MinValue) / (MaxValue - MinValue) 
+                    : (MaxValue - Value) / (MaxValue - MinValue);
 
-            //绘制前景
+            //draw progress
             float drawLength;
             Rectangle TrackForeRect;
             CornerRadius cornerRadius;
@@ -524,13 +524,13 @@ namespace KlxPiaoControls
                 cornerRadius = new CornerRadius(CornerRadius, CornerRadius, 0, 0);
             }
 
-            //填充内部
+            //draw interior
             g.DrawRounded(TrackForeRect, cornerRadius, Color.Empty, new SolidBrush(!IsReverseDrawing ? TrackForeColor : TrackBackColor));
 
-            //绘制边框
+            //draw border
             g.DrawRounded(new Rectangle(0, 0, Width, Height), new CornerRadius(CornerRadius), BackColor, new Pen(BorderColor, BorderSize));
 
-            //绘制值文本
+            //draw text
             if (IsDrawValueText)
             {
                 string drawText = ValueTextDisplayFormat.Replace("{value}", Value.ToString());
@@ -550,14 +550,12 @@ namespace KlxPiaoControls
         private float drawPercentage = 0;
 
         private bool draging = false;
-        private bool Wheeling = false;
+        private bool wheeling = false;
         private bool keyboarding = false;
 
-        #region 鼠标调整值
+        #region OnMouseDown OnMouseMove OnMouseUp
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            base.OnMouseDown(e);
-
             if (e.Button == MouseButtons.Left)
             {
                 draging = true;
@@ -569,14 +567,13 @@ namespace KlxPiaoControls
 
                 OnValueChanged(new ValueChangedEventArgs(Value, EventTriggerType.Mouse, drawPercentage));
             }
-
             Focus();
+
+            base.OnMouseDown(e);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            base.OnMouseMove(e);
-
             if (draging)
             {
                 drawPercentage = (Width >= Height) ? (float)e.X / Width : (float)e.Y / Height;
@@ -590,32 +587,32 @@ namespace KlxPiaoControls
 
                 OnValueChanged(new ValueChangedEventArgs(Value, EventTriggerType.Mouse, drawPercentage));
             }
+
+            base.OnMouseMove(e);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            base.OnMouseUp(e);
-
             draging = false;
+
+            base.OnMouseUp(e);
         }
         #endregion
 
-        #region 滚轮调整值
+        #region OnMouseWheel OnPreviewKeyDown
         protected override void OnMouseWheel(MouseEventArgs e)
         {
-            base.OnMouseWheel(e);
+            wheeling = true;
 
-            Wheeling = true;
-
-            float 一次移动大小 = (1 / (MaxValue - MinValue)) * ResponseSize;
+            float adjustSize = (1 / (MaxValue - MinValue)) * ResponseSize;
 
             switch (e.Delta)
             {
                 case > 0:
-                    drawPercentage += 一次移动大小 * (int)MouseWheelResponse;
+                    drawPercentage += adjustSize * (int)MouseWheelResponse;
                     break;
                 default:
-                    drawPercentage -= 一次移动大小 * (int)MouseWheelResponse;
+                    drawPercentage -= adjustSize * (int)MouseWheelResponse;
                     break;
             }
 
@@ -627,18 +624,16 @@ namespace KlxPiaoControls
             OnValueChanged(new ValueChangedEventArgs(Value, EventTriggerType.MouseWheel, drawPercentage));
 
             Focus();
-        }
-        #endregion
 
-        #region 键盘调整值
+            base.OnMouseWheel(e);
+        }
+
         protected override void OnPreviewKeyDown(PreviewKeyDownEventArgs e)
         {
-            base.OnPreviewKeyDown(e);
-
             keyboarding = true;
             e.IsInputKey = true;
 
-            float 一次移动大小 = (1 / (MaxValue - MinValue)) * ResponseSize;
+            float adjustSize = (1 / (MaxValue - MinValue)) * ResponseSize;
 
             switch (KeyboardResponse)
             {
@@ -647,12 +642,12 @@ namespace KlxPiaoControls
                     {
                         case Keys.Left:
                         case Keys.Up:
-                            drawPercentage -= 一次移动大小;
+                            drawPercentage -= adjustSize;
                             break;
 
                         case Keys.Right:
                         case Keys.Down:
-                            drawPercentage += 一次移动大小;
+                            drawPercentage += adjustSize;
                             break;
 
                         default:
@@ -665,11 +660,11 @@ namespace KlxPiaoControls
                     switch (e.KeyCode)
                     {
                         case Keys.Up:
-                            drawPercentage -= 一次移动大小;
+                            drawPercentage -= adjustSize;
                             break;
 
                         case Keys.Down:
-                            drawPercentage += 一次移动大小;
+                            drawPercentage += adjustSize;
                             break;
 
                         default:
@@ -682,11 +677,11 @@ namespace KlxPiaoControls
                     switch (e.KeyCode)
                     {
                         case Keys.Left:
-                            drawPercentage -= 一次移动大小;
+                            drawPercentage -= adjustSize;
                             break;
 
                         case Keys.Right:
-                            drawPercentage += 一次移动大小;
+                            drawPercentage += adjustSize;
                             break;
 
                         default:
@@ -702,10 +697,12 @@ namespace KlxPiaoControls
             Value = (float)Math.Round(MinValue + drawPercentage * (MaxValue - MinValue), DecimalPlaces);
 
             OnValueChanged(new ValueChangedEventArgs(Value, EventTriggerType.Keyboard, drawPercentage));
+
+            base.OnPreviewKeyDown(e);
         }
         #endregion
 
-        #region 反馈
+        #region OnMouseEnter OnMouseLeave OnGotFocus OnLostFocus
         private enum PropertyAction
         {
             Update,

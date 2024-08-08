@@ -8,7 +8,7 @@ namespace KlxPiaoControls
     /// 一个自定义的带圆角和图像支持的按钮控件。
     /// </summary>
     /// <remarks>
-    /// <see cref="RoundedButton"/> 继承自 <see cref="Control"/> 类，是原版 <see cref="Button"/> 的强化版本。
+    /// <see cref="RoundedButton"/> 继承自 <see cref="Control"/> 类，是原版 <see cref="Button"/> 的增强版本。
     /// </remarks>
     public partial class RoundedButton : Control
     {
@@ -96,11 +96,11 @@ namespace KlxPiaoControls
             set { _textAlign = value; Invalidate(); }
         }
 
-        #region RoundedButton外观
+        #region RoundedButton Appearance
         /// <summary>
         /// 将在控件上显示的图像。
         /// </summary>
-        [Category("RoundedButton外观")]
+        [Category("RoundedButton Appearance")]
         [Description("将在控件上显示的图像。")]
         [DefaultValue(null)]
         public Image? Image
@@ -111,7 +111,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 将在控件上显示的图像的对其方式。
         /// </summary>
-        [Category("RoundedButton外观")]
+        [Category("RoundedButton Appearance")]
         [Description("将在控件上显示的图像的对其方式。")]
         [DefaultValue(typeof(ContentAlignment), "MiddleCenter")]
         public ContentAlignment ImageAlign
@@ -122,7 +122,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 图像绘制的偏移。
         /// </summary>
-        [Category("RoundedButton外观")]
+        [Category("RoundedButton Appearance")]
         [Description("图像绘制的偏移")]
         [DefaultValue(typeof(Point), "0,0")]
         public Point ImageOffset
@@ -133,7 +133,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 边框的大小。
         /// </summary>
-        [Category("RoundedButton外观")]
+        [Category("RoundedButton Appearance")]
         [Description("边框的大小，为0时隐藏边框")]
         [DefaultValue(1)]
         public int BorderSize
@@ -149,7 +149,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 边框的颜色。
         /// </summary>
-        [Category("RoundedButton外观")]
+        [Category("RoundedButton Appearance")]
         [Description("边框的颜色")]
         [DefaultValue(typeof(Color), "Gainsboro")]
         public Color BorderColor
@@ -165,7 +165,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 圆角的大小，以 <see cref="CornerRadius"/> 结构体表示。 
         /// </summary>
-        [Category("RoundedButton外观")]
+        [Category("RoundedButton Appearance")]
         [Description("每个角的圆角大小，自动适应百分比大小或像素大小")]
         [DefaultValue(typeof(CornerRadius), "10,10,10,10")]
         public CornerRadius BorderCornerRadius
@@ -176,7 +176,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 边框外部的颜色，通常与父容器背景色相同。
         /// </summary>
-        [Category("RoundedButton外观")]
+        [Category("RoundedButton Appearance")]
         [Description("边框外部的颜色，通常与父容器背景色相同")]
         [DefaultValue(typeof(Color), "White")]
         public Color BaseBackColor
@@ -187,7 +187,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 指定 <see cref="RoundedButton"/> 如何处理图像位置或大小
         /// </summary>
-        [Category("RoundedButton外观")]
+        [Category("RoundedButton Appearance")]
         [Description("如何处理图像位置或大小")]
         [DefaultValue(typeof(PictureBoxSizeMode), "Zoom")]
         public PictureBoxSizeMode ImageSizeMode
@@ -198,7 +198,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 按比例或像素重置图像大小。
         /// </summary>
-        [Category("RoundedButton外观")]
+        [Category("RoundedButton Appearance")]
         [Description("指定一个新的大小（像素或百分比）缩放图像，新的图像位置会基于原位置居中")]
         [DefaultValue(typeof(SizeF), "0,0")]
         public SizeF ImageResizing
@@ -209,7 +209,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 指定图像大小修正的格式。
         /// </summary>
-        [Category("RoundedButton外观")]
+        [Category("RoundedButton Appearance")]
         [Description("指定图片大小修正的格式为百分比或像素")]
         [DefaultValue(typeof(FormatType), "Pixel")]
         public FormatType ImageResizingFormat
@@ -220,7 +220,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 图像圆角的大小，可以自动检测百分比或像素。
         /// </summary>
-        [Category("RoundedButton外观")]
+        [Category("RoundedButton Appearance")]
         [Description("图像圆角的大小，自动检测百分比或像素")]
         [DefaultValue(typeof(CornerRadius), "0,0,0,0")]
         public CornerRadius ImageCornerRadius
@@ -230,11 +230,11 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        #region RoundedButton交互样式
+        #region RoundedButton Interaction
         /// <summary>
         /// 获取或设置交互时是否启用动画。
         /// </summary>
-        [Category("RoundedButton交互样式")]
+        [Category("RoundedButton Interaction")]
         [Description("交互时是否启用动画")]
         public bool IsEnableAnimation
         {
@@ -244,7 +244,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置按钮的交互样式。
         /// </summary>
-        [Category("RoundedButton交互样式")]
+        [Category("RoundedButton Interaction")]
         [Description("定义鼠标交互时按钮的外观")]
         public InteractionStyleClass InteractionStyle
         {
@@ -254,7 +254,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 定义鼠标交互时按钮的颜色过渡动画配置，以 <see cref="Animation"/> 结构体表示。
         /// </summary>
-        [Category("RoundedButton交互样式")]
+        [Category("RoundedButton Interaction")]
         [Description("定义鼠标交互时按钮的颜色过渡动画配置")]
         [DefaultValue(typeof(Animation), "150, 30, [0 0;0 0;1 1;1 1]")]
         public Animation ColorAnimationConfig
@@ -265,7 +265,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 定义鼠标交互时按钮的大小过渡动画配置，以 <see cref="Animation"/> 结构体表示。
         /// </summary>
-        [Category("RoundedButton交互样式")]
+        [Category("RoundedButton Interaction")]
         [Description("定义鼠标交互时按钮的大小过渡动画配置")]
         [DefaultValue(typeof(Animation), "300, 100, [0 0;0.58 1;1 1;1 1]")]
         public Animation SizeAnimationConfig
@@ -350,18 +350,17 @@ namespace KlxPiaoControls
 
         protected override void OnPaint(PaintEventArgs pe)
         {
+            Rectangle thisRect = new(0, 0, Width, Height);
             using Bitmap bitmap = new(Width, Height);
             {
                 Graphics g = Graphics.FromImage(bitmap);
+                SizeF textSize = g.MeasureString(Text, Font);
                 g.Clear(BackColor);
 
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-                Rectangle 工作区 = new(0, 0, Width, Height);
-                SizeF 文本大小 = g.MeasureString(Text, Font);
-
-                //绘制图像
+                //draw image
                 if (Image != null)
                 {
                     Point drawPoint;
@@ -452,22 +451,22 @@ namespace KlxPiaoControls
                     }
 
                     using var roundedImage = Image.AddRounded(ImageCornerRadius);
-                    g.DrawImage(roundedImage, new Rectangle(LayoutUtilities.CalculateAlignedPosition(工作区, drawSize, ImageAlign, ImageOffset), drawSize));
+                    g.DrawImage(roundedImage, new Rectangle(LayoutUtilities.CalculateAlignedPosition(thisRect, drawSize, ImageAlign, ImageOffset), drawSize));
                 }
 
-                //绘制文本
-                g.DrawString(Text, Font, new SolidBrush(ForeColor), LayoutUtilities.CalculateAlignedPosition(工作区, 文本大小, TextAlign, LayoutUtilities.PaddingConvertToPoint(Padding)));
+                //draw text
+                g.DrawString(Text, Font, new SolidBrush(ForeColor), LayoutUtilities.CalculateAlignedPosition(thisRect, textSize, TextAlign, LayoutUtilities.PaddingConvertToPoint(Padding)));
 
-                //边框
-                g.DrawRounded(工作区, BorderCornerRadius, BaseBackColor, BorderPen);
-
-                base.OnPaint(pe);
+                //draw border
+                g.DrawRounded(thisRect, BorderCornerRadius, BaseBackColor, BorderPen);
             }
 
             pe.Graphics.DrawImage(bitmap, 0, 0);
+
+            base.OnPaint(pe);
         }
 
-        #region 交互样式
+        #region InteractionStyle
         private enum PropertyAction
         {
             Update,
@@ -597,7 +596,7 @@ namespace KlxPiaoControls
         }
 
         /// <summary>
-        /// 触发 OnClick 事件。
+        /// 引发 OnClick 事件。
         /// </summary>
         public void PerformClick()
         {

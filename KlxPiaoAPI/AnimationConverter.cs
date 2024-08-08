@@ -41,7 +41,7 @@ namespace KlxPiaoAPI
                 {
                     char c = culture.TextInfo.ListSeparator[0];
                     var parts = str.Split(c);
-                    if (parts.Length < 3) throw new ArgumentException("Invalid format");
+                    if (parts.Length < 3) throw new ArgumentException("Invalid format.");
 
                     int time = int.Parse(parts[0].Trim(), culture);
                     int fps = int.Parse(parts[1].Trim(), culture);
@@ -51,7 +51,7 @@ namespace KlxPiaoAPI
                     for (int i = 0; i < easingParts.Length; i++)
                     {
                         var pointParts = easingParts[i].Trim().Split(' ');
-                        if (pointParts.Length != 2) throw new ArgumentException("Invalid point format");
+                        if (pointParts.Length != 2) throw new ArgumentException("Invalid point format.");
                         float x = float.Parse(pointParts[0], culture);
                         float y = float.Parse(pointParts[1], culture);
                         easing[i] = new PointF(x, y);
@@ -61,7 +61,7 @@ namespace KlxPiaoAPI
                 }
                 catch
                 {
-                    throw new ArgumentException($"Cannot convert '{value}' to type Animation");
+                    throw new ArgumentException($"Cannot convert '{value}' to type Animation.");
                 }
             }
 
@@ -91,23 +91,15 @@ namespace KlxPiaoAPI
         /// <returns>转换后的对象。</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            // 检查传入的destinationType是否为string类型，以及value是否可以转换为Animation类型
             if (destinationType == typeof(string) && value is Animation animation)
             {
-                // 获取当前文化设置的列表分隔符
                 char c = culture.TextInfo.ListSeparator[0];
-
-                // 使用LINQ的Select方法，将animation.Easing集合中的每个元素（PointF对象）转换为一个包含X和Y值的字符串，然后将结果赋值给easingParts变量
                 var easingParts = animation.Easing.Select(p => $"{p.X} {p.Y}");
-
-                // 使用string.Join方法，将easingParts集合中的每个元素用分号(;)连接起来，然后放入方括号([])中，最后将结果赋值给easingStr变量
                 string easingStr = $"[{string.Join(";", easingParts)}]";
 
-                // 返回一个字符串，包含animation的Time属性，FPS属性，以及easingStr变量的值，三者之间用逗号(,)分隔
                 return $"{animation.Time}{c} {animation.FPS}{c} {easingStr}";
             }
 
-            // 如果destinationType不是string类型，或者value不能转换为Animation类型，那么调用基类的ConvertTo方法进行处理
             return base.ConvertTo(context, culture, value, destinationType);
         }
         #endregion
@@ -152,7 +144,6 @@ namespace KlxPiaoAPI
         }
         #endregion
 
-        /// <summary>初始化 <see cref="AnimationConverter"/> 类的新实例。</summary>
         public AnimationConverter() { }
     }
 }

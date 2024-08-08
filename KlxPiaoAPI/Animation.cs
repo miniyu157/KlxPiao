@@ -44,16 +44,10 @@ namespace KlxPiaoAPI
         /// <param name="fps">动画的帧率（每秒帧数）。</param>
         /// <param name="controlPoint">字符串形式的贝塞尔曲线控制点。</param>
         /// <exception cref="ArgumentException"></exception>
-        public Animation(int time, int fps, string? controlPoint)
+        public Animation(int time, int fps, string controlPoint)
         {
             Time = time;
             FPS = fps;
-
-            if (controlPoint == null)
-            {
-                Easing = null;
-                return;
-            }
 
             try
             {
@@ -82,12 +76,6 @@ namespace KlxPiaoAPI
             }
         }
 
-        /// <summary>
-        /// 重载 == 运算符，比较两个 <see cref="Animation"/> 对象是否相等。
-        /// </summary>
-        /// <param name="cr1">第一个 <see cref="Animation"/> 对象。</param>
-        /// <param name="cr2">第二个 <see cref="Animation"/> 对象。</param>
-        /// <returns>如果两个对象相等，则返回 true；否则返回 false。</returns>
         public static bool operator ==(Animation anim1, Animation anim2)
         {
             return anim1.Time == anim2.Time &&
@@ -95,12 +83,6 @@ namespace KlxPiaoAPI
                 anim1.Easing == anim2.Easing;
         }
 
-        /// <summary>
-        /// 重载 != 运算符，比较两个 <see cref="Animation"/> 对象是否不相等。
-        /// </summary>
-        /// <param name="cr1">第一个 <see cref="Animation"/> 对象。</param>
-        /// <param name="cr2">第二个 <see cref="Animation"/> 对象。</param>
-        /// <returns>如果两个对象不相等，则返回 true；否则返回 false。</returns>
         public static bool operator !=(Animation anim1, Animation anim2)
         {
             return !(anim1 == anim2);
