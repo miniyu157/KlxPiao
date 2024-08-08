@@ -2,11 +2,11 @@
 
 提供 WinForms 原版美化和一些小控件
 
-## 简介
-
 > [可以点击这里查看更新日志](/CHANGELOG.md)
 
 > [(未完成的目标)](/TARGET.md)
+
+## 简介
 
 解决方案提供了两个项目
 - KlxPiaoControls:<br>
