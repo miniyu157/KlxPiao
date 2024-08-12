@@ -43,9 +43,9 @@ namespace KlxPiaoControls
 
             _isEnableBorder = false;
             _baseBackColor = Color.White;
-            _cornerRadius = new CornerRadius(0);
-            _borderSize = 5;
-            _borderColor = Color.LightGray;
+            _cornerRadius = new CornerRadius(24);
+            _borderSize = 1;
+            _borderColor = Color.FromArgb(199, 199, 199);
 
             _textRenderingHint = TextRenderingHint.SystemDefault;
             _smoothingMode = SmoothingMode.Default;
@@ -62,8 +62,8 @@ namespace KlxPiaoControls
         [DefaultValue(true)]
         public new bool AutoSize
         {
-            get { return base.AutoSize; }
-            set { base.AutoSize = value; }
+            get => base.AutoSize;
+            set => base.AutoSize = value;
         }
 
         #region KlxPiaoLabel Shadow
@@ -75,7 +75,7 @@ namespace KlxPiaoControls
         [DefaultValue(false)]
         public bool IsEnableShadow
         {
-            get { return _isEnableShadow; }
+            get => _isEnableShadow;
             set { _isEnableShadow = value; Invalidate(); }
         }
         /// <summary>
@@ -86,7 +86,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "DarkGray")]
         public Color ShadowColor
         {
-            get { return _shadowColor; }
+            get => _shadowColor;
             set { _shadowColor = value; Invalidate(); }
         }
         /// <summary>
@@ -97,7 +97,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Point), "2, 2")]
         public Point ShadowPosition
         {
-            get { return _shadowPosition; }
+            get => _shadowPosition;
             set { _shadowPosition = value; Invalidate(); }
         }
         /// <summary>
@@ -108,7 +108,7 @@ namespace KlxPiaoControls
         [DefaultValue(true)]
         public bool IsShadowConnectLine
         {
-            get { return _isShadowConnectLine; }
+            get => _isShadowConnectLine;
             set { _isShadowConnectLine = value; Invalidate(); }
         }
         /// <summary>
@@ -119,7 +119,7 @@ namespace KlxPiaoControls
         [DefaultValue(false)]
         public bool IsEnableColorFading
         {
-            get { return _isEnableColorFading; }
+            get => _isEnableColorFading;
             set { _isEnableColorFading = value; Invalidate(); }
         }
         /// <summary>
@@ -130,7 +130,7 @@ namespace KlxPiaoControls
         [DefaultValue(true)]
         public bool IsNaturalShadowEffectEnabled
         {
-            get { return _isNaturalShadowEffectEnabled; }
+            get => _isNaturalShadowEffectEnabled;
             set { _isNaturalShadowEffectEnabled = value; Invalidate(); }
         }
         #endregion
@@ -144,7 +144,7 @@ namespace KlxPiaoControls
         [DefaultValue(false)]
         public bool IsEnableBorder
         {
-            get { return _isEnableBorder; }
+            get => _isEnableBorder;
             set { _isEnableBorder = value; Invalidate(); }
         }
         /// <summary>
@@ -155,7 +155,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "White")]
         public Color BaseBackColor
         {
-            get { return _baseBackColor; }
+            get => _baseBackColor;
             set { _baseBackColor = value; Invalidate(); }
         }
         /// <summary>
@@ -166,7 +166,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(CornerRadius), "0,0,0,0")]
         public CornerRadius CornerRadius
         {
-            get { return _cornerRadius; }
+            get => _cornerRadius;
             set { _cornerRadius = value; Invalidate(); }
         }
         /// <summary>
@@ -177,7 +177,7 @@ namespace KlxPiaoControls
         [DefaultValue(5)]
         public int BorderSize
         {
-            get { return _borderSize; }
+            get => _borderSize;
             set { _borderSize = value; Invalidate(); }
         }
         /// <summary>
@@ -188,7 +188,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "LightGray")]
         public Color BorderColor
         {
-            get { return _borderColor; }
+            get => _borderColor;
             set { _borderColor = value; Invalidate(); }
         }
         #endregion
@@ -202,7 +202,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(TextRenderingHint), "SystemDefault")]
         public TextRenderingHint TextRenderingHint
         {
-            get { return _textRenderingHint; }
+            get => _textRenderingHint;
             set { _textRenderingHint = value; Invalidate(); }
         }
         /// <summary>
@@ -213,7 +213,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(SmoothingMode), "Default")]
         public SmoothingMode SmoothingMode
         {
-            get { return _smoothingMode; }
+            get => _smoothingMode;
             set { _smoothingMode = value; Invalidate(); }
         }
         /// <summary>
@@ -224,7 +224,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(InterpolationMode), "Default")]
         public InterpolationMode InterpolationMode
         {
-            get { return _interpolationMode; }
+            get => _interpolationMode;
             set { _interpolationMode = value; Invalidate(); }
         }
         /// <summary>
@@ -235,7 +235,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(PixelOffsetMode), "Default")]
         public PixelOffsetMode PixelOffsetMode
         {
-            get { return _pixelOffsetMode; }
+            get => _pixelOffsetMode;
             set { _pixelOffsetMode = value; Invalidate(); }
         }
         /// <summary>
@@ -246,8 +246,24 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Point), "0, 0")]
         public Point DrawTextOffset
         {
-            get { return _drawTextOffset; }
+            get => _drawTextOffset;
             set { _drawTextOffset = value; Invalidate(); }
+        }
+        #endregion
+
+        #region events
+        /// <summary>
+        /// 背景绘制事件。
+        /// </summary>
+        public event PaintEventHandler? BackgroundPaint;
+
+        /// <summary>
+        /// 引发 <see cref="OnBackgroundPaint(PaintEventArgs)"/> 事件
+        /// </summary>
+        /// <param name="g"></param>
+        protected virtual void OnBackgroundPaint(PaintEventArgs e)
+        {
+            BackgroundPaint?.Invoke(this, e);
         }
         #endregion
 
@@ -263,6 +279,8 @@ namespace KlxPiaoControls
             g.PixelOffsetMode = PixelOffsetMode;
 
             g.Clear(BackColor);
+
+            OnBackgroundPaint(pe);
 
             PointF drawPosition = PointF.Empty;
             Rectangle thisRect = new(0, 0, Width, Height);
@@ -324,6 +342,16 @@ namespace KlxPiaoControls
             {
                 g.DrawRounded(thisRect, CornerRadius, BaseBackColor, new Pen(BorderColor, BorderSize));
             }
+        }
+
+
+        /// <summary>
+        /// 获取工作区的矩形。
+        /// </summary>
+        /// <returns>除投影或边框内的矩形。</returns>
+        public Rectangle GetClientRectangle()
+        {
+            return new Rectangle(0, 0, Width, Height);
         }
     }
 }

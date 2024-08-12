@@ -12,40 +12,51 @@ namespace KlxPiaoControls
     /// </remarks>
     public partial class RoundedButton : Control
     {
-        /// <summary>
-        /// 表示值的格式类型，例如百分比或像素。
-        /// </summary>
-        public enum FormatType
-        {
-            /// <summary>
-            /// 表示百分比值格式。
-            /// </summary>
-            Percentage,
-
-            /// <summary>
-            /// 表示像素值格式。
-            /// </summary>
-            Pixel
-        }
-
         private ContentAlignment _textAlign;
         private Image? _image;
         private ContentAlignment _imageAlign;
         private Point _imageOffset;
         private CornerRadius _imageCornerRadius;
-
+        private Point _textOffset;
         private int _borderSize;
         private Color _borderColor;
         private CornerRadius _borderCornerRadius;
         private Color _baseBackColor;
         private PictureBoxSizeMode _imageSizeMode;
         private SizeF _imageResizing;
-        private FormatType _imageResizingFormat;
+        private ResizeMode _imageResizingFormat;
 
         private InteractionStyleClass _interactionStyle = new();
         private bool _isEnableAnimation;
         private Animation _colorAnimationConfig;
         private Animation _sizeAnimationConfig;
+        private MouseClickModeEnum _mouseClickMode;
+
+        /// <summary>
+        /// 定义鼠标点击模式。
+        /// </summary>
+        public enum MouseClickModeEnum
+        {
+            /// <summary>
+            /// 仅左键点击。
+            /// </summary>
+            LeftOnly,
+
+            /// <summary>
+            /// 仅右键点击。
+            /// </summary>
+            RightOnly,
+
+            /// <summary>
+            /// 左键或右键点击。
+            /// </summary>
+            LeftOrRight,
+
+            /// <summary>
+            /// 任意鼠标按钮点击。
+            /// </summary>
+            Arbitrarily
+        }
 
         public RoundedButton()
         {
@@ -59,12 +70,13 @@ namespace KlxPiaoControls
 
             _borderSize = 1;
             _borderColor = Color.Gainsboro;
-            _BorderPen = new Pen(BorderColor, BorderSize);
+            _borderPen = new Pen(BorderColor, BorderSize);
             _borderCornerRadius = new CornerRadius(10);
             _baseBackColor = Color.White;
             _imageSizeMode = PictureBoxSizeMode.Zoom;
             _imageResizing = new SizeF(0, 0);
-            _imageResizingFormat = FormatType.Pixel;
+            _imageResizingFormat = ResizeMode.Pixel;
+            _mouseClickMode = MouseClickModeEnum.LeftOnly;
 
             _interactionStyle.OverBackColor = Color.FromArgb(245, 245, 245);
             _interactionStyle.DownBackColor = Color.FromArgb(235, 235, 235);
@@ -80,8 +92,8 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Size), "116,43")]
         public new Size Size
         {
-            get { return base.Size; }
-            set { base.Size = value; }
+            get => base.Size;
+            set => base.Size = value;
         }
 
         /// <summary>
@@ -92,7 +104,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(ContentAlignment), "MiddleCenter")]
         public ContentAlignment TextAlign
         {
-            get { return _textAlign; }
+            get => _textAlign;
             set { _textAlign = value; Invalidate(); }
         }
 
@@ -105,7 +117,7 @@ namespace KlxPiaoControls
         [DefaultValue(null)]
         public Image? Image
         {
-            get { return _image; }
+            get => _image;
             set { _image = value; Invalidate(); }
         }
         /// <summary>
@@ -116,7 +128,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(ContentAlignment), "MiddleCenter")]
         public ContentAlignment ImageAlign
         {
-            get { return _imageAlign; }
+            get => _imageAlign;
             set { _imageAlign = value; Invalidate(); }
         }
         /// <summary>
@@ -127,7 +139,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Point), "0,0")]
         public Point ImageOffset
         {
-            get { return _imageOffset; }
+            get => _imageOffset;
             set { _imageOffset = value; Invalidate(); }
         }
         /// <summary>
@@ -142,7 +154,7 @@ namespace KlxPiaoControls
             set
             {
                 _borderSize = value;
-                _BorderPen.Width = value;
+                _borderPen.Width = value;
                 Invalidate();
             }
         }
@@ -158,7 +170,7 @@ namespace KlxPiaoControls
             set
             {
                 _borderColor = value;
-                _BorderPen.Color = value;
+                _borderPen.Color = value;
                 Invalidate();
             }
         }
@@ -170,7 +182,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(CornerRadius), "10,10,10,10")]
         public CornerRadius BorderCornerRadius
         {
-            get { return _borderCornerRadius; }
+            get => _borderCornerRadius;
             set { _borderCornerRadius = value; Invalidate(); }
         }
         /// <summary>
@@ -181,7 +193,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "White")]
         public Color BaseBackColor
         {
-            get { return _baseBackColor; }
+            get => _baseBackColor;
             set { _baseBackColor = value; Invalidate(); }
         }
         /// <summary>
@@ -192,7 +204,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(PictureBoxSizeMode), "Zoom")]
         public PictureBoxSizeMode ImageSizeMode
         {
-            get { return _imageSizeMode; }
+            get => _imageSizeMode;
             set { _imageSizeMode = value; Invalidate(); }
         }
         /// <summary>
@@ -203,7 +215,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(SizeF), "0,0")]
         public SizeF ImageResizing
         {
-            get { return _imageResizing; }
+            get => _imageResizing;
             set { _imageResizing = value; Invalidate(); }
         }
         /// <summary>
@@ -211,10 +223,10 @@ namespace KlxPiaoControls
         /// </summary>
         [Category("RoundedButton Appearance")]
         [Description("指定图片大小修正的格式为百分比或像素")]
-        [DefaultValue(typeof(FormatType), "Pixel")]
-        public FormatType ImageResizingFormat
+        [DefaultValue(typeof(ResizeMode), "Pixel")]
+        public ResizeMode ImageResizingFormat
         {
-            get { return _imageResizingFormat; }
+            get => _imageResizingFormat;
             set { _imageResizingFormat = value; Invalidate(); }
         }
         /// <summary>
@@ -225,8 +237,19 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(CornerRadius), "0,0,0,0")]
         public CornerRadius ImageCornerRadius
         {
-            get { return _imageCornerRadius; }
+            get => _imageCornerRadius;
             set { _imageCornerRadius = value; Invalidate(); }
+        }
+        /// <summary>
+        /// 文本绘制的偏移。
+        /// </summary>
+        [Category("RoundedButton Appearance")]
+        [Description("文本绘制的偏移")]
+        [DefaultValue(typeof(Point), "0,0")]
+        public Point TextOffset
+        {
+            get => _textOffset;
+            set { _textOffset = value; Invalidate(); }
         }
         #endregion
 
@@ -238,8 +261,8 @@ namespace KlxPiaoControls
         [Description("交互时是否启用动画")]
         public bool IsEnableAnimation
         {
-            get { return _isEnableAnimation; }
-            set { _isEnableAnimation = value; }
+            get => _isEnableAnimation;
+            set => _isEnableAnimation = value;
         }
         /// <summary>
         /// 获取或设置按钮的交互样式。
@@ -248,8 +271,8 @@ namespace KlxPiaoControls
         [Description("定义鼠标交互时按钮的外观")]
         public InteractionStyleClass InteractionStyle
         {
-            get { return _interactionStyle; }
-            set { _interactionStyle = value; }
+            get => _interactionStyle;
+            set => _interactionStyle = value;
         }
         /// <summary>
         /// 定义鼠标交互时按钮的颜色过渡动画配置，以 <see cref="Animation"/> 结构体表示。
@@ -259,8 +282,8 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Animation), "150, 30, [0 0;0 0;1 1;1 1]")]
         public Animation ColorAnimationConfig
         {
-            get { return _colorAnimationConfig; }
-            set { _colorAnimationConfig = value; }
+            get => _colorAnimationConfig;
+            set => _colorAnimationConfig = value;
         }
         /// <summary>
         /// 定义鼠标交互时按钮的大小过渡动画配置，以 <see cref="Animation"/> 结构体表示。
@@ -270,8 +293,19 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Animation), "300, 100, [0 0;0.58 1;1 1;1 1]")]
         public Animation SizeAnimationConfig
         {
-            get { return _sizeAnimationConfig; }
-            set { _sizeAnimationConfig = value; }
+            get => _sizeAnimationConfig;
+            set => _sizeAnimationConfig = value;
+        }
+        /// <summary>
+        /// 定义鼠标响应鼠标单击模式，以 <see cref="MouseClickModeEnum"/> 枚举类型表示。
+        /// </summary>
+        [Category("RoundedButton Interaction")]
+        [Description("定义鼠标响应鼠标单击模式")]
+        [DefaultValue(typeof(MouseClickModeEnum), "LeftOnly")]
+        public MouseClickModeEnum MouseClickMode
+        {
+            get => _mouseClickMode;
+            set => _mouseClickMode = value;
         }
         #endregion
 
@@ -336,7 +370,7 @@ namespace KlxPiaoControls
         }
 
         //缓存Pen
-        private Pen _BorderPen;
+        private Pen _borderPen;
 
         /// <summary>
         /// 获取或设置边框的画笔。
@@ -344,8 +378,8 @@ namespace KlxPiaoControls
         [Browsable(false)]
         public Pen BorderPen
         {
-            get => _BorderPen;
-            set => _BorderPen = value;
+            get => _borderPen;
+            set => _borderPen = value;
         }
 
         protected override void OnPaint(PaintEventArgs pe)
@@ -353,12 +387,13 @@ namespace KlxPiaoControls
             Rectangle thisRect = new(0, 0, Width, Height);
             using Bitmap bitmap = new(Width, Height);
             {
-                Graphics g = Graphics.FromImage(bitmap);
+                using Graphics g = Graphics.FromImage(bitmap);
                 SizeF textSize = g.MeasureString(Text, Font);
                 g.Clear(BackColor);
 
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
                 //draw image
                 if (Image != null)
@@ -387,37 +422,11 @@ namespace KlxPiaoControls
                             break;
 
                         case PictureBoxSizeMode.CenterImage:
-                            int x = (Width - Image.Width) / 2;
-                            int y = (Height - Image.Height) / 2;
-
-                            drawPoint = new Point(x, y);
-                            drawSize = Image.Size;
+                            ImageLayoutUtility.Center(Size, Image.Size, out drawPoint, out drawSize);
                             break;
 
                         case PictureBoxSizeMode.Zoom:
-                            float imageAspect = (float)Image.Width / Image.Height;
-                            float controlAspect = (float)Width / Height;
-
-                            int drawWidth, drawHeight;
-                            int posX, posY;
-
-                            if (imageAspect > controlAspect)
-                            {
-                                drawWidth = Width;
-                                drawHeight = (int)(Width / imageAspect);
-                                posX = 0;
-                                posY = (Height - drawHeight) / 2;
-                            }
-                            else
-                            {
-                                drawWidth = (int)(Height * imageAspect);
-                                drawHeight = Height;
-                                posX = (Width - drawWidth) / 2;
-                                posY = 0;
-                            }
-
-                            drawPoint = new Point(posX, posY);
-                            drawSize = new Size(drawWidth, drawHeight);
+                            ImageLayoutUtility.Zoom(Size, Image.Size, out drawPoint, out drawSize);
                             break;
 
                         default:
@@ -431,14 +440,14 @@ namespace KlxPiaoControls
                     {
                         int newWidth = ImageResizingFormat switch
                         {
-                            FormatType.Percentage => (int)(drawSize.Width * ImageResizing.Width),
-                            FormatType.Pixel => (int)ImageResizing.Width,
+                            ResizeMode.Percentage => (int)(drawSize.Width * ImageResizing.Width),
+                            ResizeMode.Pixel => (int)ImageResizing.Width,
                             _ => 0
                         };
                         int newHeight = ImageResizingFormat switch
                         {
-                            FormatType.Percentage => (int)(drawSize.Height * ImageResizing.Height),
-                            FormatType.Pixel => (int)ImageResizing.Height,
+                            ResizeMode.Percentage => (int)(drawSize.Height * ImageResizing.Height),
+                            ResizeMode.Pixel => (int)ImageResizing.Height,
                             _ => 0
                         };
 
@@ -455,7 +464,7 @@ namespace KlxPiaoControls
                 }
 
                 //draw text
-                g.DrawString(Text, Font, new SolidBrush(ForeColor), LayoutUtilities.CalculateAlignedPosition(thisRect, textSize, TextAlign, LayoutUtilities.PaddingConvertToPoint(Padding)));
+                g.DrawString(Text, Font, new SolidBrush(ForeColor), LayoutUtilities.CalculateAlignedPosition(thisRect, textSize, TextAlign, TextOffset));
 
                 //draw border
                 g.DrawRounded(thisRect, BorderCornerRadius, BaseBackColor, BorderPen);
@@ -465,6 +474,33 @@ namespace KlxPiaoControls
 
             base.OnPaint(pe);
         }
+
+        #region events
+        /// <summary>
+        /// 单击事件。
+        /// </summary>
+        public new event EventHandler? Click;
+        /// <summary>
+        /// 引发 <see cref="OnClick(EventArgs)"/> 事件。
+        /// </summary>
+        protected new virtual void OnClick(EventArgs e)
+        {
+            Click?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// 单击事件。
+        /// </summary>
+        public new event MouseEventHandler? MouseClick;
+
+        /// <summary>
+        /// 引发 <see cref="MouseClick"/> 事件。
+        /// </summary>
+        protected new virtual void OnMouseClick(MouseEventArgs e)
+        {
+            MouseClick?.Invoke(this, e);
+        }
+        #endregion
 
         #region InteractionStyle
         private enum PropertyAction
@@ -500,15 +536,46 @@ namespace KlxPiaoControls
 
             base.OnMouseLeave(e);
         }
+
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            UpdateProperties(downProperties, oldDownProperties, PropertyAction.Update, EventType.Down);
+            MouseButtons button = e.Button;
+            bool mode = MouseClickMode switch
+            {
+                MouseClickModeEnum.LeftOnly => button == MouseButtons.Left,
+                MouseClickModeEnum.RightOnly => button == MouseButtons.Right,
+                MouseClickModeEnum.LeftOrRight => button == MouseButtons.Left && button == MouseButtons.Right,
+                MouseClickModeEnum.Arbitrarily => true,
+                _ => button == MouseButtons.Left
+            };
+
+            if (mode)
+            {
+                UpdateProperties(downProperties, oldDownProperties, PropertyAction.Update, EventType.Down);
+            }
 
             base.OnMouseDown(e);
         }
+
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            UpdateProperties(downProperties, oldDownProperties, PropertyAction.Reset, EventType.Down);
+            MouseButtons button = e.Button;
+            bool mode = MouseClickMode switch
+            {
+                MouseClickModeEnum.LeftOnly => button == MouseButtons.Left,
+                MouseClickModeEnum.RightOnly => button == MouseButtons.Right,
+                MouseClickModeEnum.LeftOrRight => button == MouseButtons.Left && button == MouseButtons.Right,
+                MouseClickModeEnum.Arbitrarily => true,
+                _ => button == MouseButtons.Left
+            };
+
+            if (mode)
+            {
+                UpdateProperties(downProperties, oldDownProperties, PropertyAction.Reset, EventType.Down);
+
+                OnClick(EventArgs.Empty);
+                OnMouseClick(e);
+            }
 
             base.OnMouseUp(e);
         }
@@ -518,11 +585,13 @@ namespace KlxPiaoControls
             switch (eventType)
             {
                 case EventType.Over:
+                    MouseDownCTS.Cancel();
                     MouseOverCTS.Cancel();
                     MouseOverCTS = new();
                     break;
 
                 case EventType.Down:
+                    MouseOverCTS.Cancel();
                     MouseDownCTS.Cancel();
                     MouseDownCTS = new();
                     break;
@@ -547,7 +616,17 @@ namespace KlxPiaoControls
                     switch (action)
                     {
                         case PropertyAction.Update:
-                            oldPropertiesArray[i] = this.SetOrGetPropertyValue(propertyName);
+
+                            //只存储一次 BackColor
+                            if (i == 0 && oldPropertiesArray[0] == null)
+                            {
+                                oldPropertiesArray[0] = this.SetOrGetPropertyValue(propertyName);
+                            }
+                            else if (i != 0)
+                            {
+                                oldPropertiesArray[i] = this.SetOrGetPropertyValue(propertyName);
+                            }
+
                             SetValue(interactionProp);
                             break;
 
@@ -564,9 +643,11 @@ namespace KlxPiaoControls
                             {
                                 case EventType.Over:
                                     _ = this.BezierTransition(propertyName, null, newValue, animation, default, true, MouseOverCTS.Token);
+
                                     break;
 
                                 case EventType.Down:
+
                                     _ = this.BezierTransition(propertyName, null, newValue, animation, default, true, MouseDownCTS.Token);
                                     break;
                             }

@@ -108,7 +108,7 @@ namespace KlxPiaoControls
         [DefaultValue("58,38")]
         public Size ItemSize
         {
-            get { return _ItemSize; }
+            get => _ItemSize;
             set { _ItemSize = value; Refresh(); RefreshSelectShowLocation(); }
         }
         /// <summary>
@@ -119,7 +119,7 @@ namespace KlxPiaoControls
         [DefaultValue("50,46")]
         public Size SelectSize
         {
-            get { return _SelectSize; }
+            get => _SelectSize;
             set { _SelectSize = value; Refresh(); RefreshSelectShowLocation(); }
         }
         /// <summary>
@@ -129,7 +129,7 @@ namespace KlxPiaoControls
         [Description("分别选中每个选项卡改变的颜色数组")]
         public Color[] ChangeColors
         {
-            get { return _ChangeColors; }
+            get => _ChangeColors;
             set
             {
                 _ChangeColors = value;
@@ -149,7 +149,7 @@ namespace KlxPiaoControls
         [DefaultValue("BackColor")]
         public StyleProperties ChangeProperty
         {
-            get { return _ChangeProperty; }
+            get => _ChangeProperty;
             set
             {
                 _ChangeProperty = value;
@@ -171,7 +171,7 @@ namespace KlxPiaoControls
         [Description("选项卡的集合")]
         public String[] Items
         {
-            get { return _Items; }
+            get => _Items;
             set
             {
                 if (value.Length < 1)
@@ -193,7 +193,7 @@ namespace KlxPiaoControls
         [DefaultValue(0)]
         public int SelectIndex
         {
-            get { return _SelectIndex; }
+            get => _SelectIndex;
             set
             {
                 //仅属性改变时触发
@@ -214,8 +214,8 @@ namespace KlxPiaoControls
         [DefaultValue(true)]
         public bool Draggable
         {
-            get { return _Draggable; }
-            set { _Draggable = value; }
+            get => _Draggable;
+            set => _Draggable = value;
         }
         /// <summary>
         /// 是否允许拖动时超出边界。
@@ -225,8 +225,8 @@ namespace KlxPiaoControls
         [DefaultValue(false)]
         public bool AllowDragOutOfBounds
         {
-            get { return _AllowDragOutOfBounds; }
-            set { _AllowDragOutOfBounds = value; }
+            get => _AllowDragOutOfBounds;
+            set => _AllowDragOutOfBounds = value;
         }
         /// <summary>
         /// 是否在拖动时即时更新文本。
@@ -236,8 +236,8 @@ namespace KlxPiaoControls
         [DefaultValue(true)]
         public bool UpdateTextOnDrag
         {
-            get { return _UpdateTextOnDrag; }
-            set { _UpdateTextOnDrag = value; }
+            get => _UpdateTextOnDrag;
+            set => _UpdateTextOnDrag = value;
         }
         /// <summary>
         /// 是否响应鼠标滚轮事件。
@@ -247,8 +247,8 @@ namespace KlxPiaoControls
         [DefaultValue(true)]
         public bool EnableMouseWheel
         {
-            get { return _EnableMouseWheel; }
-            set { _EnableMouseWheel = value; }
+            get => _EnableMouseWheel;
+            set => _EnableMouseWheel = value;
         }
         #endregion
 
@@ -261,8 +261,8 @@ namespace KlxPiaoControls
         [DefaultValue(true)]
         public bool IsAnimationEnabled
         {
-            get { return _IsAnimationEnabled; }
-            set { _IsAnimationEnabled = value; }
+            get => _IsAnimationEnabled;
+            set => _IsAnimationEnabled = value;
         }
         /// <summary>
         /// 位移动画的配置，以 <see cref="Animation"/> 结构体表示。
@@ -272,8 +272,8 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Animation), "200, 100, [0 1;0.67 1]")]
         public Animation TransAnim
         {
-            get { return _TransAnim; }
-            set { _TransAnim = value; }
+            get => _TransAnim;
+            set => _TransAnim = value;
         }
         /// <summary>
         /// 颜色动画的配置，以 <see cref="Animation"/> 结构体表示。
@@ -283,8 +283,8 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Animation), "150, 30, [0 0;1 1]")]
         public Animation ColorAnim
         {
-            get { return _ColorAnim; }
-            set { _ColorAnim = value; }
+            get => _ColorAnim;
+            set => _ColorAnim = value;
         }
         #endregion
 

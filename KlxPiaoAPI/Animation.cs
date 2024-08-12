@@ -107,7 +107,6 @@ namespace KlxPiaoAPI
             }
         }
 
-
         public Animation() { }
 
         /// <summary>

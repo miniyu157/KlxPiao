@@ -5,7 +5,7 @@ using System.Drawing.Drawing2D;
 namespace KlxPiaoControls
 {
     /// <summary>
-    /// 表示一个带有自定义外观的图片框控件，支持边框和圆角设置。
+    /// 表示一个带有自定义外观的图片框控件，支持边框和圆角，以及文本绘制设置。
     /// </summary>
     /// <remarks>
     /// <see cref="KlxPiaoPictureBox"/> 继承自 <see cref="PictureBox"/>，是原版 <see cref="PictureBox"/> 的增强版本。
@@ -51,7 +51,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(PriorityLevel), "Low")]
         public PriorityLevel TextDrawPriority
         {
-            get { return _textDrawPriority; }
+            get => _textDrawPriority;
             set { _textDrawPriority = value; Invalidate(); }
         }
         /// <summary>
@@ -62,7 +62,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(ContentAlignment), "MiddleCenter")]
         public ContentAlignment TextAlign
         {
-            get { return _textAlign; }
+            get => _textAlign;
             set { _textAlign = value; Invalidate(); }
         }
         /// <summary>
@@ -73,7 +73,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Point), "0,0")]
         public Point TextOffset
         {
-            get { return _textOffset; }
+            get => _textOffset;
             set { _textOffset = value; Invalidate(); }
         }
         /// <summary>
@@ -84,14 +84,14 @@ namespace KlxPiaoControls
         [DefaultValue(false)]
         public bool ShowText
         {
-            get { return _showText; }
+            get => _showText;
             set { _showText = value; Invalidate(); }
         }
         [Browsable(true)]
         [Category("KlxPiaoPictureBox Text")]
         public new string Text
         {
-            get { return base.Text; }
+            get => base.Text;
             set { base.Text = value; Invalidate(); }
         }
         #endregion
@@ -105,7 +105,7 @@ namespace KlxPiaoControls
         [DefaultValue(false)]
         public bool IsEnableBorder
         {
-            get { return _isEnableBorder; }
+            get => _isEnableBorder;
             set { _isEnableBorder = value; Invalidate(); }
         }
         /// <summary>
@@ -116,7 +116,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "White")]
         public Color BaseBackColor
         {
-            get { return _baseBackColor; }
+            get => _baseBackColor;
             set { _baseBackColor = value; Invalidate(); }
         }
         /// <summary>
@@ -127,7 +127,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(CornerRadius), "0,0,0,0")]
         public CornerRadius BorderCornerRadius
         {
-            get { return _borderCornerRadius; }
+            get => _borderCornerRadius;
             set { _borderCornerRadius = value; Invalidate(); }
         }
         /// <summary>
@@ -138,7 +138,7 @@ namespace KlxPiaoControls
         [DefaultValue(10)]
         public int BorderSize
         {
-            get { return _borderSize; }
+            get => _borderSize;
             set { _borderSize = value; Invalidate(); }
         }
         /// <summary>
@@ -149,7 +149,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "LightGray")]
         public Color BorderColor
         {
-            get { return _borderColor; }
+            get => _borderColor;
             set { _borderColor = value; Invalidate(); }
         }
         #endregion
@@ -157,28 +157,28 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Size), "155,155")]
         public new Size Size
         {
-            get { return base.Size; }
+            get => base.Size;
             set { base.Size = value; Invalidate(); }
         }
 
         [Browsable(true)]
         public new Font Font
         {
-            get { return base.Font; }
+            get => base.Font;
             set { base.Font = value; Invalidate(); }
         }
 
         [DefaultValue(typeof(PictureBoxSizeMode), "Zoom")]
         public new PictureBoxSizeMode SizeMode
         {
-            get { return base.SizeMode; }
+            get => base.SizeMode;
             set { base.SizeMode = value; Invalidate(); }
         }
 
         [Browsable(true)]
         public new Color ForeColor
         {
-            get { return base.ForeColor; }
+            get => base.ForeColor;
             set { base.ForeColor = value; Invalidate(); }
         }
 

@@ -40,43 +40,43 @@ namespace KlxPiaoControls
         [Category("KlxPiaoTabControl属性"), Description("选择绑定的KlxPiaoTabPage后，会强制设置绑定选项卡的大小、位置等属性")]
         public KlxPiaoTabControl? 绑定
         {
-            get { return _绑定; }
+            get => _绑定;
             set { _绑定 = value; Invalidate(); }
         }
         [Category("KlxPiaoTabControl属性"), Description("选项卡的大小")]
         public Size 选项卡大小
         {
-            get { return _选项卡大小; }
+            get => _选项卡大小;
             set { _选项卡大小 = value; Invalidate(); }
         }
         [Category("KlxPiaoTabControl属性"), Description("文字的位置")]
         public ContentAlignment 文字位置
         {
-            get { return _文字位置; }
+            get => _文字位置;
             set { _文字位置 = value; Invalidate(); }
         }
         [Category("KlxPiaoTabControl属性"), Description("图片的位置")]
         public ContentAlignment 图片位置
         {
-            get { return _图片位置; }
+            get => _图片位置;
             set { _图片位置 = value; Invalidate(); }
         }
         [Category("KlxPiaoTabControl属性"), Description("边框的颜色")]
         public Color 边框颜色
         {
-            get { return _边框颜色; }
+            get => _边框颜色;
             set { _边框颜色 = value; Invalidate(); }
         }
         [Category("KlxPiaoTabControl属性"), Description("选项卡菜单边缘的投影颜色")]
         public Color 投影颜色
         {
-            get { return _投影颜色; }
+            get => _投影颜色;
             set { _投影颜色 = value; Invalidate(); }
         }
         [Category("KlxPiaoTabControl属性"), Description("选项卡菜单边缘的投影长度，为1时隐藏投影，为0时隐藏边框")]
         public int 投影长度
         {
-            get { return _投影长度; }
+            get => _投影长度;
             set { _投影长度 = value; Invalidate(); }
         }
         #endregion
@@ -84,7 +84,7 @@ namespace KlxPiaoControls
         [Browsable(false)]
         public new string Text
         {
-            get { return base.Text; }
+            get => base.Text;
             set { base.Text = value; Invalidate(); }
         }
 

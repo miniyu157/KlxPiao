@@ -52,6 +52,8 @@ namespace KlxPiaoControls
         private bool _respondToKeyboard;
         private int _responseSize;
         private CoordinateSystem _coordinateSystemType;
+        private MouseValueChangedEventOption _mouseDownEventOption;
+        private MouseValueChangedEventOption _mouseMoveEventOption;
 
         public PointBar()
         {
@@ -70,6 +72,8 @@ namespace KlxPiaoControls
             _crosshairSize = 5;
             _crosshairDrawingPriority = PriorityLevel.Low;
             _coordinateDisplayFormat = "X:{X}, Y:{Y}";
+            _mouseDownEventOption = MouseValueChangedEventOption.OnDefault;
+            _mouseMoveEventOption = MouseValueChangedEventOption.OnDefault;
 
             _minValue = new Point(-100, -100);
             _maxValue = new Point(100, 100);
@@ -135,7 +139,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(CornerRadius), "0,0,0,0")]
         public CornerRadius CornerRadius
         {
-            get { return _cornerRadius; }
+            get => _cornerRadius;
             set { _cornerRadius = value; Invalidate(); }
         }
         /// <summary>
@@ -147,7 +151,7 @@ namespace KlxPiaoControls
         [DefaultValue("X:{X},Y:{Y}")]
         public string CoordinateDisplayFormat
         {
-            get { return _coordinateDisplayFormat; }
+            get => _coordinateDisplayFormat;
             set { _coordinateDisplayFormat = value; Invalidate(); }
         }
         /// <summary>
@@ -158,7 +162,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Point), "0,0")]
         public Point CoordinateTextOffset
         {
-            get { return _coordinateTextOffset; }
+            get => _coordinateTextOffset;
             set { _coordinateTextOffset = value; Invalidate(); }
         }
         /// <summary>
@@ -169,7 +173,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "Gray")]
         public Color BorderColor
         {
-            get { return _borderColor; }
+            get => _borderColor;
             set { _borderColor = value; Invalidate(); }
         }
         /// <summary>
@@ -180,7 +184,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "White")]
         public Color BaseBackColor
         {
-            get { return _baseBackColor; }
+            get => _baseBackColor;
             set { _baseBackColor = value; Invalidate(); }
         }
         /// <summary>
@@ -191,7 +195,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "Red")]
         public Color CrosshairColor
         {
-            get { return _crosshairColor; }
+            get => _crosshairColor;
             set { _crosshairColor = value; Invalidate(); }
         }
         /// <summary>
@@ -202,7 +206,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(PriorityLevel), "Low")]
         public PriorityLevel CrosshairDrawingPriority
         {
-            get { return _crosshairDrawingPriority; }
+            get => _crosshairDrawingPriority;
             set { _crosshairDrawingPriority = value; Invalidate(); }
         }
         /// <summary>
@@ -213,7 +217,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "LightPink")]
         public Color AxisColor
         {
-            get { return _axisColor; }
+            get => _axisColor;
             set { _axisColor = value; Invalidate(); }
         }
         /// <summary>
@@ -224,7 +228,7 @@ namespace KlxPiaoControls
         [DefaultValue(1)]
         public int BorderSize
         {
-            get { return _borderSize; }
+            get => _borderSize;
             set { _borderSize = value; Invalidate(); }
         }
         /// <summary>
@@ -235,7 +239,7 @@ namespace KlxPiaoControls
         [DefaultValue(5)]
         public int CrosshairSize
         {
-            get { return _crosshairSize; }
+            get => _crosshairSize;
             set { _crosshairSize = value; Invalidate(); }
         }
         /// <summary>
@@ -246,7 +250,7 @@ namespace KlxPiaoControls
         [DefaultValue(true)]
         public bool DisplayAxis
         {
-            get { return _displayAxis; }
+            get => _displayAxis;
             set { _displayAxis = value; Invalidate(); }
         }
         /// <summary>
@@ -257,7 +261,7 @@ namespace KlxPiaoControls
         [DefaultValue(true)]
         public bool DisplayCoordinates
         {
-            get { return _displayCoordinates; }
+            get => _displayCoordinates;
             set { _displayCoordinates = value; Invalidate(); }
         }
         /// <summary>
@@ -268,7 +272,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(ContentAlignment), "TopLeft")]
         public ContentAlignment CoordinateTextAlign
         {
-            get { return _coordinateTextAlign; }
+            get => _coordinateTextAlign;
             set { _coordinateTextAlign = value; Invalidate(); }
         }
         #endregion
@@ -282,7 +286,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Point), "-100,-100")]
         public Point MinValue
         {
-            get { return _minValue; }
+            get => _minValue;
             set { _minValue = value; Invalidate(); }
         }
         /// <summary>
@@ -293,7 +297,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Point), "100,100")]
         public Point MaxValue
         {
-            get { return _maxValue; }
+            get => _maxValue;
             set { _maxValue = value; Invalidate(); }
         }
         /// <summary>
@@ -304,7 +308,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Point), "0,0")]
         public Point Value
         {
-            get { return _value; }
+            get => _value;
             set
             {
                 _value = value;
@@ -321,7 +325,7 @@ namespace KlxPiaoControls
         [DefaultValue(true)]
         public bool RespondToKeyboard
         {
-            get { return _respondToKeyboard; }
+            get => _respondToKeyboard;
             set { _respondToKeyboard = value; Invalidate(); }
         }
         /// <summary>
@@ -332,7 +336,7 @@ namespace KlxPiaoControls
         [DefaultValue(1)]
         public int ResponseSize
         {
-            get { return _responseSize; }
+            get => _responseSize;
             set { _responseSize = value; Invalidate(); }
         }
         /// <summary>
@@ -343,15 +347,37 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(CoordinateSystem), "ComputerGraphicsCoordinateSystem")]
         public CoordinateSystem CoordinateSystemType
         {
-            get { return _coordinateSystemType; }
+            get => _coordinateSystemType;
             set { _coordinateSystemType = value; Invalidate(); }
+        }
+        /// <summary>
+        /// 获取或设置如何处理鼠标按下事件。
+        /// </summary>
+        [Category("PointBar Properties")]
+        [Description("如何处理鼠标按下事件")]
+        [DefaultValue(typeof(MouseValueChangedEventOption), "OnDefault")]
+        public MouseValueChangedEventOption MouseDownEventOption
+        {
+            get => _mouseDownEventOption;
+            set => _mouseDownEventOption = value;
+        }
+        /// <summary>
+        /// 获取或设置如何处理鼠标移动事件。
+        /// </summary>
+        [Category("PointBar Properties")]
+        [Description("如何处理鼠标移动事件")]
+        [DefaultValue(typeof(MouseValueChangedEventOption), "OnDefault")]
+        public MouseValueChangedEventOption MouseMoveEventOption
+        {
+            get => _mouseMoveEventOption;
+            set => _mouseMoveEventOption = value;
         }
         #endregion
 
         [Browsable(false)]
         public new string Text
         {
-            get { return base.Text; }
+            get => base.Text;
             set { base.Text = value; Invalidate(); }
         }
 
@@ -407,7 +433,7 @@ namespace KlxPiaoControls
                     g.DrawLine(crosshairPen, newx - px, newy, newx + px, newy);
                     g.DrawLine(crosshairPen, newx, newy - px, newx, newy + px);
                 }
-                drawCrosshair(Value + new Size(1, 1), CrosshairSize);
+                drawCrosshair(Value, CrosshairSize);
             });
 
             var drawOuter = new Action(() =>
@@ -462,21 +488,44 @@ namespace KlxPiaoControls
         }
 
         bool draging = false;
+        private void TriggerMouseEvent()
+        {
+            OnValueChanged(new ValueChangedEvent(Value));
+        }
+
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                int xRange = MaxValue.X - MinValue.X;
-                int yRange = MaxValue.Y - MinValue.Y;
-
-                Value = new Point(
-                    MinValue.X + (int)(xRange * (e.Location.X / (float)Width)),
-                    MinValue.Y + (int)(yRange * (CoordinateSystemType == CoordinateSystem.CartesianCoordinateSystem ? 1 - e.Location.Y / (float)Height : e.Location.Y / (float)Height))
-                );
-
-                OnValueChanged(new ValueChangedEvent(Value));
-
                 draging = true;
+
+                void UpdateValue()
+                {
+                    int xRange = MaxValue.X - MinValue.X;
+                    int yRange = MaxValue.Y - MinValue.Y;
+
+                    Value = new Point(
+                        MinValue.X + (int)Math.Round(xRange * (e.Location.X / (float)Width)),
+                        MinValue.Y + (int)Math.Round(yRange * (CoordinateSystemType == CoordinateSystem.CartesianCoordinateSystem
+                        ? 1 - e.Location.Y / (float)Height
+                        : e.Location.Y / (float)Height))
+                    );
+                }
+
+                switch (MouseDownEventOption)
+                {
+                    case MouseValueChangedEventOption.OnDefault:
+                        UpdateValue();
+                        TriggerMouseEvent();
+                        break;
+
+                    case MouseValueChangedEventOption.OnNoEvent:
+                        UpdateValue();
+                        break;
+
+                    case MouseValueChangedEventOption.OnNoChangeValueNoEvent:
+                        break;
+                }
             }
             Focus();
 
@@ -487,20 +536,38 @@ namespace KlxPiaoControls
         {
             if (draging)
             {
-                int xRange = MaxValue.X - MinValue.X;
-                int yRange = MaxValue.Y - MinValue.Y;
+                void UpdateValue()
+                {
+                    int xRange = MaxValue.X - MinValue.X;
+                    int yRange = MaxValue.Y - MinValue.Y;
 
-                Value = new Point(
-                    MinValue.X + (int)(xRange * (e.Location.X / (float)Width)),
-                    MinValue.Y + (int)(yRange * (CoordinateSystemType == CoordinateSystem.CartesianCoordinateSystem ? 1 - e.Location.Y / (float)Height : e.Location.Y / (float)Height))
-                );
+                    Value = new Point(
+                        MinValue.X + (int)Math.Round(xRange * (e.Location.X / (float)Width)),
+                        MinValue.Y + (int)Math.Round(yRange * (CoordinateSystemType == CoordinateSystem.CartesianCoordinateSystem
+                        ? 1 - e.Location.Y / (float)Height
+                        : e.Location.Y / (float)Height))
+                    );
 
-                if (Value.X < MinValue.X) Value = new Point(MinValue.X, Value.Y);
-                if (Value.X > MaxValue.X) Value = new Point(MaxValue.X, Value.Y);
-                if (Value.Y < MinValue.Y) Value = new Point(Value.X, MinValue.Y);
-                if (Value.Y > MaxValue.Y) Value = new Point(Value.X, MaxValue.Y);
+                    if (Value.X < MinValue.X) Value = new Point(MinValue.X, Value.Y);
+                    if (Value.X > MaxValue.X) Value = new Point(MaxValue.X, Value.Y);
+                    if (Value.Y < MinValue.Y) Value = new Point(Value.X, MinValue.Y);
+                    if (Value.Y > MaxValue.Y) Value = new Point(Value.X, MaxValue.Y);
+                }
 
-                OnValueChanged(new ValueChangedEvent(Value));
+                switch (MouseMoveEventOption)
+                {
+                    case MouseValueChangedEventOption.OnDefault:
+                        UpdateValue();
+                        TriggerMouseEvent();
+                        break;
+
+                    case MouseValueChangedEventOption.OnNoEvent:
+                        UpdateValue();
+                        break;
+
+                    case MouseValueChangedEventOption.OnNoChangeValueNoEvent:
+                        break;
+                }
 
                 Refresh();
             }
@@ -511,7 +578,7 @@ namespace KlxPiaoControls
         protected override void OnMouseUp(MouseEventArgs e)
         {
             draging = false;
-
+            TriggerMouseEvent();
             base.OnMouseUp(e);
         }
 

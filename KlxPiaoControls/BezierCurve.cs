@@ -175,7 +175,7 @@ namespace KlxPiaoControls
         [DefaultValue(2)]
         public int BorderSize
         {
-            get { return _borderSize; }
+            get => _borderSize;
             set { _borderSize = value; Invalidate(); }
         }
         /// <summary>
@@ -186,7 +186,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "Gray")]
         public Color BorderColor
         {
-            get { return _borderColor; }
+            get => _borderColor;
             set { _borderColor = value; Invalidate(); }
         }
         /// <summary>
@@ -197,7 +197,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Size), "200,200")]
         public Size ZeroToOneSize
         {
-            get { return _zeroToOneSize; }
+            get => _zeroToOneSize;
             set { _zeroToOneSize = value; Invalidate(); }
         }
         /// <summary>
@@ -208,7 +208,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(ContentAlignment), "MiddleCenter")]
         public ContentAlignment ZeroToOnePosition
         {
-            get { return _zeroToOnePosition; }
+            get => _zeroToOnePosition;
             set { _zeroToOnePosition = value; Invalidate(); }
         }
         /// <summary>
@@ -219,7 +219,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Point), "0,0")]
         public Point ZeroToOneOffset
         {
-            get { return _ZeroToOneOffset; }
+            get => _ZeroToOneOffset;
             set { _ZeroToOneOffset = value; Invalidate(); }
         }
         #endregion
@@ -233,7 +233,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "Red")]
         public Color CurveColor
         {
-            get { return _curveColor; }
+            get => _curveColor;
             set { _curveColor = value; Invalidate(); }
         }
         /// <summary>
@@ -244,7 +244,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "Red")]
         public Color ControlPointColor
         {
-            get { return _controlPointColor; }
+            get => _controlPointColor;
             set { _controlPointColor = value; Invalidate(); }
         }
         /// <summary>
@@ -255,7 +255,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "Black")]
         public Color GuidelineColor
         {
-            get { return _guidelineColor; }
+            get => _guidelineColor;
             set { _guidelineColor = value; Invalidate(); }
         }
         /// <summary>
@@ -266,7 +266,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "Blue")]
         public Color StartAndEndPointColor
         {
-            get { return _startAndEndPointColor; }
+            get => _startAndEndPointColor;
             set { _startAndEndPointColor = value; Invalidate(); }
         }
         /// <summary>
@@ -277,7 +277,7 @@ namespace KlxPiaoControls
         [DefaultValue(2)]
         public int CurveSize
         {
-            get { return _curveSize; }
+            get => _curveSize;
             set { _curveSize = value; Invalidate(); }
         }
         /// <summary>
@@ -288,7 +288,7 @@ namespace KlxPiaoControls
         [DefaultValue(8)]
         public int ControlPointSize
         {
-            get { return _controlPointSize; }
+            get => _controlPointSize;
             set { _controlPointSize = value; Invalidate(); }
         }
         /// <summary>
@@ -299,7 +299,7 @@ namespace KlxPiaoControls
         [DefaultValue(1)]
         public int GuidelineSize
         {
-            get { return _guidelineSize; }
+            get => _guidelineSize;
             set { _guidelineSize = value; Invalidate(); }
         }
         /// <summary>
@@ -310,7 +310,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(GuidelineDrawMode), "BothEndsSolid_MiddleDashed")]
         public GuidelineDrawMode GuidelineDraw
         {
-            get { return _guidelineDraw; }
+            get => _guidelineDraw;
             set { _guidelineDraw = value; Invalidate(); }
         }
         /// <summary>
@@ -321,7 +321,7 @@ namespace KlxPiaoControls
         [DefaultValue(0.005F)]
         public float DrawingAccuracy
         {
-            get { return _drawingAccuracy; }
+            get => _drawingAccuracy;
             set { _drawingAccuracy = value; Invalidate(); }
         }
         /// <summary>
@@ -332,7 +332,7 @@ namespace KlxPiaoControls
         [DefaultValue(true)]
         public bool IsDisplayControlPoint
         {
-            get { return _isDisplayControlPoint; }
+            get => _isDisplayControlPoint;
             set { _isDisplayControlPoint = value; Invalidate(); }
         }
         #endregion
@@ -345,7 +345,7 @@ namespace KlxPiaoControls
         [Description("贝塞尔曲线的控制点集合")]
         public List<PointF> ControlPoints
         {
-            get { return _controlPoints; }
+            get => _controlPoints;
             set
             {
                 _controlPoints = value;
@@ -362,7 +362,7 @@ namespace KlxPiaoControls
         [DefaultValue(2)]
         public int DecimalPlaces
         {
-            get { return _decimalPlaces; }
+            get => _decimalPlaces;
             set { _decimalPlaces = value; Invalidate(); }
         }
         /// <summary>
@@ -373,7 +373,7 @@ namespace KlxPiaoControls
         [DefaultValue(false)]
         public bool IsStartAndEndPointDraggable
         {
-            get { return _isStartAndEndPointDraggable; }
+            get => _isStartAndEndPointDraggable;
             set { _isStartAndEndPointDraggable = value; Invalidate(); }
         }
         /// <summary>
@@ -384,8 +384,8 @@ namespace KlxPiaoControls
         [DefaultValue(true)]
         public bool IsEnableAutoAdsorption
         {
-            get { return _isEnableAutoAdsorption; }
-            set { _isEnableAutoAdsorption = value; }
+            get => _isEnableAutoAdsorption;
+            set => _isEnableAutoAdsorption = value;
         }
         /// <summary>
         /// 对控制点拖动时做出的限制。
@@ -395,8 +395,8 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(ConstraintMode), "XAxisOnly")]
         public ConstraintMode DragConstraint
         {
-            get { return _dragConstraint; }
-            set { _dragConstraint = value; }
+            get => _dragConstraint;
+            set => _dragConstraint = value;
         }
         /// <summary>
         /// 获取或设置拖动时是否显示控制点信息。
@@ -406,8 +406,8 @@ namespace KlxPiaoControls
         [DefaultValue(true)]
         public bool IsDisplayControlPointTextWhileDragging
         {
-            get { return _isDisplayControlPointTextWhileDragging; }
-            set { _isDisplayControlPointTextWhileDragging = value; }
+            get => _isDisplayControlPointTextWhileDragging;
+            set => _isDisplayControlPointTextWhileDragging = value;
         }
         /// <summary>
         /// 获取或设置显示控制点信息的格式。
@@ -418,7 +418,7 @@ namespace KlxPiaoControls
         [DefaultValue("({index}) X:{x},Y:{y}")]
         public string ControlPointTextDisplayFormat
         {
-            get { return _controlPointTextDisplayFormat; }
+            get => _controlPointTextDisplayFormat;
             set { _controlPointTextDisplayFormat = value; Invalidate(); }
         }
         #endregion
@@ -426,8 +426,8 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Size), "200,200")]
         public new Size Size
         {
-            get { return base.Size; }
-            set { base.Size = value; }
+            get => base.Size;
+            set => base.Size = value;
         }
 
         #region method

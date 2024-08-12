@@ -126,11 +126,19 @@ namespace KlxPiaoAPI
                     if (cR == 0)
                         graphicsPath.AddLine(cRLine1, cRLine2);
                     else
-                        graphicsPath.AddArc(cRRect, arc1, arc2);
+                        try
+                        {
+                            graphicsPath.AddArc(cRRect, arc1, arc2);
+                        }
+                        catch { }
                 }
                 else if (cR != 0)
                 {
-                    graphicsPath.AddArc(cRRect, arc1, arc2);
+                    try
+                    {
+                        graphicsPath.AddArc(cRRect, arc1, arc2);
+                    }
+                    catch { }
                     graphicsPath.AddLine(cRLine1, cRLine2);
                     graphicsPath.CloseFigure();
                 }

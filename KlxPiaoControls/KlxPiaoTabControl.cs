@@ -21,7 +21,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Size), "299,127")]
         public new Size Size
         {
-            get { return base.Size; }
+            get => base.Size;
             set { base.Size = value; Invalidate(); }
         }
 

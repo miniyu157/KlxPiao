@@ -44,39 +44,5 @@
             return new RectangleF(x, y, width, height);
         }
         #endregion
-
-        #region (2 个重载) ScaleRectangle
-        /// <summary>
-        /// 缩放矩形的尺寸，通过将指定的缩放因子添加到其宽度和高度。
-        /// 矩形的位置会调整以保持其中心点不变。
-        /// </summary>
-        /// <param name="rectangle">要缩放的矩形。</param>
-        /// <param name="scaleFactor">缩放因子，正值表示放大，负值表示缩小。</param>
-        /// <returns>尺寸调整和位置调整后的缩放矩形。</returns>
-        public static Rectangle ScaleRectangle(this Rectangle rectangle, int scaleFactor)
-        {
-            return new(
-                rectangle.X - scaleFactor / 2,
-                rectangle.Y - scaleFactor / 2,
-                rectangle.Width + scaleFactor,
-                rectangle.Height + scaleFactor);
-        }
-
-        /// <summary>
-        /// 缩放矩形的尺寸，通过将指定的缩放因子添加到其宽度和高度。
-        /// 矩形的位置会调整以保持其中心点不变。
-        /// </summary>
-        /// <param name="rectangle">要缩放的矩形。</param>
-        /// <param name="scaleFactor">缩放因子，正值表示放大，负值表示缩小。</param>
-        /// <returns>尺寸调整和位置调整后的缩放矩形。</returns>
-        public static RectangleF ScaleRectangle(this RectangleF rectangle, float scaleFactor)
-        {
-            return new(
-                rectangle.X - scaleFactor / 2,
-                rectangle.Y - scaleFactor / 2,
-                rectangle.Width + scaleFactor,
-                rectangle.Height + scaleFactor);
-        }
-        #endregion
     }
 }

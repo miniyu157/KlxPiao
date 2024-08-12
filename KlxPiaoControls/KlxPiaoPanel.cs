@@ -72,7 +72,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "199,199,199")]
         public Color BorderColor
         {
-            get { return _borderColor; }
+            get => _borderColor;
             set { _borderColor = value; Invalidate(); }
         }
         /// <summary>
@@ -83,7 +83,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "White")]
         public Color BaseBackColor
         {
-            get { return _baseBackColor; }
+            get => _baseBackColor;
             set { _baseBackColor = value; Invalidate(); }
         }
         /// <summary>
@@ -94,7 +94,7 @@ namespace KlxPiaoControls
         [DefaultValue(1)]
         public int BorderSize
         {
-            get { return _borderSize; }
+            get => _borderSize;
             set { _borderSize = value; Invalidate(); }
         }
         /// <summary>
@@ -105,7 +105,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(CornerRadius), "0,0,0,0")]
         public CornerRadius CornerRadius
         {
-            get { return _cornerRadius; }
+            get => _cornerRadius;
             set { _cornerRadius = value; Invalidate(); }
         }
         /// <summary>
@@ -116,7 +116,7 @@ namespace KlxPiaoControls
         [DefaultValue(true)]
         public bool IsEnableShadow
         {
-            get { return _isEnableShadow; }
+            get => _isEnableShadow;
             set { _isEnableShadow = value; Invalidate(); }
         }
         /// <summary>
@@ -127,7 +127,7 @@ namespace KlxPiaoControls
         [DefaultValue(5)]
         public int ShadowLength
         {
-            get { return _shadowLength; }
+            get => _shadowLength;
             set { _shadowLength = value; Invalidate(); }
         }
         /// <summary>
@@ -138,7 +138,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "142,142,142")]
         public Color ShadowColor
         {
-            get { return _shadowColor; }
+            get => _shadowColor;
             set { _shadowColor = value; Invalidate(); }
         }
         /// <summary>
@@ -149,7 +149,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(ShadowDirectionEnum), "BottomRight")]
         public ShadowDirectionEnum ShadowDirection
         {
-            get { return _shadowDirection; }
+            get => _shadowDirection;
             set { _shadowDirection = value; Invalidate(); }
         }
         #endregion
@@ -157,16 +157,33 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Size), "100,100")]
         public new Size Size
         {
-            get { return base.Size; }
+            get => base.Size;
             set { base.Size = value; Invalidate(); }
         }
 
         [Browsable(false)]
         public new BorderStyle BorderStyle
         {
-            get { return base.BorderStyle; }
+            get => base.BorderStyle;
             set { base.BorderStyle = value; Invalidate(); }
         }
+
+        #region events
+        /// <summary>
+        /// 背景绘制事件。
+        /// </summary>
+        public event PaintEventHandler? BackgroundPaint;
+
+        /// <summary>
+        /// 引发 <see cref="OnBackgroundPaint(Graphics)"/> 事件
+        /// </summary>
+        /// <param name="g"></param>
+        protected virtual void OnBackgroundPaint(Graphics g)
+        {
+            var pe = new PaintEventArgs(g, new Rectangle(0, 0, Width, Height));
+            BackgroundPaint?.Invoke(this, pe);
+        }
+        #endregion
 
         protected override void OnPaint(PaintEventArgs pe)
         {
@@ -196,13 +213,15 @@ namespace KlxPiaoControls
                         g.FillRectangle(brush, new Rectangle(i, ShadowLength - i, Width - ShadowLength * 2, Height - ShadowLength));
                     }
 
-                    //border
-                    using Pen borderPen = new(BorderColor, 1);
-                    g.DrawRectangle(borderPen, GetClientRectangle());
-
                     //background
                     using SolidBrush backBrush = new(BackColor);
                     g.FillRectangle(backBrush, AdjustRectangle(GetClientRectangle(), -1));
+
+                    OnBackgroundPaint(g);
+
+                    //border
+                    using Pen borderPen = new(BorderColor, 1);
+                    g.DrawRectangle(borderPen, GetClientRectangle());
                 }
                 else
                 {
@@ -212,7 +231,7 @@ namespace KlxPiaoControls
                     //background
                     using SolidBrush backBrush = new(BackColor);
                     g.FillRectangle(backBrush, thisRect);
-
+                    OnBackgroundPaint(g);
                     g.DrawRounded(thisRect, CornerRadius, BaseBackColor, new Pen(BorderColor, BorderSize));
                 }
                 pe.Graphics.DrawImage(bitmap, 0, 0);

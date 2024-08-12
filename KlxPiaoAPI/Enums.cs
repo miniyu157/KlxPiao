@@ -1,6 +1,42 @@
 ﻿namespace KlxPiaoAPI
 {
     /// <summary>
+    /// 鼠标值修改事件处理选项。
+    /// </summary>
+    public enum MouseValueChangedEventOption
+    {
+        /// <summary>
+        /// 修改值并触发事件。
+        /// </summary>
+        OnDefault,
+
+        /// <summary>
+        /// 修改值但不触发事件。
+        /// </summary>
+        OnNoEvent,
+
+        /// <summary>
+        /// 不修改值且不触发事件。
+        /// </summary>
+        OnNoChangeValueNoEvent,
+    }
+
+    /// <summary>
+    /// 表示调整大小的模式
+    /// </summary>
+    public enum ResizeMode
+    {
+        /// <summary>
+        /// 表示百分比值缩放模式。
+        /// </summary>
+        Percentage,
+        /// <summary>
+        /// 表示像素缩放模式。
+        /// </summary>
+        Pixel
+    }
+
+    /// <summary>
     /// 匹配模式的枚举。
     /// </summary>
     public enum MatchMode

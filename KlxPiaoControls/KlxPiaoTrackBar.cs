@@ -99,6 +99,8 @@ namespace KlxPiaoControls
         private InteractionStyleClass _interactionStyle = new();
         private MouseWheelResponseMode _mouseWheelResponse;
         private KeyboardResponseMode _keyboardResponse;
+        private MouseValueChangedEventOption _mouseDownEventOption;
+        private MouseValueChangedEventOption _mouseMoveEventOption;
         private float _responseSize;
 
         //值文本绘制
@@ -106,6 +108,7 @@ namespace KlxPiaoControls
         private string _valueTextDisplayFormat;
         private Point _valueTextDrawOffset;
         private bool _isDrawValueText;
+        private bool _isAutoComplete;
         #endregion
 
         public KlxPiaoTrackBar()
@@ -126,6 +129,8 @@ namespace KlxPiaoControls
 
             _mouseWheelResponse = MouseWheelResponseMode.Forward;
             _keyboardResponse = KeyboardResponseMode.AllDirections;
+            _mouseDownEventOption = MouseValueChangedEventOption.OnDefault;
+            _mouseMoveEventOption = MouseValueChangedEventOption.OnDefault;
             _responseSize = 1;
 
             _valueTextDrawAlign = ContentAlignment.MiddleCenter;
@@ -152,7 +157,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "Gainsboro")]
         public Color TrackBackColor
         {
-            get { return _trackBackColor; }
+            get => _trackBackColor;
             set { _trackBackColor = value; Invalidate(); }
         }
         /// <summary>
@@ -163,7 +168,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "Gray")]
         public Color TrackForeColor
         {
-            get { return _trackForeColor; }
+            get => _trackForeColor;
             set { _trackForeColor = value; Invalidate(); }
         }
         /// <summary>
@@ -174,7 +179,7 @@ namespace KlxPiaoControls
         [DefaultValue(0)]
         public int BorderSize
         {
-            get { return _borderSize; }
+            get => _borderSize;
             set { _borderSize = value; Invalidate(); }
         }
         /// <summary>
@@ -185,7 +190,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Color), "0,210,212")]
         public Color BorderColor
         {
-            get { return _borderColor; }
+            get => _borderColor;
             set { _borderColor = value; Invalidate(); }
         }
         /// <summary>
@@ -196,7 +201,7 @@ namespace KlxPiaoControls
         [DefaultValue(1F)]
         public float CornerRadius
         {
-            get { return _cornerRadius; }
+            get => _cornerRadius;
             set
             {
                 //防止超出最大范围
@@ -219,7 +224,7 @@ namespace KlxPiaoControls
         [DefaultValue(false)]
         public bool IsReverseDrawing
         {
-            get { return _isReverseDrawing; }
+            get => _isReverseDrawing;
             set { _isReverseDrawing = value; Invalidate(); }
         }
         #endregion
@@ -233,7 +238,7 @@ namespace KlxPiaoControls
         [DefaultValue(0F)]
         public float Value
         {
-            get { return _value; }
+            get => _value;
             set
             {
                 _value = value;
@@ -251,8 +256,8 @@ namespace KlxPiaoControls
         [DefaultValue(100F)]
         public float MaxValue
         {
-            get { return _maxValue; }
-            set { _maxValue = value; }
+            get => _maxValue;
+            set => _maxValue = value;
         }
         /// <summary>
         /// 获取或设置最小值。
@@ -262,8 +267,8 @@ namespace KlxPiaoControls
         [DefaultValue(0F)]
         public float MinValue
         {
-            get { return _minValue; }
-            set { _minValue = value; }
+            get => _minValue;
+            set => _minValue = value;
         }
         /// <summary>
         /// 获取或设置小数点后保留的位数。
@@ -273,7 +278,7 @@ namespace KlxPiaoControls
         [DefaultValue(0)]
         public int DecimalPlaces
         {
-            get { return _decimalPlaces; }
+            get => _decimalPlaces;
             set { _decimalPlaces = value; Invalidate(); }
         }
         #endregion
@@ -286,8 +291,8 @@ namespace KlxPiaoControls
         [Description("用户交互时的外观")]
         public InteractionStyleClass InteractionStyle
         {
-            get { return _interactionStyle; }
-            set { _interactionStyle = value; }
+            get => _interactionStyle;
+            set => _interactionStyle = value;
         }
         /// <summary>
         /// 获取或设置鼠标滚轮响应的方式。
@@ -297,8 +302,8 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(MouseWheelResponseMode), "Forward")]
         public MouseWheelResponseMode MouseWheelResponse
         {
-            get { return _mouseWheelResponse; }
-            set { _mouseWheelResponse = value; Invalidate(); }
+            get => _mouseWheelResponse;
+            set => _mouseWheelResponse = value;
         }
         /// <summary>
         /// 获取或设置键盘响应的方式。
@@ -308,8 +313,30 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(KeyboardResponseMode), "AllDirections")]
         public KeyboardResponseMode KeyboardResponse
         {
-            get { return _keyboardResponse; }
-            set { _keyboardResponse = value; Invalidate(); }
+            get => _keyboardResponse;
+            set => _keyboardResponse = value;
+        }
+        /// <summary>
+        /// 获取或设置如何处理鼠标按下事件。
+        /// </summary>
+        [Category("KlxPiaoTrackBar Interaction")]
+        [Description("如何处理鼠标按下事件")]
+        [DefaultValue(typeof(MouseValueChangedEventOption), "OnDefault")]
+        public MouseValueChangedEventOption MouseDownEventOption
+        {
+            get => _mouseDownEventOption;
+            set => _mouseDownEventOption = value;
+        }
+        /// <summary>
+        /// 获取或设置如何处理鼠标移动事件。
+        /// </summary>
+        [Category("KlxPiaoTrackBar Interaction")]
+        [Description("如何处理鼠标移动事件")]
+        [DefaultValue(typeof(MouseValueChangedEventOption), "OnDefault")]
+        public MouseValueChangedEventOption MouseMoveEventOption
+        {
+            get => _mouseMoveEventOption;
+            set => _mouseMoveEventOption = value;
         }
         /// <summary>
         /// 获取或设置通过鼠标滚轮或键盘交互，一次调整的大小。
@@ -319,8 +346,8 @@ namespace KlxPiaoControls
         [DefaultValue(1F)]
         public float ResponseSize
         {
-            get { return _responseSize; }
-            set { _responseSize = value; Invalidate(); }
+            get => _responseSize;
+            set => _responseSize = value;
         }
         #endregion
 
@@ -333,7 +360,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(ContentAlignment), "MiddleCenter")]
         public ContentAlignment ValueTextDrawAlign
         {
-            get { return _valueTextDrawAlign; }
+            get => _valueTextDrawAlign;
             set { _valueTextDrawAlign = value; Invalidate(); }
         }
         /// <summary>
@@ -346,7 +373,7 @@ namespace KlxPiaoControls
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public string ValueTextDisplayFormat
         {
-            get { return _valueTextDisplayFormat; }
+            get => _valueTextDisplayFormat;
             set { _valueTextDisplayFormat = value; Invalidate(); }
         }
         /// <summary>
@@ -357,7 +384,7 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Point), "0,0")]
         public Point ValueTextDrawOffset
         {
-            get { return _valueTextDrawOffset; }
+            get => _valueTextDrawOffset;
             set { _valueTextDrawOffset = value; Invalidate(); }
         }
         /// <summary>
@@ -368,8 +395,19 @@ namespace KlxPiaoControls
         [DefaultValue(false)]
         public bool IsDrawValueText
         {
-            get { return _isDrawValueText; }
+            get => _isDrawValueText;
             set { _isDrawValueText = value; Invalidate(); }
+        }
+        /// <summary>
+        /// 获取或设置是否自动补全至小数精度位数。
+        /// </summary>
+        [Category("KlxPiaoTrackBar TextDrawing")]
+        [Description("是否自动补全至小数精度位数")]
+        [DefaultValue(false)]
+        public bool IsAutoComplete
+        {
+            get => _isAutoComplete;
+            set { _isAutoComplete = value; Invalidate(); }
         }
         #endregion
 
@@ -475,14 +513,14 @@ namespace KlxPiaoControls
         [DefaultValue(typeof(Size), "286,10")]
         public new Size Size
         {
-            get { return base.Size; }
+            get => base.Size;
             set { base.Size = value; Invalidate(); }
         }
 
         [Browsable(false)]
         public new string Text
         {
-            get { return base.Text; }
+            get => base.Text;
             set { base.Text = value; Invalidate(); }
         }
 
@@ -502,8 +540,8 @@ namespace KlxPiaoControls
 
             //如果非用户设置 Value，则根据值的大小计算绘制百分比
             if (!(draging || wheeling || keyboarding))
-                drawPercentage = !IsReverseDrawing 
-                    ? (Value - MinValue) / (MaxValue - MinValue) 
+                drawPercentage = !IsReverseDrawing
+                    ? (Value - MinValue) / (MaxValue - MinValue)
                     : (MaxValue - Value) / (MaxValue - MinValue);
 
             //draw progress
@@ -533,7 +571,7 @@ namespace KlxPiaoControls
             //draw text
             if (IsDrawValueText)
             {
-                string drawText = ValueTextDisplayFormat.Replace("{value}", Value.ToString());
+                string drawText = ValueTextDisplayFormat.Replace("{value}", Value.ToString(IsAutoComplete ? $"F{DecimalPlaces}" : null));
 
                 SizeF textSize = g.MeasureString(drawText, Font);
                 PointF drawPosition = LayoutUtilities.CalculateAlignedPosition(thisRect, textSize, ValueTextDrawAlign, ValueTextDrawOffset);
@@ -554,18 +592,38 @@ namespace KlxPiaoControls
         private bool keyboarding = false;
 
         #region OnMouseDown OnMouseMove OnMouseUp
+        private void TriggerMouseEvent()
+        {
+            OnValueChanged(new ValueChangedEventArgs(Value, EventTriggerType.Mouse, drawPercentage));
+        }
+
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 draging = true;
 
-                drawPercentage = (Width >= Height) ? (float)e.X / Width : (float)e.Y / Height;
-                Value = (float)Math.Round(MinValue + drawPercentage * (MaxValue - MinValue), DecimalPlaces);
+                void UpdateValue()
+                {
+                    drawPercentage = (Width >= Height) ? (float)e.X / Width : (float)e.Y / Height;
+                    Value = (float)Math.Round(MinValue + drawPercentage * (MaxValue - MinValue), DecimalPlaces);
+                    if (IsReverseDrawing) { Value = (float)Math.Round(MaxValue - (Value - MinValue), DecimalPlaces); }
+                }
 
-                if (IsReverseDrawing) { Value = (float)Math.Round(MaxValue - (Value - MinValue), DecimalPlaces); }
+                switch (MouseDownEventOption)
+                {
+                    case MouseValueChangedEventOption.OnDefault:
+                        UpdateValue();
+                        TriggerMouseEvent();
+                        break;
 
-                OnValueChanged(new ValueChangedEventArgs(Value, EventTriggerType.Mouse, drawPercentage));
+                    case MouseValueChangedEventOption.OnNoEvent:
+                        UpdateValue();
+                        break;
+
+                    case MouseValueChangedEventOption.OnNoChangeValueNoEvent:
+                        break;
+                }
             }
             Focus();
 
@@ -576,16 +634,32 @@ namespace KlxPiaoControls
         {
             if (draging)
             {
-                drawPercentage = (Width >= Height) ? (float)e.X / Width : (float)e.Y / Height;
+                void UpdateValue()
+                {
+                    drawPercentage = (Width >= Height) ? (float)e.X / Width : (float)e.Y / Height;
 
-                if (drawPercentage > 1) { drawPercentage = 1; }
-                if (drawPercentage < 0) { drawPercentage = 0; }
+                    if (drawPercentage > 1) { drawPercentage = 1; }
+                    if (drawPercentage < 0) { drawPercentage = 0; }
 
-                Value = (float)Math.Round(MinValue + drawPercentage * (MaxValue - MinValue), DecimalPlaces);
+                    Value = (float)Math.Round(MinValue + drawPercentage * (MaxValue - MinValue), DecimalPlaces);
 
-                if (IsReverseDrawing) { Value = (float)Math.Round(MaxValue - (Value - MinValue), DecimalPlaces); }
+                    if (IsReverseDrawing) { Value = (float)Math.Round(MaxValue - (Value - MinValue), DecimalPlaces); }
+                }
 
-                OnValueChanged(new ValueChangedEventArgs(Value, EventTriggerType.Mouse, drawPercentage));
+                switch (MouseMoveEventOption)
+                {
+                    case MouseValueChangedEventOption.OnDefault:
+                        UpdateValue();
+                        TriggerMouseEvent();
+                        break;
+
+                    case MouseValueChangedEventOption.OnNoEvent:
+                        UpdateValue();
+                        break;
+
+                    case MouseValueChangedEventOption.OnNoChangeValueNoEvent:
+                        break;
+                }
             }
 
             base.OnMouseMove(e);
@@ -594,7 +668,7 @@ namespace KlxPiaoControls
         protected override void OnMouseUp(MouseEventArgs e)
         {
             draging = false;
-
+            TriggerMouseEvent();
             base.OnMouseUp(e);
         }
         #endregion

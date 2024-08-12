@@ -1,5 +1,73 @@
 # 更新日志
 
+## 版本 1.2.0.1
+### 解决方案
+#### 优化
+- 部分代码优化
+#### 枚举类型迁移
+- KlxPiaoControls.RoundedButton.FormatType -> KlxPiaoAPI.ResizeMode;
+
+### KlxPiaoControls
+#### 新增组件
+- ImageBox
+  > 表示一个图片框控件，支持边框和圆角等自定义外观设置。<br>
+  > ```ImageBox``` 继承自 ```System.Windows.Forms.Control```<br>
+  > 相较于 ```KlxPiaoPictureBox```，```ImageBox``` 提供了更加自由的图片绘制选项。
+#### 新增方法
+- KlxPiaoForm.RefreshTitleButtonProperties
+- KlxPiaoForm.SetThemeColor
+- KlxPiaoForm.GetTitleBoxHeight
+- KlxPiaoForm.GetTitleBoxRectangle
+- (扩展, +1 重载) Bitmap.ReplaceNonFullyTransparentPixels
+- (扩展, +1 重载) Bitmap.CreateTransparentBackground
+#### 移除方法
+- (扩展) Color.SetBrightness
+- KlxPiaoForm.SetGlobalTheme
+#### 新增事件
+- KlxPiaoForm.CloseButtonPaint
+- KlxPiaoForm.ResizeButtonPaint
+- KlxPiaoForm.MinimizeButtonPaint
+- KlxPiaoForm.BackgroundPaint
+- KlxPiaoPanel.BackgroundPaint
+- klxPiaoLabel.BackgroundPaint
+#### 新增属性
+- RoundedButton.TextOffset (原以 Padding 表示偏移)
+- KlxPiaoTrackBar.IsAutoComplete
+- KlxPiaoForm.IconDrawOffset
+- KlxPiaoForm.TitleBoxDragThreshold
+- KlxPiaoTrackBar.MouseDownEventOption
+- KlxPiaoTrackBar.MouseMoveEventOption
+- PointBar.MouseDownEventOption
+- PointBar.MouseMoveEventOption
+#### 隐藏属性
+- KlxPiaoForm.HelpButton
+- KlxPiaoForm.ControlBox
+#### 修复
+- KlxPiaoForm.InteractionColorScale 属性设置后不会立即生效的问题
+- PointBar 拖动时偏移
+- RoundedButton 鼠标快速移入移出时属性不恢复的问题
+#### 优化
+- RoundedButton 图像的抗锯齿效果
+
+### KlxPiaoAPI
+#### 优化方法
+- (扩展) Graphics.ConvertToRoundedPath 错误处理
+#### 新增方法重载
+- ImageExtensions
+  ```
+  Image ReplaceColor(this Image originalImage, Color oldColor, Color newColor, bool isPreserveAlpha = true)
+  Bitmap.ResetImage(this Bitmap originalImage, int newWidth, int newHeight, Color? baseColor = null)
+  Image.ResetImage(this Image originalImage, int newWidth, int newHeight, Color? baseColor = null)
+  Bitmap.AddRounded(this Bitmap original, CornerRadius cornerRadius, Color baseColor, Color? borderColor = null, int borderSize = 0)
+  Image.AddRounded(this Image original, CornerRadius cornerRadius, Color baseColor, Color? borderColor = null, int borderSize = 0)
+  ```
+#### 移除方法
+- (扩展, +1 重载) Rectangle.ScaleRectangle
+#### 新增类
+- ImageLayoutUtility (提供用于计算图像布局的实用方法)
+
+---
+
 ## 版本 1.2.0.0
 ### 解决方案
 - 部分代码优化
