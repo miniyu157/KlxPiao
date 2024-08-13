@@ -32,6 +32,7 @@
 - klxPiaoLabel.BackgroundPaint
 #### 新增属性
 - RoundedButton.TextOffset (原以 Padding 表示偏移)
+- RoundedButton.MouseClickMode
 - KlxPiaoTrackBar.IsAutoComplete
 - KlxPiaoForm.IconDrawOffset
 - KlxPiaoForm.TitleBoxDragThreshold
