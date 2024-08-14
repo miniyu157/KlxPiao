@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Drawing.Drawing2D;
 
-namespace KlxPiaoControls
+namespace KlxPiaoDemo
 {
     /// <summary>
     /// 用于绘制贝塞尔曲线，可交互的组件。

@@ -451,8 +451,6 @@
             titleButtonWidthTrackBar.InteractionStyle = interactionStyleClass3;
             titleButtonWidthTrackBar.IsDrawValueText = true;
             titleButtonWidthTrackBar.Location = new Point(197, 30);
-            titleButtonWidthTrackBar.MouseDownEventOption = KlxPiaoAPI.MouseValueChangedEventOption.OnNoEvent;
-            titleButtonWidthTrackBar.MouseMoveEventOption = KlxPiaoAPI.MouseValueChangedEventOption.OnNoEvent;
             titleButtonWidthTrackBar.Name = "titleButtonWidthTrackBar";
             titleButtonWidthTrackBar.Size = new Size(166, 21);
             titleButtonWidthTrackBar.TabIndex = 21;
@@ -745,7 +743,7 @@
             interactionStyleClass7.OverSize = new Size(150, 43);
             roundedButton2.InteractionStyle = interactionStyleClass7;
             roundedButton2.IsEnableAnimation = true;
-            roundedButton2.Location = new Point(330, 27);
+            roundedButton2.Location = new Point(373, 69);
             roundedButton2.Name = "roundedButton2";
             roundedButton2.Size = new Size(116, 43);
             animation4.Easing = new PointF[]
@@ -787,7 +785,7 @@
             interactionStyleClass8.OverSize = new Size(150, 43);
             roundedButton1.InteractionStyle = interactionStyleClass8;
             roundedButton1.IsEnableAnimation = true;
-            roundedButton1.Location = new Point(132, 27);
+            roundedButton1.Location = new Point(129, 69);
             roundedButton1.Name = "roundedButton1";
             roundedButton1.Size = new Size(116, 43);
             animation6.Easing = new PointF[]
@@ -869,7 +867,7 @@
         private KlxPiaoControls.RoundedButton githubButton;
         private TabPage controlsTabPage;
         private KlxPiaoControls.KlxPiaoLabel welcomeLabel;
-        private KlxPiaoControls.RoundedButton roundedButton1;
         private KlxPiaoControls.RoundedButton roundedButton2;
+        private KlxPiaoControls.RoundedButton roundedButton1;
     }
 }

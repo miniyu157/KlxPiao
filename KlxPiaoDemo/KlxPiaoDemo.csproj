@@ -20,6 +20,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="BezierCurve.cs">
+		  <SubType>Component</SubType>
+		</Compile>
 		<Compile Update="Properties\Resources.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
@@ -28,6 +31,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<EmbeddedResource Update="BezierCurve.resx">
+		  <SubType>Designer</SubType>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Properties\Resources.resx">
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>

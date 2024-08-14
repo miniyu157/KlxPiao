@@ -6,22 +6,36 @@
 
 > [(未完成的目标)](/TARGET.md)
 
+> Demo 程序重做未完成，截图截止到版本 1.2.00
+
+## 欢迎使用 KlxPiaoControls & KlxPiaoAPI !
+
+主要针对于原版强化进行创作，目前 KlxPiaoControl 仍在不断优化中。
+
+```KlxPiaoForm``` 实际上是继承自 ```Form``` 的WinForms 无边框窗体 (FormBorderStyle = None)，所以任何元素都是可以接管的
+
 ## 简介
+
 
 解决方案提供了两个项目
 - KlxPiaoControls:<br>
   提供原版增强的控件，创造这个控件库的初衷是为了能有一个原版增强的 Form<br>
 
-  **使用方法:** <br>
-  > 
-  > C#
-  > ```
-  > public partial class MainForm : KlxPiaoControls.KlxPiaoForm
-  > ```
-  > VB.NET (.Designer 文件中修改继承)
-  > ```
-  > Inherits KlxPiaoControls.KlxPiaoForm
-  > ```
+  **安装和使用:** <br>
+  - 安装
+	> ```
+	> Install-Package KlxPiaoControls
+	> ```
+  - 使用
+    > 
+    > C#
+    > ```
+    > public partial class MainForm : KlxPiaoControls.KlxPiaoForm
+    > ```
+    > VB.NET (.Designer 文件中修改继承)
+    > ```
+    > Inherits KlxPiaoControls.KlxPiaoForm
+    > ```
   
   ![home](screenshot/home.png)
 
@@ -39,6 +53,10 @@
 - KlxPiaoAPI:<br>
   创造 **KlxPiaoControl** 时产生的工具类库<br>
   提供了各种类型的扩展方法以及实用方法，例如数据处理、图片处理、布局计算、GDI+快速绘制圆角等
+   
+    > ```
+    > Install-Package KlxPiaoAPI
+    > ```
 
 ## 预览
 

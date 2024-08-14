@@ -1,5 +1,19 @@
 # 更新日志
 
+## 版本 1.2.0.3
+### KlxPiaoControls
+#### 移除组件
+- BezierCurve (转移至项目 ```KlxPiaoDemo```)
+- SlideSwitch (后续版本重做，已被转移到 ```\oldfiles```)
+- KlxPiaoTabControl (后续版本重做，已被转移到 ```\oldfiles```)
+- TabControlContainer (后续版本重做，已被转移到 ```\oldfiles```)
+#### 新增属性：
+- KlxPiaoMessageBox.SyncedFormProperties
+- KlxPiaoMessageBox.ButtonBackColor
+- KlxPiaoMessageBox.ButtonForeColor
+
+---
+
 ## 版本 1.2.0.2
 ### 解决方案
 #### 优化

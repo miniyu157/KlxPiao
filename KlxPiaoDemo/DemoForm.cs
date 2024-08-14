@@ -13,6 +13,17 @@ namespace KlxPiaoDemo
         {
             InitializeComponent();
 
+            roundedButton1.Click += (sender, e) =>
+            {
+                KlxPiaoMessageBox m = new(this)
+                {
+                    Title = "标题",
+                    SyncedFormProperties = ["BackColor", "TitleTextOffset"]
+                };
+                m.Show();
+
+            };
+
             welcomeLabel.BackgroundPaint += (sender, e) =>
             {
                 Color color1 = Color.FromArgb(255, 196, 225);

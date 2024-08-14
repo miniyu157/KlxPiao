@@ -1,4 +1,6 @@
-﻿namespace KlxPiaoControls
+﻿using KlxPiaoAPI;
+
+namespace KlxPiaoControls
 {
     /// <summary>
     /// 自定义消息框类，用于显示带有自定义按钮的对话框。
@@ -9,6 +11,7 @@
     /// <param name="baseForm">用于设置对话框样式和其他属性的基窗体。</param>
     public class KlxPiaoMessageBox(KlxPiaoForm baseForm)
     {
+        #region basic properties
         /// <summary>
         /// 获取或设置用于设置对话框主题和其他属性的基窗体。
         /// </summary>
@@ -28,7 +31,26 @@
         /// 获取或设置对话框的标题文本。
         /// </summary>
         public string Title { get; set; } = string.Empty;
+        #endregion
 
+        #region other properties
+        /// <summary>
+        /// 获取或设置是否使用 <see cref="Control.Invoke"/> 在基窗体上显示对话框。
+        /// </summary>
+        public bool UseInvoke { get; set; } = false;
+
+        /// <summary>
+        /// 获取或设置是否根据基窗体自动初始化一基本些默认值（例如标题框颜色）。
+        /// </summary>
+        public bool InitializeDefaultValue { get; set; } = true;
+
+        /// <summary>
+        /// 获取或设置要根据基窗体同步到对话框窗体的属性（使用反射）。
+        /// </summary>
+        public string[] SyncedFormProperties { get; set; } = [];
+        #endregion
+
+        #region basic appearance
         /// <summary>
         /// 获取或设置按钮的大小。
         /// </summary>
@@ -48,7 +70,9 @@
         /// 获取或设置对话框的启动位置。
         /// </summary>
         public FormStartPosition StartPosition { get; set; } = FormStartPosition.CenterParent;
+        #endregion
 
+        #region offset
         /// <summary>
         /// 获取或设置按钮底边距。
         /// </summary>
@@ -73,17 +97,9 @@
         /// 获取或设置正文的上边距。
         /// </summary>
         public int ContentTopMargin { get; set; } = 23;
+        #endregion
 
-        /// <summary>
-        /// 获取或设置是否使用 <see cref="Control.Invoke"/> 在基窗体上显示对话框。
-        /// </summary>
-        public bool UseInvoke { get; set; } = false;
-
-        /// <summary>
-        /// 获取或设置是否根据基窗体自动初始化一些默认值（例如标题框颜色）。
-        /// </summary>
-        public bool InitializeDefaultValue { get; set; } = true;
-
+        #region button properties
         /// <summary>
         /// 获取或设置按钮的交互样式。
         /// </summary>
@@ -95,6 +111,17 @@
         public Color? ButtonBorderColor { get; set; } = null;
 
         /// <summary>
+        /// 获取或设置按钮的背景颜色，若未设置，则使用基窗体的背景颜色。
+        /// </summary>
+        public Color? ButtonBackColor { get; set; } = null;
+
+        /// <summary>
+        /// 获取或设置按钮的前景颜色，若未设置，则使用基窗体的前景颜色。
+        /// </summary>
+        public Color? ButtonForeColor { get; set; } = null;
+        #endregion
+
+        /// <summary>
         /// 显示对话框并返回用户选择的结果。
         /// </summary>
         /// <returns>对话框的结果。</returns>
@@ -104,10 +131,13 @@
 
             DialogForm.Text = Title;
             DialogForm.StartPosition = StartPosition;
+
+            //初始化固定值
             DialogForm.TitleButtons = KlxPiaoForm.TitleButtonStyle.CloseOnly;
             DialogForm.Resizable = false;
             DialogForm.ShowInTaskbar = false;
 
+            //根据基窗体初始化基本默认值
             if (InitializeDefaultValue)
             {
                 DialogForm.Theme = BaseForm.Theme;
@@ -115,6 +145,12 @@
                 DialogForm.TitleBoxBackColor = BaseForm.TitleBoxBackColor;
                 DialogForm.TitleBoxForeColor = BaseForm.TitleBoxForeColor;
                 DialogForm.InteractionColorScale = BaseForm.InteractionColorScale;
+            }
+
+            //同步基窗体的属性
+            foreach (var property in SyncedFormProperties)
+            {
+                DialogForm.SetOrGetPropertyValue(property, BaseForm.SetOrGetPropertyValue(property));
             }
 
             KlxPiaoLabel contentLabel = new()
@@ -135,16 +171,14 @@
                 int length = buttonText.Length;
                 int buttonWidth = ButtonSize.Width;
                 int buttonHeight = ButtonSize.Height;
-
                 int buttonWidthRange = buttonWidth * length + ButtonSpacing * (length - 1);
-
                 SizeF textSize = graphics.MeasureString(Content, contentLabel.Font);
 
                 DialogForm.Width = Math.Max((int)textSize.Width, buttonWidthRange) + ContentOrButtonHorizontalMargin * 2;
                 DialogForm.Height = DialogForm.GetTitleBoxHeight() + (int)textSize.Height + buttonHeight + ButtonBottomMargin + ButtonTextSpacing;
 
                 contentLabel.Location = DialogForm.GetClientLocation();
-                contentLabel.Size = DialogForm.GetClientSize() + new Size(1, 1);
+                contentLabel.Size = DialogForm.GetClientSize() + new Size(1, 1); //更正偏移
 
                 for (int index = 0; index < length; index++)
                 {
@@ -155,8 +189,11 @@
                         BaseBackColor = DialogForm.BackColor
                     };
 
+                    //设置按钮的属性（若可用）
                     if (InteractionStyle != null) newButton.InteractionStyle = InteractionStyle;
                     if (ButtonBorderColor != null) newButton.BorderColor = ButtonBorderColor.Value;
+                    if (ButtonBackColor != null) newButton.BackColor = ButtonBackColor.Value;
+                    if (ButtonForeColor != null) newButton.ForeColor = ButtonForeColor.Value;
 
                     Point CalcButtonLocation(int length, int index) => new(
                             (buttonWidth + ButtonSpacing) * index + (contentLabel.Width - buttonWidthRange) / 2,

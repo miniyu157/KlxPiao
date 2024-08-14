@@ -1,4 +1,4 @@
-﻿namespace KlxPiaoControls
+﻿namespace KlxPiaoDemo
 {
     partial class BezierCurve
     {

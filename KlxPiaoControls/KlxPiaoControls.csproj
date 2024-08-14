@@ -5,23 +5,14 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyVersion>1.2.0.2</AssemblyVersion>
-    <FileVersion>1.2.0.2</FileVersion>
-    <Copyright>KlxPiao Copyright © 2024</Copyright>
+    <AssemblyVersion>1.2.0.3</AssemblyVersion>
+    <FileVersion>1.2.0.3</FileVersion>
+    <Copyright>Copyright © 2024 KlxPiao</Copyright>
     <Authors>$(AssemblyName)</Authors>
-	<Version>1.2.0.2</Version>
+	<Version>1.2.0.3</Version>
 	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="SlideSwitch.cs" />
-    <Compile Remove="SlideSwitch.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Remove="SlideSwitch.resx" />
-  </ItemGroup>
-
+	
   <ItemGroup>
     <ProjectReference Include="..\KlxPiaoAPI\KlxPiaoAPI.csproj" />
   </ItemGroup>
