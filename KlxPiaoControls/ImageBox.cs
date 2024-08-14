@@ -238,8 +238,6 @@ namespace KlxPiaoControls
             //draw image
             if (Image != null)
             {
-
-
                 Point drawPoint;
                 Size drawSize;
 
