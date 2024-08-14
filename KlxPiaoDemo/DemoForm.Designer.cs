@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             KlxPiaoAPI.Animation animation1 = new KlxPiaoAPI.Animation();
+            KlxPiaoControls.RoundedButton.DisabledStyleClass disabledStyleClass1 = new KlxPiaoControls.RoundedButton.DisabledStyleClass();
             KlxPiaoControls.RoundedButton.InteractionStyleClass interactionStyleClass1 = new KlxPiaoControls.RoundedButton.InteractionStyleClass();
             KlxPiaoAPI.Animation animation2 = new KlxPiaoAPI.Animation();
             KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass2 = new KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass();
@@ -36,6 +37,15 @@
             KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass4 = new KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass();
             KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass5 = new KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass();
             KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass6 = new KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass();
+            KlxPiaoAPI.Animation animation3 = new KlxPiaoAPI.Animation();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DemoForm));
+            KlxPiaoControls.RoundedButton.DisabledStyleClass disabledStyleClass2 = new KlxPiaoControls.RoundedButton.DisabledStyleClass();
+            KlxPiaoControls.RoundedButton.InteractionStyleClass interactionStyleClass7 = new KlxPiaoControls.RoundedButton.InteractionStyleClass();
+            KlxPiaoAPI.Animation animation4 = new KlxPiaoAPI.Animation();
+            KlxPiaoAPI.Animation animation5 = new KlxPiaoAPI.Animation();
+            KlxPiaoControls.RoundedButton.DisabledStyleClass disabledStyleClass3 = new KlxPiaoControls.RoundedButton.DisabledStyleClass();
+            KlxPiaoControls.RoundedButton.InteractionStyleClass interactionStyleClass8 = new KlxPiaoControls.RoundedButton.InteractionStyleClass();
+            KlxPiaoAPI.Animation animation6 = new KlxPiaoAPI.Animation();
             mainTabControl = new TabControl();
             homeTabPage = new TabPage();
             githubButton = new KlxPiaoControls.RoundedButton();
@@ -80,12 +90,15 @@
             dragModeComboBox = new ComboBox();
             enableResizeAnimationCheckBox = new CheckBox();
             controlsTabPage = new TabPage();
+            roundedButton2 = new KlxPiaoControls.RoundedButton();
+            roundedButton1 = new KlxPiaoControls.RoundedButton();
             mainTabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             propertiesTabPage.SuspendLayout();
             groupBox3.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
+            controlsTabPage.SuspendLayout();
             SuspendLayout();
             // 
             // mainTabControl
@@ -120,6 +133,10 @@
             animation1.FPS = 30;
             animation1.Time = 150;
             githubButton.ColorAnimationConfig = animation1;
+            disabledStyleClass1.BackColor = Color.Empty;
+            disabledStyleClass1.BorderColor = Color.Empty;
+            disabledStyleClass1.ForeColor = Color.Empty;
+            githubButton.DisabledStyle = disabledStyleClass1;
             githubButton.Image = Properties.Resources.github_128x128;
             githubButton.ImageAlign = ContentAlignment.MiddleLeft;
             githubButton.ImageOffset = new Point(6, 0);
@@ -693,12 +710,98 @@
             // controlsTabPage
             // 
             controlsTabPage.BackColor = Color.White;
+            controlsTabPage.Controls.Add(roundedButton2);
+            controlsTabPage.Controls.Add(roundedButton1);
             controlsTabPage.Location = new Point(4, 26);
             controlsTabPage.Name = "controlsTabPage";
             controlsTabPage.Padding = new Padding(3);
             controlsTabPage.Size = new Size(727, 403);
             controlsTabPage.TabIndex = 2;
             controlsTabPage.Text = "Controls";
+            // 
+            // roundedButton2
+            // 
+            roundedButton2.BackColor = Color.FromArgb(80, 80, 80);
+            animation3.Easing = new PointF[]
+    {
+    (PointF)resources.GetObject("animation3.Easing"),
+    (PointF)resources.GetObject("animation3.Easing1")
+    };
+            animation3.FPS = 30;
+            animation3.Time = 150;
+            roundedButton2.ColorAnimationConfig = animation3;
+            disabledStyleClass2.BackColor = Color.Empty;
+            disabledStyleClass2.BorderColor = Color.Empty;
+            disabledStyleClass2.ForeColor = Color.Empty;
+            roundedButton2.DisabledStyle = disabledStyleClass2;
+            roundedButton2.ForeColor = Color.White;
+            interactionStyleClass7.DownBackColor = Color.FromArgb(249, 236, 236);
+            interactionStyleClass7.DownBorderColor = Color.Empty;
+            interactionStyleClass7.DownForeColor = Color.Empty;
+            interactionStyleClass7.DownSize = new Size(0, 0);
+            interactionStyleClass7.OverBackColor = Color.White;
+            interactionStyleClass7.OverBorderColor = Color.Pink;
+            interactionStyleClass7.OverForeColor = Color.Black;
+            interactionStyleClass7.OverSize = new Size(150, 43);
+            roundedButton2.InteractionStyle = interactionStyleClass7;
+            roundedButton2.IsEnableAnimation = true;
+            roundedButton2.Location = new Point(330, 27);
+            roundedButton2.Name = "roundedButton2";
+            roundedButton2.Size = new Size(116, 43);
+            animation4.Easing = new PointF[]
+    {
+    (PointF)resources.GetObject("animation4.Easing"),
+    (PointF)resources.GetObject("animation4.Easing1"),
+    (PointF)resources.GetObject("animation4.Easing2"),
+    (PointF)resources.GetObject("animation4.Easing3")
+    };
+            animation4.FPS = 100;
+            animation4.Time = 300;
+            roundedButton2.SizeAnimationConfig = animation4;
+            roundedButton2.TabIndex = 1;
+            roundedButton2.Text = "RoundedButton";
+            // 
+            // roundedButton1
+            // 
+            roundedButton1.BackColor = Color.FromArgb(80, 80, 80);
+            animation5.Easing = new PointF[]
+    {
+    (PointF)resources.GetObject("animation5.Easing"),
+    (PointF)resources.GetObject("animation5.Easing1")
+    };
+            animation5.FPS = 30;
+            animation5.Time = 150;
+            roundedButton1.ColorAnimationConfig = animation5;
+            disabledStyleClass3.BackColor = Color.Blue;
+            disabledStyleClass3.BorderColor = Color.FromArgb(192, 192, 0);
+            disabledStyleClass3.ForeColor = Color.Red;
+            roundedButton1.DisabledStyle = disabledStyleClass3;
+            roundedButton1.ForeColor = Color.White;
+            interactionStyleClass8.DownBackColor = Color.White;
+            interactionStyleClass8.DownBorderColor = Color.Pink;
+            interactionStyleClass8.DownForeColor = Color.Black;
+            interactionStyleClass8.DownSize = new Size(0, 0);
+            interactionStyleClass8.OverBackColor = SystemColors.WindowFrame;
+            interactionStyleClass8.OverBorderColor = Color.Gainsboro;
+            interactionStyleClass8.OverForeColor = Color.White;
+            interactionStyleClass8.OverSize = new Size(150, 43);
+            roundedButton1.InteractionStyle = interactionStyleClass8;
+            roundedButton1.IsEnableAnimation = true;
+            roundedButton1.Location = new Point(132, 27);
+            roundedButton1.Name = "roundedButton1";
+            roundedButton1.Size = new Size(116, 43);
+            animation6.Easing = new PointF[]
+    {
+    (PointF)resources.GetObject("animation6.Easing"),
+    (PointF)resources.GetObject("animation6.Easing1"),
+    (PointF)resources.GetObject("animation6.Easing2"),
+    (PointF)resources.GetObject("animation6.Easing3")
+    };
+            animation6.FPS = 100;
+            animation6.Time = 300;
+            roundedButton1.SizeAnimationConfig = animation6;
+            roundedButton1.TabIndex = 0;
+            roundedButton1.Text = "RoundedButton";
             // 
             // DemoForm
             // 
@@ -717,6 +820,7 @@
             groupBox2.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            controlsTabPage.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -765,5 +869,7 @@
         private KlxPiaoControls.RoundedButton githubButton;
         private TabPage controlsTabPage;
         private KlxPiaoControls.KlxPiaoLabel welcomeLabel;
+        private KlxPiaoControls.RoundedButton roundedButton1;
+        private KlxPiaoControls.RoundedButton roundedButton2;
     }
 }

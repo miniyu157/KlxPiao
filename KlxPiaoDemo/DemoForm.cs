@@ -7,7 +7,7 @@ namespace KlxPiaoDemo
 {
     public partial class DemoForm : KlxPiaoForm
     {
-        private const string githubLink= "https://github.com/miniyu157/KlxPiao";
+        private const string githubLink = "https://github.com/miniyu157/KlxPiao";
 
         public DemoForm()
         {
@@ -47,7 +47,7 @@ namespace KlxPiaoDemo
             InitializeTrackBar(titleButtonWidthTrackBar,                      TitleButtonWidth,                      value => TitleButtonWidth = (int)value);
             InitializeTrackBar(titleTextMarginTrackBar,                       TitleTextMargin,                       value => TitleTextMargin = (int)value);
             InitializeTrackBar(titleButtonIconSizeTrackBar,                   TitleButtonIconSize.Width,             value => TitleButtonIconSize = new SizeF(value, value));
-            
+
             InitializeColorPanel(titleBoxBackColorPanel,                      TitleBoxBackColor,                     color =>
             {
                 SetThemeColor(color);

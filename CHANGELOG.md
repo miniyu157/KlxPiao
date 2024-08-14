@@ -1,5 +1,23 @@
 # 更新日志
 
+## 版本 1.2.0.2
+### 解决方案
+#### 优化
+- 部分代码优化
+
+### KlxPiaoControls
+#### 新增类：
+- RoundedButton.DisabledStyleClass
+- KlxPiaoMessageBox
+#### 新增属性：
+- RoundedButton.DisabledStyle
+#### 修复
+- RoundedButton 除 BackColor 以外的属性在鼠标快速移入移出时不恢复的问题
+#### 优化
+- RoundedButton 交互动画部分代码逻辑
+
+---
+
 ## 版本 1.2.0.1
 ### 解决方案
 #### 优化
