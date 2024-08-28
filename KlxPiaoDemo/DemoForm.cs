@@ -1,7 +1,6 @@
 ﻿using KlxPiaoAPI;
 using KlxPiaoControls;
 using System.Diagnostics;
-using System.Drawing.Drawing2D;
 
 namespace KlxPiaoDemo
 {
@@ -13,6 +12,7 @@ namespace KlxPiaoDemo
         {
             InitializeComponent();
 
+            //checkBox1.CheckedChanged += (sender, e) => roundedButton1.Enabled = checkBox1.Checked;
             roundedButton1.Click += (sender, e) =>
             {
                 KlxPiaoMessageBox m = new(this)
@@ -22,17 +22,18 @@ namespace KlxPiaoDemo
                 };
                 m.Show();
 
+                BackColor = Color.Green;
             };
 
-            welcomeLabel.BackgroundPaint += (sender, e) =>
-            {
-                Color color1 = Color.FromArgb(255, 196, 225);
-                Color color2 = Color.FromArgb(182, 234, 254);
-                Rectangle rect = welcomeLabel.GetClientRectangle();
+            //BackgroundPaint += (sender, e) =>
+            //{
+            //    Color color1 = Color.FromArgb(255, 196, 225);
+            //    Color color2 = Color.FromArgb(182, 234, 254);
+            //    Rectangle rect = new(0, 0, Width, Height);
 
-                using LinearGradientBrush brush = new(rect, color1, color2, LinearGradientMode.ForwardDiagonal);
-                e.Graphics.FillRectangle(brush, rect);
-            };
+            //    using LinearGradientBrush brush = new(rect, color1, color2, LinearGradientMode.ForwardDiagonal);
+            //    e.Graphics.FillRectangle(brush, rect);
+            //};
 
             githubButton.Click += (sender, e) => Process.Start(new ProcessStartInfo() { FileName = githubLink, UseShellExecute = true });
 
@@ -56,6 +57,7 @@ namespace KlxPiaoDemo
             InitializeTrackBar(interactionColorScaleTrackBar,                 InteractionColorScale,                 value => InteractionColorScale = value);
             InitializeTrackBar(titleBoxHeightTrackBar,                        TitleBoxHeight,                        value => TitleBoxHeight = (int)value);
             InitializeTrackBar(titleButtonWidthTrackBar,                      TitleButtonWidth,                      value => TitleButtonWidth = (int)value);
+            InitializeTrackBar(titleButtonHeightTrackBar,                     TitleButtonHeight,                     value => TitleButtonHeight = (int)value);
             InitializeTrackBar(titleTextMarginTrackBar,                       TitleTextMargin,                       value => TitleTextMargin = (int)value);
             InitializeTrackBar(titleButtonIconSizeTrackBar,                   TitleButtonIconSize.Width,             value => TitleButtonIconSize = new SizeF(value, value));
 
@@ -69,9 +71,10 @@ namespace KlxPiaoDemo
             InitializeColorPanel(backColorPanel,                              BackColor,                             color => BackColor = color);
 
             InitializePointBar(titleTextOffsetPointBar,                       TitleTextOffset,                       value => TitleTextOffset = value);
+            InitializePointBar(iconDrawOffsetPointBar,                        IconDrawOffset,                        value => IconDrawOffset = value);
         }
 
-        #region Initialize Method
+        #region Initialize
         private static void InitializeComboBox<TEnum>(ComboBox comboBox, TEnum selectedValue, Action<TEnum> onSelectionChanged) where TEnum : Enum
         {
             comboBox.Items.Clear();

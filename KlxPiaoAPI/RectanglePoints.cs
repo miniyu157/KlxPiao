@@ -5,7 +5,7 @@
     /// </summary>
     public static class RectanglePoints
     {
-        #region RectangleF顶点
+        #region RectangleF
         /// <summary>
         /// 获取矩形顶部中心点。
         /// </summary>
@@ -87,7 +87,7 @@
         }
         #endregion
 
-        #region Rectangle顶点
+        #region Rectangle
         /// <summary>
         /// 获取矩形顶部中心点。
         /// </summary>

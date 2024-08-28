@@ -175,7 +175,7 @@ namespace KlxPiaoControls
                 SizeF textSize = graphics.MeasureString(Content, contentLabel.Font);
 
                 DialogForm.Width = Math.Max((int)textSize.Width, buttonWidthRange) + ContentOrButtonHorizontalMargin * 2;
-                DialogForm.Height = DialogForm.GetTitleBoxHeight() + (int)textSize.Height + buttonHeight + ButtonBottomMargin + ButtonTextSpacing;
+                DialogForm.Height = DialogForm.TitleBoxHeight + (int)textSize.Height + buttonHeight + ButtonBottomMargin + ButtonTextSpacing;
 
                 contentLabel.Location = DialogForm.GetClientLocation();
                 contentLabel.Size = DialogForm.GetClientSize() + new Size(1, 1); //更正偏移

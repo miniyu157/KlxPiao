@@ -1,5 +1,64 @@
 # 更新日志
 
+## 版本 1.2.0.4
+### 解决方案
+#### 优化
+- 部分代码优化
+
+### KlxPiaoAPI
+#### 新增类
+- EasingTypeUtils (提供对于缓动效果处理的使用方法)
+- AnimationInfoConverter (将 ```AnimationInfo``` 类型的对象与其他类型之间进行转换的转换器)
+- ControlAnimator (控件过渡动画类，提供使用贝塞尔曲线或自定义缓动函数进行过渡动画的方法)
+#### 新增结构
+- AnimationInfo
+#### 新增接口
+- IInterpolatorStrategy (插值器策略接口，定义了插值计算的方法)
+#### 接口位置迁移
+- TypeChecker.ITypeCollection -> KlxPiaoAPI.ITypeCollection
+#### 新增方法
+- EasingTypeUtils.GetControlPoints
+- EasingTypeUtils.ParseEasing
+- EasingTypeUtils.IsValidControlPoint
+- EasingTypeUtils.ParseControlPoints
+#### 新增枚举类型
+- EasingType
+#### 移除类
+- AnimationConverter
+- ControlTransitionAnimator
+- RectangleExtensions
+#### 重命名类
+- ControlAndPropertyUtils -> ControlObjectUtils
+#### 移除结构
+- Animation
+#### 优化
+- TypeInterpolator 的工作方式
+
+### KlxPiaoControls
+#### 优化
+-  子控件的 BaseBackColor 自动跟随 ```KlxPiaoForm``` 和 ```KlxPiaoPanel``` 的背景色
+#### 重命名屬性
+- KlxPiaoForm.TitleBoxHeight -> TitleButtonHeight
+- KlxPiaoForm.TitleBoxDragThreshold -> TitleBoxHeight
+#### 移除方法
+- KlxPiaoForm
+#### 新增类
+- RoundedButton.AnimationConfigClass
+#### 移除属性
+- RoundedButton.SizeAnimationConfig
+- RoundedButton.ColorAnimationConfig
+- RoundedButton.InteractionStyleClass.OverSize
+- RoundedButton.InteractionStyleClass.DownSize
+#### 新增属性
+- RoundedButton.InteractionStyleClass.OverBorderSize
+- RoundedButton.InteractionStyleClass.DownBorderSize
+#### 修复
+- RoundedButton 启动后部分属性设置无效的问题
+#### 属性类型变更
+- RoundedButton.BorderSize ```int``` -> ```float```
+
+---
+
 ## 版本 1.2.0.3
 ### KlxPiaoControls
 #### 移除组件
@@ -7,7 +66,7 @@
 - SlideSwitch (后续版本重做，已被转移到 ```\oldfiles```)
 - KlxPiaoTabControl (后续版本重做，已被转移到 ```\oldfiles```)
 - TabControlContainer (后续版本重做，已被转移到 ```\oldfiles```)
-#### 新增属性：
+#### 新增属性
 - KlxPiaoMessageBox.SyncedFormProperties
 - KlxPiaoMessageBox.ButtonBackColor
 - KlxPiaoMessageBox.ButtonForeColor
@@ -20,10 +79,10 @@
 - 部分代码优化
 
 ### KlxPiaoControls
-#### 新增类：
+#### 新增类
 - RoundedButton.DisabledStyleClass
 - KlxPiaoMessageBox
-#### 新增属性：
+#### 新增属性
 - RoundedButton.DisabledStyle
 #### 修复
 - RoundedButton 除 BackColor 以外的属性在鼠标快速移入移出时不恢复的问题

@@ -202,7 +202,7 @@ namespace KlxPiaoControls
         private Color _borderColor;
         private Style _theme;
 
-        private int _titleBoxHeight;
+        private int _titleButtonHeight;
         private Color _titleBoxBackColor;
         private Color _titleBoxForeColor;
         private Font _titleFont;
@@ -219,7 +219,7 @@ namespace KlxPiaoControls
         private bool _enableMinimizeButton;
         private Color _titleButtonDisabledColor;
         private Point _iconDrawOffset;
-        private int _titleBoxDragThreshold;
+        private int _titleBoxHeight;
 
         private WindowPosition _dragMode;
         private WindowPosition _shortcutResizeMode;
@@ -305,6 +305,51 @@ namespace KlxPiaoControls
         }
         #endregion
 
+        [Browsable(false)]
+        public new FormBorderStyle FormBorderStyle
+        {
+            get => base.FormBorderStyle;
+            set => base.FormBorderStyle = value;
+        }
+
+        [Browsable(false)]
+        public new bool HelpButton
+        {
+            get => base.HelpButton;
+            set => base.HelpButton = value;
+        }
+
+        [Browsable(false)]
+        public new bool ControlBox
+        {
+            get => base.ControlBox;
+            set => base.ControlBox = value;
+        }
+
+        private class TitleButton : Button
+        {
+            public TitleButton()
+            {
+                FlatStyle = FlatStyle.Flat;
+                FlatAppearance.BorderSize = 0;
+                SetStyle(ControlStyles.Selectable, false);
+            }
+        }
+
+        //private Bitmap GetUserPaintBackGround()
+        //{
+        //    Bitmap bitmap = new(Width, Height);
+        //    using (Graphics graphics = Graphics.FromImage(bitmap))
+        //    {
+        //        OnBackgroundPaint(graphics);
+        //    }
+        //    return bitmap;
+        //}
+
+        private readonly TitleButton CloseButton = new();
+        private readonly TitleButton ResizeButton = new();
+        private readonly TitleButton MinimizeButton = new();
+
         private void InitializeTitleButton()
         {
             CloseButton.Name = "CloseButton";
@@ -336,6 +381,13 @@ namespace KlxPiaoControls
             MinimizeButton.Top = 1;
         }
 
+        //private ImageList _titleButtonIcon;
+        //public ImageList TitleButtonIcon
+        //{
+        //    get => _titleButtonIcon;
+        //    set => _titleButtonIcon = value;
+        //}
+
         private void TitleButtons_Paint(object? sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -352,6 +404,8 @@ namespace KlxPiaoControls
 
             if (sender is Control but)
             {
+                //but.BackgroundImage = GetUserPaintBackGround().Clone(new Rectangle(but.Location, but.Size), PixelFormat.Format32bppArgb);
+
                 switch (but.Name)
                 {
                     case "CloseButton":
@@ -429,7 +483,6 @@ namespace KlxPiaoControls
             _borderColor = SystemColors.WindowFrame;
             _theme = Style.Windows;
 
-            _titleBoxHeight = 31;
             _titleBoxBackColor = Color.FromArgb(224, 224, 224);
             _titleBoxForeColor = Color.Black;
             _titleFont = new Font("Microsoft YaHei UI", 9);
@@ -437,6 +490,8 @@ namespace KlxPiaoControls
             _titleTextMargin = 11;
             _titleTextOffset = Point.Empty;
             _titleButtons = TitleButtonStyle.ShowAll;
+            _titleBoxHeight = 31;
+            _titleButtonHeight = 31;
             _titleButtonWidth = 40;
             _titleButtonAlign = HorizontalEnds.Right;
             _titleButtonIconSize = new SizeF(10F, 10F);
@@ -447,7 +502,6 @@ namespace KlxPiaoControls
             _titleButtonDisabledColor = Color.DarkGray;
             _enableChangeInactiveTitleBoxForeColor = true;
             _iconDrawOffset = Point.Empty;
-            _titleBoxDragThreshold = 0;
 
             _dragMode = WindowPosition.TitleBarOnly;
             _shortcutResizeMode = WindowPosition.TitleBarOnly;
@@ -467,7 +521,7 @@ namespace KlxPiaoControls
             FormBorderStyle = FormBorderStyle.None;
             DoubleBuffered = true;
 
-            MinimumSize = new Size(TitleButtonWidth, TitleBoxHeight);
+            MinimumSize = new Size(TitleButtonWidth, TitleButtonHeight);
         }
 
         #region KlxPiaoForm Appearance
@@ -495,14 +549,14 @@ namespace KlxPiaoControls
 
         #region KlxPiaoForm Title Box
         /// <summary>
-        /// 获取或设置标题框的高度。
+        /// 获取或设置标题按钮的高度。
         /// </summary>
         [Category("KlxPiaoForm Title Box")]
-        [Description("标题框的高度")]
-        public int TitleBoxHeight
+        [Description("标题按钮的高度")]
+        public int TitleButtonHeight
         {
-            get => _titleBoxHeight;
-            set { _titleBoxHeight = value; Invalidate(); }
+            get => _titleButtonHeight;
+            set { _titleButtonHeight = value; RefreshTitleButtonProperties(); }
         }
         /// <summary>
         /// 获取或设置标题框的背景色。
@@ -675,14 +729,14 @@ namespace KlxPiaoControls
             set { _iconDrawOffset = value; InvalidateTitleBox(); }
         }
         /// <summary>
-        /// 获取或设置标题框拖动阈值。
+        /// 获取或设置标题框的高度。
         /// </summary>
         [Category("KlxPiaoForm Title Box")]
-        [Description("标题框拖动阈值，如果设置了该属性，将覆盖默认的判定大小")]
-        public int TitleBoxDragThreshold
+        [Description("标题框的高度")]
+        public int TitleBoxHeight
         {
-            get => _titleBoxDragThreshold;
-            set { _titleBoxDragThreshold = value; InvalidateTitleBox(); }
+            get => _titleBoxHeight;
+            set { InvalidateTitleBox(); _titleBoxHeight = value; }
         }
         #endregion
 
@@ -790,42 +844,6 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        [Browsable(false)]
-        public new FormBorderStyle FormBorderStyle
-        {
-            get => base.FormBorderStyle;
-            set => base.FormBorderStyle = value;
-        }
-
-        [Browsable(false)]
-        public new bool HelpButton
-        {
-            get => base.HelpButton;
-            set => base.HelpButton = value;
-        }
-
-        [Browsable(false)]
-        public new bool ControlBox
-        {
-            get => base.ControlBox;
-            set => base.ControlBox = value;
-        }
-
-        private bool isClosing = false;
-        private class TitleButton : Button
-        {
-            public TitleButton()
-            {
-                FlatStyle = FlatStyle.Flat;
-                FlatAppearance.BorderSize = 0;
-                SetStyle(ControlStyles.Selectable, false);
-            }
-        }
-
-        private readonly TitleButton CloseButton = new();
-        private readonly TitleButton ResizeButton = new();
-        private readonly TitleButton MinimizeButton = new();
-
         protected override void OnPaint(PaintEventArgs pe)
         {
             Rectangle thisRect = new(0, 0, Width, Height);
@@ -837,10 +855,11 @@ namespace KlxPiaoControls
             //draw titlebox
             using (Brush brush = new SolidBrush(TitleBoxBackColor))
             {
-                g.FillRectangle(brush, new Rectangle(thisRect.X, thisRect.Y, thisRect.Width, GetTitleBoxHeight()));
-
-                OnBackgroundPaint(g);
+                g.FillRectangle(brush, new Rectangle(thisRect.X, thisRect.Y, thisRect.Width, TitleBoxHeight));
             }
+
+            //user drawing
+            OnBackgroundPaint(g);
 
             //draw border
             if (!(AutoHideWindowBorder && WindowState == FormWindowState.Maximized) && !EnableShadow)
@@ -1110,6 +1129,21 @@ namespace KlxPiaoControls
             }
         }
 
+        protected override void OnBackColorChanged(EventArgs e)
+        {
+            this.ForEachControl<Control>(control =>
+            {
+                var property = control.GetType().GetProperty("BaseBackColor");
+
+                if (property != null && property.CanWrite)
+                {
+                    property.SetValue(control, BackColor);
+                }
+            });
+
+            base.OnBackColorChanged(e);
+        }
+
         protected override void OnTextChanged(EventArgs e)
         {
             InvalidateTitleBox();
@@ -1133,7 +1167,7 @@ namespace KlxPiaoControls
                 {
                     ResizeButton_Click(ResizeButton, e);
                 }
-                else if (ShortcutResizeMode == WindowPosition.TitleBarOnly && mouseDownPos.Y <= GetTitleBoxHeight())
+                else if (ShortcutResizeMode == WindowPosition.TitleBarOnly && mouseDownPos.Y <= TitleBoxHeight)
                 {
                     ResizeButton_Click(ResizeButton, e);
                 }
@@ -1207,7 +1241,7 @@ namespace KlxPiaoControls
                 && WindowState != FormWindowState.Maximized
                 && (DragMode == WindowPosition.EntireWindow ||
                    (DragMode == WindowPosition.TitleBarOnly
-                   && mouseDownPos.Y <= GetTitleBoxHeight())))
+                   && mouseDownPos.Y <= TitleBoxHeight)))
             {
                 Location = new Point(Location.X + e.X - mouseDownPos.X, Location.Y + e.Y - mouseDownPos.Y);
             }
@@ -1382,6 +1416,8 @@ namespace KlxPiaoControls
         }
         #endregion
 
+        private bool isClosing = false;
+
         #region public method
         /// <summary>
         /// 刷新标题按钮的属性。
@@ -1392,7 +1428,7 @@ namespace KlxPiaoControls
 
             foreach (TitleButton b in buttons)
             {
-                b.Size = new Size(TitleButtonWidth, TitleBoxHeight - 1);
+                b.Size = new Size(TitleButtonWidth, TitleButtonHeight - 1);
                 b.BackColor = TitleBoxBackColor;
                 b.FlatAppearance.MouseOverBackColor = TitleBoxBackColor.AdjustBrightness(InteractionColorScale);
                 b.FlatAppearance.MouseDownBackColor = b.FlatAppearance.MouseOverBackColor.AdjustBrightness(InteractionColorScale);
@@ -1509,7 +1545,7 @@ namespace KlxPiaoControls
         /// </summary>
         public void InvalidateTitleBox()
         {
-            Invalidate(new Rectangle(0, 0, Width, GetTitleBoxHeight()));
+            Invalidate(new Rectangle(0, 0, Width, TitleBoxHeight));
         }
 
         /// <summary>
@@ -1527,7 +1563,7 @@ namespace KlxPiaoControls
         /// <returns>用户区域的大小。</returns>
         public Size GetClientSize()
         {
-            return new Size(Width - 3, Height - (GetTitleBoxHeight()) - 2);
+            return new Size(Width - 3, Height - TitleBoxHeight - 2);
         }
 
         /// <summary>
@@ -1536,7 +1572,7 @@ namespace KlxPiaoControls
         /// <returns>用户区域的大小。</returns>
         public Point GetClientLocation()
         {
-            return new Point(1, GetTitleBoxHeight());
+            return new Point(1, TitleBoxHeight);
         }
 
         /// <summary>
@@ -1545,14 +1581,8 @@ namespace KlxPiaoControls
         /// <returns>标题框的矩形。</returns>
         public Rectangle GetTitleBoxRectangle()
         {
-            return new Rectangle(0, 0, Width, GetTitleBoxHeight());
+            return new Rectangle(0, 0, Width, TitleBoxHeight);
         }
-
-        /// <summary>
-        /// 获取实际标题框高度（根据 TitleBoxDragThreshold 计算）。
-        /// </summary>
-        /// <returns></returns>
-        public int GetTitleBoxHeight() => TitleBoxDragThreshold == 0 ? TitleBoxHeight : TitleBoxDragThreshold;
 
         /// <summary>
         /// 将指定的字体应用与窗体的每个控件，不改变字体大小（可选）

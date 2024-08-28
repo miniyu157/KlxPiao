@@ -55,13 +55,7 @@ namespace KlxPiaoAPI
             TopLeft = TopRight = BottomRight = BottomLeft = all;
         }
 
-        #region 重载运算符
-        /// <summary>
-        /// 重载 + 运算符，实现两个 <see cref="CornerRadius"/> 对象相加。
-        /// </summary>
-        /// <param name="cr1">第一个 <see cref="CornerRadius"/> 对象。</param>
-        /// <param name="cr2">第二个 <see cref="CornerRadius"/> 对象。</param>
-        /// <returns>相加后的 <see cref="CornerRadius"/> 对象。</returns>
+        #region operator
         public static CornerRadius operator +(CornerRadius cr1, CornerRadius cr2)
         {
             return new CornerRadius(
@@ -72,12 +66,6 @@ namespace KlxPiaoAPI
             );
         }
 
-        /// <summary>
-        /// 重载 * 运算符，实现 <see cref="CornerRadius"/> 对象与 <see cref="int"/> 相乘。
-        /// </summary>
-        /// <param name="cr"><see cref="CornerRadius"/> 对象。</param>
-        /// <param name="multiplier">乘数。</param>
-        /// <returns>相乘后的 <see cref="CornerRadius"/> 对象。</returns>
         public static CornerRadius operator *(CornerRadius cr, float multiplier)
         {
             return new CornerRadius(
@@ -88,12 +76,6 @@ namespace KlxPiaoAPI
             );
         }
 
-        /// <summary>
-        /// 重载 / 运算符，实现 <see cref="CornerRadius"/> 对象与 <see cref="int"/> 相除。
-        /// </summary>
-        /// <param name="cr"><see cref="CornerRadius"/> 对象。</param>
-        /// <param name="multiplier">除数。</param>
-        /// <returns>相除后的 <see cref="CornerRadius"/> 对象。</returns>
         public static CornerRadius operator /(CornerRadius cr, float multiplier)
         {
             return new CornerRadius(
@@ -104,12 +86,6 @@ namespace KlxPiaoAPI
             );
         }
 
-        /// <summary>
-        /// 重载 == 运算符，比较两个 <see cref="CornerRadius"/> 对象是否相等。
-        /// </summary>
-        /// <param name="cr1">第一个 <see cref="CornerRadius"/> 对象。</param>
-        /// <param name="cr2">第二个 <see cref="CornerRadius"/> 对象。</param>
-        /// <returns>如果两个对象相等，则返回 true；否则返回 false。</returns>
         public static bool operator ==(CornerRadius cr1, CornerRadius cr2)
         {
             return cr1.TopLeft == cr2.TopLeft &&
@@ -118,12 +94,6 @@ namespace KlxPiaoAPI
                    cr1.BottomLeft == cr2.BottomLeft;
         }
 
-        /// <summary>
-        /// 重载 != 运算符，比较两个 <see cref="CornerRadius"/> 对象是否不相等。
-        /// </summary>
-        /// <param name="cr1">第一个 <see cref="CornerRadius"/> 对象。</param>
-        /// <param name="cr2">第二个 <see cref="CornerRadius"/> 对象。</param>
-        /// <returns>如果两个对象不相等，则返回 true；否则返回 false。</returns>
         public static bool operator !=(CornerRadius cr1, CornerRadius cr2)
         {
             return !(cr1 == cr2);

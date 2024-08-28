@@ -121,6 +121,5 @@ namespace KlxPiaoAPI
         /// <param name="item2">此参数由事件类型定义，通常是更改的对象。</param>
         [LibraryImport("shell32.dll")]
         private static partial void SHChangeNotify(int eventId, int flags, IntPtr item1, IntPtr item2);
-
     }
 }

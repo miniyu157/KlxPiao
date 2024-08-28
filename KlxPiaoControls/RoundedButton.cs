@@ -26,17 +26,15 @@ namespace KlxPiaoControls
         private ContentAlignment _textAlign;
 
         //Border
-        private int _borderSize;
+        private float _borderSize;
         private Color _borderColor;
         private CornerRadius _borderCornerRadius;
         private Color _baseBackColor;
-        private Pen _borderPen;
 
         //Interaction
         private DisabledStyleClass _disabledStyle = new();
         private InteractionStyleClass _interactionStyle = new();
-        private Animation _colorAnimationConfig;
-        private Animation _sizeAnimationConfig;
+        private AnimationConfigClass _animationConfig = new();
         private MouseClickModeEnum _mouseClickMode;
         #endregion
 
@@ -81,29 +79,37 @@ namespace KlxPiaoControls
             _textOffset = Point.Empty;
             _textAlign = ContentAlignment.MiddleCenter;
 
-            _borderSize = 1;
-            _borderColor = Color.Gainsboro;
-            _borderPen = new Pen(BorderColor, BorderSize);
             _borderCornerRadius = new CornerRadius(10);
             _baseBackColor = Color.White;
 
             _mouseClickMode = MouseClickModeEnum.LeftOnly;
             _interactionStyle.OverBackColor = Color.FromArgb(245, 245, 245);
             _interactionStyle.DownBackColor = Color.FromArgb(235, 235, 235);
-            _colorAnimationConfig = new Animation(150, 30, "0, 0, 1, 1");
-            _sizeAnimationConfig = new Animation(300, 100, "0.58, 1, 1, 1");
+            _animationConfig.ColorAnimation = new AnimationInfo(150, 30, EasingType.Linear);
+            _animationConfig.BorderColorAnimation = new AnimationInfo(150, 30, EasingType.Linear);
+            _animationConfig.BorderSizeAnimation = new AnimationInfo(100, 30, EasingType.Linear);
 
-            Size = new Size(116, 43);
             DoubleBuffered = true;
+
+            //animation properties
+            BackColor = Color.White;
+            ForeColor = Color.Black;
+            BorderColor = Color.Gainsboro;
+            Size = new Size(116, 43);
+            BorderSize = 1;
 
             SetStyle(ControlStyles.Selectable, true);
         }
 
-        [DefaultValue(typeof(Size), "116,43")]
+        [DefaultValue(typeof(Size), "116, 43")]
         public new Size Size
         {
             get => base.Size;
-            set => base.Size = value;
+            set
+            {
+                base.Size = value;
+                Invalidate();
+            }
         }
 
         #region RoundedButton Basic Properties
@@ -220,47 +226,6 @@ namespace KlxPiaoControls
 
         #region RoundedButton Border
         /// <summary>
-        /// 获取或设置边框的画笔。
-        /// </summary>
-        [Browsable(false)]
-        public Pen BorderPen
-        {
-            get => _borderPen;
-            set => _borderPen = value;
-        }
-        /// <summary>
-        /// 边框的大小。
-        /// </summary>
-        [Category("RoundedButton Border")]
-        [Description("边框的大小，为0时隐藏边框")]
-        [DefaultValue(1)]
-        public int BorderSize
-        {
-            get => _borderSize;
-            set
-            {
-                _borderSize = value;
-                _borderPen.Width = value;
-                Invalidate();
-            }
-        }
-        /// <summary>
-        /// 边框的颜色。
-        /// </summary>
-        [Category("RoundedButton Border")]
-        [Description("边框的颜色")]
-        [DefaultValue(typeof(Color), "Gainsboro")]
-        public Color BorderColor
-        {
-            get => _borderColor;
-            set
-            {
-                _borderColor = value;
-                _borderPen.Color = value;
-                Invalidate();
-            }
-        }
-        /// <summary>
         /// 圆角的大小，以 <see cref="CornerRadius"/> 结构体表示。 
         /// </summary>
         [Category("RoundedButton Border")]
@@ -289,7 +254,7 @@ namespace KlxPiaoControls
         /// 定义 <see cref="RoundedButton"/> 禁用时的样式，以 <see cref="DisabledStyleClass"/> 类表示。
         /// </summary>
         [Category("RoundedButton Interaction")]
-        [Description("禁用时的样式")]
+        [Description("定义按钮禁用时的样式")]
         [DefaultValue(typeof(Point), "0,0")]
         public DisabledStyleClass DisabledStyle
         {
@@ -307,26 +272,14 @@ namespace KlxPiaoControls
             set => _interactionStyle = value;
         }
         /// <summary>
-        /// 定义鼠标交互时按钮的颜色过渡动画配置，以 <see cref="Animation"/> 结构体表示。
+        /// 获取或设置按钮的动画配置。
         /// </summary>
         [Category("RoundedButton Interaction")]
-        [Description("定义鼠标交互时按钮的颜色过渡动画配置")]
-        [DefaultValue(typeof(Animation), "150, 30, [0 0;0 0;1 1;1 1]")]
-        public Animation ColorAnimationConfig
+        [Description("定义按钮的动画配置")]
+        public AnimationConfigClass AnimationConfig
         {
-            get => _colorAnimationConfig;
-            set => _colorAnimationConfig = value;
-        }
-        /// <summary>
-        /// 定义鼠标交互时按钮的大小过渡动画配置，以 <see cref="Animation"/> 结构体表示。
-        /// </summary>
-        [Category("RoundedButton Interaction")]
-        [Description("定义鼠标交互时按钮的大小过渡动画配置")]
-        [DefaultValue(typeof(Animation), "300, 100, [0 0;0.58 1;1 1;1 1]")]
-        public Animation SizeAnimationConfig
-        {
-            get => _sizeAnimationConfig;
-            set => _sizeAnimationConfig = value;
+            get => _animationConfig;
+            set => _animationConfig = value;
         }
         /// <summary>
         /// 定义鼠标响应鼠标单击模式，以 <see cref="MouseClickModeEnum"/> 枚举类型表示。
@@ -340,6 +293,36 @@ namespace KlxPiaoControls
             set => _mouseClickMode = value;
         }
         #endregion
+
+        /// <summary>
+        /// 定义 <see cref="RoundedButton"/> 的动画配置。
+        /// </summary>
+        [TypeConverter(typeof(ExpandableObjectConverter))]
+        public class AnimationConfigClass
+        {
+            /// <summary>
+            /// 定义鼠标交互时按钮的颜色过渡动画配置，以 <see cref="AnimationInfo"/> 结构体表示。
+            /// </summary>
+            [Description("定义鼠标交互时按钮的颜色过渡动画配置")]
+            public AnimationInfo ColorAnimation { get; set; }
+
+            /// <summary>
+            /// 定义鼠标交互时按钮的边框颜色过渡动画配置，以 <see cref="AnimationInfo"/> 结构体表示。
+            /// </summary>
+            [Description("定义鼠标交互时按钮的边框颜色过渡动画配置")]
+            public AnimationInfo BorderColorAnimation { get; set; }
+
+            /// <summary>
+            /// 定义鼠标交互时按钮的边框大小过渡动画配置，以 <see cref="AnimationInfo"/> 结构体表示。
+            /// </summary>
+            [Description("定义鼠标交互时按钮的边框大小过渡动画配置")]
+            public AnimationInfo BorderSizeAnimation { get; set; }
+
+            public override string ToString()
+            {
+                return "(expandable)";
+            }
+        }
 
         /// <summary>
         /// 定义 <see cref="RoundedButton"/> 的交互样式。
@@ -384,20 +367,20 @@ namespace KlxPiaoControls
             public Color DownForeColor { get; set; }
 
             /// <summary>
-            /// 获取或设置鼠标移入时组件的大小。
+            /// 获取或设置鼠标移入时组件的边框大小。
             /// </summary>
-            [Description("鼠标移入时组件的大小。")]
-            public Size OverSize { get; set; }
+            [Description("鼠标移入时组件的边框大小。")]
+            public float OverBorderSize { get; set; }
 
             /// <summary>
-            /// 获取或设置鼠标按下时组件的大小。
+            /// 获取或设置鼠标按下时组件的边框大小。
             /// </summary>
-            [Description("鼠标按下时组件的大小。")]
-            public Size DownSize { get; set; }
+            [Description("鼠标按下时组件的边框大小。")]
+            public float DownBorderSize { get; set; }
 
             public override string ToString()
             {
-                return "";
+                return "(expandable)";
             }
         }
 
@@ -424,7 +407,7 @@ namespace KlxPiaoControls
 
             public override string ToString()
             {
-                return "";
+                return "(expandable)";
             }
         }
 
@@ -435,7 +418,7 @@ namespace KlxPiaoControls
             {
                 using Graphics g = Graphics.FromImage(bitmap);
                 SizeF textSize = g.MeasureString(Text, Font);
-                g.Clear(BackColor);
+                g.Clear(DrawBackColor);
 
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.PixelOffsetMode = PixelOffsetMode.HighQuality;
@@ -460,8 +443,7 @@ namespace KlxPiaoControls
                             break;
 
                         case PictureBoxSizeMode.AutoSize:
-                            Width = Image.Width;
-                            Height = Image.Height;
+                            Size = new Size(Image.Width, Image.Height);
 
                             drawPoint = new Point(0, 0);
                             drawSize = Image.Size;
@@ -510,37 +492,18 @@ namespace KlxPiaoControls
                 }
 
                 //draw text
-                g.DrawString(Text, Font, new SolidBrush(ForeColor), LayoutUtilities.CalculateAlignedPosition(thisRect, textSize, TextAlign, TextOffset));
+                using SolidBrush textBrush = new(DrawForeColor);
+                g.DrawString(Text, Font, textBrush, LayoutUtilities.CalculateAlignedPosition(thisRect, textSize, TextAlign, TextOffset));
 
                 //draw border
-                g.DrawRounded(thisRect, BorderCornerRadius, BaseBackColor, BorderPen);
+                using Pen borderPen = new(DrawBorderColor, DrawBorderSize);
+                g.DrawRounded(thisRect, BorderCornerRadius, BaseBackColor, borderPen);
             }
 
             pe.Graphics.DrawImage(bitmap, 0, 0);
 
-            //若 Enabled 初始为 false 并且未初始化默认值，则设置原始属性值（仅一次）
-            if (!Enabled && !initialisationed)
-            {
-                static void HandleDisableColor(Color disableColor, Color getColor, ref Color? originalColor, Action<Color> setColor)
-                {
-                    if (disableColor != Color.Empty)
-                    {
-                        originalColor = getColor;
-                        setColor(disableColor);
-                    }
-                }
-
-                HandleDisableColor(DisabledStyle.BackColor, BackColor, ref originalBackColor, color => BackColor = color);
-                HandleDisableColor(DisabledStyle.ForeColor, ForeColor, ref originalForeColor, color => ForeColor = color);
-                HandleDisableColor(DisabledStyle.BorderColor, BorderColor, ref originalBorderColor, color => BorderColor = color);
-            }
-            initialisationed = true;
-
             base.OnPaint(pe);
         }
-
-        //disable style 初始化标识符
-        private bool initialisationed = false;
 
         #region events
         /// <summary>
@@ -569,31 +532,231 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        #region InteractionStyle
-        private enum SetAndReset
+        #region animation properties
+        private Color _drawBackColor;
+        private Color _drawForeColor;
+        private Color _drawBorderColor;
+        private float _drawBorderSize;
+
+        /// <summary>
+        /// 当前呈现的背景色。
+        /// </summary>
+        [Browsable(false)]
+        public Color DrawBackColor
         {
-            Set,
-            Reset
+            get => _drawBackColor;
+            set { _drawBackColor = value; Invalidate(); }
+        }
+        public new Color BackColor
+        {
+            get => base.BackColor;
+            set
+            {
+                base.BackColor = value;
+                DrawBackColor = value;
+            }
         }
 
-        private readonly object?[] oldOverProperties = new object?[4];
-        private readonly object?[] oldDownProperties = new object?[4];
-        private readonly string[] baseProperties = ["BackColor", "BorderColor", "ForeColor", "Size"];
-        private readonly string[] overProperties = ["OverBackColor", "OverBorderColor", "OverForeColor", "OverSize"];
-        private readonly string[] downProperties = ["DownBackColor", "DownBorderColor", "DownForeColor", "DownSize"];
+        /// <summary>
+        /// 当前呈现的前景色。
+        /// </summary>
+        [Browsable(false)]
+        public Color DrawForeColor
+        {
+            get => _drawForeColor;
+            set { _drawForeColor = value; Invalidate(); }
+        }
+        public new Color ForeColor
+        {
+            get => base.ForeColor;
+            set
+            {
+                base.ForeColor = value;
+                DrawForeColor = value;
+            }
+        }
 
-        private CancellationTokenSource cts = new();
+        /// <summary>
+        /// 当前呈现的边框颜色。
+        /// </summary>
+        [Browsable(false)]
+        public Color DrawBorderColor
+        {
+            get => _drawBorderColor;
+            set { _drawBorderColor = value; Invalidate(); }
+        }
+        /// <summary>
+        /// 边框的颜色。
+        /// </summary>
+        [Category("RoundedButton Border")]
+        [Description("边框的颜色")]
+        [DefaultValue(typeof(Color), "Gainsboro")]
+        public Color BorderColor
+        {
+            get => _borderColor;
+            set
+            {
+                _borderColor = value;
+                DrawBorderColor = value;
+            }
+        }
+
+        /// <summary>
+        /// 当前呈现的边框大小。
+        /// </summary>
+        [Browsable(false)]
+        public float DrawBorderSize
+        {
+            get => _drawBorderSize;
+            set { _drawBorderSize = value; Invalidate(); }
+        }
+        /// <summary>
+        /// 边框的大小。
+        /// </summary>
+        [Category("RoundedButton Border")]
+        [Description("边框的大小，为 0 时隐藏边框")]
+        [DefaultValue(1)]
+        public float BorderSize
+        {
+            get => _borderSize;
+            set
+            {
+                _borderSize = value;
+                DrawBorderSize = value;
+            }
+        }
+        #endregion
+
+        #region OnMouseEnter OnMouseLeave OnMouseDown OnMouseUp
+        private readonly CancellationTokenSource backColorCTS = new();
+        private readonly CancellationTokenSource foreColorCTS = new();
+        private readonly CancellationTokenSource borderColorCTS = new();
+        private readonly CancellationTokenSource borderSizeCTS = new();
+
+        private void SetColorAnimation(Color newColor, Color startColor, Action<Color> setColor, AnimationInfo animationConfig, CancellationTokenSource cts)
+        {
+            if (newColor != Color.Empty)
+            {
+                if (IsEnableAnimation)
+                {
+                    cts.Cancel();
+                    cts = new();
+                    _ = ControlAnimator.BezierTransition(startColor, newColor, animationConfig, setColor, true, cts.Token);
+                }
+                else
+                {
+                    setColor(newColor);
+                }
+            }
+        }
+
+        private void SetFloatAnimation(float newValue, float startValue, Action<float> setValue, AnimationInfo animationConfig, CancellationTokenSource cts)
+        {
+            if (newValue != 0)
+            {
+                if (IsEnableAnimation)
+                {
+                    cts.Cancel();
+                    cts = new();
+                    _ = ControlAnimator.BezierTransition(startValue, newValue, animationConfig, setValue, true, cts.Token);
+                }
+                else
+                {
+                    setValue(newValue);
+                }
+            }
+        }
+
+        private void ResetColorAnimation(Color newColor, Color startColor, Action<Color> setColor, AnimationInfo animationConfig, CancellationTokenSource cts)
+        {
+            if (IsEnableAnimation)
+            {
+                cts.Cancel();
+                cts = new();
+                _ = ControlAnimator.BezierTransition(startColor, newColor, animationConfig, setColor, true, cts.Token);
+            }
+            else
+            {
+                setColor(newColor);
+            }
+        }
+
+        private void ResetFloatAnimation(float newValue, float startValue, Action<float> setValue, AnimationInfo animationConfig, CancellationTokenSource cts)
+        {
+            if (IsEnableAnimation)
+            {
+                cts.Cancel();
+                cts = new();
+                _ = ControlAnimator.BezierTransition(startValue, newValue, animationConfig, setValue, true, cts.Token);
+            }
+            else
+            {
+                setValue(newValue);
+            }
+        }
 
         protected override void OnMouseEnter(EventArgs e)
         {
-            UpdateProperties(overProperties, oldOverProperties, SetAndReset.Set);
+            SetColorAnimation(
+                InteractionStyle.OverBackColor,
+                DrawBackColor,
+                value => DrawBackColor = value,
+                AnimationConfig.ColorAnimation,
+                backColorCTS);
+
+            SetColorAnimation(
+                InteractionStyle.OverForeColor,
+                DrawForeColor,
+                value => DrawForeColor = value,
+                AnimationConfig.ColorAnimation,
+                foreColorCTS);
+
+            SetColorAnimation(
+                InteractionStyle.OverBorderColor,
+                DrawBorderColor,
+                value => DrawBorderColor = value,
+                AnimationConfig.BorderColorAnimation,
+                borderColorCTS);
+
+            SetFloatAnimation(
+                InteractionStyle.OverBorderSize,
+                DrawBorderSize,
+                value => DrawBorderSize = value,
+                AnimationConfig.BorderSizeAnimation,
+                borderSizeCTS);
 
             base.OnMouseEnter(e);
         }
 
         protected override void OnMouseLeave(EventArgs e)
         {
-            UpdateProperties(overProperties, oldOverProperties, SetAndReset.Reset);
+            ResetColorAnimation(
+                BackColor,
+                DrawBackColor,
+                value => DrawBackColor = value,
+                AnimationConfig.ColorAnimation,
+                backColorCTS);
+
+            ResetColorAnimation(
+                ForeColor,
+                DrawForeColor,
+                value => DrawForeColor = value,
+                AnimationConfig.ColorAnimation,
+                foreColorCTS);
+
+            ResetColorAnimation(
+                BorderColor,
+                DrawBorderColor,
+                value => DrawBorderColor = value,
+                AnimationConfig.BorderColorAnimation,
+                borderColorCTS);
+
+            ResetFloatAnimation(
+                BorderSize,
+                DrawBorderSize,
+                value => DrawBorderSize = value,
+                AnimationConfig.BorderSizeAnimation,
+                borderSizeCTS);
 
             base.OnMouseLeave(e);
         }
@@ -611,7 +774,33 @@ namespace KlxPiaoControls
             };
             if (mode)
             {
-                UpdateProperties(downProperties, oldDownProperties, SetAndReset.Set);
+                SetColorAnimation(
+                    InteractionStyle.DownBackColor,
+                    DrawBackColor,
+                    value => DrawBackColor = value,
+                    AnimationConfig.ColorAnimation,
+                    backColorCTS);
+
+                SetColorAnimation(
+                    InteractionStyle.DownForeColor,
+                    DrawForeColor,
+                    value => DrawForeColor = value,
+                    AnimationConfig.ColorAnimation,
+                    foreColorCTS);
+
+                SetColorAnimation(
+                    InteractionStyle.DownBorderColor,
+                    DrawBorderColor,
+                    value => DrawBorderColor = value,
+                    AnimationConfig.BorderColorAnimation,
+                    borderColorCTS);
+
+                SetFloatAnimation(
+                    InteractionStyle.DownBorderSize,
+                    DrawBorderSize,
+                    value => DrawBorderSize = value,
+                    AnimationConfig.BorderSizeAnimation,
+                    borderSizeCTS);
             }
 
             base.OnMouseDown(e);
@@ -630,7 +819,33 @@ namespace KlxPiaoControls
             };
             if (mode)
             {
-                UpdateProperties(downProperties, oldDownProperties, SetAndReset.Reset);
+                ResetColorAnimation(
+                    InteractionStyle.OverBackColor == Color.Empty ? BackColor : InteractionStyle.OverBackColor,
+                    DrawBackColor,
+                    value => DrawBackColor = value,
+                    AnimationConfig.ColorAnimation,
+                    backColorCTS);
+
+                ResetColorAnimation(
+                    InteractionStyle.OverForeColor == Color.Empty ? ForeColor : InteractionStyle.OverForeColor,
+                    DrawForeColor,
+                    value => DrawForeColor = value,
+                    AnimationConfig.ColorAnimation,
+                    foreColorCTS);
+
+                ResetColorAnimation(
+                    InteractionStyle.OverBorderColor == Color.Empty ? BorderColor : InteractionStyle.OverBorderColor,
+                    DrawBorderColor,
+                    value => DrawBorderColor = value,
+                    AnimationConfig.BorderColorAnimation,
+                    borderColorCTS);
+
+                ResetFloatAnimation(
+                    InteractionStyle.OverBorderSize == 0 ? BorderSize : InteractionStyle.OverBorderSize,
+                    DrawBorderSize,
+                    value => DrawBorderSize = value,
+                    AnimationConfig.BorderSizeAnimation,
+                    borderSizeCTS);
 
                 //使用重写的 Click 事件，防止用户弹出对话框时，事件触发顺序错误
                 OnClick(EventArgs.Empty);
@@ -639,85 +854,26 @@ namespace KlxPiaoControls
 
             base.OnMouseUp(e);
         }
-
-        private void UpdateProperties(string[] newProperties, object?[] oldProperties, SetAndReset action)
-        {
-            cts.Cancel();
-            cts = new();
-
-            for (int i = 0; i < baseProperties.Length; i++)
-            {
-                string propertyName = baseProperties[i];
-                var newProperty = InteractionStyle.SetOrGetPropertyValue(newProperties[i]);
-
-                if ((newProperty is Color color && color != Color.Empty) ||
-                    (newProperty is Size size && size != Size.Empty))
-                {
-                    switch (action)
-                    {
-                        case SetAndReset.Set:
-                            //只存储一次
-                            if (oldProperties[i] == null)
-                            {
-                                oldProperties[i] = this.SetOrGetPropertyValue(propertyName);
-                            }
-                            SetValue(newProperty);
-                            break;
-
-                        case SetAndReset.Reset:
-                            SetValue(oldProperties[i]);
-                            break;
-                    }
-
-                    void SetValue(object? newValue)
-                    {
-                        if (IsEnableAnimation)
-                        {
-                            Animation animation = this.GetPropertyType(propertyName).Name switch
-                            {
-                                "Color" => ColorAnimationConfig,
-                                "Size" => SizeAnimationConfig,
-                                _ => new(200, 30, "0, 0, 1, 1")
-                            };
-                            _ = this.BezierTransition(propertyName, null, newValue, animation, default, true, cts.Token);
-                        }
-                        else
-                        {
-                            this.SetOrGetPropertyValue(propertyName, newValue);
-                        }
-                    }
-                }
-            }
-        }
         #endregion
 
-        #region DisableStyle
-        private void HandleColorChange(string name, Color getColor, Action<Color> setColor, ref Color? originalColor, Color disableColor, CancellationTokenSource cts)
+        #region OnEnabledChanged
+        private void SetDisableColor(Color disableColor, Color startColor, Color baseColor, Action<Color> setColor, CancellationTokenSource cts)
         {
             if (disableColor != Color.Empty)
             {
-                Color newColor = Color.Empty;
-                if (Enabled)
-                {
-                    if (originalColor != null)
-                    {
-                        newColor = originalColor.Value;
-                    }
-                }
-                else
-                {
-                    if (originalColor == null)
-                    {
-                        originalColor = getColor;
-                    }
-                    newColor = disableColor;
-                }
-
+                Color newColor = Enabled ? baseColor : disableColor;
                 if (IsEnableAnimation)
                 {
                     cts.Cancel();
                     cts = new();
-                    _ = this.BezierTransition(name, null, newColor, new Animation(150, 30, "0, 0, 1, 1"), null, true, cts.Token);
+
+                    _ = ControlAnimator.BezierTransition(
+                        startColor,
+                        newColor,
+                        new AnimationInfo(150, 30, EasingType.Linear),
+                        setColor,
+                        true,
+                        cts.Token);
                 }
                 else
                 {
@@ -726,19 +882,28 @@ namespace KlxPiaoControls
             }
         }
 
-        private readonly CancellationTokenSource backColorCTS = new();
-        private readonly CancellationTokenSource foreColorCTS = new();
-        private readonly CancellationTokenSource borderColorCTS = new();
-
-        private Color? originalBackColor = null;
-        private Color? originalForeColor = null;
-        private Color? originalBorderColor = null;
-
         protected override void OnEnabledChanged(EventArgs e)
         {
-            HandleColorChange("BackColor", BackColor, color => BackColor = color, ref originalBackColor, DisabledStyle.BackColor, backColorCTS);
-            HandleColorChange("ForeColor", ForeColor, color => ForeColor = color, ref originalForeColor, DisabledStyle.ForeColor, foreColorCTS);
-            HandleColorChange("BorderColor", BorderColor, color => BorderColor = color, ref originalBorderColor, DisabledStyle.BorderColor, borderColorCTS);
+            SetDisableColor(
+                DisabledStyle.BackColor,
+                DrawBackColor,
+                BackColor,
+                value => DrawBackColor = value,
+                backColorCTS);
+
+            SetDisableColor(
+                DisabledStyle.ForeColor,
+                DrawForeColor,
+                ForeColor,
+                value => DrawForeColor = value,
+                foreColorCTS);
+
+            SetDisableColor(
+                DisabledStyle.BorderColor,
+                DrawBorderColor,
+                BorderColor,
+                value => DrawBorderColor = value,
+                borderColorCTS);
 
             base.OnEnabledChanged(e);
         }
@@ -759,7 +924,7 @@ namespace KlxPiaoControls
         }
 
         /// <summary>
-        /// 引发 OnClick 事件。
+        /// 引发 <see cref="OnClick(EventArgs)"/> 事件。
         /// </summary>
         public void PerformClick()
         {

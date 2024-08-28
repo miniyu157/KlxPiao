@@ -5,7 +5,7 @@ namespace KlxPiaoAPI
     /// <summary>
     /// 提供操作控件和处理对象属性的静态工具方法。
     /// </summary>
-    public static class ControlAndPropertyUtils
+    public static class ControlObjectUtils
     {
         /// <summary>
         /// 返回控件绘制的图像。

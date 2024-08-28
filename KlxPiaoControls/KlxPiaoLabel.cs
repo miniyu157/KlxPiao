@@ -307,7 +307,7 @@ namespace KlxPiaoControls
                         double progress = Math.Abs((double)x / ShadowPosition.X);
                         int drawAlpha = IsNaturalShadowEffectEnabled ? xAlpha : (int)(255 * (1 - progress));
                         SolidBrush drawBrush = IsEnableColorFading
-                            ? new(Color.FromArgb(drawAlpha, TypeInterpolator.Interpolator(startColor, endColor, progress)))
+                            ? new(Color.FromArgb(drawAlpha, TypeInterpolator.Interpolate(startColor, endColor, progress)))
                             : shadowBrush;
                         float slope = ShadowPosition.Y / (float)ShadowPosition.X;
                         g.DrawString(Text, Font, drawBrush, new PointF(drawPosition.X + x, drawPosition.Y + x * slope));
@@ -318,7 +318,7 @@ namespace KlxPiaoControls
                         double progress = Math.Abs((double)y / ShadowPosition.Y);
                         int drawAlpha = IsNaturalShadowEffectEnabled ? yAlpha : (int)(255 * (1 - progress));
                         SolidBrush drawBrush = IsEnableColorFading
-                            ? new(Color.FromArgb(drawAlpha, TypeInterpolator.Interpolator(startColor, endColor, progress)))
+                            ? new(Color.FromArgb(drawAlpha, TypeInterpolator.Interpolate(startColor, endColor, progress)))
                             : shadowBrush;
                         float slope = ShadowPosition.X / (float)ShadowPosition.Y;
                         g.DrawString(Text, Font, drawBrush, new PointF(drawPosition.X + y * slope, drawPosition.Y + y));

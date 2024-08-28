@@ -1,4 +1,6 @@
-﻿namespace KlxPiaoDemo
+﻿using KlxPiaoControls;
+
+namespace KlxPiaoDemo
 {
     partial class DemoForm
     {
@@ -28,58 +30,55 @@
         /// </summary>
         private void InitializeComponent()
         {
-            KlxPiaoAPI.Animation animation1 = new KlxPiaoAPI.Animation();
-            KlxPiaoControls.RoundedButton.DisabledStyleClass disabledStyleClass1 = new KlxPiaoControls.RoundedButton.DisabledStyleClass();
-            KlxPiaoControls.RoundedButton.InteractionStyleClass interactionStyleClass1 = new KlxPiaoControls.RoundedButton.InteractionStyleClass();
-            KlxPiaoAPI.Animation animation2 = new KlxPiaoAPI.Animation();
-            KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass2 = new KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass();
-            KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass3 = new KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass();
-            KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass4 = new KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass();
-            KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass5 = new KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass();
-            KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass6 = new KlxPiaoControls.KlxPiaoTrackBar.InteractionStyleClass();
-            KlxPiaoAPI.Animation animation3 = new KlxPiaoAPI.Animation();
+            RoundedButton.AnimationConfigClass animationConfigClass1 = new RoundedButton.AnimationConfigClass();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DemoForm));
-            KlxPiaoControls.RoundedButton.DisabledStyleClass disabledStyleClass2 = new KlxPiaoControls.RoundedButton.DisabledStyleClass();
-            KlxPiaoControls.RoundedButton.InteractionStyleClass interactionStyleClass7 = new KlxPiaoControls.RoundedButton.InteractionStyleClass();
-            KlxPiaoAPI.Animation animation4 = new KlxPiaoAPI.Animation();
-            KlxPiaoAPI.Animation animation5 = new KlxPiaoAPI.Animation();
-            KlxPiaoControls.RoundedButton.DisabledStyleClass disabledStyleClass3 = new KlxPiaoControls.RoundedButton.DisabledStyleClass();
-            KlxPiaoControls.RoundedButton.InteractionStyleClass interactionStyleClass8 = new KlxPiaoControls.RoundedButton.InteractionStyleClass();
-            KlxPiaoAPI.Animation animation6 = new KlxPiaoAPI.Animation();
+            RoundedButton.DisabledStyleClass disabledStyleClass1 = new RoundedButton.DisabledStyleClass();
+            RoundedButton.InteractionStyleClass interactionStyleClass1 = new RoundedButton.InteractionStyleClass();
+            KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass2 = new KlxPiaoTrackBar.InteractionStyleClass();
+            KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass3 = new KlxPiaoTrackBar.InteractionStyleClass();
+            KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass4 = new KlxPiaoTrackBar.InteractionStyleClass();
+            KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass5 = new KlxPiaoTrackBar.InteractionStyleClass();
+            KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass6 = new KlxPiaoTrackBar.InteractionStyleClass();
+            KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass7 = new KlxPiaoTrackBar.InteractionStyleClass();
+            RoundedButton.AnimationConfigClass animationConfigClass2 = new RoundedButton.AnimationConfigClass();
+            RoundedButton.DisabledStyleClass disabledStyleClass2 = new RoundedButton.DisabledStyleClass();
+            RoundedButton.InteractionStyleClass interactionStyleClass8 = new RoundedButton.InteractionStyleClass();
             mainTabControl = new TabControl();
             homeTabPage = new TabPage();
-            githubButton = new KlxPiaoControls.RoundedButton();
-            welcomeLabel = new KlxPiaoControls.KlxPiaoLabel();
-            homeTitleImage = new KlxPiaoControls.ImageBox();
-            homeTitleLabel = new KlxPiaoControls.KlxPiaoLabel();
+            githubButton = new RoundedButton();
+            welcomeLabel = new KlxPiaoLabel();
+            homeTitleImage = new ImageBox();
+            homeTitleLabel = new KlxPiaoLabel();
             propertiesTabPage = new TabPage();
             groupBox3 = new GroupBox();
             label9 = new Label();
-            backColorPanel = new KlxPiaoControls.KlxPiaoPanel();
+            backColorPanel = new KlxPiaoPanel();
             label8 = new Label();
-            titleButtonDisabledColorPanel = new KlxPiaoControls.KlxPiaoPanel();
+            titleButtonDisabledColorPanel = new KlxPiaoPanel();
             label10 = new Label();
-            titleBoxForeColorPanel = new KlxPiaoControls.KlxPiaoPanel();
+            titleBoxForeColorPanel = new KlxPiaoPanel();
             label7 = new Label();
-            titleBoxBackColorPanel = new KlxPiaoControls.KlxPiaoPanel();
+            titleBoxBackColorPanel = new KlxPiaoPanel();
             groupBox2 = new GroupBox();
+            iconDrawOffsetPointBar = new PointBar();
+            titleTextOffsetPointBar = new PointBar();
+            titleButtonHeightTrackBar = new KlxPiaoTrackBar();
             showIconCheckBox = new CheckBox();
-            titleTextOffsetPointBar = new KlxPiaoControls.PointBar();
-            titleTextMarginTrackBar = new KlxPiaoControls.KlxPiaoTrackBar();
+            titleTextMarginTrackBar = new KlxPiaoTrackBar();
             label6 = new Label();
             titleTextAlignComboBox = new ComboBox();
-            titleButtonWidthTrackBar = new KlxPiaoControls.KlxPiaoTrackBar();
+            titleButtonWidthTrackBar = new KlxPiaoTrackBar();
             label5 = new Label();
             enableChangeInactiveTitleBoxForeColorCheckBox = new CheckBox();
             enableMinimizeButtonCheckBox = new CheckBox();
             titleButtonsComboBox = new ComboBox();
-            titleButtonIconSizeTrackBar = new KlxPiaoControls.KlxPiaoTrackBar();
+            titleButtonIconSizeTrackBar = new KlxPiaoTrackBar();
             titleButtonAlignComboBox = new ComboBox();
             enableCloseButtonCheckBox = new CheckBox();
             label4 = new Label();
             enableResizeButtonCheckBox = new CheckBox();
-            titleBoxHeightTrackBar = new KlxPiaoControls.KlxPiaoTrackBar();
-            interactionColorScaleTrackBar = new KlxPiaoControls.KlxPiaoTrackBar();
+            titleBoxHeightTrackBar = new KlxPiaoTrackBar();
+            interactionColorScaleTrackBar = new KlxPiaoTrackBar();
             groupBox1 = new GroupBox();
             label1 = new Label();
             shortcutResizeModeComboBox = new ComboBox();
@@ -90,8 +89,7 @@
             dragModeComboBox = new ComboBox();
             enableResizeAnimationCheckBox = new CheckBox();
             controlsTabPage = new TabPage();
-            roundedButton2 = new KlxPiaoControls.RoundedButton();
-            roundedButton1 = new KlxPiaoControls.RoundedButton();
+            roundedButton1 = new RoundedButton();
             mainTabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             propertiesTabPage.SuspendLayout();
@@ -106,10 +104,10 @@
             mainTabControl.Controls.Add(homeTabPage);
             mainTabControl.Controls.Add(propertiesTabPage);
             mainTabControl.Controls.Add(controlsTabPage);
-            mainTabControl.Location = new Point(13, 42);
+            mainTabControl.Location = new Point(13, 47);
             mainTabControl.Name = "mainTabControl";
             mainTabControl.SelectedIndex = 0;
-            mainTabControl.Size = new Size(735, 433);
+            mainTabControl.Size = new Size(735, 428);
             mainTabControl.TabIndex = 7;
             // 
             // homeTabPage
@@ -122,44 +120,46 @@
             homeTabPage.Location = new Point(4, 26);
             homeTabPage.Name = "homeTabPage";
             homeTabPage.Padding = new Padding(3);
-            homeTabPage.Size = new Size(727, 403);
+            homeTabPage.Size = new Size(727, 398);
             homeTabPage.TabIndex = 1;
             homeTabPage.Text = "Home";
             // 
             // githubButton
             // 
-            githubButton.BorderCornerRadius = new KlxPiaoAPI.CornerRadius(12F, 12F, 12F, 12F);
-            animation1.Easing = null;
-            animation1.FPS = 30;
-            animation1.Time = 150;
-            githubButton.ColorAnimationConfig = animation1;
+            animationConfigClass1.BorderColorAnimation = (KlxPiaoAPI.AnimationInfo)resources.GetObject("animationConfigClass1.BorderColorAnimation");
+            animationConfigClass1.BorderSizeAnimation = (KlxPiaoAPI.AnimationInfo)resources.GetObject("animationConfigClass1.BorderSizeAnimation");
+            animationConfigClass1.ColorAnimation = (KlxPiaoAPI.AnimationInfo)resources.GetObject("animationConfigClass1.ColorAnimation");
+            githubButton.AnimationConfig = animationConfigClass1;
+            githubButton.BackColor = Color.White;
+            githubButton.BorderSize = 1F;
             disabledStyleClass1.BackColor = Color.Empty;
             disabledStyleClass1.BorderColor = Color.Empty;
             disabledStyleClass1.ForeColor = Color.Empty;
             githubButton.DisabledStyle = disabledStyleClass1;
+            githubButton.DrawBackColor = Color.White;
+            githubButton.DrawBorderColor = Color.Gainsboro;
+            githubButton.DrawBorderSize = 1F;
+            githubButton.DrawForeColor = Color.Black;
+            githubButton.ForeColor = Color.Black;
             githubButton.Image = Properties.Resources.github_128x128;
             githubButton.ImageAlign = ContentAlignment.MiddleLeft;
-            githubButton.ImageOffset = new Point(6, 0);
-            githubButton.ImageResizing = new SizeF(0.7F, 0.7F);
+            githubButton.ImageOffset = new Point(8, 0);
+            githubButton.ImageResizing = new SizeF(0.75F, 0.75F);
             githubButton.ImageResizingFormat = KlxPiaoAPI.ResizeMode.Percentage;
             interactionStyleClass1.DownBackColor = Color.FromArgb(235, 235, 235);
             interactionStyleClass1.DownBorderColor = Color.Empty;
+            interactionStyleClass1.DownBorderSize = 0F;
             interactionStyleClass1.DownForeColor = Color.Empty;
-            interactionStyleClass1.DownSize = new Size(0, 0);
-            interactionStyleClass1.OverBackColor = Color.WhiteSmoke;
+            interactionStyleClass1.OverBackColor = Color.FromArgb(245, 245, 245);
             interactionStyleClass1.OverBorderColor = Color.Empty;
+            interactionStyleClass1.OverBorderSize = 0F;
             interactionStyleClass1.OverForeColor = Color.Empty;
-            interactionStyleClass1.OverSize = new Size(0, 0);
             githubButton.InteractionStyle = interactionStyleClass1;
             githubButton.IsEnableAnimation = true;
             githubButton.Location = new Point(6, 369);
             githubButton.Name = "githubButton";
-            githubButton.Size = new Size(86, 28);
-            animation2.Easing = null;
-            animation2.FPS = 30;
-            animation2.Time = 150;
-            githubButton.SizeAnimationConfig = animation2;
-            githubButton.TabIndex = 6;
+            githubButton.Size = new Size(87, 28);
+            githubButton.TabIndex = 4;
             githubButton.Text = "Github";
             githubButton.TextAlign = ContentAlignment.MiddleRight;
             githubButton.TextOffset = new Point(-8, 0);
@@ -182,7 +182,7 @@
             welcomeLabel.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
             welcomeLabel.ShadowColor = Color.FromArgb(50, 50, 50);
             welcomeLabel.ShadowPosition = new Point(3, 3);
-            welcomeLabel.Size = new Size(715, 233);
+            welcomeLabel.Size = new Size(715, 227);
             welcomeLabel.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             welcomeLabel.TabIndex = 1;
             welcomeLabel.Text = "欢迎使用 KlxPiaoControls!\r\n\r\n主要针对于原版强化进行创作，目前 KlxPiaoControl 仍在不断优化中。\r\n你所看到的窗体实际上是 WinForms 无边框窗体 (FormBorderStyle = None)，所以任何元素都是可以接管的\r\n\r\n切换选项卡以预览 KlxPiaoControls 的功能";
@@ -234,7 +234,7 @@
             propertiesTabPage.Location = new Point(4, 26);
             propertiesTabPage.Name = "propertiesTabPage";
             propertiesTabPage.Padding = new Padding(3);
-            propertiesTabPage.Size = new Size(727, 403);
+            propertiesTabPage.Size = new Size(727, 398);
             propertiesTabPage.TabIndex = 0;
             propertiesTabPage.Text = "Form Properties";
             // 
@@ -268,6 +268,7 @@
             // backColorPanel
             // 
             backColorPanel.BackColor = Color.White;
+            backColorPanel.BaseBackColor = SystemColors.Control;
             backColorPanel.CornerRadius = new KlxPiaoAPI.CornerRadius(12F, 12F, 12F, 12F);
             backColorPanel.Cursor = Cursors.Hand;
             backColorPanel.IsEnableShadow = false;
@@ -289,6 +290,7 @@
             // titleButtonDisabledColorPanel
             // 
             titleButtonDisabledColorPanel.BackColor = Color.White;
+            titleButtonDisabledColorPanel.BaseBackColor = SystemColors.Control;
             titleButtonDisabledColorPanel.CornerRadius = new KlxPiaoAPI.CornerRadius(12F, 12F, 12F, 12F);
             titleButtonDisabledColorPanel.Cursor = Cursors.Hand;
             titleButtonDisabledColorPanel.IsEnableShadow = false;
@@ -310,6 +312,7 @@
             // titleBoxForeColorPanel
             // 
             titleBoxForeColorPanel.BackColor = Color.White;
+            titleBoxForeColorPanel.BaseBackColor = SystemColors.Control;
             titleBoxForeColorPanel.CornerRadius = new KlxPiaoAPI.CornerRadius(12F, 12F, 12F, 12F);
             titleBoxForeColorPanel.Cursor = Cursors.Hand;
             titleBoxForeColorPanel.IsEnableShadow = false;
@@ -331,6 +334,7 @@
             // titleBoxBackColorPanel
             // 
             titleBoxBackColorPanel.BackColor = Color.White;
+            titleBoxBackColorPanel.BaseBackColor = SystemColors.Control;
             titleBoxBackColorPanel.CornerRadius = new KlxPiaoAPI.CornerRadius(12F, 12F, 12F, 12F);
             titleBoxBackColorPanel.Cursor = Cursors.Hand;
             titleBoxBackColorPanel.IsEnableShadow = false;
@@ -341,8 +345,10 @@
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(showIconCheckBox);
+            groupBox2.Controls.Add(iconDrawOffsetPointBar);
             groupBox2.Controls.Add(titleTextOffsetPointBar);
+            groupBox2.Controls.Add(titleButtonHeightTrackBar);
+            groupBox2.Controls.Add(showIconCheckBox);
             groupBox2.Controls.Add(titleTextMarginTrackBar);
             groupBox2.Controls.Add(label6);
             groupBox2.Controls.Add(titleTextAlignComboBox);
@@ -365,6 +371,61 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "Title Box";
             // 
+            // iconDrawOffsetPointBar
+            // 
+            iconDrawOffsetPointBar.BackColor = Color.White;
+            iconDrawOffsetPointBar.CoordinateDisplayFormat = "IconDrawOffset: {X}, {Y}";
+            iconDrawOffsetPointBar.CoordinateTextAlign = ContentAlignment.BottomCenter;
+            iconDrawOffsetPointBar.CoordinateTextOffset = new Point(0, -2);
+            iconDrawOffsetPointBar.CornerRadius = new KlxPiaoAPI.CornerRadius(6F, 6F, 6F, 6F);
+            iconDrawOffsetPointBar.Font = new Font("Microsoft YaHei UI", 7.5F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            iconDrawOffsetPointBar.Location = new Point(271, 249);
+            iconDrawOffsetPointBar.MaxValue = new Point(10, 10);
+            iconDrawOffsetPointBar.MinValue = new Point(-10, -10);
+            iconDrawOffsetPointBar.Name = "iconDrawOffsetPointBar";
+            iconDrawOffsetPointBar.Size = new Size(105, 105);
+            iconDrawOffsetPointBar.TabIndex = 28;
+            // 
+            // titleTextOffsetPointBar
+            // 
+            titleTextOffsetPointBar.BackColor = Color.White;
+            titleTextOffsetPointBar.CoordinateDisplayFormat = "TitleTextOffset: {X}, {Y}";
+            titleTextOffsetPointBar.CoordinateTextAlign = ContentAlignment.BottomCenter;
+            titleTextOffsetPointBar.CoordinateTextOffset = new Point(0, -2);
+            titleTextOffsetPointBar.CornerRadius = new KlxPiaoAPI.CornerRadius(6F, 6F, 6F, 6F);
+            titleTextOffsetPointBar.Font = new Font("Microsoft YaHei UI", 7.5F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            titleTextOffsetPointBar.Location = new Point(258, 191);
+            titleTextOffsetPointBar.MaxValue = new Point(10, 10);
+            titleTextOffsetPointBar.MinValue = new Point(-10, -10);
+            titleTextOffsetPointBar.Name = "titleTextOffsetPointBar";
+            titleTextOffsetPointBar.Size = new Size(105, 105);
+            titleTextOffsetPointBar.TabIndex = 25;
+            // 
+            // titleButtonHeightTrackBar
+            // 
+            titleButtonHeightTrackBar.BackColor = Color.White;
+            titleButtonHeightTrackBar.BorderColor = Color.Gray;
+            titleButtonHeightTrackBar.BorderSize = 1;
+            titleButtonHeightTrackBar.CornerRadius = 6F;
+            titleButtonHeightTrackBar.Font = new Font("Microsoft YaHei UI", 8.25F);
+            interactionStyleClass2.FocusBorderColor = null;
+            interactionStyleClass2.FocusBorderSize = null;
+            interactionStyleClass2.FocusTrackBackColor = null;
+            interactionStyleClass2.FocusTrackForeColor = null;
+            interactionStyleClass2.MouseOverBorderColor = null;
+            interactionStyleClass2.MouseOverBorderSize = null;
+            interactionStyleClass2.MouseOverTrackBackColor = null;
+            interactionStyleClass2.MouseOverTrackForeColor = null;
+            titleButtonHeightTrackBar.InteractionStyle = interactionStyleClass2;
+            titleButtonHeightTrackBar.IsDrawValueText = true;
+            titleButtonHeightTrackBar.Location = new Point(197, 57);
+            titleButtonHeightTrackBar.Name = "titleButtonHeightTrackBar";
+            titleButtonHeightTrackBar.Size = new Size(166, 21);
+            titleButtonHeightTrackBar.TabIndex = 27;
+            titleButtonHeightTrackBar.TrackBackColor = Color.White;
+            titleButtonHeightTrackBar.TrackForeColor = Color.LightGray;
+            titleButtonHeightTrackBar.ValueTextDisplayFormat = "TitleButtonHeight: {value}";
+            // 
             // showIconCheckBox
             // 
             showIconCheckBox.AutoSize = true;
@@ -375,21 +436,6 @@
             showIconCheckBox.Text = "ShowIcon";
             showIconCheckBox.UseVisualStyleBackColor = true;
             // 
-            // titleTextOffsetPointBar
-            // 
-            titleTextOffsetPointBar.BackColor = Color.White;
-            titleTextOffsetPointBar.CoordinateDisplayFormat = "TitleTextOffset: {X}, {Y}";
-            titleTextOffsetPointBar.CoordinateTextAlign = ContentAlignment.BottomCenter;
-            titleTextOffsetPointBar.CoordinateTextOffset = new Point(0, -2);
-            titleTextOffsetPointBar.CornerRadius = new KlxPiaoAPI.CornerRadius(6F, 6F, 6F, 6F);
-            titleTextOffsetPointBar.Font = new Font("Microsoft YaHei UI", 7.5F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            titleTextOffsetPointBar.Location = new Point(19, 226);
-            titleTextOffsetPointBar.MaxValue = new Point(10, 10);
-            titleTextOffsetPointBar.MinValue = new Point(-10, -10);
-            titleTextOffsetPointBar.Name = "titleTextOffsetPointBar";
-            titleTextOffsetPointBar.Size = new Size(112, 112);
-            titleTextOffsetPointBar.TabIndex = 25;
-            // 
             // titleTextMarginTrackBar
             // 
             titleTextMarginTrackBar.BackColor = Color.White;
@@ -397,17 +443,17 @@
             titleTextMarginTrackBar.BorderSize = 1;
             titleTextMarginTrackBar.CornerRadius = 6F;
             titleTextMarginTrackBar.Font = new Font("Microsoft YaHei UI", 8.25F);
-            interactionStyleClass2.FocusBorderColor = null;
-            interactionStyleClass2.FocusBorderSize = null;
-            interactionStyleClass2.FocusTrackBackColor = null;
-            interactionStyleClass2.FocusTrackForeColor = null;
-            interactionStyleClass2.MouseOverBorderColor = null;
-            interactionStyleClass2.MouseOverBorderSize = null;
-            interactionStyleClass2.MouseOverTrackBackColor = null;
-            interactionStyleClass2.MouseOverTrackForeColor = null;
-            titleTextMarginTrackBar.InteractionStyle = interactionStyleClass2;
+            interactionStyleClass3.FocusBorderColor = null;
+            interactionStyleClass3.FocusBorderSize = null;
+            interactionStyleClass3.FocusTrackBackColor = null;
+            interactionStyleClass3.FocusTrackForeColor = null;
+            interactionStyleClass3.MouseOverBorderColor = null;
+            interactionStyleClass3.MouseOverBorderSize = null;
+            interactionStyleClass3.MouseOverTrackBackColor = null;
+            interactionStyleClass3.MouseOverTrackForeColor = null;
+            titleTextMarginTrackBar.InteractionStyle = interactionStyleClass3;
             titleTextMarginTrackBar.IsDrawValueText = true;
-            titleTextMarginTrackBar.Location = new Point(197, 57);
+            titleTextMarginTrackBar.Location = new Point(197, 84);
             titleTextMarginTrackBar.Name = "titleTextMarginTrackBar";
             titleTextMarginTrackBar.Size = new Size(166, 21);
             titleTextMarginTrackBar.TabIndex = 24;
@@ -418,7 +464,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(141, 237);
+            label6.Location = new Point(17, 217);
             label6.Name = "label6";
             label6.Size = new Size(85, 17);
             label6.TabIndex = 22;
@@ -428,7 +474,7 @@
             // 
             titleTextAlignComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             titleTextAlignComboBox.FormattingEnabled = true;
-            titleTextAlignComboBox.Location = new Point(244, 234);
+            titleTextAlignComboBox.Location = new Point(120, 214);
             titleTextAlignComboBox.Name = "titleTextAlignComboBox";
             titleTextAlignComboBox.Size = new Size(121, 25);
             titleTextAlignComboBox.TabIndex = 23;
@@ -440,15 +486,15 @@
             titleButtonWidthTrackBar.BorderSize = 1;
             titleButtonWidthTrackBar.CornerRadius = 6F;
             titleButtonWidthTrackBar.Font = new Font("Microsoft YaHei UI", 8.25F);
-            interactionStyleClass3.FocusBorderColor = null;
-            interactionStyleClass3.FocusBorderSize = null;
-            interactionStyleClass3.FocusTrackBackColor = null;
-            interactionStyleClass3.FocusTrackForeColor = null;
-            interactionStyleClass3.MouseOverBorderColor = null;
-            interactionStyleClass3.MouseOverBorderSize = null;
-            interactionStyleClass3.MouseOverTrackBackColor = null;
-            interactionStyleClass3.MouseOverTrackForeColor = null;
-            titleButtonWidthTrackBar.InteractionStyle = interactionStyleClass3;
+            interactionStyleClass4.FocusBorderColor = null;
+            interactionStyleClass4.FocusBorderSize = null;
+            interactionStyleClass4.FocusTrackBackColor = null;
+            interactionStyleClass4.FocusTrackForeColor = null;
+            interactionStyleClass4.MouseOverBorderColor = null;
+            interactionStyleClass4.MouseOverBorderSize = null;
+            interactionStyleClass4.MouseOverTrackBackColor = null;
+            interactionStyleClass4.MouseOverTrackForeColor = null;
+            titleButtonWidthTrackBar.InteractionStyle = interactionStyleClass4;
             titleButtonWidthTrackBar.IsDrawValueText = true;
             titleButtonWidthTrackBar.Location = new Point(197, 30);
             titleButtonWidthTrackBar.Name = "titleButtonWidthTrackBar";
@@ -461,7 +507,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(141, 299);
+            label5.Location = new Point(17, 279);
             label5.Name = "label5";
             label5.Size = new Size(76, 17);
             label5.TabIndex = 19;
@@ -491,7 +537,7 @@
             // 
             titleButtonsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             titleButtonsComboBox.FormattingEnabled = true;
-            titleButtonsComboBox.Location = new Point(244, 296);
+            titleButtonsComboBox.Location = new Point(120, 276);
             titleButtonsComboBox.Name = "titleButtonsComboBox";
             titleButtonsComboBox.Size = new Size(121, 25);
             titleButtonsComboBox.TabIndex = 20;
@@ -503,15 +549,15 @@
             titleButtonIconSizeTrackBar.BorderSize = 1;
             titleButtonIconSizeTrackBar.CornerRadius = 6F;
             titleButtonIconSizeTrackBar.Font = new Font("Microsoft YaHei UI", 8.25F);
-            interactionStyleClass4.FocusBorderColor = null;
-            interactionStyleClass4.FocusBorderSize = null;
-            interactionStyleClass4.FocusTrackBackColor = null;
-            interactionStyleClass4.FocusTrackForeColor = null;
-            interactionStyleClass4.MouseOverBorderColor = null;
-            interactionStyleClass4.MouseOverBorderSize = null;
-            interactionStyleClass4.MouseOverTrackBackColor = null;
-            interactionStyleClass4.MouseOverTrackForeColor = null;
-            titleButtonIconSizeTrackBar.InteractionStyle = interactionStyleClass4;
+            interactionStyleClass5.FocusBorderColor = null;
+            interactionStyleClass5.FocusBorderSize = null;
+            interactionStyleClass5.FocusTrackBackColor = null;
+            interactionStyleClass5.FocusTrackForeColor = null;
+            interactionStyleClass5.MouseOverBorderColor = null;
+            interactionStyleClass5.MouseOverBorderSize = null;
+            interactionStyleClass5.MouseOverTrackBackColor = null;
+            interactionStyleClass5.MouseOverTrackForeColor = null;
+            titleButtonIconSizeTrackBar.InteractionStyle = interactionStyleClass5;
             titleButtonIconSizeTrackBar.IsDrawValueText = true;
             titleButtonIconSizeTrackBar.Location = new Point(19, 84);
             titleButtonIconSizeTrackBar.Name = "titleButtonIconSizeTrackBar";
@@ -525,7 +571,7 @@
             // 
             titleButtonAlignComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             titleButtonAlignComboBox.FormattingEnabled = true;
-            titleButtonAlignComboBox.Location = new Point(244, 265);
+            titleButtonAlignComboBox.Location = new Point(120, 245);
             titleButtonAlignComboBox.Name = "titleButtonAlignComboBox";
             titleButtonAlignComboBox.Size = new Size(121, 25);
             titleButtonAlignComboBox.TabIndex = 17;
@@ -543,7 +589,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(141, 269);
+            label4.Location = new Point(17, 249);
             label4.Name = "label4";
             label4.Size = new Size(99, 17);
             label4.TabIndex = 16;
@@ -566,15 +612,15 @@
             titleBoxHeightTrackBar.BorderSize = 1;
             titleBoxHeightTrackBar.CornerRadius = 6F;
             titleBoxHeightTrackBar.Font = new Font("Microsoft YaHei UI", 8.25F);
-            interactionStyleClass5.FocusBorderColor = null;
-            interactionStyleClass5.FocusBorderSize = null;
-            interactionStyleClass5.FocusTrackBackColor = null;
-            interactionStyleClass5.FocusTrackForeColor = null;
-            interactionStyleClass5.MouseOverBorderColor = null;
-            interactionStyleClass5.MouseOverBorderSize = null;
-            interactionStyleClass5.MouseOverTrackBackColor = null;
-            interactionStyleClass5.MouseOverTrackForeColor = null;
-            titleBoxHeightTrackBar.InteractionStyle = interactionStyleClass5;
+            interactionStyleClass6.FocusBorderColor = null;
+            interactionStyleClass6.FocusBorderSize = null;
+            interactionStyleClass6.FocusTrackBackColor = null;
+            interactionStyleClass6.FocusTrackForeColor = null;
+            interactionStyleClass6.MouseOverBorderColor = null;
+            interactionStyleClass6.MouseOverBorderSize = null;
+            interactionStyleClass6.MouseOverTrackBackColor = null;
+            interactionStyleClass6.MouseOverTrackForeColor = null;
+            titleBoxHeightTrackBar.InteractionStyle = interactionStyleClass6;
             titleBoxHeightTrackBar.IsDrawValueText = true;
             titleBoxHeightTrackBar.Location = new Point(19, 57);
             titleBoxHeightTrackBar.Name = "titleBoxHeightTrackBar";
@@ -592,15 +638,15 @@
             interactionColorScaleTrackBar.CornerRadius = 6F;
             interactionColorScaleTrackBar.DecimalPlaces = 2;
             interactionColorScaleTrackBar.Font = new Font("Microsoft YaHei UI", 8.25F);
-            interactionStyleClass6.FocusBorderColor = null;
-            interactionStyleClass6.FocusBorderSize = null;
-            interactionStyleClass6.FocusTrackBackColor = null;
-            interactionStyleClass6.FocusTrackForeColor = null;
-            interactionStyleClass6.MouseOverBorderColor = null;
-            interactionStyleClass6.MouseOverBorderSize = null;
-            interactionStyleClass6.MouseOverTrackBackColor = null;
-            interactionStyleClass6.MouseOverTrackForeColor = null;
-            interactionColorScaleTrackBar.InteractionStyle = interactionStyleClass6;
+            interactionStyleClass7.FocusBorderColor = null;
+            interactionStyleClass7.FocusBorderSize = null;
+            interactionStyleClass7.FocusTrackBackColor = null;
+            interactionStyleClass7.FocusTrackForeColor = null;
+            interactionStyleClass7.MouseOverBorderColor = null;
+            interactionStyleClass7.MouseOverBorderSize = null;
+            interactionStyleClass7.MouseOverTrackBackColor = null;
+            interactionStyleClass7.MouseOverTrackForeColor = null;
+            interactionColorScaleTrackBar.InteractionStyle = interactionStyleClass7;
             interactionColorScaleTrackBar.IsAutoComplete = true;
             interactionColorScaleTrackBar.IsDrawValueText = true;
             interactionColorScaleTrackBar.Location = new Point(19, 30);
@@ -708,108 +754,58 @@
             // controlsTabPage
             // 
             controlsTabPage.BackColor = Color.White;
-            controlsTabPage.Controls.Add(roundedButton2);
             controlsTabPage.Controls.Add(roundedButton1);
             controlsTabPage.Location = new Point(4, 26);
             controlsTabPage.Name = "controlsTabPage";
             controlsTabPage.Padding = new Padding(3);
-            controlsTabPage.Size = new Size(727, 403);
+            controlsTabPage.Size = new Size(727, 398);
             controlsTabPage.TabIndex = 2;
             controlsTabPage.Text = "Controls";
             // 
-            // roundedButton2
+            // roundedButton1
             // 
-            roundedButton2.BackColor = Color.FromArgb(80, 80, 80);
-            animation3.Easing = new PointF[]
-    {
-    (PointF)resources.GetObject("animation3.Easing"),
-    (PointF)resources.GetObject("animation3.Easing1")
-    };
-            animation3.FPS = 30;
-            animation3.Time = 150;
-            roundedButton2.ColorAnimationConfig = animation3;
+            animationConfigClass2.BorderColorAnimation = (KlxPiaoAPI.AnimationInfo)resources.GetObject("animationConfigClass2.BorderColorAnimation");
+            animationConfigClass2.BorderSizeAnimation = (KlxPiaoAPI.AnimationInfo)resources.GetObject("animationConfigClass2.BorderSizeAnimation");
+            animationConfigClass2.ColorAnimation = (KlxPiaoAPI.AnimationInfo)resources.GetObject("animationConfigClass2.ColorAnimation");
+            roundedButton1.AnimationConfig = animationConfigClass2;
+            roundedButton1.BackColor = Color.White;
+            roundedButton1.BorderSize = 1F;
             disabledStyleClass2.BackColor = Color.Empty;
             disabledStyleClass2.BorderColor = Color.Empty;
             disabledStyleClass2.ForeColor = Color.Empty;
-            roundedButton2.DisabledStyle = disabledStyleClass2;
-            roundedButton2.ForeColor = Color.White;
-            interactionStyleClass7.DownBackColor = Color.FromArgb(249, 236, 236);
-            interactionStyleClass7.DownBorderColor = Color.Empty;
-            interactionStyleClass7.DownForeColor = Color.Empty;
-            interactionStyleClass7.DownSize = new Size(0, 0);
-            interactionStyleClass7.OverBackColor = Color.White;
-            interactionStyleClass7.OverBorderColor = Color.Pink;
-            interactionStyleClass7.OverForeColor = Color.Black;
-            interactionStyleClass7.OverSize = new Size(150, 43);
-            roundedButton2.InteractionStyle = interactionStyleClass7;
-            roundedButton2.IsEnableAnimation = true;
-            roundedButton2.Location = new Point(373, 69);
-            roundedButton2.Name = "roundedButton2";
-            roundedButton2.Size = new Size(116, 43);
-            animation4.Easing = new PointF[]
-    {
-    (PointF)resources.GetObject("animation4.Easing"),
-    (PointF)resources.GetObject("animation4.Easing1"),
-    (PointF)resources.GetObject("animation4.Easing2"),
-    (PointF)resources.GetObject("animation4.Easing3")
-    };
-            animation4.FPS = 100;
-            animation4.Time = 300;
-            roundedButton2.SizeAnimationConfig = animation4;
-            roundedButton2.TabIndex = 1;
-            roundedButton2.Text = "RoundedButton";
-            // 
-            // roundedButton1
-            // 
-            roundedButton1.BackColor = Color.FromArgb(80, 80, 80);
-            animation5.Easing = new PointF[]
-    {
-    (PointF)resources.GetObject("animation5.Easing"),
-    (PointF)resources.GetObject("animation5.Easing1")
-    };
-            animation5.FPS = 30;
-            animation5.Time = 150;
-            roundedButton1.ColorAnimationConfig = animation5;
-            disabledStyleClass3.BackColor = Color.Blue;
-            disabledStyleClass3.BorderColor = Color.FromArgb(192, 192, 0);
-            disabledStyleClass3.ForeColor = Color.Red;
-            roundedButton1.DisabledStyle = disabledStyleClass3;
-            roundedButton1.ForeColor = Color.White;
-            interactionStyleClass8.DownBackColor = Color.White;
-            interactionStyleClass8.DownBorderColor = Color.Pink;
-            interactionStyleClass8.DownForeColor = Color.Black;
-            interactionStyleClass8.DownSize = new Size(0, 0);
-            interactionStyleClass8.OverBackColor = SystemColors.WindowFrame;
-            interactionStyleClass8.OverBorderColor = Color.Gainsboro;
-            interactionStyleClass8.OverForeColor = Color.White;
-            interactionStyleClass8.OverSize = new Size(150, 43);
+            roundedButton1.DisabledStyle = disabledStyleClass2;
+            roundedButton1.DrawBackColor = Color.White;
+            roundedButton1.DrawBorderColor = Color.Gainsboro;
+            roundedButton1.DrawBorderSize = 1F;
+            roundedButton1.DrawForeColor = Color.Black;
+            roundedButton1.ForeColor = Color.Black;
+            interactionStyleClass8.DownBackColor = Color.FromArgb(235, 235, 235);
+            interactionStyleClass8.DownBorderColor = Color.Empty;
+            interactionStyleClass8.DownBorderSize = 0F;
+            interactionStyleClass8.DownForeColor = Color.Empty;
+            interactionStyleClass8.OverBackColor = Color.FromArgb(245, 245, 245);
+            interactionStyleClass8.OverBorderColor = Color.Empty;
+            interactionStyleClass8.OverBorderSize = 0F;
+            interactionStyleClass8.OverForeColor = Color.Empty;
             roundedButton1.InteractionStyle = interactionStyleClass8;
             roundedButton1.IsEnableAnimation = true;
-            roundedButton1.Location = new Point(129, 69);
+            roundedButton1.Location = new Point(153, 95);
             roundedButton1.Name = "roundedButton1";
             roundedButton1.Size = new Size(116, 43);
-            animation6.Easing = new PointF[]
-    {
-    (PointF)resources.GetObject("animation6.Easing"),
-    (PointF)resources.GetObject("animation6.Easing1"),
-    (PointF)resources.GetObject("animation6.Easing2"),
-    (PointF)resources.GetObject("animation6.Easing3")
-    };
-            animation6.FPS = 100;
-            animation6.Time = 300;
-            roundedButton1.SizeAnimationConfig = animation6;
-            roundedButton1.TabIndex = 0;
-            roundedButton1.Text = "RoundedButton";
+            roundedButton1.TabIndex = 2;
+            roundedButton1.Text = "roundedButton1";
             // 
             // DemoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(760, 487);
             Controls.Add(mainTabControl);
             Name = "DemoForm";
-            Theme = Style.Mac;
-            TitleTextAlign = HorizontalAlignment.Center;
+            TitleBoxBackColor = Color.White;
+            TitleBoxHeight = 50;
+            TitleButtonWidth = 46;
             mainTabControl.ResumeLayout(false);
             homeTabPage.ResumeLayout(false);
             propertiesTabPage.ResumeLayout(false);
@@ -840,34 +836,35 @@
         private CheckBox enableResizeButtonCheckBox;
         private CheckBox enableCloseButtonCheckBox;
         private GroupBox groupBox2;
-        private KlxPiaoControls.KlxPiaoTrackBar interactionColorScaleTrackBar;
-        private KlxPiaoControls.KlxPiaoTrackBar titleBoxHeightTrackBar;
+        private KlxPiaoTrackBar interactionColorScaleTrackBar;
+        private KlxPiaoTrackBar titleBoxHeightTrackBar;
         private ComboBox titleButtonAlignComboBox;
         private Label label4;
-        private KlxPiaoControls.KlxPiaoTrackBar titleButtonIconSizeTrackBar;
+        private KlxPiaoTrackBar titleButtonIconSizeTrackBar;
         private ComboBox titleButtonsComboBox;
         private Label label5;
-        private KlxPiaoControls.KlxPiaoTrackBar titleButtonWidthTrackBar;
+        private KlxPiaoTrackBar titleButtonWidthTrackBar;
         private Label label6;
         private ComboBox titleTextAlignComboBox;
-        private KlxPiaoControls.KlxPiaoTrackBar titleTextMarginTrackBar;
-        private KlxPiaoControls.PointBar titleTextOffsetPointBar;
+        private KlxPiaoTrackBar titleTextMarginTrackBar;
+        private PointBar titleTextOffsetPointBar;
         private GroupBox groupBox3;
-        private KlxPiaoControls.KlxPiaoPanel titleBoxBackColorPanel;
+        private KlxPiaoPanel titleBoxBackColorPanel;
         private Label label7;
         private Label label10;
-        private KlxPiaoControls.KlxPiaoPanel titleBoxForeColorPanel;
+        private KlxPiaoPanel titleBoxForeColorPanel;
         private Label label8;
-        private KlxPiaoControls.KlxPiaoPanel titleButtonDisabledColorPanel;
+        private KlxPiaoPanel titleButtonDisabledColorPanel;
         private Label label9;
-        private KlxPiaoControls.KlxPiaoPanel backColorPanel;
+        private KlxPiaoPanel backColorPanel;
         private CheckBox showIconCheckBox;
-        private KlxPiaoControls.KlxPiaoLabel homeTitleLabel;
-        private KlxPiaoControls.ImageBox homeTitleImage;
-        private KlxPiaoControls.RoundedButton githubButton;
+        private KlxPiaoLabel homeTitleLabel;
+        private ImageBox homeTitleImage;
         private TabPage controlsTabPage;
-        private KlxPiaoControls.KlxPiaoLabel welcomeLabel;
-        private KlxPiaoControls.RoundedButton roundedButton2;
-        private KlxPiaoControls.RoundedButton roundedButton1;
+        private KlxPiaoLabel welcomeLabel;
+        private KlxPiaoTrackBar titleButtonHeightTrackBar;
+        private PointBar iconDrawOffsetPointBar;
+        private RoundedButton roundedButton1;
+        private RoundedButton githubButton;
     }
 }

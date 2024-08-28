@@ -292,6 +292,21 @@ namespace KlxPiaoControls
         public Rectangle GetClientRectangle() => new(GetClientLocation(), GetClientSize());
         #endregion
 
+        protected override void OnBackColorChanged(EventArgs e)
+        {
+            this.ForEachControl<Control>(control =>
+            {
+                var property = control.GetType().GetProperty("BaseBackColor");
+
+                if (property != null && property.CanWrite)
+                {
+                    property.SetValue(control, BackColor);
+                }
+            });
+
+            base.OnBackColorChanged(e);
+        }
+
         private static Rectangle AdjustRectangle(Rectangle rectangle, int adjust)
         {
             return new Rectangle(rectangle.X - adjust, rectangle.Y - adjust, rectangle.Width + adjust, rectangle.Height + adjust);
