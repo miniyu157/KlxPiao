@@ -40,6 +40,9 @@ namespace KlxPiaoDemo
             KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass5 = new KlxPiaoTrackBar.InteractionStyleClass();
             KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass6 = new KlxPiaoTrackBar.InteractionStyleClass();
             KlxPiaoTrackBar.InteractionStyleClass interactionStyleClass7 = new KlxPiaoTrackBar.InteractionStyleClass();
+            RoundedButton.AnimationConfigClass animationConfigClass3 = new RoundedButton.AnimationConfigClass();
+            RoundedButton.DisabledStyleClass disabledStyleClass3 = new RoundedButton.DisabledStyleClass();
+            RoundedButton.InteractionStyleClass interactionStyleClass9 = new RoundedButton.InteractionStyleClass();
             RoundedButton.AnimationConfigClass animationConfigClass2 = new RoundedButton.AnimationConfigClass();
             RoundedButton.DisabledStyleClass disabledStyleClass2 = new RoundedButton.DisabledStyleClass();
             RoundedButton.InteractionStyleClass interactionStyleClass8 = new RoundedButton.InteractionStyleClass();
@@ -90,6 +93,7 @@ namespace KlxPiaoDemo
             enableResizeAnimationCheckBox = new CheckBox();
             controlsTabPage = new TabPage();
             roundedButton1 = new RoundedButton();
+            selectFileButton = new RoundedButton();
             mainTabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             propertiesTabPage.SuspendLayout();
@@ -754,6 +758,7 @@ namespace KlxPiaoDemo
             // controlsTabPage
             // 
             controlsTabPage.BackColor = Color.White;
+            controlsTabPage.Controls.Add(selectFileButton);
             controlsTabPage.Controls.Add(roundedButton1);
             controlsTabPage.Location = new Point(4, 26);
             controlsTabPage.Name = "controlsTabPage";
@@ -764,36 +769,74 @@ namespace KlxPiaoDemo
             // 
             // roundedButton1
             // 
-            animationConfigClass2.BorderColorAnimation = (KlxPiaoAPI.AnimationInfo)resources.GetObject("animationConfigClass2.BorderColorAnimation");
-            animationConfigClass2.BorderSizeAnimation = (KlxPiaoAPI.AnimationInfo)resources.GetObject("animationConfigClass2.BorderSizeAnimation");
-            animationConfigClass2.ColorAnimation = (KlxPiaoAPI.AnimationInfo)resources.GetObject("animationConfigClass2.ColorAnimation");
-            roundedButton1.AnimationConfig = animationConfigClass2;
+            animationConfigClass3.BorderColorAnimation = (KlxPiaoAPI.AnimationInfo)resources.GetObject("animationConfigClass3.BorderColorAnimation");
+            animationConfigClass3.BorderSizeAnimation = (KlxPiaoAPI.AnimationInfo)resources.GetObject("animationConfigClass3.BorderSizeAnimation");
+            animationConfigClass3.ColorAnimation = (KlxPiaoAPI.AnimationInfo)resources.GetObject("animationConfigClass3.ColorAnimation");
+            roundedButton1.AnimationConfig = animationConfigClass3;
             roundedButton1.BackColor = Color.White;
             roundedButton1.BorderSize = 1F;
-            disabledStyleClass2.BackColor = Color.Empty;
-            disabledStyleClass2.BorderColor = Color.Empty;
-            disabledStyleClass2.ForeColor = Color.Empty;
-            roundedButton1.DisabledStyle = disabledStyleClass2;
+            disabledStyleClass3.BackColor = Color.Empty;
+            disabledStyleClass3.BorderColor = Color.Empty;
+            disabledStyleClass3.ForeColor = Color.Empty;
+            roundedButton1.DisabledStyle = disabledStyleClass3;
             roundedButton1.DrawBackColor = Color.White;
             roundedButton1.DrawBorderColor = Color.Gainsboro;
             roundedButton1.DrawBorderSize = 1F;
             roundedButton1.DrawForeColor = Color.Black;
             roundedButton1.ForeColor = Color.Black;
-            interactionStyleClass8.DownBackColor = Color.FromArgb(235, 235, 235);
-            interactionStyleClass8.DownBorderColor = Color.Empty;
-            interactionStyleClass8.DownBorderSize = 0F;
-            interactionStyleClass8.DownForeColor = Color.Empty;
-            interactionStyleClass8.OverBackColor = Color.FromArgb(245, 245, 245);
-            interactionStyleClass8.OverBorderColor = Color.Empty;
-            interactionStyleClass8.OverBorderSize = 0F;
-            interactionStyleClass8.OverForeColor = Color.Empty;
-            roundedButton1.InteractionStyle = interactionStyleClass8;
+            interactionStyleClass9.DownBackColor = Color.FromArgb(235, 235, 235);
+            interactionStyleClass9.DownBorderColor = Color.Empty;
+            interactionStyleClass9.DownBorderSize = 0F;
+            interactionStyleClass9.DownForeColor = Color.Empty;
+            interactionStyleClass9.OverBackColor = Color.FromArgb(245, 245, 245);
+            interactionStyleClass9.OverBorderColor = Color.Empty;
+            interactionStyleClass9.OverBorderSize = 0F;
+            interactionStyleClass9.OverForeColor = Color.Empty;
+            roundedButton1.InteractionStyle = interactionStyleClass9;
             roundedButton1.IsEnableAnimation = true;
             roundedButton1.Location = new Point(153, 95);
             roundedButton1.Name = "roundedButton1";
             roundedButton1.Size = new Size(116, 43);
             roundedButton1.TabIndex = 2;
             roundedButton1.Text = "roundedButton1";
+            // 
+            // selectFileButton
+            // 
+            animationConfigClass2.BorderColorAnimation = (KlxPiaoAPI.AnimationInfo)resources.GetObject("animationConfigClass2.BorderColorAnimation");
+            animationConfigClass2.BorderSizeAnimation = (KlxPiaoAPI.AnimationInfo)resources.GetObject("animationConfigClass2.BorderSizeAnimation");
+            animationConfigClass2.ColorAnimation = (KlxPiaoAPI.AnimationInfo)resources.GetObject("animationConfigClass2.ColorAnimation");
+            selectFileButton.AnimationConfig = animationConfigClass2;
+            selectFileButton.BackColor = Color.FromArgb(30, 30, 30);
+            selectFileButton.BaseBackColor = Color.FromArgb(30, 30, 30);
+            selectFileButton.BorderColor = Color.FromArgb(180, 201, 252);
+            selectFileButton.BorderSize = 1F;
+            disabledStyleClass2.BackColor = Color.Empty;
+            disabledStyleClass2.BorderColor = Color.Empty;
+            disabledStyleClass2.ForeColor = Color.Empty;
+            selectFileButton.DisabledStyle = disabledStyleClass2;
+            selectFileButton.DrawBackColor = Color.FromArgb(30, 30, 30);
+            selectFileButton.DrawBorderColor = Color.FromArgb(180, 201, 252);
+            selectFileButton.DrawBorderSize = 1F;
+            selectFileButton.DrawForeColor = Color.White;
+            selectFileButton.ForeColor = Color.White;
+            selectFileButton.ImageAlign = ContentAlignment.MiddleLeft;
+            selectFileButton.ImageResizing = new SizeF(0.75F, 0.75F);
+            selectFileButton.ImageResizingFormat = KlxPiaoAPI.ResizeMode.Percentage;
+            interactionStyleClass8.DownBackColor = Color.FromArgb(2, 27, 85);
+            interactionStyleClass8.DownBorderColor = Color.Empty;
+            interactionStyleClass8.DownBorderSize = 0F;
+            interactionStyleClass8.DownForeColor = Color.Empty;
+            interactionStyleClass8.OverBackColor = Color.FromArgb(4, 37, 117);
+            interactionStyleClass8.OverBorderColor = Color.Empty;
+            interactionStyleClass8.OverBorderSize = 0F;
+            interactionStyleClass8.OverForeColor = Color.Empty;
+            selectFileButton.InteractionStyle = interactionStyleClass8;
+            selectFileButton.IsEnableAnimation = true;
+            selectFileButton.Location = new Point(313, 183);
+            selectFileButton.Name = "selectFileButton";
+            selectFileButton.Size = new Size(100, 33);
+            selectFileButton.TabIndex = 61;
+            selectFileButton.Text = "Select File";
             // 
             // DemoForm
             // 
@@ -866,5 +909,6 @@ namespace KlxPiaoDemo
         private PointBar iconDrawOffsetPointBar;
         private RoundedButton roundedButton1;
         private RoundedButton githubButton;
+        private RoundedButton selectFileButton;
     }
 }

@@ -628,12 +628,12 @@ namespace KlxPiaoControls
         #endregion
 
         #region OnMouseEnter OnMouseLeave OnMouseDown OnMouseUp
-        private readonly CancellationTokenSource backColorCTS = new();
-        private readonly CancellationTokenSource foreColorCTS = new();
-        private readonly CancellationTokenSource borderColorCTS = new();
-        private readonly CancellationTokenSource borderSizeCTS = new();
+        private CancellationTokenSource backColorCTS = new();
+        private CancellationTokenSource foreColorCTS = new();
+        private CancellationTokenSource borderColorCTS = new();
+        private CancellationTokenSource borderSizeCTS = new();
 
-        private void SetColorAnimation(Color newColor, Color startColor, Action<Color> setColor, AnimationInfo animationConfig, CancellationTokenSource cts)
+        private void SetColorAnimation(Color newColor, Color startColor, Action<Color> setColor, AnimationInfo animationConfig,ref CancellationTokenSource cts)
         {
             if (newColor != Color.Empty)
             {
@@ -650,7 +650,7 @@ namespace KlxPiaoControls
             }
         }
 
-        private void SetFloatAnimation(float newValue, float startValue, Action<float> setValue, AnimationInfo animationConfig, CancellationTokenSource cts)
+        private void SetFloatAnimation(float newValue, float startValue, Action<float> setValue, AnimationInfo animationConfig,ref CancellationTokenSource cts)
         {
             if (newValue != 0)
             {
@@ -667,7 +667,7 @@ namespace KlxPiaoControls
             }
         }
 
-        private void ResetColorAnimation(Color newColor, Color startColor, Action<Color> setColor, AnimationInfo animationConfig, CancellationTokenSource cts)
+        private void ResetColorAnimation(Color newColor, Color startColor, Action<Color> setColor, AnimationInfo animationConfig,ref CancellationTokenSource cts)
         {
             if (IsEnableAnimation)
             {
@@ -681,7 +681,7 @@ namespace KlxPiaoControls
             }
         }
 
-        private void ResetFloatAnimation(float newValue, float startValue, Action<float> setValue, AnimationInfo animationConfig, CancellationTokenSource cts)
+        private void ResetFloatAnimation(float newValue, float startValue, Action<float> setValue, AnimationInfo animationConfig,ref CancellationTokenSource cts)
         {
             if (IsEnableAnimation)
             {
@@ -702,28 +702,28 @@ namespace KlxPiaoControls
                 DrawBackColor,
                 value => DrawBackColor = value,
                 AnimationConfig.ColorAnimation,
-                backColorCTS);
+                ref backColorCTS);
 
             SetColorAnimation(
                 InteractionStyle.OverForeColor,
                 DrawForeColor,
                 value => DrawForeColor = value,
                 AnimationConfig.ColorAnimation,
-                foreColorCTS);
+                ref foreColorCTS);
 
             SetColorAnimation(
                 InteractionStyle.OverBorderColor,
                 DrawBorderColor,
                 value => DrawBorderColor = value,
                 AnimationConfig.BorderColorAnimation,
-                borderColorCTS);
+                ref borderColorCTS);
 
             SetFloatAnimation(
                 InteractionStyle.OverBorderSize,
                 DrawBorderSize,
                 value => DrawBorderSize = value,
                 AnimationConfig.BorderSizeAnimation,
-                borderSizeCTS);
+                ref borderSizeCTS);
 
             base.OnMouseEnter(e);
         }
@@ -735,28 +735,28 @@ namespace KlxPiaoControls
                 DrawBackColor,
                 value => DrawBackColor = value,
                 AnimationConfig.ColorAnimation,
-                backColorCTS);
+                ref backColorCTS);
 
             ResetColorAnimation(
                 ForeColor,
                 DrawForeColor,
                 value => DrawForeColor = value,
                 AnimationConfig.ColorAnimation,
-                foreColorCTS);
+                ref foreColorCTS);
 
             ResetColorAnimation(
                 BorderColor,
                 DrawBorderColor,
                 value => DrawBorderColor = value,
                 AnimationConfig.BorderColorAnimation,
-                borderColorCTS);
+                ref borderColorCTS);
 
             ResetFloatAnimation(
                 BorderSize,
                 DrawBorderSize,
                 value => DrawBorderSize = value,
                 AnimationConfig.BorderSizeAnimation,
-                borderSizeCTS);
+                ref borderSizeCTS);
 
             base.OnMouseLeave(e);
         }
@@ -779,28 +779,28 @@ namespace KlxPiaoControls
                     DrawBackColor,
                     value => DrawBackColor = value,
                     AnimationConfig.ColorAnimation,
-                    backColorCTS);
+                    ref backColorCTS);
 
                 SetColorAnimation(
                     InteractionStyle.DownForeColor,
                     DrawForeColor,
                     value => DrawForeColor = value,
                     AnimationConfig.ColorAnimation,
-                    foreColorCTS);
+                    ref foreColorCTS);
 
                 SetColorAnimation(
                     InteractionStyle.DownBorderColor,
                     DrawBorderColor,
                     value => DrawBorderColor = value,
                     AnimationConfig.BorderColorAnimation,
-                    borderColorCTS);
+                    ref borderColorCTS);
 
                 SetFloatAnimation(
                     InteractionStyle.DownBorderSize,
                     DrawBorderSize,
                     value => DrawBorderSize = value,
                     AnimationConfig.BorderSizeAnimation,
-                    borderSizeCTS);
+                    ref borderSizeCTS);
             }
 
             base.OnMouseDown(e);
@@ -824,28 +824,28 @@ namespace KlxPiaoControls
                     DrawBackColor,
                     value => DrawBackColor = value,
                     AnimationConfig.ColorAnimation,
-                    backColorCTS);
+                    ref backColorCTS);
 
                 ResetColorAnimation(
                     InteractionStyle.OverForeColor == Color.Empty ? ForeColor : InteractionStyle.OverForeColor,
                     DrawForeColor,
                     value => DrawForeColor = value,
                     AnimationConfig.ColorAnimation,
-                    foreColorCTS);
+                    ref foreColorCTS);
 
                 ResetColorAnimation(
                     InteractionStyle.OverBorderColor == Color.Empty ? BorderColor : InteractionStyle.OverBorderColor,
                     DrawBorderColor,
                     value => DrawBorderColor = value,
                     AnimationConfig.BorderColorAnimation,
-                    borderColorCTS);
+                    ref borderColorCTS);
 
                 ResetFloatAnimation(
                     InteractionStyle.OverBorderSize == 0 ? BorderSize : InteractionStyle.OverBorderSize,
                     DrawBorderSize,
                     value => DrawBorderSize = value,
                     AnimationConfig.BorderSizeAnimation,
-                    borderSizeCTS);
+                    ref borderSizeCTS);
 
                 //使用重写的 Click 事件，防止用户弹出对话框时，事件触发顺序错误
                 OnClick(EventArgs.Empty);

@@ -136,4 +136,13 @@
   <data name="animationConfigClass2.ColorAnimation" type="KlxPiaoAPI.AnimationInfo, KlxPiaoAPI">
     <value>150, 30, [0, 0, 1, 1]</value>
   </data>
+  <data name="animationConfigClass3.BorderColorAnimation" type="KlxPiaoAPI.AnimationInfo, KlxPiaoAPI">
+    <value>150, 30, [0, 0, 1, 1]</value>
+  </data>
+  <data name="animationConfigClass3.BorderSizeAnimation" type="KlxPiaoAPI.AnimationInfo, KlxPiaoAPI">
+    <value>100, 30, [0, 0, 1, 1]</value>
+  </data>
+  <data name="animationConfigClass3.ColorAnimation" type="KlxPiaoAPI.AnimationInfo, KlxPiaoAPI">
+    <value>150, 30, [0, 0, 1, 1]</value>
+  </data>
 </root>

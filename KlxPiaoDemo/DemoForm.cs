@@ -13,17 +13,17 @@ namespace KlxPiaoDemo
             InitializeComponent();
 
             //checkBox1.CheckedChanged += (sender, e) => roundedButton1.Enabled = checkBox1.Checked;
-            roundedButton1.Click += (sender, e) =>
-            {
-                KlxPiaoMessageBox m = new(this)
-                {
-                    Title = "标题",
-                    SyncedFormProperties = ["BackColor", "TitleTextOffset"]
-                };
-                m.Show();
+            //roundedButton1.Click += (sender, e) =>
+            //{
+            //    KlxPiaoMessageBox m = new(this)
+            //    {
+            //        Title = "标题",
+            //        SyncedFormProperties = ["BackColor", "TitleTextOffset"]
+            //    };
+            //    m.Show();
 
-                BackColor = Color.Green;
-            };
+            //    BackColor = Color.Green;
+            //};
 
             //BackgroundPaint += (sender, e) =>
             //{
