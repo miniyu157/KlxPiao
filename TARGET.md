@@ -7,7 +7,6 @@
 - 组件首次创建或父容器背景色改变时，```BaseBackColor``` 属性不能自动适应
 - KlxPiaoTrackBar 交互时也要加入动画相关属性
 - 所有组件的边框大小类型都要改为 ```float```
-- 修复 KlxPiaoForm 使用 OnBackgroundPaint 方法绘制不能应用为标题按钮的背景 (最好把标题按钮的运作方式改一改)
 
 以优化 KlxPiaoForm (可以考虑改个名字) 为主，小控件做不好就不要做了(<br>
 例如 1.2.0.0 移除的 KlxPiaoText，和套上圆角 Panel 效果是一样的

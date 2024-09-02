@@ -79,7 +79,7 @@ namespace KlxPiaoDemo
             {
                 cts.Cancel();
                 cts = new();
-                _ = ControlAnimator.BezierTransition(DrawBackColor, newColor, AnimationConfig, value => DrawBackColor = value, true, cts.Token);
+                _ = TransiMate.Start(DrawBackColor, newColor, AnimationConfig, value => DrawBackColor = value, true, cts.Token);
             }
 
             base.OnMouseEnter(e);
@@ -89,7 +89,7 @@ namespace KlxPiaoDemo
         {
             cts.Cancel();
             cts = new();
-            _ = ControlAnimator.BezierTransition(DrawBackColor, BackColor, AnimationConfig, value => DrawBackColor = value, true, cts.Token);
+            _ = TransiMate.Start(DrawBackColor, BackColor, AnimationConfig, value => DrawBackColor = value, true, cts.Token);
 
             base.OnMouseLeave(e);
         }
@@ -101,7 +101,7 @@ namespace KlxPiaoDemo
             {
                 cts.Cancel();
                 cts = new();
-                _ = ControlAnimator.BezierTransition(DrawBackColor, newColor, AnimationConfig, value => DrawBackColor = value, true, cts.Token);
+                _ = TransiMate.Start(DrawBackColor, newColor, AnimationConfig, value => DrawBackColor = value, true, cts.Token);
             }
 
             base.OnMouseDown(e);
@@ -113,7 +113,7 @@ namespace KlxPiaoDemo
             cts = new();
 
             Color restoreColor = InteractionStyle.OverBackColor == Color.Empty ? BackColor : InteractionStyle.OverBackColor;
-            _ = ControlAnimator.BezierTransition(DrawBackColor, restoreColor, AnimationConfig, value => DrawBackColor = value, true, cts.Token);
+            _ = TransiMate.Start(DrawBackColor, restoreColor, AnimationConfig, value => DrawBackColor = value, true, cts.Token);
 
             base.OnMouseUp(e);
         }

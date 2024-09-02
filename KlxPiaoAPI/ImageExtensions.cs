@@ -366,5 +366,50 @@ namespace KlxPiaoAPI
             return ((Bitmap)originalImage).CreateTransparentBackground(cellSize, lightColor, darkColor);
         }
         #endregion
+
+        public static Bitmap AdjustBrightness(this Bitmap image, float brightnessFactor)
+        {
+            Bitmap adjustedImage = new(image.Width, image.Height);
+
+            Rectangle rect = new(0, 0, image.Width, image.Height);
+
+            BitmapData originalData = image.LockBits(rect, ImageLockMode.ReadOnly, image.PixelFormat);
+            BitmapData adjustedData = adjustedImage.LockBits(rect, ImageLockMode.WriteOnly, image.PixelFormat);
+
+            int bytesPerPixel = Image.GetPixelFormatSize(image.PixelFormat) / 8;
+            int byteCount = originalData.Stride * image.Height;
+            byte[] pixelBuffer = new byte[byteCount];
+            byte[] resultBuffer = new byte[byteCount];
+
+            Marshal.Copy(originalData.Scan0, pixelBuffer, 0, byteCount);
+
+            for (int i = 0; i < byteCount; i += bytesPerPixel)
+            {
+                float r = pixelBuffer[i + 2] * brightnessFactor;
+                float g = pixelBuffer[i + 1] * brightnessFactor;
+                float b = pixelBuffer[i] * brightnessFactor;
+
+                resultBuffer[i + 2] = (byte)Math.Min(255, Math.Max(0, r));
+                resultBuffer[i + 1] = (byte)Math.Min(255, Math.Max(0, g));
+                resultBuffer[i] = (byte)Math.Min(255, Math.Max(0, b));
+
+                if (bytesPerPixel == 4)
+                {
+                    resultBuffer[i + 3] = pixelBuffer[i + 3];
+                }
+            }
+
+            Marshal.Copy(resultBuffer, 0, adjustedData.Scan0, byteCount);
+
+            image.UnlockBits(originalData);
+            adjustedImage.UnlockBits(adjustedData);
+
+            return adjustedImage;
+        }
+
+        public static Image AdjustBrightness(this Image image, float brightnessFactor)
+        {
+            return ((Bitmap)image).AdjustBrightness(brightnessFactor);
+        }
     }
 }

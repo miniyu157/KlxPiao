@@ -77,9 +77,9 @@ namespace KlxPiaoControls
                                 topHeight = 1
                             };
                             DwmExtendFrameIntoClientArea(Handle, ref margins);
-
                         }
                         break;
+
                     default:
                         break;
                 }
@@ -89,6 +89,28 @@ namespace KlxPiaoControls
         #endregion
 
         #region enums
+        /// <summary>
+        /// 定义刷新方式的枚举。
+        /// </summary>
+        public enum RefreshMode
+        {
+            /// <summary>
+            /// 仅刷新标题栏。
+            /// </summary>
+            TitleBarOnly,
+
+            /// <summary>
+            /// 仅刷新窗体（不包含子控件）。
+            /// </summary>
+            Window,
+
+            /// <summary>
+            /// 刷新窗体及其子控件。
+            /// </summary>
+            WindowAndChildren
+        }
+
+
         /// <summary>
         /// 表示横向两端的枚举。
         /// </summary>
@@ -212,7 +234,7 @@ namespace KlxPiaoControls
         private TitleButtonStyle _titleButtons;
         private int _titleButtonWidth;
         private HorizontalEnds _titleButtonAlign;
-        private SizeF _titleButtonIconSize;
+        private Size _titleButtonIconSize;
         private float _interactionColorScale;
         private bool _enableCloseButton;
         private bool _enableResizeButton;
@@ -220,9 +242,12 @@ namespace KlxPiaoControls
         private Color _titleButtonDisabledColor;
         private Point _iconDrawOffset;
         private int _titleBoxHeight;
+        private CornerRadius _titleButtonCornerRadius;
+        private bool _enableTitleButtonAnimation;
 
         private WindowPosition _dragMode;
         private WindowPosition _shortcutResizeMode;
+        private RefreshMode _sizeChangeRefreshMode;
         private bool _enableStartupAnimation;
         private bool _enableCloseAnimation;
         private bool _enableResizeAnimation;
@@ -232,6 +257,29 @@ namespace KlxPiaoControls
         private StartupSequence _startupOrder;
         private bool _enableShadow;
         private bool _enableChangeInactiveTitleBoxForeColor;
+        #endregion
+
+        #region override properties
+        [Browsable(false)]
+        public new FormBorderStyle FormBorderStyle
+        {
+            get => base.FormBorderStyle;
+            set => base.FormBorderStyle = value;
+        }
+
+        [Browsable(false)]
+        public new bool HelpButton
+        {
+            get => base.HelpButton;
+            set => base.HelpButton = value;
+        }
+
+        [Browsable(false)]
+        public new bool ControlBox
+        {
+            get => base.ControlBox;
+            set => base.ControlBox = value;
+        }
         #endregion
 
         #region events
@@ -305,50 +353,23 @@ namespace KlxPiaoControls
         }
         #endregion
 
-        [Browsable(false)]
-        public new FormBorderStyle FormBorderStyle
-        {
-            get => base.FormBorderStyle;
-            set => base.FormBorderStyle = value;
-        }
-
-        [Browsable(false)]
-        public new bool HelpButton
-        {
-            get => base.HelpButton;
-            set => base.HelpButton = value;
-        }
-
-        [Browsable(false)]
-        public new bool ControlBox
-        {
-            get => base.ControlBox;
-            set => base.ControlBox = value;
-        }
-
-        private class TitleButton : Button
+        #region create titlebutton
+        private class TitleButton : RoundedButton
         {
             public TitleButton()
             {
-                FlatStyle = FlatStyle.Flat;
-                FlatAppearance.BorderSize = 0;
+                BorderSize = 0;
+                BorderCornerRadius = new CornerRadius(0);
+                IsEnableAnimation = false;
+
                 SetStyle(ControlStyles.Selectable, false);
             }
         }
 
-        //private Bitmap GetUserPaintBackGround()
-        //{
-        //    Bitmap bitmap = new(Width, Height);
-        //    using (Graphics graphics = Graphics.FromImage(bitmap))
-        //    {
-        //        OnBackgroundPaint(graphics);
-        //    }
-        //    return bitmap;
-        //}
-
         private readonly TitleButton CloseButton = new();
         private readonly TitleButton ResizeButton = new();
         private readonly TitleButton MinimizeButton = new();
+        #endregion
 
         private void InitializeTitleButton()
         {
@@ -381,13 +402,6 @@ namespace KlxPiaoControls
             MinimizeButton.Top = 1;
         }
 
-        //private ImageList _titleButtonIcon;
-        //public ImageList TitleButtonIcon
-        //{
-        //    get => _titleButtonIcon;
-        //    set => _titleButtonIcon = value;
-        //}
-
         private void TitleButtons_Paint(object? sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -402,9 +416,43 @@ namespace KlxPiaoControls
             Pen p2 = EnableResizeButton ? pen : disablePen;
             Pen p3 = EnableMinimizeButton ? pen : disablePen;
 
-            if (sender is Control but)
+            if (sender is TitleButton but)
             {
-                //but.BackgroundImage = GetUserPaintBackGround().Clone(new Rectangle(but.Location, but.Size), PixelFormat.Format32bppArgb);
+                Bitmap? GetUserPaintBackGround()
+                {
+                    if (BackgroundPaint == null)
+                    {
+                        return null;
+                    }
+
+                    Bitmap bitmap = new(Width, Height);
+                    using (Graphics graphics = Graphics.FromImage(bitmap))
+                    {
+                        OnBackgroundPaint(graphics);
+                    }
+                    return bitmap;
+                }
+
+                using (var backgroundBitmap = GetUserPaintBackGround())
+                {
+                    if (BackgroundImage != null)
+                    {
+                        g.DrawImage(
+                            BackgroundImage,
+                            new Rectangle(0, 0, but.Width, but.Height),
+                            but.Location.X, but.Location.Y, but.Width, but.Height,
+                            GraphicsUnit.Pixel);
+                    }
+
+                    if (backgroundBitmap != null)
+                    {
+                        g.DrawImage(
+                            backgroundBitmap,
+                            new Rectangle(0, 0, but.Width, but.Height),
+                            but.Location.X, but.Location.Y, but.Width, but.Height,
+                            GraphicsUnit.Pixel);
+                    }
+                }
 
                 switch (but.Name)
                 {
@@ -492,9 +540,9 @@ namespace KlxPiaoControls
             _titleButtons = TitleButtonStyle.ShowAll;
             _titleBoxHeight = 31;
             _titleButtonHeight = 31;
-            _titleButtonWidth = 40;
+            _titleButtonWidth = 46;
             _titleButtonAlign = HorizontalEnds.Right;
-            _titleButtonIconSize = new SizeF(10F, 10F);
+            _titleButtonIconSize = new Size(10, 10);
             _interactionColorScale = -0.04F;
             _enableCloseButton = true;
             _enableResizeButton = true;
@@ -502,9 +550,12 @@ namespace KlxPiaoControls
             _titleButtonDisabledColor = Color.DarkGray;
             _enableChangeInactiveTitleBoxForeColor = true;
             _iconDrawOffset = Point.Empty;
+            _titleButtonCornerRadius = new CornerRadius(0);
+            _enableTitleButtonAnimation = false;
 
             _dragMode = WindowPosition.TitleBarOnly;
             _shortcutResizeMode = WindowPosition.TitleBarOnly;
+            _sizeChangeRefreshMode = RefreshMode.TitleBarOnly;
             _enableStartupAnimation = true;
             _enableCloseAnimation = true;
             _enableResizeAnimation = true;
@@ -653,7 +704,7 @@ namespace KlxPiaoControls
         /// </summary>
         [Category("KlxPiaoForm Title Box")]
         [Description("标题按钮图标绘制大小")]
-        public SizeF TitleButtonIconSize
+        public Size TitleButtonIconSize
         {
             get => _titleButtonIconSize;
             set { _titleButtonIconSize = value; RefreshTitleBoxButton(); }
@@ -738,6 +789,26 @@ namespace KlxPiaoControls
             get => _titleBoxHeight;
             set { InvalidateTitleBox(); _titleBoxHeight = value; }
         }
+        /// <summary>
+        /// 获取或设置标题按钮的角半径，以 <see cref="CornerRadius"/> 结构体表示。
+        /// </summary>
+        [Category("KlxPiaoForm Title Box")]
+        [Description("标题按钮的角半径")]
+        public CornerRadius TitleButtonCornerRadius
+        {
+            get => _titleButtonCornerRadius;
+            set { _titleButtonCornerRadius = value; RefreshTitleButtonProperties(); }
+        }
+        /// <summary>
+        /// 获取或设置是否启用标题按钮过渡动画。
+        /// </summary>
+        [Category("KlxPiaoForm Title Box")]
+        [Description("是否启用标题按钮过渡动画")]
+        public bool EnableTitleButtonAnimation
+        {
+            get => _enableTitleButtonAnimation;
+            set => _enableTitleButtonAnimation = value;
+        }
         #endregion
 
         #region KlxPiaoForm Properties
@@ -760,6 +831,16 @@ namespace KlxPiaoControls
         {
             get => _shortcutResizeMode;
             set => _shortcutResizeMode = value;
+        }
+        /// <summary>
+        /// 获取或设置窗体大小改变时的刷新方式。
+        /// </summary>
+        [Category("KlxPiaoForm Properties")]
+        [Description("窗体大小改变时的刷新方式")]
+        public RefreshMode SizeChangeRefreshMode
+        {
+            get => _sizeChangeRefreshMode;
+            set => _sizeChangeRefreshMode = value;
         }
         /// <summary>
         /// 获取或设置是否启用启动动画。
@@ -856,6 +937,12 @@ namespace KlxPiaoControls
             using (Brush brush = new SolidBrush(TitleBoxBackColor))
             {
                 g.FillRectangle(brush, new Rectangle(thisRect.X, thisRect.Y, thisRect.Width, TitleBoxHeight));
+            }
+
+            //draw background
+            if (BackgroundImage != null)
+            {
+                g.DrawImage(BackgroundImage, new Rectangle(0, 0, BackgroundImage.Width, BackgroundImage.Height));
             }
 
             //user drawing
@@ -1153,8 +1240,22 @@ namespace KlxPiaoControls
 
         protected override void OnSizeChanged(EventArgs e)
         {
-            InvalidateTitleBox();
-            Update();
+            switch (SizeChangeRefreshMode)
+            {
+                case RefreshMode.TitleBarOnly:
+                    InvalidateTitleBox();
+                    Update();
+                    break;
+
+                case RefreshMode.Window:
+                    Invalidate(false);
+                    Update();
+                    break;
+
+                case RefreshMode.WindowAndChildren:
+                    Refresh();
+                    break;
+            }
 
             base.OnSizeChanged(e);
         }
@@ -1430,8 +1531,13 @@ namespace KlxPiaoControls
             {
                 b.Size = new Size(TitleButtonWidth, TitleButtonHeight - 1);
                 b.BackColor = TitleBoxBackColor;
-                b.FlatAppearance.MouseOverBackColor = TitleBoxBackColor.AdjustBrightness(InteractionColorScale);
-                b.FlatAppearance.MouseDownBackColor = b.FlatAppearance.MouseOverBackColor.AdjustBrightness(InteractionColorScale);
+                b.BaseBackColor = TitleBoxBackColor;
+                b.BorderCornerRadius = TitleButtonCornerRadius;
+                b.IsEnableAnimation = EnableTitleButtonAnimation;
+
+                b.InteractionStyle.OverBackColor = TitleBoxBackColor.AdjustBrightness(InteractionColorScale);
+                b.InteractionStyle.DownBackColor = b.InteractionStyle.OverBackColor.AdjustBrightness(InteractionColorScale);
+
             }
 
             CloseButton.Enabled = EnableCloseButton;
@@ -1602,7 +1708,7 @@ namespace KlxPiaoControls
         /// <summary>
         /// 设置主题颜色。
         /// </summary>
-        /// <param name="themeColor">主题色。</param>
+        /// <param name="color">主题色。</param>
         public void SetThemeColor(Color color)
         {
             TitleBoxBackColor = color;

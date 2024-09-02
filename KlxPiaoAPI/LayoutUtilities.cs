@@ -5,47 +5,6 @@
     /// </summary>
     public class LayoutUtilities
     {
-        #region (4 个重载) CalculateAlignedPosition
-        /// <summary>
-        /// 根据指定的对齐方式，计算容器矩形内部矩形的位置。
-        /// </summary>
-        /// <param name="containerRect">包含内部大小的容器矩形。</param>
-        /// <param name="internalSize">要在容器内对齐的内部矩形的大小。</param>
-        /// <param name="alignment">内部矩形在容器内的对齐方式。</param>
-        /// <param name="offset">偏移，用于调整内部矩形在容器中的位置。默认为null。</param>
-        /// <returns>经过对齐和偏移调整后的内部矩形的位置。</returns>
-        public static Point CalculateAlignedPosition(Rectangle containerRect, Size internalSize, ContentAlignment alignment, Point? offset = null)
-        {
-            int HLeft = containerRect.X;
-            int HCenter = containerRect.X + (containerRect.Width - internalSize.Width) / 2;
-            int HRight = containerRect.X + containerRect.Width - internalSize.Width;
-            int VTop = containerRect.Y;
-            int VCenter = containerRect.Y + (containerRect.Height - internalSize.Height) / 2;
-            int VBottom = containerRect.Y + containerRect.Height - internalSize.Height;
-
-            Point point = alignment switch
-            {
-                ContentAlignment.TopLeft => new Point(HLeft, VTop),
-                ContentAlignment.TopCenter => new Point(HCenter, VTop),
-                ContentAlignment.TopRight => new Point(HRight, VTop),
-                ContentAlignment.MiddleLeft => new Point(HLeft, VCenter),
-                ContentAlignment.MiddleCenter => new Point(HCenter, VCenter),
-                ContentAlignment.MiddleRight => new Point(HRight, VCenter),
-                ContentAlignment.BottomLeft => new Point(HLeft, VBottom),
-                ContentAlignment.BottomCenter => new Point(HCenter, VBottom),
-                ContentAlignment.BottomRight => new Point(HRight, VBottom),
-                _ => Point.Empty
-            };
-
-            if (offset != null)
-            {
-                point.X += ((Point)offset).X;
-                point.Y += ((Point)offset).Y;
-            }
-
-            return point;
-        }
-
         /// <summary>
         /// 根据指定的对齐方式，计算容器矩形内部矩形的位置。
         /// </summary>
@@ -79,8 +38,8 @@
 
             if (offset != null)
             {
-                pointF.X += ((PointF)offset).X;
-                pointF.Y += ((PointF)offset).Y;
+                pointF.X += ((Point)offset).X;
+                pointF.Y += ((Point)offset).Y;
             }
 
             return pointF;
@@ -92,26 +51,13 @@
         /// <param name="containerRect">包含内部大小的容器矩形。</param>
         /// <param name="internalSize">要在容器内对齐的内部矩形的大小。</param>
         /// <param name="alignment">内部矩形在容器内的对齐方式。</param>
-        /// <param name="padding">偏移，用于调整内部矩形在容器中的位置。默认为null。</param>
-        /// <returns>经过对齐和偏移调整后的内部矩形的位置。</returns>
-        public static Point CalculateAlignedPosition(Rectangle containerRect, SizeF internalSize, ContentAlignment alignment, Point? offset = null)
-        {
-            return CalculateAlignedPosition(containerRect, new Size((int)internalSize.Width, (int)internalSize.Height), alignment, offset);
-        }
-
-        /// <summary>
-        /// 根据指定的对齐方式，计算容器矩形内部矩形的位置。
-        /// </summary>
-        /// <param name="containerRect">包含内部大小的容器矩形。</param>
-        /// <param name="internalSize">要在容器内对齐的内部矩形的大小。</param>
-        /// <param name="alignment">内部矩形在容器内的对齐方式。</param>
         /// <param name="offset">偏移，用于调整内部矩形在容器中的位置。默认为null。</param>
         /// <returns>经过对齐和偏移调整后的内部矩形的位置。</returns>
-        public static PointF CalculateAlignedPosition(RectangleF containerRect, Size internalSize, ContentAlignment alignment, Point? offset = null)
+        public static Point CalculateAlignedPosition(Rectangle containerRect, Size internalSize, ContentAlignment alignment, Point? offset = null)
         {
-            return CalculateAlignedPosition(containerRect, new SizeF(internalSize.Width, internalSize.Height), alignment, offset);
+            PointF temp = CalculateAlignedPosition(containerRect, new SizeF(internalSize.Width, internalSize.Height), alignment, offset);
+            return new Point((int)temp.X, (int)temp.Y);
         }
-        #endregion
 
         #region (2 个重载) AdjustContentAlignment
         /// <summary>

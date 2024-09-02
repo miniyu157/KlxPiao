@@ -633,7 +633,7 @@ namespace KlxPiaoControls
         private CancellationTokenSource borderColorCTS = new();
         private CancellationTokenSource borderSizeCTS = new();
 
-        private void SetColorAnimation(Color newColor, Color startColor, Action<Color> setColor, AnimationInfo animationConfig,ref CancellationTokenSource cts)
+        private void SetColorAnimation(Color newColor, Color startColor, Action<Color> setColor, AnimationInfo animationConfig, ref CancellationTokenSource cts)
         {
             if (newColor != Color.Empty)
             {
@@ -641,7 +641,7 @@ namespace KlxPiaoControls
                 {
                     cts.Cancel();
                     cts = new();
-                    _ = ControlAnimator.BezierTransition(startColor, newColor, animationConfig, setColor, true, cts.Token);
+                    _ = TransiMate.Start(startColor, newColor, animationConfig, setColor, true, cts.Token);
                 }
                 else
                 {
@@ -650,7 +650,7 @@ namespace KlxPiaoControls
             }
         }
 
-        private void SetFloatAnimation(float newValue, float startValue, Action<float> setValue, AnimationInfo animationConfig,ref CancellationTokenSource cts)
+        private void SetFloatAnimation(float newValue, float startValue, Action<float> setValue, AnimationInfo animationConfig, ref CancellationTokenSource cts)
         {
             if (newValue != 0)
             {
@@ -658,7 +658,7 @@ namespace KlxPiaoControls
                 {
                     cts.Cancel();
                     cts = new();
-                    _ = ControlAnimator.BezierTransition(startValue, newValue, animationConfig, setValue, true, cts.Token);
+                    _ = TransiMate.Start(startValue, newValue, animationConfig, setValue, true, cts.Token);
                 }
                 else
                 {
@@ -667,13 +667,13 @@ namespace KlxPiaoControls
             }
         }
 
-        private void ResetColorAnimation(Color newColor, Color startColor, Action<Color> setColor, AnimationInfo animationConfig,ref CancellationTokenSource cts)
+        private void ResetColorAnimation(Color newColor, Color startColor, Action<Color> setColor, AnimationInfo animationConfig, ref CancellationTokenSource cts)
         {
             if (IsEnableAnimation)
             {
                 cts.Cancel();
                 cts = new();
-                _ = ControlAnimator.BezierTransition(startColor, newColor, animationConfig, setColor, true, cts.Token);
+                _ = TransiMate.Start(startColor, newColor, animationConfig, setColor, true, cts.Token);
             }
             else
             {
@@ -681,13 +681,13 @@ namespace KlxPiaoControls
             }
         }
 
-        private void ResetFloatAnimation(float newValue, float startValue, Action<float> setValue, AnimationInfo animationConfig,ref CancellationTokenSource cts)
+        private void ResetFloatAnimation(float newValue, float startValue, Action<float> setValue, AnimationInfo animationConfig, ref CancellationTokenSource cts)
         {
             if (IsEnableAnimation)
             {
                 cts.Cancel();
                 cts = new();
-                _ = ControlAnimator.BezierTransition(startValue, newValue, animationConfig, setValue, true, cts.Token);
+                _ = TransiMate.Start(startValue, newValue, animationConfig, setValue, true, cts.Token);
             }
             else
             {
@@ -867,7 +867,7 @@ namespace KlxPiaoControls
                     cts.Cancel();
                     cts = new();
 
-                    _ = ControlAnimator.BezierTransition(
+                    _ = TransiMate.Start(
                         startColor,
                         newColor,
                         new AnimationInfo(150, 30, EasingType.Linear),

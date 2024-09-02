@@ -23,14 +23,14 @@
         /// <typeparam name="T">进行插值的类型。</typeparam>
         /// <param name="startValue">插值的起始值。</param>
         /// <param name="endValue">插值的终止值。</param>
-        /// <param name="progress">插值的进度，范围为0到1。</param>
+        /// <param name="progress">插值的进度，范围为 0-1。</param>
         /// <returns>计算得到的插值结果。</returns>
-        /// <exception cref="ArgumentOutOfRangeException">当progress不在0到1之间时抛出。</exception>
+        /// <exception cref="ArgumentOutOfRangeException">当 progress 不在 0-1 之间时抛出。</exception>
         /// <exception cref="NotImplementedException">当指定类型的插值策略未注册时抛出。</exception>
         public static T Interpolate<T>(T startValue, T endValue, double progress) where T : notnull
         {
             if (progress < 0 || progress > 1)
-                throw new ArgumentOutOfRangeException(nameof(progress), "进度必须在0到1之间。");
+                throw new ArgumentOutOfRangeException(nameof(progress), "进度必须在 0-1 之间。");
 
             Type type = typeof(T);
             if (strategies.TryGetValue(type, out IInterpolatorStrategy? value))

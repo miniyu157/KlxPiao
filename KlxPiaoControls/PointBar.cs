@@ -479,7 +479,7 @@ namespace KlxPiaoControls
                 using SolidBrush Textbrush = new(ForeColor);
 
                 SizeF textSize = g.MeasureString(text, Font);
-                Point textPos = LayoutUtilities.CalculateAlignedPosition(thisRect, textSize, CoordinateTextAlign, CoordinateTextOffset);
+                PointF textPos = LayoutUtilities.CalculateAlignedPosition(thisRect, textSize, CoordinateTextAlign, CoordinateTextOffset);
 
                 g.DrawString(text, Font, Textbrush, textPos);
             }

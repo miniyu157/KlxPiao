@@ -34,7 +34,7 @@ namespace KlxPiaoControls
 
         private Color _borderColor;
         private Color _baseBackColor;
-        private int _borderSize;
+        private float _borderSize;
         private CornerRadius _cornerRadius;
         private bool _isEnableShadow;
         private int _shadowLength;
@@ -92,7 +92,7 @@ namespace KlxPiaoControls
         [Category("KlxPiaoPanel Appearance")]
         [Description("边框的大小，启用阴影时失效")]
         [DefaultValue(1)]
-        public int BorderSize
+        public float BorderSize
         {
             get => _borderSize;
             set { _borderSize = value; Invalidate(); }
@@ -259,7 +259,7 @@ namespace KlxPiaoControls
             }
             else
             {
-                return new Size(Width - BorderSize * 2, Height - BorderSize * 2);
+                return new Size(Width - (int)BorderSize * 2, Height - (int)BorderSize * 2);
             }
         }
 
@@ -281,7 +281,7 @@ namespace KlxPiaoControls
             }
             else
             {
-                return new Point(BorderSize, BorderSize);
+                return new Point((int)BorderSize, (int)BorderSize);
             }
         }
 

@@ -15,6 +15,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="q1otnj3t.aaq~" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\KlxPiaoAPI\KlxPiaoAPI.csproj" />
 		<ProjectReference Include="..\KlxPiaoControls\KlxPiaoControls.csproj" />
 	</ItemGroup>

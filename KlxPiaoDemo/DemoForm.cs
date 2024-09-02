@@ -1,17 +1,20 @@
 ﻿using KlxPiaoAPI;
 using KlxPiaoControls;
 using System.Diagnostics;
+using System.Drawing.Drawing2D;
 
 namespace KlxPiaoDemo
 {
     public partial class DemoForm : KlxPiaoForm
     {
+
         private const string githubLink = "https://github.com/miniyu157/KlxPiao";
 
         public DemoForm()
         {
             InitializeComponent();
 
+            roundedButton2.Click += (sender, e) => new KlxPiaoLabelDemoForm().ShowDialog();
             //checkBox1.CheckedChanged += (sender, e) => roundedButton1.Enabled = checkBox1.Checked;
             //roundedButton1.Click += (sender, e) =>
             //{
@@ -33,6 +36,8 @@ namespace KlxPiaoDemo
 
             //    using LinearGradientBrush brush = new(rect, color1, color2, LinearGradientMode.ForwardDiagonal);
             //    e.Graphics.FillRectangle(brush, rect);
+
+            //    e.Graphics.DrawRounded(rect, new CornerRadius(16), Color.Empty, new Pen(Color.Red, 5));
             //};
 
             githubButton.Click += (sender, e) => Process.Start(new ProcessStartInfo() { FileName = githubLink, UseShellExecute = true });
@@ -59,7 +64,8 @@ namespace KlxPiaoDemo
             InitializeTrackBar(titleButtonWidthTrackBar,                      TitleButtonWidth,                      value => TitleButtonWidth = (int)value);
             InitializeTrackBar(titleButtonHeightTrackBar,                     TitleButtonHeight,                     value => TitleButtonHeight = (int)value);
             InitializeTrackBar(titleTextMarginTrackBar,                       TitleTextMargin,                       value => TitleTextMargin = (int)value);
-            InitializeTrackBar(titleButtonIconSizeTrackBar,                   TitleButtonIconSize.Width,             value => TitleButtonIconSize = new SizeF(value, value));
+            InitializeTrackBar(titleButtonIconSizeTrackBar,                   TitleButtonIconSize.Width,             value => TitleButtonIconSize = new Size((int)value, (int)value));
+            InitializeTrackBar(titleButtonCornerRadiusTrackBar,               TitleButtonCornerRadius.TopLeft,       value => TitleButtonCornerRadius = new CornerRadius(value));
 
             InitializeColorPanel(titleBoxBackColorPanel,                      TitleBoxBackColor,                     color =>
             {

@@ -6,7 +6,10 @@
 
 > [(未完成的目标)](/TARGET.md)
 
-> Demo 程序重做未完成，截图截止到版本 1.2.00
+> ![1206](/screenshot/1206.png)
+> 1.2.0.6 实现标题按钮透明 [<u>Demo.exe</u>](https://github.com/miniyu157/KlxPiao/releases/download/v1.2.0.6/KlxPiaoDemo.exe)
+
+> Demo 程序重做未完成，以下截图截止到版本 1.2.0.0
 
 ## 欢迎使用 KlxPiaoControls & KlxPiaoAPI !
 
@@ -15,7 +18,6 @@
 ```KlxPiaoForm``` 实际上是继承自 ```Form``` 的WinForms 无边框窗体 (FormBorderStyle = None)，所以任何元素都是可以接管的
 
 ## 简介
-
 
 解决方案提供了两个项目
 - KlxPiaoControls:<br>

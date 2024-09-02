@@ -1,5 +1,29 @@
 # 更新日志
 
+## 版本 1.2.0.6
+### KlxPiaoAPI
+#### 优化方法重载
+- LayoutUtilities.CalculateAlignedPosition
+#### 重命名类
+- ControlAnimator -> TransiMate
+#### 重命名方法
+- ControlAnimator -> Start
+- CustomTransition -> Start
+
+### KlxPiaoControls
+#### 属性类型变更
+- KlxPiaoPanel.BorderSize ```int``` -> ```float```
+#### 新增组件
+- KlxPiaoListBox
+#### 新增属性
+- KlxPiaoForm.EnableTitleButtonAnimation
+- KlxPiaoForm.SizeChangeRefreshMode
+- KlxPiaoForm.TitleButtonCornerRadius
+#### 修复
+- KlxPiaoForm.BackgroundImage 不生效的问题
+
+---
+
 ## 版本 1.2.0.5
 ### KlxPiaoControls
 #### 修复
