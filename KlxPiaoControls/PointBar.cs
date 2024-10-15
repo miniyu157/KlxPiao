@@ -145,10 +145,12 @@ namespace KlxPiaoControls
         /// <summary>
         /// 获取或设置坐标显示的格式。
         /// </summary>
-        /// <remarks>占位符：<br/>- {x}：X<br/>- {y}：Y。</remarks>
+        /// <remarks>占位符：<br/>{x}：X 坐标<br/>{y}：Y 坐标。</remarks>
         [Category("PointBar Appearance")]
         [Description("边框的颜色")]
         [DefaultValue("X:{X},Y:{Y}")]
+        [Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design", typeof(System.Drawing.Design.UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public string CoordinateDisplayFormat
         {
             get => _coordinateDisplayFormat;
@@ -475,7 +477,7 @@ namespace KlxPiaoControls
                     {"{Y}", Value.Y.ToString()}
                 };
 
-                string text = CoordinateDisplayFormat.ReplaceMultiple(replacements);
+                string text = CoordinateDisplayFormat.ReplaceMultiple(replacements, StringComparison.OrdinalIgnoreCase);
                 using SolidBrush Textbrush = new(ForeColor);
 
                 SizeF textSize = g.MeasureString(text, Font);

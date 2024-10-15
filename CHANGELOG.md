@@ -1,5 +1,19 @@
 # 更新日志
 
+## 版本 1.2.0.7
+### KlxPiaoAPI
+#### 优化
+- TypeInterpolator.Interpolate 取消 0-1 限制
+- TransiMate.Start 方法签名
+- (扩展) string.ReplaceMultiple 方法签名
+
+### KlxPiaoControls
+#### 优化
+- PointBar.CoordinateDisplayFormat 支持多行
+- PointBar.CoordinateDisplayFormat 忽略大小写
+
+---
+
 ## 版本 1.2.0.6
 ### KlxPiaoAPI
 #### 优化方法重载

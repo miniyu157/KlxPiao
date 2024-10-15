@@ -64,7 +64,9 @@ namespace KlxPiaoDemo
             label7 = new Label();
             titleBoxBackColorPanel = new KlxPiaoPanel();
             groupBox2 = new GroupBox();
+            titleTextOffsetPointBar = new PointBar();
             titleButtonCornerRadiusTrackBar = new KlxPiaoTrackBar();
+            iconDrawOffsetPointBar = new PointBar();
             titleButtonHeightTrackBar = new KlxPiaoTrackBar();
             showIconCheckBox = new CheckBox();
             titleTextMarginTrackBar = new KlxPiaoTrackBar();
@@ -96,8 +98,6 @@ namespace KlxPiaoDemo
             klxPiaoListBox1 = new KlxPiaoListBox();
             roundedButton2 = new RoundedButton();
             roundedButton1 = new RoundedButton();
-            titleTextOffsetPointBar = new PointBar();
-            iconDrawOffsetPointBar = new PointBar();
             mainTabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             propertiesTabPage.SuspendLayout();
@@ -355,7 +355,9 @@ namespace KlxPiaoDemo
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(titleTextOffsetPointBar);
             groupBox2.Controls.Add(titleButtonCornerRadiusTrackBar);
+            groupBox2.Controls.Add(iconDrawOffsetPointBar);
             groupBox2.Controls.Add(titleButtonHeightTrackBar);
             groupBox2.Controls.Add(showIconCheckBox);
             groupBox2.Controls.Add(titleTextMarginTrackBar);
@@ -379,6 +381,21 @@ namespace KlxPiaoDemo
             groupBox2.TabIndex = 14;
             groupBox2.TabStop = false;
             groupBox2.Text = "Title Box";
+            // 
+            // titleTextOffsetPointBar
+            // 
+            titleTextOffsetPointBar.BackColor = Color.White;
+            titleTextOffsetPointBar.CoordinateDisplayFormat = "TitleTextOffset: {X}, {Y}";
+            titleTextOffsetPointBar.CoordinateTextAlign = ContentAlignment.BottomCenter;
+            titleTextOffsetPointBar.CoordinateTextOffset = new Point(0, -2);
+            titleTextOffsetPointBar.CornerRadius = new KlxPiaoAPI.CornerRadius(1F, 1F, 1F, 1F);
+            titleTextOffsetPointBar.Font = new Font("Microsoft YaHei UI", 7.5F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            titleTextOffsetPointBar.Location = new Point(292, 207);
+            titleTextOffsetPointBar.MaxValue = new Point(10, 10);
+            titleTextOffsetPointBar.MinValue = new Point(-10, -10);
+            titleTextOffsetPointBar.Name = "titleTextOffsetPointBar";
+            titleTextOffsetPointBar.Size = new Size(75, 75);
+            titleTextOffsetPointBar.TabIndex = 25;
             // 
             // titleButtonCornerRadiusTrackBar
             // 
@@ -406,6 +423,21 @@ namespace KlxPiaoDemo
             titleButtonCornerRadiusTrackBar.TrackBackColor = Color.White;
             titleButtonCornerRadiusTrackBar.TrackForeColor = Color.LightGray;
             titleButtonCornerRadiusTrackBar.ValueTextDisplayFormat = "TitleButtonCornerRadius: {value}";
+            // 
+            // iconDrawOffsetPointBar
+            // 
+            iconDrawOffsetPointBar.BackColor = Color.White;
+            iconDrawOffsetPointBar.CoordinateDisplayFormat = "IconDrawOffset: {X}, {Y}";
+            iconDrawOffsetPointBar.CoordinateTextAlign = ContentAlignment.BottomCenter;
+            iconDrawOffsetPointBar.CoordinateTextOffset = new Point(0, -2);
+            iconDrawOffsetPointBar.CornerRadius = new KlxPiaoAPI.CornerRadius(6F, 6F, 6F, 6F);
+            iconDrawOffsetPointBar.Font = new Font("Microsoft YaHei UI", 7.5F, FontStyle.Regular, GraphicsUnit.Point, 134);
+            iconDrawOffsetPointBar.Location = new Point(211, 207);
+            iconDrawOffsetPointBar.MaxValue = new Point(10, 10);
+            iconDrawOffsetPointBar.MinValue = new Point(-10, -10);
+            iconDrawOffsetPointBar.Name = "iconDrawOffsetPointBar";
+            iconDrawOffsetPointBar.Size = new Size(75, 75);
+            iconDrawOffsetPointBar.TabIndex = 28;
             // 
             // titleButtonHeightTrackBar
             // 
@@ -863,38 +895,6 @@ namespace KlxPiaoDemo
             roundedButton1.TabIndex = 2;
             roundedButton1.Text = "roundedButton1";
             // 
-            // titleTextOffsetPointBar
-            // 
-            titleTextOffsetPointBar.BackColor = Color.White;
-            titleTextOffsetPointBar.CoordinateDisplayFormat = "TitleTextOffset: {X}, {Y}";
-            titleTextOffsetPointBar.CoordinateTextAlign = ContentAlignment.BottomCenter;
-            titleTextOffsetPointBar.CoordinateTextOffset = new Point(0, -2);
-            titleTextOffsetPointBar.CornerRadius = new KlxPiaoAPI.CornerRadius(1F, 1F, 1F, 1F);
-            titleTextOffsetPointBar.Font = new Font("Microsoft YaHei UI", 7.5F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            titleTextOffsetPointBar.Location = new Point(484, 11);
-            titleTextOffsetPointBar.MaxValue = new Point(10, 10);
-            titleTextOffsetPointBar.MinValue = new Point(-10, -10);
-            titleTextOffsetPointBar.Name = "titleTextOffsetPointBar";
-            titleTextOffsetPointBar.Size = new Size(105, 105);
-            titleTextOffsetPointBar.TabIndex = 25;
-            titleTextOffsetPointBar.Visible = false;
-            // 
-            // iconDrawOffsetPointBar
-            // 
-            iconDrawOffsetPointBar.BackColor = Color.White;
-            iconDrawOffsetPointBar.CoordinateDisplayFormat = "IconDrawOffset: {X}, {Y}";
-            iconDrawOffsetPointBar.CoordinateTextAlign = ContentAlignment.BottomCenter;
-            iconDrawOffsetPointBar.CoordinateTextOffset = new Point(0, -2);
-            iconDrawOffsetPointBar.CornerRadius = new KlxPiaoAPI.CornerRadius(6F, 6F, 6F, 6F);
-            iconDrawOffsetPointBar.Font = new Font("Microsoft YaHei UI", 7.5F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            iconDrawOffsetPointBar.Location = new Point(331, 11);
-            iconDrawOffsetPointBar.MaxValue = new Point(10, 10);
-            iconDrawOffsetPointBar.MinValue = new Point(-10, -10);
-            iconDrawOffsetPointBar.Name = "iconDrawOffsetPointBar";
-            iconDrawOffsetPointBar.Size = new Size(105, 105);
-            iconDrawOffsetPointBar.TabIndex = 28;
-            iconDrawOffsetPointBar.Visible = false;
-            // 
             // DemoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -902,8 +902,6 @@ namespace KlxPiaoDemo
             BackColor = Color.White;
             BackgroundImage = Properties.Resources.testbackground;
             ClientSize = new Size(760, 487);
-            Controls.Add(titleTextOffsetPointBar);
-            Controls.Add(iconDrawOffsetPointBar);
             Controls.Add(mainTabControl);
             EnableTitleButtonAnimation = true;
             Name = "DemoForm";

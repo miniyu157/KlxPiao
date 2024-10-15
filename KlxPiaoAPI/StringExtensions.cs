@@ -13,12 +13,13 @@ namespace KlxPiaoAPI
         /// </summary>
         /// <param name="format">要进行替换操作的原始字符串。</param>
         /// <param name="replacements">用于替换的键值对，键表示要替换的内容，值表示替换后的新值。</param>
-        public static string ReplaceMultiple(this string format, Dictionary<string, string> replacements)
+        public static string ReplaceMultiple(this string format, Dictionary<string, string> replacements, StringComparison comparison = StringComparison.Ordinal)
         {
             foreach (var replacement in replacements)
             {
-                format = format.Replace(replacement.Key, replacement.Value);
+                format = format.Replace(replacement.Key, replacement.Value, comparison);
             }
+
             return format;
         }
 

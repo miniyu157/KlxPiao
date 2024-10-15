@@ -15,10 +15,9 @@ namespace KlxPiaoAPI
         /// <param name="endValue">动画的终止值。</param>
         /// <param name="animationInfo">动画信息，包括时长和缓动曲线等，以 <see cref="AnimationInfo"/> 结构体表示。</param>
         /// <param name="setValue">用于设置动画中间值的委托。</param>
-        /// <param name="isCheckControlPoint">是否检查控制点，如果为 true，保证控制点的起始和终止分别为 (0,0) 和 (1,1)。</param>
         /// <param name="token">用于取消动画的 <see cref="CancellationToken"/>。</param>
         /// <returns>表示异步动画操作的 <see cref="Task"/>。</returns>
-        public static async Task Start<T>(T startValue, T endValue, AnimationInfo animationInfo, Action<T> setValue, bool isCheckControlPoint = true, CancellationToken token = default) where T : notnull
+        public static async Task Start<T>(T startValue, T endValue, AnimationInfo animationInfo, Action<T> setValue, CancellationToken token = default) where T : notnull
         {
             PointF[] controlPoints = EasingUtils.ParseEasing(animationInfo.Easing);
             TimeSpan totalDuration = TimeSpan.FromMilliseconds(animationInfo.Time);
@@ -28,13 +27,10 @@ namespace KlxPiaoAPI
                 return;
             }
 
-            if (isCheckControlPoint)
-            {
-                var newControlPoints = controlPoints.ToList();
-                if (controlPoints[0] != new PointF(0, 0)) newControlPoints.Insert(0, new PointF(0, 0));
-                if (controlPoints[^1] != new PointF(1, 1)) newControlPoints.Add(new PointF(1, 1));
-                controlPoints = [.. newControlPoints];
-            }
+            var newControlPoints = controlPoints.ToList();
+            if (controlPoints[0] != new PointF(0, 0)) newControlPoints.Insert(0, new PointF(0, 0));
+            if (controlPoints[^1] != new PointF(1, 1)) newControlPoints.Add(new PointF(1, 1));
+            controlPoints = [.. newControlPoints];
 
             Stopwatch stopwatch = Stopwatch.StartNew();
 

@@ -1,7 +1,6 @@
 ﻿using KlxPiaoAPI;
 using KlxPiaoControls;
 using System.Diagnostics;
-using System.Drawing.Drawing2D;
 
 namespace KlxPiaoDemo
 {

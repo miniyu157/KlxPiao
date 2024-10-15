@@ -641,7 +641,7 @@ namespace KlxPiaoControls
                 {
                     cts.Cancel();
                     cts = new();
-                    _ = TransiMate.Start(startColor, newColor, animationConfig, setColor, true, cts.Token);
+                    _ = TransiMate.Start(startColor, newColor, animationConfig, setColor, cts.Token);
                 }
                 else
                 {
@@ -658,7 +658,7 @@ namespace KlxPiaoControls
                 {
                     cts.Cancel();
                     cts = new();
-                    _ = TransiMate.Start(startValue, newValue, animationConfig, setValue, true, cts.Token);
+                    _ = TransiMate.Start(startValue, newValue, animationConfig, setValue, cts.Token);
                 }
                 else
                 {
@@ -673,7 +673,7 @@ namespace KlxPiaoControls
             {
                 cts.Cancel();
                 cts = new();
-                _ = TransiMate.Start(startColor, newColor, animationConfig, setColor, true, cts.Token);
+                _ = TransiMate.Start(startColor, newColor, animationConfig, setColor, cts.Token);
             }
             else
             {
@@ -687,7 +687,7 @@ namespace KlxPiaoControls
             {
                 cts.Cancel();
                 cts = new();
-                _ = TransiMate.Start(startValue, newValue, animationConfig, setValue, true, cts.Token);
+                _ = TransiMate.Start(startValue, newValue, animationConfig, setValue, cts.Token);
             }
             else
             {
@@ -872,7 +872,6 @@ namespace KlxPiaoControls
                         newColor,
                         new AnimationInfo(150, 30, EasingType.Linear),
                         setColor,
-                        true,
                         cts.Token);
                 }
                 else
